@@ -1,0 +1,33 @@
+.column {
+    display: inline-grid;
+    width: 30%;
+    max-width: 31%;
+    place-content: center;
+    place-self: start;
+}
+
+.column > img {
+    object-fit: cover;
+    height: 322px;
+    width: 324px;
+    margin-bottom: 14px;
+    border: 1px solid #a4afb7;
+}
+
+.gallery_body {
+    display: flex;
+    place-content: center;
+    padding: 42px 0;
+    background: #eee;
+    border: 1px solid #ddd;
+    margin-top: 42px;
+}
+
+.add {
+    bottom: 12px;
+    position: fixed;
+    width: 320px;
+    margin-left: 7px;
+    width: 30%;
+    /* left: 0px; */
+}

@@ -1,0 +1,18 @@
+/*
+Theme Name: Mirele A1
+Author: iRTEX
+Version: 1.0.0
+Text Domain: Mirele A1
+Requires PHP: 5.6
+Description: A small theme with custom block editor for the home page. Theme support WooCommerce plugin
+Tags: animation, block editor
+License: Themeforest Regular License;
+License URI: -
+Author URI: https://themeforest.net/user/irtex
+*/
+
+.wp-caption-text,
+.gallery-caption,
+.bypostauthor {
+}
+

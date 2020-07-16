@@ -1,0 +1,72 @@
+{
+    "15": {
+        "functions": {
+            "rosemary_register_element": {
+                "params": [
+                    {
+                        "name": "id"
+                    },
+                    {
+                        "name": "data"
+                    },
+                    {
+                        "name": "options"
+                    }
+                ],
+                "verify": 1593945804,
+                "pass": false
+            }
+        }
+    },
+    "20": {
+        "functions": {
+            "rosemary_register_element": {
+                "params": [
+                    {
+                        "name": "id"
+                    },
+                    {
+                        "name": "data"
+                    },
+                    {
+                        "name": "options"
+                    }
+                ],
+                "verify": 1593945804,
+                "pass": false
+            }
+        }
+    },
+    "28": {
+        "functions": {
+            "get_option": {
+                "params": [
+                    {
+                        "name": "option"
+                    },
+                    {
+                        "name": "default"
+                    }
+                ],
+                "verify": 1593945804,
+                "pass": false
+            }
+        }
+    },
+    "29": {
+        "functions": {
+            "get_option": {
+                "params": [
+                    {
+                        "name": "option"
+                    },
+                    {
+                        "name": "default"
+                    }
+                ],
+                "verify": 1593945804,
+                "pass": false
+            }
+        }
+    }
+}

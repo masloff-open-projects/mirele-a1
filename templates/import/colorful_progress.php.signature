@@ -1,0 +1,101 @@
+{
+    "16": {
+        "functions": {
+            "rosemary_register_element": {
+                "params": [
+                    {
+                        "name": "id"
+                    },
+                    {
+                        "name": "data"
+                    },
+                    {
+                        "name": "options"
+                    }
+                ],
+                "verify": 1593945804,
+                "pass": false
+            }
+        }
+    },
+    "22": {
+        "functions": {
+            "rosemary_register_element": {
+                "params": [
+                    {
+                        "name": "id"
+                    },
+                    {
+                        "name": "data"
+                    },
+                    {
+                        "name": "options"
+                    }
+                ],
+                "verify": 1593945804,
+                "pass": false
+            }
+        }
+    },
+    "36": {
+        "functions": {
+            "rosemary_register_element": {
+                "params": [
+                    {
+                        "name": "id"
+                    },
+                    {
+                        "name": "data"
+                    },
+                    {
+                        "name": "options"
+                    }
+                ],
+                "verify": 1593945804,
+                "pass": false
+            }
+        }
+    },
+    "37": {
+        "functions": {
+            "rand": {
+                "params": [
+                    {
+                        "name": "min"
+                    },
+                    {
+                        "name": "max"
+                    }
+                ],
+                "verify": 1593945804,
+                "pass": false
+            }
+        }
+    },
+    "45": {
+        "functions": {
+            "rosemary_get_options": {
+                "params": [
+                    {
+                        "name": "id"
+                    }
+                ],
+                "verify": 1593945804,
+                "pass": false
+            }
+        }
+    },
+    "47": {
+        "functions": {
+            "rosemary_get_full_id": {
+                "params": [
+                    {
+                        "name": "id"
+                    }
+                ],
+                "verify": 1593945804,
+                "pass": false
+            }
+        }
+    }
+}

@@ -1,0 +1,113 @@
+{
+    "7": {
+        "constants": {
+            "MIRELE_INTEGRATION_MAILCHIMP": {
+                "value": true,
+                "verify": 1593945804,
+                "pass": false
+            }
+        }
+    },
+    "11": {
+        "functions": {
+            "rosemary_register_element": {
+                "params": [
+                    {
+                        "name": "id"
+                    },
+                    {
+                        "name": "data"
+                    },
+                    {
+                        "name": "options"
+                    }
+                ],
+                "verify": 1593945804,
+                "pass": false
+            }
+        }
+    },
+    "19": {
+        "functions": {
+            "rosemary_get_options": {
+                "params": [
+                    {
+                        "name": "id"
+                    }
+                ],
+                "verify": 1593945804,
+                "pass": false
+            }
+        }
+    },
+    "27": {
+        "functions": {
+            "rosemary_register_element": {
+                "params": [
+                    {
+                        "name": "id"
+                    },
+                    {
+                        "name": "data"
+                    },
+                    {
+                        "name": "options"
+                    }
+                ],
+                "verify": 1593945804,
+                "pass": false
+            }
+        }
+    },
+    "32": {
+        "functions": {
+            "rosemary_register_element": {
+                "params": [
+                    {
+                        "name": "id"
+                    },
+                    {
+                        "name": "data"
+                    },
+                    {
+                        "name": "options"
+                    }
+                ],
+                "verify": 1593945804,
+                "pass": false
+            }
+        }
+    },
+    "43": {
+        "functions": {
+            "rosemary_register_element": {
+                "params": [
+                    {
+                        "name": "id"
+                    },
+                    {
+                        "name": "data"
+                    },
+                    {
+                        "name": "options"
+                    }
+                ],
+                "verify": 1593945804,
+                "pass": false
+            }
+        }
+    },
+    "50": {
+        "functions": {
+            "rosemary_get_full_id": {
+                "params": [
+                    {
+                        "name": "id"
+                    }
+                ],
+                "verify": 1593945804,
+                "pass": false
+            }
+        }
+    }
+}

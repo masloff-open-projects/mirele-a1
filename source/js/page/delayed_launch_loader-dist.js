@@ -1,0 +1,2 @@
+"function"==typeof jQuery&&jQuery.fn.jquery&&$(document).ready((function(){if(0!==$("[data-delayed]").length)for(const e of $("[data-delayed]")){let d=e;$(e).remove(),$($(d).attr("data-delayed")).delay(0).fadeIn(300),delete d}}));
+//# sourceMappingURL=delayed_launch_loader-dist.js.map

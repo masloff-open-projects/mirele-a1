@@ -1,0 +1,2 @@
+"function"==typeof jQuery&&jQuery.fn.jquery&&$(document).ready((function(){for(const o of $("[data-lightboximage]"))$(o).dblclick((function(){karlin("body").lightboximage($(o).attr("src"))})),$(o).on("doubletap",(function(){karlin("body").lightboximage($(o).attr("src"))}))}));
+//# sourceMappingURL=lightbox-dist.js.map

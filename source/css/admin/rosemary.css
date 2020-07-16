@@ -1,0 +1,33 @@
+.rosemary-blocks-placeholder {
+    border: 2px dashed #ccc;
+    /* height: 180px; */
+    display: block;
+    margin-bottom: 18px;
+}
+
+.wp-rosemary-table {
+    margin-bottom: 18px !important;
+}
+
+.block_element > p {
+    margin: 0;
+}
+
+*[data-image-hint] {
+    position: relative;
+}
+*[data-image-hint]:hover:after {
+    content: ' ';
+    position: absolute;
+    left: 72px;
+    bottom: 12px;
+    max-width: 200px;
+    z-index: 100;
+    background-color: #1d1d1da8;
+    line-height: 16px;
+    color: #fff;
+    padding: 4px;
+    border-radius: 6px;
+    border: 1px solid #474747;
+    font-size: 13px;
+}

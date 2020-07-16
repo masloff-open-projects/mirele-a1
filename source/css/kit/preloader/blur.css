@@ -1,0 +1,5 @@
+.mirele-preloader-background-blur {
+    background-color: rgba(0, 0, 0, 0.5);
+    -webkit-backdrop-filter: blur(28px);
+    backdrop-filter: blur(28px);
+}

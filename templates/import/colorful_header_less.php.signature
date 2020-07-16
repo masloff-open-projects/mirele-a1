@@ -1,0 +1,91 @@
+{
+    "9": {
+        "functions": {
+            "rosemary_register_element": {
+                "params": [
+                    {
+                        "name": "id"
+                    },
+                    {
+                        "name": "data"
+                    },
+                    {
+                        "name": "options"
+                    }
+                ],
+                "verify": 1593945804,
+                "pass": false
+            }
+        }
+    },
+    "18": {
+        "functions": {
+            "rosemary_get_options": {
+                "params": [
+                    {
+                        "name": "id"
+                    }
+                ],
+                "verify": 1593945804,
+                "pass": false
+            }
+        }
+    },
+    "19": {
+        "functions": {
+            "explode": {
+                "params": [
+                    {
+                        "name": "separator"
+                    },
+                    {
+                        "name": "str"
+                    },
+                    {
+                        "name": "limit"
+                    }
+                ],
+                "verify": 1593945804,
+                "pass": false
+            }
+        }
+    },
+    "38": {
+        "functions": {
+            "rosemary_register_element": {
+                "params": [
+                    {
+                        "name": "id"
+                    },
+                    {
+                        "name": "data"
+                    },
+                    {
+                        "name": "options"
+                    }
+                ],
+                "verify": 1593945804,
+                "pass": false
+            }
+        }
+    },
+    "43": {
+        "functions": {
+            "rosemary_register_element": {
+                "params": [
+                    {
+                        "name": "id"
+                    },
+                    {
+                        "name": "data"
+                    },
+                    {
+                        "name": "options"
+                    }
+                ],
+                "verify": 1593945804,
+                "pass": false
+            }
+        }
+    }
+}
