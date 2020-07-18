@@ -29,7 +29,7 @@ define ('ROSEMARY_INSTANCES', 'SMART');
 define ('ROSEMARY_GIT', 'irtex-web/mirele');
 define ('MIRELE_URL', $_SERVER['REQUEST_SCHEME'] .'://'. $_SERVER['HTTP_HOST'] . explode('?', $_SERVER['REQUEST_URI'], 2)[0]);
 
-if (!wp_doing_ajax() and false) {
+if (!wp_doing_ajax() and true) {
     ini_set('error_reporting', E_ALL);
     ini_set('display_errors', 1);
     ini_set('display_startup_errors', 1);
