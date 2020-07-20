@@ -1,0 +1,21 @@
+{
+    "9": {
+        "functions": {
+            "rosemary_register": {
+                "params": [
+                    {
+                        "name": "id"
+                    },
+                    {
+                        "name": "function"
+                    },
+                    {
+                        "name": "meta"
+                    }
+                ],
+                "verify": 1595258519,
+                "pass": false
+            }
+        }
+    }
+}
