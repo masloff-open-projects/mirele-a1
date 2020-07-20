@@ -32,7 +32,19 @@ class MStyler {
      */
 
     public function register ($page='any', $element="*", $style=array()) {
-        $this->style[$page][$element] = array_unique(array_merge(is_array($this->style[$page][$element]) ? $this->style[$page][$element] : [], is_array($style) ? $style : []));
+
+        if (isset($this->style[$page])) {
+            $array = is_array($this->style[$page][$element]) ? $this->style[$page][$element] : [];
+        } else {
+            $array = [];
+        }
+
+        if (isset($this->style[$page])) {
+            $this->style[$page][$element] = array_unique(array_merge($array, is_array($style) ? $style : []));
+        } else {
+            $this->style[$page] = array();
+            $this->style[$page][$element] = array_unique(array_merge($array, is_array($style) ? $style : []));
+        }
     }
 
 

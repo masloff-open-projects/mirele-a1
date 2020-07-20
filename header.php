@@ -46,7 +46,7 @@ if (get_option('mrl_wp_preloader_enabled', false) == 'true') {
 
     ?>
 
-    <?php if (is_woocommerce()): ?>
+    <?php if (function_exists('is_woocommerce') and is_woocommerce()): ?>
 
         <?php
 

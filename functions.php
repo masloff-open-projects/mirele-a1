@@ -11,8 +11,6 @@ define ('MIRELE_INTEGRATION_MAILCHIMP', true);
 define ('ROSEMARY_CANVAS', 'canvas.php');
 define ('ROSEMARY_TEMPLATES_DIR', get_template_directory() . '/templates');
 define ('ROSEMARY_TEMPLATES_HTML_DIR', get_template_directory() . '/rosemary_html');
-define ('MIRELE_BACKUPS_DIR', get_template_directory() . '/core/backup');
-define ('MIRELE_UPGRADE_DIR', get_template_directory() . '/upgrade');
 define ('MIRELE_CORE_DIR', get_template_directory() . '/core');
 define ('MIRELE_SOURCE_DIR', get_template_directory_uri() . '/source');
 define ('MIRELE_SOURCE_PATH', get_template_directory() . '/source');
@@ -35,10 +33,14 @@ if (!wp_doing_ajax() and true) {
     ini_set('display_startup_errors', 1);
 }
 
+# Compatibility check
+if (true == true) {
+
+}
+
 $include = function ($e=null){
 
     include_once 'core/function/fault_tolerance.php';
-    include_once 'core/function/include.php';
     include_once 'core/function/lorem.php';
     include_once 'core/function/password_generate.php';
     include_once 'core/function/secondstotime.php';
@@ -48,14 +50,12 @@ $include = function ($e=null){
     include_once 'core/class/MAccount.php';
     include_once 'core/class/MAnalytics.php';
     include_once 'core/class/MApps.php';
-    include_once 'core/class/MBackup.php';
     include_once 'core/class/MCache.php';
     include_once 'core/class/MData.php';
     include_once 'core/class/MHubSpot.php';
     include_once 'core/class/MMailChimp.php';
     include_once 'core/class/MPackage.php';
     include_once 'core/class/MSafe.php';
-    include_once 'core/class/MUpgrade.php';
     include_once 'core/class/MVersion.php';
     include_once 'core/class/MRepository.php';
     include_once 'core/class/MRouter.php';
@@ -63,7 +63,6 @@ $include = function ($e=null){
     include_once 'core/class/MPager.php';
     include_once 'core/class/MSettings.php';
     include_once 'core/class/MStyler.php';
-    include_once 'core/class/MMarket.php';
     include_once 'core/class/MFile.php';
     include_once 'core/class/MBBPress.php';
     include_once 'core/class/MDemos.php';
@@ -105,8 +104,6 @@ $include = function ($e=null){
     include_once 'core/ui/mirele/center/center_home.php';
     include_once 'core/ui/mirele/center/warnings.php';
     include_once 'core/ui/mirele/center/settings_theme.php';
-    include_once 'core/ui/mirele/backup/main.php';
-    include_once 'core/ui/mirele/upgrade/main.php';
     include_once 'core/ui/mirele/access/main.php';
     include_once 'core/ui/mirele/interrogation/main.php';
     include_once 'core/ui/mirele/apps/template/app.php';
@@ -197,7 +194,7 @@ add_action ('wp_enqueue_scripts', function () {
 
     $mrouter->execute('site');
 
-    if (is_woocommerce()) {
+    if ( function_exists('is_woocommerce') and is_woocommerce()) {
         get_header('shop');
         $mrouter->execute('wp-page');
         $mrouter->execute('woocommerce-page');
@@ -237,7 +234,7 @@ add_action ('wp_body_open', function () {
         ));
     }
 
-    if (is_woocommerce()) {
+    if (function_exists('is_woocommerce') and is_woocommerce()) {
         MPackage::single_font(get_option('mrl_wp_default_body_font_woo', "Roboto"));
 
         $mstyler->register('any', 'body, html', array(
@@ -418,7 +415,6 @@ add_action ('init', function () {
     register_setting( 'mirele_wp_edit', 'mirele_bootstrap_main_type_width_woo', '');
     register_setting( 'mirele_wp_edit', 'mrl_wp_js_disabled_warning', '');
     register_setting( 'mirele_wp_edit', 'mrl_wp_cookies_warning', '');
-    register_setting( 'mirele_wp_edit', 'mrl_backups_password', '');
     register_setting( 'mirele_wp_edit', 'mrl_wp_seo_main_author', '');
     register_setting( 'mirele_wp_edit', 'mrl_wp_seo_main_keywords', '');
     register_setting( 'mirele_wp_edit', 'mrl_wp_seo_main_description', '');
@@ -443,9 +439,6 @@ add_action ('init', function () {
     register_setting( 'mirele_analysis', 'mirele_allow_install_from_repo', '');
     register_setting( 'mirele_analysis', 'mirele_allow_check_updates', '');
     register_setting( 'mirele_analysis', 'mirele_forbid_updates', '');
-    register_setting( 'mirele_analysis', 'mirele_allow_backups', '');
-    register_setting( 'mirele_analysis', 'mirele_allow_backups_cron', '');
-    register_setting( 'mirele_analysis', 'mirele_frequency_backups_time', '');
     register_setting( 'mirele_analysis', 'mirele_core_use_defer_js', '');
     register_setting( 'mirele_analysis', 'mirele_core_use_async_js', '');
     register_setting( 'mirele_analysis', 'mirele_core_use_async_css', '');
@@ -505,7 +498,7 @@ add_action ('init', function () {
 
     $mdata->set('seo_author', get_bloginfo('name'));
     $mdata->set('seo_keywords', get_bloginfo('name'));
-    if(is_woocommerce()) {
+    if(function_exists('is_woocommerce') and is_woocommerce()) {
         $mdata->set('seo_description', 'woocommerce');
     } else {
         $mdata->set('seo_description', get_bloginfo('description'));
@@ -545,7 +538,7 @@ add_action ('admin_menu', function () {
     $mrouter->register('admin_page_rosemary_render_editor', 'js', array('admin' => get_template_directory_uri() . '/source/js/admin/mgDialog.js'));
     $mrouter->register('admin_page_rosemary_render_editor', 'js', array('admin' => get_template_directory_uri() . '/source/js/admin/rosemary.js'));
 
-    $majax->register_ajax('mirele_wp_edit', function ($e=null) {
+    $majax->register('mirele_wp_edit', function ($e=null) {
 
         foreach ($e as $option => $value) {
             if ($option == "action" or $option == "option_page") {
@@ -558,7 +551,7 @@ add_action ('admin_menu', function () {
             'form' => $e
         ));
     });
-    $majax->register_ajax('mirele_woo_edit', function ($e=null) {
+    $majax->register('mirele_woo_edit', function ($e=null) {
 
         foreach ($e as $option => $value) {
             if ($option == "action" or $option == "option_page") {
@@ -571,7 +564,7 @@ add_action ('admin_menu', function () {
             'form' => $e
         ));
     });
-    $majax->register_ajax('mirele_site', function ($e=null) {
+    $majax->register('mirele_site', function ($e=null) {
 
         if ($e->action_ == "default_") {
             die(setup_robotstxt ('default'));
@@ -590,36 +583,6 @@ add_action ('admin_menu', function () {
             'form' => $e
         ));
     });
-    $majax->register_ajax('filter_tabs', function ($e=null) {
-        
-        if ($e->tab == "install") {
-            
-            if (isset($e->s) and !empty($e->s)) {
-                $s = $e->s;
-            } else {
-                $s = 'mirele';
-            }
-
-            $market = MMarket::search('template', $s, false, false);
-            
-            if (is_array($market) or is_object($market)) {
-
-                ?>
-
-                <div id="the-list">
-                    <?php
-                    foreach ($market->items as $package) {
-                        do_action('mirele_ui_market_template_package', $package);
-                    }
-                    ?>
-                </div>
-
-                <?php
-            }
-        }
-
-    });
-
     $mpager->register('mirele_center', [
         function ($e=null) {
             MPager::ui_tabs([
@@ -636,14 +599,6 @@ add_action ('admin_menu', function () {
                     'id' => 'tas'
                 ],
                 [
-                    'content' => 'Backups',
-                    'id' => 'backups'
-                ],
-                [
-                    'content' => 'Upgrade',
-                    'id' => 'upgrade'
-                ],
-                [
                     'content' => 'Interrogation',
                     'id' => 'interrogation'
                 ]
@@ -652,54 +607,8 @@ add_action ('admin_menu', function () {
         function ($e=null) {
             if (MPager::ui_current_tab()->id == 'tas') {
                 do_action('ui_mirele_settings_theme');
-            } elseif (MPager::ui_current_tab()->id == 'backups') {
-                if ($_POST['action'] == "Create Backup now") {
-                    if (MBackup::create(get_template_directory(), true)) {
-                        ?>
-                        <br>
-                        <div class="notice notice-success">
-                            <p>Your backup has been successfully created. </p>
-                        </div>
-                        <?php
-                    } else {
-                        ?>
-                        <br>
-                        <div class="notice notice-warning">
-                            <p>Error. <br>
-                                The program cannot back up data. Check your server access to the <?php echo MIRELE_BACKUPS_DIR ?> folder
-                            </p>
-                        </div>
-                        <?php
-                    }
-                    if (isset($_POST['expand'])) {
-                        if (MBackup::expand($_POST['expand'], $_POST['passwd'])) {
-                            ?>
-                            <br>
-                            <div class="notice notice-success">
-                                <p>Your backup has been successfully restored from the backup. <br>
-                                    Now you can go to the WordPress theme list and select an alternative Mirele theme in it - this is a theme restored from a backup</p>
-                            </div>
-                            <?php
-                        } else {
-                            ?>
-                            <br>
-                            <div class="notice notice-error">
-                                <p>An error occurred while unpacking the backup. <br>
-                                    Check your server has write permissions to the WordPress theme directory. Check if you restored the copy recently.</p>
-                            </div>
-                            <?php
-                        }
-                    }
-                }
-                do_action('ui_mirele_backup_main');
             } elseif (MPager::ui_current_tab()->id == 'settings') {
                 MPager::ui_settings ('mirele_analysis', 'analysis');
-            } elseif (MPager::ui_current_tab()->id == 'upgrade') {
-                if (get_option('mirele_forbid_updates', false) != 'true') {
-                    do_action('ui_mirele_upgrade');
-                } else {
-                    do_action('ui_mirele_no_access');
-                }
             } elseif (MPager::ui_current_tab()->id == 'interrogation') {
                 do_action('ui_mirele_interrogation');
             } else {

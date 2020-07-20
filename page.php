@@ -42,7 +42,7 @@ if (is_active_sidebar('right-side-page')) {
 
         <div class="<?php echo $center; ?>">
             <?php if ( have_posts() ) while ( have_posts() ) : the_post();  ?>
-                <?php if (get_option('woo_hide_page_title', 'false') != 'true' && !is_woocommerce()): ?>
+                <?php if (get_option('woo_hide_page_title', 'false') != 'true' && function_exists('is_woocommerce') and !is_woocommerce()): ?>
                     <h1><?php the_title(); ?></h1>
                 <?php endif; ?>
             <?php the_content();  ?>

@@ -19,26 +19,6 @@ class MAjax
 
 
     /**
-     * The function registers the NORMAL AJAX method.
-     * This method will not be routed through the function self::all ()
-     *
-     * @param string $action
-     * @param null $function
-     * @param bool $private
-     */
-
-    static public function register ($action="ajax", $function=null, $private=false) {
-
-        if ($private) {
-            add_action("wp_ajax_$action", $function);
-        } else {
-            add_action("wp_ajax_$action", $function);
-            add_action("wp_ajax_nopriv_$action", $function);
-        }
-    }
-
-
-    /**
      * The function registers the AJAX method.
      * This method works based on an embedded private variable.
      * It is routed through the all method.
@@ -46,14 +26,14 @@ class MAjax
      * @param string $action
      * @param null $function
      * @param bool $private
-     * @return bool
+     * @return bool|object
      */
 
-    public function register_ajax ($action="ajax", $function=null, $private=true) {
+     public function register ($action="ajax", $function=null, $private=false) {
 
         if (!isset($this->ajax[$private][$action]) and !empty($action)) {
 
-            $this->ajax[$private][$action] = (object) array(
+            return $this->ajax[$private][$action] = (object) array(
                 'action' => $action,
                 'function' => $function,
                 'private' => $private
@@ -63,7 +43,7 @@ class MAjax
             return false;
         }
 
-    }
+     }
 
 
     /**
