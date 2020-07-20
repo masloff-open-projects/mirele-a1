@@ -9,37 +9,24 @@
 get_header();
 ?>
 
-<?php
-    
-    // $start = microtime(true);
+    <section>
+        <div class="container">
+            <div class="row">
+                <div>
+                    <h1><?php // заголовок архивов
+                        if (is_day()) : printf('Daily Archives: %s', get_the_date()); // если по дням
+                        elseif (is_month()) : printf('Monthly Archives: %s', get_the_date('F Y')); // если по месяцам
+                        elseif (is_year()) : printf('Yearly Archives: %s', get_the_date('Y')); // если по годам
+                        else : 'Archives';
+                        endif; ?></h1>
+                    <?php if (have_posts()) : while (have_posts()) : the_post(); // если посты есть - запускаем цикл wp ?>
+                        <?php get_template_part('loop'); // для отображения каждой записи берем шаблон loop.php ?>
+                    <?php endwhile; // конец цикла
+                    else: echo '<p>Нет записей.</p>'; endif; // если записей нет, напишим "простите" ?>
+                </div>
+                <?php get_sidebar(); // подключаем sidebar.php ?>
+            </div>
+        </div>
+    </section>
 
-    // $rosemary = new RManager;
-    
-    // $rosemary->database_markup();
-    // var_dump($rosemary->add_element('E49B8B4053DF9505E1F48C3A701C68237', 'header', 'about', (object) array(
-    //     'type' => 'text',
-    //     'value' => 'Hello, world!'
-    // ) ));
-
-    // echo do_shortcode('[rosemary page="about"]');
-
-    // $var = rosemary_tempalte ('header');
-    
-    // echo 'Время выполнения скрипта: '.round(microtime(true) - $start, 4).' сек.';
-
-
-
-    // if (is_home()) {
-    //     if (bridge_content()) {
-    //         foreach (bridge_content() as $block) {
-    //             $e = $block['elements'];
-    //             include_once sprintf("%s/template/%s.php", get_template_directory(), $block['info']['block_id']);
-    //         }
-    //     } else {
-    //         echo "<h3 style='color: black;'>The site is empty, since you deleted all the blocks</h3>";
-    //     }
-    // }
-
-
-
-get_footer(); ?>
+<?php get_footer(); ?>

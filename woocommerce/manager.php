@@ -598,7 +598,7 @@ function woocommerce_manager () {
     
         add_action('mirele_header', function(){
             
-            if (is_woocommerce()) {
+            if (function_exists('is_woocommerce') and is_woocommerce()) {
                 
                 if (get_option('woo_fastcart_enabled', 'false') == 'true') {
                     add_action('mirele_footer_before', function () {

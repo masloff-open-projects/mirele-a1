@@ -44,7 +44,7 @@ if (is_active_sidebar('right-side-single')) {
         <div class="<?php echo $center; ?>">
             <?php if ( have_posts() ) while ( have_posts() ) : the_post();  ?>
             <article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
-                <?php if (get_option('woo_hide_page_title', 'false') != 'true' && !is_woocommerce()): ?>
+                <?php if (get_option('woo_hide_page_title', 'false') != 'true' && function_exists('is_woocommerce') and !is_woocommerce()): ?>
                     <h1 class="post-header"><?php the_title(); ?></h1>
                 <?php endif; ?>
                 <p><?php the_content();  ?></p>

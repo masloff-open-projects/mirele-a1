@@ -562,7 +562,7 @@ class MPager
     static public function ui_part ($id=null, $content=false) {
 
         global $majax;
-        $majax->register_ajax("mui_$id", $content);
+        $majax->register("mui_$id", $content);
 
     }
 

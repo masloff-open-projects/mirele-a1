@@ -16,34 +16,6 @@ add_action('ui_mirele_center_home_page', function () {
 
     <div class="wrap wp-wrap-tabs">
 
-        <?php
-
-        /**
-         * Getting meta information from the repository to
-         * check for updates, find out news, etc.
-         *
-         * @version 1.0.0
-         */
-
-        $version = new MRepository;
-
-        if (isset($version->version()->version)) {
-
-            if ($version->version()->version != MIRELE_VERSION) {
-                ?>
-                <div class="notice notice-success">
-                    <p>New version of Mirele -
-                        <b><?php echo $version->version()->version; ?></b>! <?php echo $version->version()->description; ?>
-                        <a href="javascript:" data-action="re-specify_update_email">I want to re-specify email to
-                            receive updates</a></p>
-                </div>
-                <?php
-            }
-
-        }
-
-        ?>
-
         <div class="wp-mrl-column-1">
 
             <hr class="wp-header-end">

@@ -50,13 +50,16 @@ add_action('init', function() {
                     <div class="collapse navbar-collapse" id="navbar-main">
                         <?php
 
-                        wp_nav_menu(array(
-                            'theme_location' => 'header',
-                            'container'=> false,
-                            'menu_id' => 'top-nav-ul',
-                            'items_wrap' => '<ul class="nav navbar-nav %2$s">%3$s</ul>',
-                            'menu_class' => 'top-menu',
-                            'walker' => false));
+                        if ((int) get_nav_menu_locations()['header'] > 0) {
+                            wp_nav_menu(array(
+                                'theme_location' => 'header',
+                                'container'=> false,
+                                'menu_id' => 'top-nav-ul',
+                                'items_wrap' => '<ul class="nav navbar-nav %2$s">%3$s</ul>',
+                                'menu_class' => 'top-menu',
+                                'walker' => false
+                            ));
+                        }
 
                         ?>
                     </div>
@@ -109,14 +112,17 @@ add_action('init', function() {
 
                         <?php
 
-                        wp_nav_menu(array(
-                            'depth' => 1,
-                            'theme_location' => 'header',
-                            'container'=> false,
-                            'menu_id' => 'top-nav-ul',
-                            'items_wrap' => '<ul class="nav navbar-nav %2$s">%3$s</ul>',
-                            'menu_class' => 'top-menu',
-                            'walker' => false));
+                        if ((int) get_nav_menu_locations()['header'] > 0) {
+                            wp_nav_menu(array(
+                                'depth' => 1,
+                                'theme_location' => 'header',
+                                'container'=> false,
+                                'menu_id' => 'top-nav-ul',
+                                'items_wrap' => '<ul class="nav navbar-nav %2$s">%3$s</ul>',
+                                'menu_class' => 'top-menu',
+                                'walker' => false
+                            ));
+                        }
 
                         ?>
 

@@ -271,7 +271,7 @@ function wp_setups()
 
                 add_action('mirele_header', function () {
 
-                    if (is_woocommerce()) {
+                    if (function_exists('is_woocommerce') and is_woocommerce()) {
                         $max_width = "<style>
                         @media (min-width:1200px) {
                             .container {

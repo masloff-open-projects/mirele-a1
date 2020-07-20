@@ -1,19 +1,19 @@
 {
-    "15": {
+    "9": {
         "functions": {
-            "rosemary_register_element": {
+            "rosemary_register": {
                 "params": [
                     {
                         "name": "id"
                     },
                     {
-                        "name": "data"
+                        "name": "function"
                     },
                     {
-                        "name": "options"
+                        "name": "meta"
                     }
                 ],
-                "verify": 1593945804,
+                "verify": 1595258519,
                 "pass": false
             }
         }
