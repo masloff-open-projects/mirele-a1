@@ -566,4 +566,29 @@ class MPager
 
     }
 
+    static public function render ($file="", $params=array(), $toString=false) {
+
+        global $latte;
+
+        if (file_exists(ROSEMARY_TEMPLATES_DIR . '/' . $file)) {
+
+            $params = array_merge(
+                array (
+                    'source' => MIRELE_SOURCE_DIR
+                ),
+                $params
+            );
+
+            if ($toString) {
+                return $latte->renderToString(ROSEMARY_TEMPLATES_DIR . '/' . $file, $params);
+            } else {
+                return $latte->render(ROSEMARY_TEMPLATES_DIR . '/' . $file, $params);
+            }
+
+        } else {
+            return false;
+        }
+
+    }
+
 } 

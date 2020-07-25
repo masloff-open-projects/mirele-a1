@@ -24,7 +24,6 @@ define ('MIRELE_TWITTER_ME', "mirele");
 define ('MIRELE_VERSION', "1.0.0");
 define ('ROSEMARY_VERSION', "1.0.1");
 define ('ROSEMARY_INSTANCES', 'SMART');
-define ('ROSEMARY_GIT', 'irtex-web/mirele');
 define ('MIRELE_URL', $_SERVER['REQUEST_SCHEME'] .'://'. $_SERVER['HTTP_HOST'] . explode('?', $_SERVER['REQUEST_URI'], 2)[0]);
 
 if (!wp_doing_ajax() and true) {
@@ -39,6 +38,8 @@ if (true == true) {
 }
 
 $include = function ($e=null){
+
+    include_once 'vendor/autoload.php';
 
     include_once 'core/function/fault_tolerance.php';
     include_once 'core/function/lorem.php';
@@ -130,6 +131,7 @@ woocommerce_manager ();
 bbpress_manager();
 
 global $rm;
+global $latte;
 global $mdata;
 global $mpackage;
 global $msafe;
@@ -143,6 +145,7 @@ global $mapps;
 global $mstyler;
 global $majax;
 
+$latte = new Latte\Engine;
 $mrouter = new MRouter;
 $rm = new RManager;
 $mdata = new MData;
@@ -163,7 +166,6 @@ $majax = new MAjax;
  * @version: 1.0.0
  * @package: Mirele
  */
-
 
 /**
  * Connection of all components that are displayed in
