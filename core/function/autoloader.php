@@ -30,6 +30,8 @@ function initialize_templates ($verify_signature=false) {
     global $rosemary_templates_autoload;
     global $msafe;
 
+    $ignore = ['cache'];
+
     if (empty($rosemary_templates_autoload)) {
         $rosemary_templates_autoload = array();
     }
@@ -42,32 +44,40 @@ function initialize_templates ($verify_signature=false) {
         foreach($objects as $name => $object){
             if (is_file($name) and mime_content_type($name) == 'text/x-php') {
 
+                foreach ($ignore as $_) {
+                    if (strpos($name, $_) !== false) {
+                        continue;
+                    }
+                }
+
                 $code = MFile::read($name);
 
                 preg_match('/Rosemary Template: (.+?);/', $code, $COMMENT_TEMPLATE);
 
-                if (isset($COMMENT_TEMPLATE[1]) and !empty($COMMENT_TEMPLATE[1]) and empty($rosemary_templates_autoload) or !in_array($COMMENT_TEMPLATE[1], $rosemary_templates_autoload)) {
-                    $rosemary_templates_autoload[$COMMENT_TEMPLATE[1]] = (object) array(
-                        'name' => $COMMENT_TEMPLATE[1],
-                        'filename' => $name
-                    );
+                if (count($COMMENT_TEMPLATE) > 0 ) {
+                    if (isset($COMMENT_TEMPLATE[1]) and !empty($COMMENT_TEMPLATE[1]) and empty($rosemary_templates_autoload) or !in_array($COMMENT_TEMPLATE[1], $rosemary_templates_autoload)) {
+                        $rosemary_templates_autoload[$COMMENT_TEMPLATE[1]] = (object) array(
+                            'name' => $COMMENT_TEMPLATE[1],
+                            'filename' => $name
+                        );
 
-                    if ($msafe->verify_source_code($name, $code)) {
+                        if ($msafe->verify_source_code($name, $code)) {
 
-                        if ($verify_signature and $msafe->verify_signature($name, $code)) {
-                            try {
-                                include_once $name;
-                            } catch (\Exception $e) {
-                                echo $COMMENT_TEMPLATE[1] . ' => ',  $e->getMessage(), "\n";
+                            if ($verify_signature and $msafe->verify_signature($name, $code)) {
+                                try {
+                                    include_once $name;
+                                } catch (\Exception $e) {
+                                    echo $COMMENT_TEMPLATE[1] . ' => ',  $e->getMessage(), "\n";
+                                }
+                            } elseif (!$verify_signature) {
+                                try {
+                                    include_once $name;
+                                } catch (\Exception $e) {
+                                    echo $COMMENT_TEMPLATE[1] . ' => ',  $e->getMessage(), "\n";
+                                }
                             }
-                        } elseif (!$verify_signature) {
-                            try {
-                                include_once $name;
-                            } catch (\Exception $e) {
-                                echo $COMMENT_TEMPLATE[1] . ' => ',  $e->getMessage(), "\n";
-                            }
+
                         }
-
                     }
                 }
 
@@ -77,6 +87,12 @@ function initialize_templates ($verify_signature=false) {
     } else {
 
         foreach (glob(ROSEMARY_TEMPLATES_DIR . '/*/*.php') as $r) {
+
+            foreach ($ignore as $_) {
+                if (strpos($r, $_) !== false) {
+                    continue;
+                }
+            }
 
             $code = MFile::read($r);
             preg_match('/Rosemary Template: (.+?);/', $code, $matches);

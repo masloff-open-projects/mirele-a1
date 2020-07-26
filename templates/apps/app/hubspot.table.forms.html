@@ -1,0 +1,26 @@
+<table class="wp-list-table widefat fixed striped posts">
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Form Type</th>
+        <th>The form is published</th>
+        <th>Version</th>
+    </tr>
+    </thead>
+    <tbody>
+
+    {% for i in forms %}
+
+    <tr>
+        <th> <b> {{i.guid|default('Unknown')}} </b> </th>
+        <th> {{i.name|default('Unknown')}} </th>
+        <th> {{i.formType|default('Default')}} </th>
+        <th> {{i.isPublished == 1 ? 'Yes' : 'No'}} </th>
+        <th> {{i.editVersion|default('Default')}} </th>
+    </tr>
+
+    {% endfor %}
+
+    </tbody>
+</table>

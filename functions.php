@@ -39,7 +39,9 @@ if (true == true) {
 
 $include = function ($e=null){
 
-    include_once 'vendor/autoload.php';
+    if (!wp_doing_ajax()) {
+        include_once 'vendor/autoload.php';
+    }
 
     include_once 'core/function/fault_tolerance.php';
     include_once 'core/function/lorem.php';
@@ -84,32 +86,17 @@ $include = function ($e=null){
     include_once 'core/function/resize.php';
     include_once 'core/function/setups.php';
 
-    include_once 'core/ui/rosemary/market.php';
-    include_once 'core/ui/rosemary/market/template/package.php';
-    include_once 'core/ui/rosemary/market/manager.php';
-    include_once 'core/ui/rosemary/market/loader.php';
-    include_once 'core/ui/rosemary/market/installzip.php';
-    include_once 'core/ui/rosemary/market/installurl.php';
-    include_once 'core/ui/rosemary/market/repositorymanager.php';
-    include_once 'core/ui/rosemary/pages/blocks.php';
-    include_once 'core/ui/rosemary/pages/pages.php';
     include_once 'core/ui/rosemary/demos/template/demo.php';
 
     include_once 'core/ui/mirele/integration/hubspot/hubspot_login.php';
     include_once 'core/ui/mirele/integration/hubspot/hubspot_main.php';
     include_once 'core/ui/mirele/integration/hubspot/hubspot_settings.php';
 
-    include_once 'core/ui/mirele/integration/mailchimp/mailchimp_main.php';
-    include_once 'core/ui/mirele/integration/mailchimp/mailchimp_login.php';
-
     include_once 'core/ui/mirele/center/center_home.php';
     include_once 'core/ui/mirele/center/warnings.php';
     include_once 'core/ui/mirele/center/settings_theme.php';
     include_once 'core/ui/mirele/access/main.php';
     include_once 'core/ui/mirele/interrogation/main.php';
-    include_once 'core/ui/mirele/apps/template/app.php';
-    include_once 'core/ui/mirele/apps/app.php';
-    include_once 'core/ui/mirele/apps/main.php';
     include_once 'core/ui/mirele/robotstxt/main.php';
     include_once 'core/ui/wordpress/comments.php';
     include_once 'core/ui/wordpress/comment-form.php';
@@ -131,7 +118,7 @@ woocommerce_manager ();
 bbpress_manager();
 
 global $rm;
-global $latte;
+global $twig;
 global $mdata;
 global $mpackage;
 global $msafe;
@@ -145,7 +132,39 @@ global $mapps;
 global $mstyler;
 global $majax;
 
-$latte = new Latte\Engine;
+if (!wp_doing_ajax()) {
+    $twig_loader = new \Twig\Loader\FilesystemLoader(ROSEMARY_TEMPLATES_DIR);
+    $twig = new \Twig\Environment($twig_loader, [
+        'cache' => false,
+//    'cache' => ROSEMARY_TEMPLATES_DIR . '/cache',
+    ]);
+
+    class RosemaryUtiils {
+
+        function version () {
+            return "utils-1.0.0";
+        }
+
+        #
+        function settings_fields ($id='') {
+            return settings_fields($id);
+        }
+
+        #
+        function date_format ($time='', $format="Y/m/d H:i:s") {
+            return date_format(date_create($time), $format);
+        }
+
+        #
+        function get_option ($option="", $default=false) {
+            return get_option($option, $default);
+        }
+
+    }
+
+    $twig->addGlobal('utils', new RosemaryUtiils());
+}
+
 $mrouter = new MRouter;
 $rm = new RManager;
 $mdata = new MData;
@@ -585,6 +604,7 @@ add_action ('admin_menu', function () {
             'form' => $e
         ));
     });
+
     $mpager->register('mirele_center', [
         function ($e=null) {
             MPager::ui_tabs([
@@ -618,18 +638,52 @@ add_action ('admin_menu', function () {
             }
         }
     ]);
-    $mpager->register('mirele_apps', [
-        'ui_mirele_apps'
-    ]);
-    $mpager->register('rosemary_render_editor', [
-        function () {
-            if ($_GET['page_id'])  {
-                do_action('rosemary_render_editor_blocks', $_GET['page_id']);
-            } else {
-                do_action('rosemary_render_editor_pages');
-            }
-        }
-    ]);
+    
+    # Apps page routing
+    $mpager->register('mirele_apps', [function() {
+
+        global $mapps;
+        do_action('rosemary_render_app_start');
+        MPager::render('apps/app.html', array(
+            "app_exists" => $mapps->app_exists($_GET['app']),
+            "app_id" => $_GET['app'],
+            "app_content" => $mapps->app_exists($_GET['app']) ? $mapps->app($_GET['app']) : "App not execute"
+        ));
+        do_action('rosemary_render_app_end');
+
+    }],  function () { return isset($_GET['app']) and !empty($_GET['app']); });
+    $mpager->register('mirele_apps', [function() {
+
+        global $mapps;
+        do_action('rosemary_render_apps_start');
+        MPager::render('apps/main.html', array("apps" => $mapps->all()));
+        do_action('rosemary_render_apps_end');
+
+    }],  function () { return !isset($_GET['app']); });
+
+    # Editor page routing
+    $mpager->register('rosemary_render_editor', [function() {
+
+        global $rm;
+        do_action('rosemary_render_pages_list_start');
+        MPager::render('editor/main.html', array("markup" => $rm->markup()));
+        do_action('rosemary_render_pages_list_end');
+
+    }],  function () { return !isset($_GET['page_id']); });
+    $mpager->register('rosemary_render_editor', [function() {
+
+        global $rm;
+
+        initialize_templates(true);
+        rosemary_page($_GET['page_id'], 'depressed');
+
+        MPager::render('editor/editor.html', array(
+            'id' => $_GET['page_id'],
+            'get_page' => $rm->get_page($_GET['page_id'])
+        ));
+
+    }],  function () { return isset($_GET['page_id']); });
+
     $mpager->register('rosemary_render_demos', [
         function ($e=null) {
             MPager::ui_tabs([

@@ -1,0 +1,35 @@
+<div class="plugin-card">
+    <div class="plugin-card-top">
+        <div class="name column-name">
+            <h3>
+                <span class="thickbox">
+                    {{app.meta.title|default('Unknown title')}}
+                    <img src="{{app.meta.picture|default('Unknown title')}}" class="plugin-icon icon-for-search-block-repo" loading="lazy">
+                </span>
+            </h3>
+        </div>
+        <div class="action-links">
+            <ul class="plugin-action-buttons">
+                <li>
+                    <a class="install-now button aria-button-if-js" href="{{url_without_params}}?page={{page_id}}&app={{app.app_id}}" role="button">Open</a>
+                </li>
+            </ul>
+        </div>
+        <div class="desc column-description">
+            <p>{{app.meta.description|default('Unknown description')}}</p>
+            <p class="authors">
+                <cite>By
+                    <span>
+                        <a href="javascript:;">{{app.meta.author|default('iRTEX')}}</a>
+                    </span>
+                </cite>
+            </p>
+        </div>
+    </div>
+    <div class="plugin-card-bottom">
+        <div class="column-updated">
+            <strong>Version</strong>
+            {{app.meta.version|default('1.0.0')}}
+        </div>
+    </div>
+</div>

@@ -1,0 +1,47 @@
+<table class="wp-list-table widefat fixed striped posts">
+
+    <thead>
+        <tr>
+            <th>Page ID</th>
+            <th>Name</th>
+            <th>Blocks count</th>
+            <th>Shortcode</th>
+        </tr>
+    </thead>
+
+    <tbody>
+
+        {% for page, body in markup %}
+            <tr>
+                <th>
+                    <b> {{page}} </b>
+
+                    <p class="row-actions">
+                        <span class="view">
+                            <a href="{{url_without_params}}?page={{page_id}}&page_id={{page}}">Edit page</a>
+                        </span>
+
+
+                        <span class="view"> |
+                            <a href="javascript:;" data-action="create_wordpress_page" page="{{page}}">Create WordPress Page</a>
+                        </span>
+
+                        <span class="trash"> |
+                            <a href="javascript:;" data-action="remove_page" page="{{page}}">Remove page</a>
+                        </span>
+
+                    </p>
+                </th>
+                <th> {{body.page.id}} </th>
+                <th> {{body|length - 1}} </th>
+                <th>
+                    <code>
+                        [rosemary page="{{body.page.id}}"]
+                    </code>
+                </th>
+            </tr>
+        {% endfor %}
+
+    </tbody>
+
+</table>

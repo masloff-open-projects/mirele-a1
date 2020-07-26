@@ -1,0 +1,26 @@
+<table class="wp-list-table widefat fixed striped posts">
+    <thead>
+    <tr>
+        <th>VID</th>
+        <th>Added at</th>
+        <th>Last Name</th>
+        <th>First Name</th>
+        <th>Is Contact</th>
+    </tr>
+    </thead>
+    <tbody>
+
+    {% for i in contacts %}
+
+    <tr>
+        <th><b> {{i.vid}} </b></th>
+        <th> {{i.properties.lastmodifieddate.value / 1000|round}} </th>
+        <th> {{i.properties.lastname.value|default('Unknown')}} </th>
+        <th> {{i.properties.firstname.value|default('Unknown')}} </th>
+        <th> {{i.is-contact == 1 ? 'Yes' : 'No'}} </th>
+    </tr>
+
+    {% endfor %}
+
+    </tbody>
+</table>

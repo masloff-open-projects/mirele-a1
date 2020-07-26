@@ -42,8 +42,16 @@ class MPager
      * @param null $content
      */
 
-    public function register ($page='null', $content=null) {
-        $this->dependencies[$page][] = $content;
+    public function register ($page='null', $content=null, $condition=null) {
+        if (is_callable($condition)) {
+            if (call_user_func($condition) == true) {
+                $this->dependencies[$page][] = $content;
+            }else{
+                return false;
+            }
+        } else {
+            $this->dependencies[$page][] = $content;
+        }
     }
 
 
@@ -566,25 +574,26 @@ class MPager
 
     }
 
-    static public function render ($file="", $params=array(), $toString=false) {
+    static public function render ($file="", $params=array(), $echo=true) {
 
-        global $latte;
+        global $twig;
 
         if (file_exists(ROSEMARY_TEMPLATES_DIR . '/' . $file)) {
 
             $params = array_merge(
                 array (
-                    'source' => MIRELE_SOURCE_DIR
+                    'source' => MIRELE_SOURCE_DIR,
+                    'url_without_params' => MIRELE_URL,
+                    'page_id' => isset($_GET['page']) ? $_GET['page'] : false,
                 ),
                 $params
             );
 
-            if ($toString) {
-                return $latte->renderToString(ROSEMARY_TEMPLATES_DIR . '/' . $file, $params);
+            if ($echo) {
+                echo $twig->render($file, $params);
             } else {
-                return $latte->render(ROSEMARY_TEMPLATES_DIR . '/' . $file, $params);
+                return $twig->render($file, $params);
             }
-
         } else {
             return false;
         }

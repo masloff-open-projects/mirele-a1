@@ -1,0 +1,125 @@
+<table class="wp-list-table widefat fixed striped posts table-block wp-rosemary-table" data-action="table_for_block" block="{{body.block.id}}" block-name="{{body.block.id|split('@')[0]}}">
+
+    <form method="POST" data-action="edit_block">
+
+        <thead>
+
+        <tr>
+            <th width="160px"> <b> {{body.block.id|split('@')[0]|replace({'_': ' '})|capitalize}} </b>
+
+                {% if block.options != empty %}
+                -
+                <a href="javascript:;" data-action="edit_block_options" block="<?php echo $body['block']['id']; ?>">
+                    edit
+                </a>
+                {% endif %}
+
+
+            </th>
+            <th>Value</th>
+            <th width="140px">Action</th>
+            <th width="140px">Visible</th>
+        </tr>
+
+        </thead>
+
+        <tbody>
+
+        {% for element in body.elements %}
+
+        <tr>
+
+            <th class="id-element-rosemary-block">
+
+                <i>{{ element.element_id|split(':')[2]|replace({'_': ' '})|capitalize }}</i>
+
+                {% if element.element_options_object != "[]" %}
+
+                    <p class="row-actions">
+                        <span class="view">
+                            <a href="javascript:;" data-action="edit_element_options" page="{{body.page.id}}" element_id="{{element.element_id}}">Edit options</a>
+                        </span>
+                    </p>
+
+                {% endif %}
+
+            </th>
+
+            <th class="blocks-input">
+
+                {% if element.element_type == 'src' %}
+
+                    <input type="hidden" name="{{element.element_id}}/value"  value="{{element.element_value}}" readonly class="wp-rosemary-any-input">
+
+                    {% for img in element.element_value|split('|') %}
+
+                        {% if img %}
+
+                            <button class="button" disabled> {{img}} </button>
+
+                        {% endif %}
+
+                    {% endfor %}
+
+                {% elseif element.element_type == 'int' %}
+
+                    <input type="number" name="{{element.element_id}}/value"  value="{{element.element_value}}" class="wp-rosemary-any-input">
+
+                {% else %}
+
+                    <input type="text" name="{{element.element_id}}/value"  value="{{element.element_value}}" class="wp-rosemary-any-input">
+
+                {% endif %}
+
+            </th>
+
+            <th class="wp-rosemary-table-actions">
+
+                {% if element.element_type == 'src' %}
+
+                    <a class="button button-primary" href="javascript:;" data-action="media" for_name="{{element.element_id}}/value">Select Media</a>
+
+                {% else %}
+
+                    <a href="javascript:;" class="button-primary" data-action="html_edit" for_name="{{element.element_id}}/value">HTML</a>
+                    <a href="javascript:;" class="button-primary" data-action="pretty_text" for_name="{{element.element_id}}/value">Pretty</a>
+
+                {% endif %}
+
+            </th>
+
+            <th>
+                <label>
+
+                    {% if element.element_visible %}
+                        <input type="checkbox" value="1" name="{{element.element_id}}/visible" checked> Show element
+                    {% else %}
+                        <input type="checkbox" value="1" name="{{element.element_id}}/visible"> Show element
+                    {% endif %}
+
+                </label>
+            </th>
+
+        </tr>
+
+        {% endfor %}
+
+        </tbody>
+
+        <tfoot>
+            <tr>
+                <th colspan="4">
+                    <div class="table-block-manage">
+                        <div>
+                            <input type="hidden" value="editor_save_block" name="action">
+                            <a class="button-secondary" href="javascript:;" data-action="remove_block" block="<?php echo $body['block']['id']; ?>">Remove block</a>
+                            <input type="submit" value="Save block" class="button button-primary" style="float: right;">
+                        </div>
+                    </div>
+                </th>
+            </tr>
+        </tfoot>
+
+    </form>
+
+</table>

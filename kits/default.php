@@ -761,118 +761,15 @@ add_action('init', function() {
             global $mrouter;
 
             if (get_option('mrli_hs_ajax_table', false)) {
-                MPager::ui_part ('mui_hubspot_contacts', function () {
-
-                    ?>
-
-                    <div class="root">
-
-                        <h3>Contacts list</h3>
-
-                        <table class="wp-list-table widefat fixed striped posts">
-                            <thead>
-                            <tr>
-                                <th>VID</th>
-                                <th>Added at</th>
-                                <th>Last Name</th>
-                                <th>First Name</th>
-                                <th>Is Contact</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-
-                            <?php foreach (MIHubSpot::contacts(get_option('mrltkn_hs', false), 10)->contacts as $list): ?>
-                                <tr>
-                                    <th><b> <?php echo $list->vid; ?> </b></th>
-                                    <th> <?php echo date("Y/m/d H:i:s", $list->properties->lastmodifieddate->value / 1000); ?> </th>
-                                    <th> <?php echo isset($list->properties->lastname->value) ? $list->properties->lastname->value : 'None'; ?> </th>
-                                    <th> <?php echo isset($list->properties->firstname->value) ? $list->properties->firstname->value : 'None'; ?> </th>
-                                    <th> <?php echo ((array)$list)['is-contact'] == 1 ? 'Yes' : 'No' ?> </th>
-                                </tr>
-                            <?php endforeach; ?>
-
-                            </tbody>
-                        </table>
-
-                    </div>
-
-                    <?php
-
-                });
-                MPager::ui_part ('mui_hubspot_forms', function () {
-
-                    ?>
-
-                    <div class="root">
-
-                        <h3>Forms</h3>
-
-                        <table class="wp-list-table widefat fixed striped posts">
-                            <thead>
-                            <tr>
-                                <th>ID</th>
-                                <th>Name</th>
-                                <th>Form Type</th>
-                                <th>The form is published</th>
-                                <th>Version</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-
-                            <?php foreach (MIHubSpot::forms(get_option('mrltkn_hs', false), 10) as $list): ?>
-                                <tr>
-                                    <th><b> <?php echo $list->guid; ?> </b></th>
-                                    <th> <?php echo $list->name; ?> </th>
-                                    <th> <?php echo $list->formType; ?> </th>
-                                    <th> <?php echo $list->isPublished == 1 ? 'Yes' : 'No'; ?> </th>
-                                    <th> <?php echo $list->editVersion; ?> </th>
-                                </tr>
-                            <?php endforeach; ?>
-
-                            </tbody>
-                        </table>
-
-                    </div>
-
-                    <?php
-
-                });
-                MPager::ui_part ('mui_hubspot_tickets', function () {
-
-                    ?>
-
-                    <div class="root">
-
-                        <h3>Tickets</h3>
-
-                        <table class="wp-list-table widefat fixed striped posts">
-                            <thead>
-                            <tr>
-                                <th>ID</th>
-                                <th>Created At</th>
-                                <th>Title</th>
-                                <th>Content</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-
-                            <?php foreach (MIHubSpot::tickets(get_option('mrltkn_hs', false))->objects as $list): ?>
-                                <tr>
-                                    <th><b> <?php echo $list->objectId; ?> </b></th>
-                                    <th> <?php echo date("Y/m/d H:i:s", $list->properties->subject->timestamp / 1000); ?> </th>
-                                    <th> <?php echo isset($list->properties->subject->value) ? mb_strimwidth($list->properties->subject->value, 0, 128, "...") : 'None'; ?> </th>
-                                    <th> <?php echo isset($list->properties->content->value) ? mb_strimwidth($list->properties->content->value, 0, 128, "...") : 'None'; ?> </th>
-                                </tr>
-                            <?php endforeach; ?>
-
-                            </tbody>
-                        </table>
-
-                    </div>
-
-                    <?php
-
-                });
+                MPager::ui_part ('mui_hubspot_contacts', function () { MPager::render('apps/app/hubspot.table.contacts.html', array(
+                    'contacts' => MIHubSpot::contacts(get_option('mrltkn_hs', false), 10)->contacts
+                )); });
+                MPager::ui_part ('mui_hubspot_forms', function () { MPager::render('apps/app/hubspot.table.forms.html', array(
+                    'forms' => MIHubSpot::forms(get_option('mrltkn_hs', false), 10)
+                )); });
+                MPager::ui_part ('mui_hubspot_tickets', function () { MPager::render('apps/app/hubspot.table.tickets.html', array(
+                    'tickets' => MIHubSpot::tickets(get_option('mrltkn_hs', false))->objects
+                )); });
             }
 
             $mrouter->register("app_kristen_gallery", 'css', MIRELE_SOURCE_DIR . '/css/admin/kristen.css');
@@ -927,6 +824,7 @@ add_action('init', function() {
                 'picture' => MIRELE_SOURCE_DIR . '/img/apps/kristen_icon.png'
             ));
 
+            # Hubspot app
             $mapps->register('hubspot', function ($e=null) {
 
                 settings_fields('mirele_web_integrate');
@@ -957,13 +855,18 @@ add_action('init', function() {
                 if (get_option('mrltkn_hs', false)) {
 
                     if (MPager::ui_current_tab()->id == 'main') {
-                        do_action('ui_mirele_integration_hubspot');
+                        MPager::render('apps/app/hubspot.main.html', array(
+                            'owners' => MIHubSpot::owners(get_option('mrltkn_hs', false)),
+                            'contacts' => MIHubSpot::contacts(get_option('mrltkn_hs', false), 10)->contacts,
+                            'forms' => MIHubSpot::forms(get_option('mrltkn_hs', false), 10),
+                            'tickets' => MIHubSpot::tickets(get_option('mrltkn_hs', false))->objects
+                        ));
                     } elseif (MPager::ui_current_tab()->id == 'settings') {
                         do_action('ui_mirele_integration_hubspot_settings');
                     }
 
                 } else {
-                    do_action('ui_mirele_integration_hubspot_login');
+                    MPager::render('apps/app/hubspot.login.html');
                 }
 
 
@@ -976,6 +879,8 @@ add_action('init', function() {
                 'picture' => MIRELE_SOURCE_DIR . '/img/apps/hubspot_icon.png'
             ));
 
+
+            # Mailchimp app
             $mapps->register('mailchimp', function ($e=null) {
 
                 settings_fields('mirele_web_integrate');
@@ -993,12 +898,12 @@ add_action('init', function() {
 
                 if (get_option('mrltkn_mc', false)) {
                     if (MPager::ui_current_tab()->id == 'main') {
-                        do_action('ui_mirele_mailchimp_main');
-                    } elseif (MPager::ui_current_tab()->id == 'settings') {
-                        do_action('ui_mirele_mailchimp_settings');
-                    }
+                        MPager::render('apps/app/mailchimp.main.html', array(
+                            'lists' => MIMailChimp::lists(get_option('mrltkn_mc'))->lists
+                        ));
+                    } elseif (MPager::ui_current_tab()->id == 'settings') {}
                 } else {
-                    do_action('ui_mirele_mailchimp_login');
+                    MPager::render('apps/app/mailchimp.login.html');
                 }
 
 
@@ -1010,6 +915,7 @@ add_action('init', function() {
                 'picture' => MIRELE_SOURCE_DIR . '/img/apps/mailchimp_icon.jpg'
             ));
 
+            # RobotsTXT app
             $mapps->register('robotstxt', function ($e=null) {
 
                 /**

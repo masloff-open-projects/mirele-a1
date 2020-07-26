@@ -212,7 +212,7 @@ function MAjax()
 
         $self_page = $_POST['page'];
 
-        initialize_templates();
+        initialize_templates(true);
 
         if (!rosemary_template($_POST['block'])) {
             die('template.no.display');
@@ -375,7 +375,7 @@ function MAjax()
 
         ajax_protect() or die();
 
-        initialize_templates();
+        initialize_templates(true);
 
         wp_send_json([
             'status' => 'success',
@@ -510,7 +510,7 @@ function MAjax()
 
         ajax_protect() or die();
 
-        initialize_templates();
+        initialize_templates(true);
 
         rosemary_page($_POST['page'], 'depressed');
 

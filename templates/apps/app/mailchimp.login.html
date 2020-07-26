@@ -1,0 +1,27 @@
+<div class="wrap">
+    <div class="root">
+
+        <hr class="wp-header-end">
+
+        <div class="integrate-body">
+
+            <img src="{{source}}/img/apps/mailchimp_icon.jpg" width="120px" class="app-icon">
+
+            <h1 class="app-title">MailChimp integration</h1>
+
+            <form method="post" enctype="multipart/form-data" action="options.php" id="app_mailchimp_auth">
+
+                {{utils.settings_fields('mirele_web_integrate_mc')}}
+
+                <input type="text" name="mrltkn_mc" placeholder="Token">
+
+                <input type="submit" value="Login to account" class="button-primary">
+
+            </form>
+
+            <a href="https://us17.admin.mailchimp.com/account/api/">Get token</a>
+
+        </div>
+
+    </div>
+</div>

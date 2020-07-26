@@ -196,6 +196,7 @@ class RManager {
                 }
 
                 $data->element_options = json_encode($data->element_options);
+                $data->element_options_object = $data->element_options;
 
                 $markup[$data->page_id][$data->block_index][$data->block_id]['elements'][$data->element_id] = $data;
                 $markup[$data->page_id][$data->block_index]['page']['id'] = $data->page_id;

@@ -36,7 +36,7 @@ rosemary_register('light_header_with_people', function ($event=null) {
                 ]); ?> </p>
 
                 <div class="margin-x-md">
-                    <a href="javascrip:;" class="text-300" target="_blank" rel="noopener noreferrer">
+                    <a href="javascript:;" class="text-300" target="_blank" rel="noopener noreferrer">
                         <?php echo $button ?> <i class="fas fa-chevron-right svg-icon-small"></i>
                     </a>
                 </div>

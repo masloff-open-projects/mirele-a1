@@ -1,0 +1,99 @@
+<div class="wrap">
+
+    <div class="wp-mrl-column-1">
+
+        <hr class="wp-header-end">
+
+        <div class="root wp-theme-section">
+            <div class="wrap wp-header-block">
+                <h3> {{owners[0].lastName}} </h3>
+                <p> {{owners[0].email}} </p>
+                <small> {{owners[0].isActive ? 'Active' : 'Deactivated'}} </small>
+            </div>
+        </div>
+
+        <br>
+
+        {% if utils.get_option('mrli_hs_ajax_table') %}
+
+            <div data-mpager-part="mui_hubspot_contacts">
+
+            </div>
+
+            <div data-mpager-part="mui_hubspot_forms">
+
+            </div>
+
+            <div data-mpager-part="mui_hubspot_tickets">
+
+            </div>
+
+        {% else %}
+
+            <div class="root">
+
+                <h3>Contacts list</h3>
+
+                {% include 'apps/app/hubspot.table.contacts.html' %}
+
+            </div>
+
+            <div class="root">
+
+                <h3>Forms</h3>
+
+                {% include 'apps/app/hubspot.table.forms.html' %}
+
+            </div>
+
+            <div class="root">
+
+                <h3>Tickets</h3>
+
+                {% include 'apps/app/hubspot.table.tickets.html' %}
+
+            </div>
+
+        {% endif %}
+
+
+        <hr>
+
+        <div>
+            <form action="" method="post">
+                <input type="submit" value="Log out of this account" class="button" name="action">
+            </form>
+        </div>
+
+    </div>
+
+    <div class="wp-mrl-column-2">
+
+        <div class="wp-mrl-box">
+            <div class="inner">
+
+                <h2>Welcome to HubSpot!</h2>
+
+                <p>You are in the administrative integration control panel.</p>
+                <p>Here you can configure the application and get the necessary statistics.</p>
+                <p>Integration manuals you can find in the knowledge base</p>
+
+                <h3>Resources</h3>
+                <ul>
+                    <li>
+                        <a href="https://irtex-web.github.io" target="_blank">
+                            <i aria-hidden="true" class="dashicons dashicons-external"></i> Documentation
+                        </a>
+                    </li>
+                </ul>
+
+            </div>
+            <div class="footer">
+                Thanks for choosing Mirele's HubSpot solution.
+            </div>
+        </div>
+
+    </div>
+
+
+</div>

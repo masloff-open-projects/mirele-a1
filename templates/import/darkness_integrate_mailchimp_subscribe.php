@@ -59,7 +59,7 @@ if (MIRELE_INTEGRATION_MAILCHIMP) {
     
     
             <div class="margin-x-md">
-                <a href="javascrip:;" class="button-dark" action="subscribe_to_news_mailchimp_do"> <?php echo $button ?> <i class="fas fa-chevron-right"></i> </a>
+                <a href="javascript:;" class="button-dark" action="subscribe_to_news_mailchimp_do"> <?php echo $button ?> <i class="fas fa-chevron-right"></i> </a>
             </div>
     
         </form>
