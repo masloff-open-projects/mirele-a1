@@ -1,11 +1,31 @@
 <?php
+/**
+ * Welcome to the source code
+ *
+ * ███╗   ███╗██╗██████╗ ███████╗██╗     ███████╗
+ * ████╗ ████║██║██╔══██╗██╔════╝██║     ██╔════╝
+ * ██╔████╔██║██║██████╔╝█████╗  ██║     █████╗
+ * ██║╚██╔╝██║██║██╔══██╗██╔══╝  ██║     ██╔══╝
+ * ██║ ╚═╝ ██║██║██║  ██║███████╗███████╗███████╗
+ * ╚═╝     ╚═╝╚═╝╚═╝  ╚═╝╚══════╝╚══════╝╚══════╝
+ *
+ *
+ * If you have any problems with the software,
+ * go to iRTEX official Envato account and find
+ * there a link to technical support.
+ *
+ * If you have suggestions or want to offer cooperation,
+ * you can write to Wire: @maslof_deals
+ *
+ * Memo to the developers:
+ * 1. GitHub is your friend and savior. Often make `git push`
+ * 2. More `If`
+ * 3. Document the code.
+ */
 
-defined( 'ABSPATH' ) or die();
+defined( 'ABSPATH' ) or die('Not defined ABSPATH');
 
 define('MIRELE_FORCED_DISABLE_ANALYSIS', false);
-define('MIRELE_SEND_ANALYSIS', get_option("mirele_send_analysis", "true") == "true" ? true : false);
-//define("MIRELE_ANALYSIS_IP", 'http://3.19.58.62:3000');
-define("MIRELE_ANALYSIS_IP", 'http://192.168.1.130:3000');
 define ('MIRELE_INTEGRATION_HUBSPOT', true);
 define ('MIRELE_INTEGRATION_MAILCHIMP', true);
 define ('ROSEMARY_CANVAS', 'canvas.php');
@@ -50,8 +70,6 @@ $include = function ($e=null){
     include_once 'core/function/size.php';
     include_once 'core/function/time.php';
 
-    include_once 'core/class/MAccount.php';
-    include_once 'core/class/MAnalytics.php';
     include_once 'core/class/MApps.php';
     include_once 'core/class/MCache.php';
     include_once 'core/class/MData.php';
@@ -538,7 +556,7 @@ add_action ('admin_menu', function () {
     (new RManager)->database_markup();
 
 
-    //$mrouter->register('admin', 'js', get_template_directory_uri() . '/source/js/jquery.min.js');
+    # $mrouter->register('admin', 'js', get_template_directory_uri() . '/source/js/jquery.min.js');
 
     $mrouter->register('admin', 'css', get_template_directory_uri() . '/source/css/admin/mgDialog.css');
     $mrouter->register('admin', 'css', get_template_directory_uri() . '/source/css/admin/admin.css');
@@ -552,7 +570,7 @@ add_action ('admin_menu', function () {
     $mrouter->register('admin_page_rosemary_render_editor', 'css', get_template_directory_uri() . '/source/css/admin/rosemary.css');
     $mrouter->register('admin_page_rosemary_render_editor', 'css', get_template_directory_uri() . '/source/css/admin/mgDialog.css');
 
-//    $mrouter->register('admin_page_rosemary_render_editor', 'js', get_template_directory_uri() . '/source/js/jquery.min.js');
+    # $mrouter->register('admin_page_rosemary_render_editor', 'js', get_template_directory_uri() . '/source/js/jquery.min.js');
     $mrouter->register('admin_page_rosemary_render_editor', 'js', array('admin' => get_template_directory_uri() . '/source/js/jquery-ui-dist.js'));
     $mrouter->register('admin_page_rosemary_render_editor', 'js', array('admin' => get_template_directory_uri() . '/source/js/karlin-dist.js'));
     $mrouter->register('admin_page_rosemary_render_editor', 'js', array('admin' => get_template_directory_uri() . '/source/js/admin/admin.js'));

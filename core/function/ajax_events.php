@@ -1,6 +1,10 @@
 <?php
 
 /**
+ * You are in the code of the handler of all Ajax.
+ */
+
+/**
  *
  */
 function MIHubSpot_ajax()
@@ -618,149 +622,6 @@ function MAjax()
         global $rm;
 
         wp_send_json(array_keys($rm->markup()));
-
-    });
-
-
-    /**
-     *  * A method is a method for development.
-     *  * It is not dangerous, but all developer functions can be disabled
-     *  * Used to get information about a file by name without .php
-     *
-     * @version: 1.0.0
-     * @package: Mirele
-     * @author: Mirele
-     */
-
-    add_action('wp_ajax_developer_get_file', function () {
-
-        ajax_protect() or die();
-
-        ROSEMARY_DEVELOPER_MODE or die();
-
-        $file = RDevelop::get_file($_POST['file']);
-
-        wp_send_json(array(
-            'content' => $file,
-            'content_base64' => base64_encode($file),
-        ));
-
-    });
-
-
-    /**
-     *  * A method is a method for development.
-     *  * It is not dangerous, but all developer functions can be disabled
-     *  * Used to save file
-     *
-     * @version: 1.0.0
-     * @package: Mirele
-     * @author: Mirele
-     */
-
-    add_action('wp_ajax_developer_write_file', function () {
-
-        ajax_protect() or die();
-
-        ROSEMARY_DEVELOPER_MODE or die();
-
-        if (isset($_POST['noRewrite'])) {
-
-            wp_send_json(array(
-                'status' => RDevelop::write_file_safe($_POST['file'], base64_decode($_POST['content']))
-            ));
-
-        } else {
-            wp_send_json(array(
-                'status' => RDevelop::write_file($_POST['file'], base64_decode($_POST['content']))
-            ));
-        }
-
-
-    });
-
-
-    /**
-     *  * Method for searching for blocks in the repository
-     *
-     * @version: 1.0.0
-     * @package: Mirele
-     * @author: Mirele
-     */
-
-    add_action('wp_ajax_market_search', function () {
-
-        ajax_protect() or die();
-
-        wp_send_json(MMarket::search('block', $_POST['search']));
-
-    });
-
-
-    /**
-     *  * Method for installing packages from outside sources
-     *
-     * @version: 1.0.0
-     * @package: Mirele
-     * @author: Mirele
-     */
-
-    add_action('wp_ajax_market_install', function () {
-
-        ajax_protect() or die();
-
-        $return = MAccount::execute(function () {
-            return MMarket::install_from_url($_POST['url']);
-        }, $_POST['password']);
-
-
-        switch ($return) {
-
-            case MAUTH_ERROR_PASSWORD:
-
-                die(json_encode(array(
-                    'mirele_auth' => 'error_password'
-                )));
-
-                break;
-
-            case MAUTH_ERROR_NOT_ACCOUNT:
-
-                die(json_encode(array(
-                    'mirele_auth' => 'no_registred'
-                )));
-
-                break;
-
-            default:
-
-                die(json_encode($return));
-
-                break;
-
-        }
-
-    });
-
-    /**
-     * Method for register new password
-     *
-     * @version: 1.0.0
-     * @package: Mirele
-     * @author: Mirele
-     */
-
-    add_action('wp_ajax_mirele_account_register', function () {
-
-        ajax_protect() or die();
-
-        if (!MAccount::is_registered()) {
-
-            wp_send_json(array(
-                'auth' => MAccount::register($_POST['password'])
-            ));
-
-        }
 
     });
 
