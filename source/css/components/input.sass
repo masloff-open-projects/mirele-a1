@@ -1,0 +1,32 @@
+// Input
+input
+  background: $UIBackground
+  border: $UIBorder $mainBorderColor
+  color: $UIColor
+  padding: $UIPadding
+  font: $UIFont
+  font-size: $UIFontSize
+  font-weight: normal
+  cursor: pointer
+  outline: none
+
+  &:-webkit-autofill,
+  &:-webkit-autofill:hover,
+  &:-webkit-autofill:focus
+    background: #E8F0FE
+
+  &::placeholder
+    color: #757575
+
+  &:focus,
+  &:active
+    outline: none
+
+  &:disabled,
+  &[disabled]
+    color: #A0A0A0
+
+  &:disabled:hover,
+  &[disabled]:hover
+    border: $UIBorder $mainBorderColor
+    cursor: not-allowed

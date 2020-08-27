@@ -761,13 +761,13 @@ add_action('init', function() {
             global $mrouter;
 
             if (get_option('mrli_hs_ajax_table', false)) {
-                MPager::ui_part ('mui_hubspot_contacts', function () { MPager::render('apps/app/hubspot.table.contacts.html', array(
+                MPager::ui_part ('mui_hubspot_contacts', function () { MPager::render('apps/app/hubspot.table.contacts.twig', array(
                     'contacts' => MIHubSpot::contacts(get_option('mrltkn_hs', false), 10)->contacts
                 )); });
-                MPager::ui_part ('mui_hubspot_forms', function () { MPager::render('apps/app/hubspot.table.forms.html', array(
+                MPager::ui_part ('mui_hubspot_forms', function () { MPager::render('apps/app/hubspot.table.forms.twig', array(
                     'forms' => MIHubSpot::forms(get_option('mrltkn_hs', false), 10)
                 )); });
-                MPager::ui_part ('mui_hubspot_tickets', function () { MPager::render('apps/app/hubspot.table.tickets.html', array(
+                MPager::ui_part ('mui_hubspot_tickets', function () { MPager::render('apps/app/hubspot.table.tickets.twig', array(
                     'tickets' => MIHubSpot::tickets(get_option('mrltkn_hs', false))->objects
                 )); });
             }
@@ -855,7 +855,7 @@ add_action('init', function() {
                 if (get_option('mrltkn_hs', false)) {
 
                     if (MPager::ui_current_tab()->id == 'main') {
-                        MPager::render('apps/app/hubspot.main.html', array(
+                        MPager::render('apps/app/hubspot.main.twig', array(
                             'owners' => MIHubSpot::owners(get_option('mrltkn_hs', false)),
                             'contacts' => MIHubSpot::contacts(get_option('mrltkn_hs', false), 10)->contacts,
                             'forms' => MIHubSpot::forms(get_option('mrltkn_hs', false), 10),
@@ -866,7 +866,7 @@ add_action('init', function() {
                     }
 
                 } else {
-                    MPager::render('apps/app/hubspot.login.html');
+                    MPager::render('apps/app/hubspot.login.twig');
                 }
 
 
@@ -898,12 +898,12 @@ add_action('init', function() {
 
                 if (get_option('mrltkn_mc', false)) {
                     if (MPager::ui_current_tab()->id == 'main') {
-                        MPager::render('apps/app/mailchimp.main.html', array(
+                        MPager::render('apps/app/mailchimp.main.twig', array(
                             'lists' => MIMailChimp::lists(get_option('mrltkn_mc'))->lists
                         ));
                     } elseif (MPager::ui_current_tab()->id == 'settings') {}
                 } else {
-                    MPager::render('apps/app/mailchimp.login.html');
+                    MPager::render('apps/app/mailchimp.login.twig');
                 }
 
 

@@ -9,7 +9,7 @@ function wp_setups()
         function navmenus()
         {
             register_nav_menus(array(
-                'header' => 'Header'
+                'navbar' => 'Navbar'
             ));
             register_nav_menus(array(
                 'footer' => 'Footer'

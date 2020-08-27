@@ -12,11 +12,70 @@
  * @package: Mirele
  */
 
-class MAjax
+namespace Mirele\AJAX;
+
+class Connector
 {
 
-    private $ajax = array();
+    /**
+     * The single object is stored in a static class field. This field is an array, so...
+     * how we let our Lonely have subclasses * All the elements of it.
+     * the arrays will be copies of specific subclasses of Single. Don't worry,
+     * we're about to get to know how it works
+     */
 
+    private static $instances = [];
+    private $ajax = [];
+
+
+    /**
+     * Loners should not be cloned.
+     */
+
+    protected function __clone() { }
+
+
+    /**
+     * Single units should not be recovered from lines.
+     *
+     * @throws Exception
+     */
+
+    public function __wakeup()
+    {
+        throw new Exception("Cannot unserialize a singleton.");
+    }
+
+
+    /**
+     * Сonstruct Single must always be hidden to prevent
+     * creating an object through the operator new.
+     */
+
+    protected function __construct() { }
+
+
+    /**
+     * It's a static method that controls access to a single instance. At .
+     * the first run, it creates an instance of a loner and puts it in *
+     * static field. On subsequent launches, it returns the object to the client,
+     * stored in a static field *
+     *
+     * This implementation allows you to extend the Singles class by saving everywhere
+     * only one copy of each subclass.
+     *
+     * @return mixed|static
+     */
+
+    public static function getInstance()
+    {
+        $cls = static::class;
+        if (!isset(self::$instances[$cls])) {
+            self::$instances[$cls] = new static();
+        }
+
+        return self::$instances[$cls];
+    }
 
     /**
      * The function registers the AJAX method.
@@ -61,4 +120,5 @@ class MAjax
             return false;
         }
     }
+
 }

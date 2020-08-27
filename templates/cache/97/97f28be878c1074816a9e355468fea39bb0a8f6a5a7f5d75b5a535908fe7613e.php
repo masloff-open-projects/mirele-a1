@@ -12,7 +12,7 @@ use Twig\Sandbox\SecurityNotAllowedFunctionError;
 use Twig\Source;
 use Twig\Template;
 
-/* editor/pages.html */
+/* editor/pages.twig */
 class __TwigTemplate_e2049c67e00d3be543e9eac004b328352a3c2f0cac09e60cc31ca1f5f76648e8 extends \Twig\Template
 {
     private $source;
@@ -91,7 +91,7 @@ class __TwigTemplate_e2049c67e00d3be543e9eac004b328352a3c2f0cac09e60cc31ca1f5f76
 
     public function getTemplateName()
     {
-        return "editor/pages.html";
+        return "editor/pages.twig";
     }
 
     public function getDebugInfo()
@@ -101,6 +101,6 @@ class __TwigTemplate_e2049c67e00d3be543e9eac004b328352a3c2f0cac09e60cc31ca1f5f76
 
     public function getSourceContext()
     {
-        return new Source("", "editor/pages.html", "/var/www/html/wp-content/themes/mirele-a1/templates/editor/pages.html");
+        return new Source("", "editor/pages.twig", "/var/www/html/wp-content/themes/mirele-a1/templates/editor/pages.twig");
     }
 }

@@ -1,0 +1,9 @@
+{% for key, crumb in breadcrumb %}
+
+    {% if breadcrumb|last == crumb %}
+        <a> {{ wp.e(crumb[0]) }} </a>
+    {% else %}
+        <a href="{{ wp.esc_url(crumb[1]) }}"> {{ wp.e(crumb[0]) }} </a>
+    {% endif %}
+
+{% endfor %}

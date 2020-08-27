@@ -1,0 +1,30 @@
+{
+    "15": {
+        "functions": {
+            "rosemary_register_element": {
+                "params": [
+                    {
+                        "name": "id"
+                    },
+                    {
+                        "name": "data"
+                    },
+                    {
+                        "name": "options"
+                    }
+                ],
+                "verify": 1598524278,
+                "pass": false
+            }
+        }
+    },
+    "24": {
+        "constants": {
+            "MIRELE_SOURCE_DIR": {
+                "value": "http:\/\/localhost\/wp-content\/themes\/mirele-a1\/source",
+                "verify": 1598524278,
+                "pass": false
+            }
+        }
+    }
+}

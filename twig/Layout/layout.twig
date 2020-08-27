@@ -1,0 +1,33 @@
+{{ wp.header }}
+
+<div class="container">
+    <div class="row">
+
+        {% if als == true %}
+
+            <div class="col-sm-4">
+                {{ Component('default_sidebar', {'name': lsbn}) }}
+            </div>
+
+        {% endif %}
+
+        <div class="col-sm-{{ (als == true and ars == true) ? '4' : ((als == true or ars == true) ? '8' : '12') }}">
+
+            {% block main %}
+
+            {% endblock %}
+
+        </div>
+
+        {% if ars == true %}
+
+            <div class="col-sm-4">
+                {{ Component('default_sidebar', {'name': rsbn}) }}
+            </div>
+
+        {% endif %}
+
+    </div>
+</div>
+
+{{ wp.footer }}

@@ -2,8 +2,8 @@
 
 /**
  * A script to initialize template objects.
- * It automatically checks the file for the presence of meta information in it
- * and if he considers it a template - loads into memory
+ * It automatically checks the file for the presence of meta information in it
+ * and if he considers it a template - loads into memory
  *
  * @author: Mirele
  * @version: 1.0.0.
@@ -13,7 +13,7 @@
 
 /**
  * Initialization function of all templates and connection
- * them to the system
+ * them to the system
  *
  * @author: Mirele
  * @version: 1.0.0

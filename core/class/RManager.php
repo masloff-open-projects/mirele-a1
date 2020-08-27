@@ -14,8 +14,8 @@ class RManager {
 
     /**
      * Get all the layout of blocks and components inside
-         * of each block. Decency is also provided,
-         * according to the order inside the visual editor
+         * of each block. Decency is also provided,
+         * according to the order inside the visual editor
      *
      * @version: 1.0.0
      * @executetime: 0.0021 s
@@ -45,8 +45,8 @@ class RManager {
 
     /**
      * Get all blocks in sorted form and with meta
-         * information is not a problem. Bridge function receives data with 'Markup'
-         * and wraps them in the desired wrapper
+         * information is not a problem. Bridge function receives data with 'Markup'
+         * and wraps them in the desired wrapper
      *
      * @version: 1.0.0
      * @executetime: 0.0019 s
@@ -80,8 +80,8 @@ class RManager {
 
     /**
      * Function for markup tables in a WordPress database.
-         * It creates a table if it is not in the database. Re-layout
-         * existing table is not possible
+         * It creates a table if it is not in the database. Re-layout
+         * existing table is not possible
      *
      * @version: 1.0.0
      * @executetime: 0.001 s
@@ -131,9 +131,9 @@ class RManager {
 
     /**
      * Function to delete a table with data.
-         *
-         * Attention! The function will delete the entire table, all data will be lost without the possibility
-         * recovery
+         *
+         * Attention! The function will delete the entire table, all data will be lost without the possibility
+         * recovery
      *
      * @version: 1.0.0
      */
@@ -151,9 +151,9 @@ class RManager {
 
     /**
      * Function for re-partitioning the database.
-         *
-         * Attention! Function FULLY DELETE TABLE and creates ABSOLUTELY WAY
-         * a new table, based on the actual markup database_markup ()
+         *
+         * Attention! Function FULLY DELETE TABLE and creates ABSOLUTELY WAY
+         * a new table, based on the actual markup database_markup ()
      *
      * @version: 1.0.0
      */
@@ -173,8 +173,8 @@ class RManager {
 
     /**
      * The absolute function of getting blocks inside a page by its identifier.
-         * If there is a task to correctly receive blocks, as implemented in the block editor
-         *
+         * If there is a task to correctly receive blocks, as implemented in the block editor
+         *
      * @version: 1.0.0
      * @executetime: 0.0012 s
      */
@@ -231,8 +231,8 @@ class RManager {
 
     /**
      * Function for changing block sequence number
-         * when displayed on the page
-         *
+         * when displayed on the page
+         *
      * @version: 1.0.0
      */
 
@@ -251,7 +251,7 @@ class RManager {
      * Function to remove block information from the database.
      * Attention! The template will not be deleted from the system’s memory,
      * it will only be deleted from the database
-         *
+         *
      * @version: 1.0.0
      */
 
@@ -273,10 +273,10 @@ class RManager {
 
     /**
      * Function to delete the entire page.
-         * Attention! The function will delete the entire page completely. She will stay
-         * in the system memory for some time, but all data will be deleted from
-         * Database
-         *
+         * Attention! The function will delete the entire page completely. She will stay
+         * in the system memory for some time, but all data will be deleted from
+         * Database
+         *
      * @version: 1.0.0
      */
 
@@ -296,8 +296,8 @@ class RManager {
     /**
      * Function to replace edit element.
      * As parameters, takes the ID of the element and
-         * A set of new parameters.
-         * Attention! Old parameters, if empty, will be overwritten by void
+         * A set of new parameters.
+         * Attention! Old parameters, if empty, will be overwritten by void
      *
      * @version: 1.0.0
      */
@@ -331,10 +331,10 @@ class RManager {
 
     /**
      * Function to update item options.
-         * Attention! All old options will also be overwritten! All new
-         * the object that was transferred will be recorded as new,
-         * not editing untouched old options if they were not transferred
-         * in the facility
+         * Attention! All old options will also be overwritten! All new
+         * the object that was transferred will be recorded as new,
+         * not editing untouched old options if they were not transferred
+         * in the facility
      *
      * @version: 1.0.0
      */

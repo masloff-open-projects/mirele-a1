@@ -2,8 +2,8 @@
 
 /**
  * This script is responsible for storing
- * data inside WP. It registers settings, allows you to store a small amount of data
- * inside WP global variables
+ * data inside WP. It registers settings, allows you to store a small amount of data
+ * inside WP global variables
  *
  * @author: Mirele
  * @version: 1.0.0

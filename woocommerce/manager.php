@@ -2,9 +2,9 @@
 
 /**
  * Script to manage all the functions of WooCommerce
- * in the Mirele template. He is responsible for the download priorities,
- * for download areas, for security, for initialization of theme plugins for
- * the shops
+ * in the Mirele template. He is responsible for the download priorities,
+ * for download areas, for security, for initialization of theme plugins for
+ * the shops
  * 
  * @author: Mirele
  * @version: 1.0.0
@@ -82,7 +82,7 @@ function woocommerce_manager () {
 
             /**
              * If HubSpot integration is enabled, then
-             * it needs to be done by hooks
+             * it needs to be done by hooks
              * 
              * @author: Mirele
              * @package: Mirele
@@ -261,9 +261,9 @@ function woocommerce_manager () {
 
         /**
          * All events that must be completed taking into account
-         * Activation of the e-commerce plugin is written in this block.
-         * As the main event recorder internal system
-         * WooCommerce stands for init.php.
+         * Activation of the e-commerce plugin is written in this block.
+         * As the main event recorder internal system
+         * WooCommerce stands for init.php.
          * 
          * @version: 1.0.0
          */
@@ -275,9 +275,9 @@ function woocommerce_manager () {
     
             /**
              * Some products need to work from outside,
-             * using AJAX, Karlin <JQuery, etc. to
-             * Deliver product information to Frontend, need a method,
-             * described below
+             * using AJAX, Karlin <JQuery, etc. to
+             * Deliver product information to Frontend, need a method,
+             * described below
              * 
              * @version: 1.0.0
              */
@@ -322,7 +322,7 @@ function woocommerce_manager () {
 
             /**
              * Squeaks to remove the product from the basket.
-             * Originally created to manage FastCart
+             * Originally created to manage FastCart
              * 
              * @version: 1.0.0
              */
@@ -360,11 +360,11 @@ function woocommerce_manager () {
             /**
              * Function for receiving goods for FastCart.
              * 
-             * Due to the fact that the FastCart plugin is absolutely integrated
-             * to the Mirele WooCommerce subsystem, all functions for the plugin
-             * it is prescribed exactly inside the core of the subsystem, and not in the zone
-             * plugins. Perhaps FastCart will be cut out of the kernel
-             * and moved to plugins in version 1.2, but this is not accurate information.
+             * Due to the fact that the FastCart plugin is absolutely integrated
+             * to the Mirele WooCommerce subsystem, all functions for the plugin
+             * it is prescribed exactly inside the core of the subsystem, and not in the zone
+             * plugins. Perhaps FastCart will be cut out of the kernel
+             * and moved to plugins in version 1.2, but this is not accurate information.
              *
              * @version: 1.0.0
              */
@@ -615,11 +615,11 @@ function woocommerce_manager () {
     
         /**
          * If WooCommerce is not installed or
-         * not activated, a notification will be displayed in the admin panel
-         * that you need to install or activate WooCommerce.
-         *
-         * Also, all events that must be completed if WooCommerce is disabled
-         * must be specified in this block.
+         * not activated, a notification will be displayed in the admin panel
+         * that you need to install or activate WooCommerce.
+         *
+         * Also, all events that must be completed if WooCommerce is disabled
+         * must be specified in this block.
          *
          * @version: 1.0.0
          */

@@ -1,0 +1,32 @@
+// Button
+button
+  background: $UIBackground
+  border: $UIBorder $mainBorderColor
+  color: $UIColor
+  padding: $UIPadding
+  font: $UIFont
+  font-size: $UIFontSize
+  font-weight: normal
+  cursor: pointer
+  outline: none
+
+  &:hover
+    border: $UIBorder $mainHoverBorderColor
+
+  &:active
+    background: rgb(233, 234, 234)
+    color: #171616
+
+
+  &:focus,
+  &:active
+    outline: none
+
+  &:disabled,
+  &[disabled]
+    color: #A0A0A0
+
+  &:disabled:hover,
+  &[disabled]:hover
+    border: $UIBorder $mainBorderColor
+    cursor: not-allowed

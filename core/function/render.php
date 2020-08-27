@@ -2,10 +2,10 @@
 
 /**
  * The script responsible for rendering the page.
- * Data from render functions is transferred to
- * Shortcodes, on the main page, if necessary.
- *
- * So its render can be displayed in a variable
+ * Data from render functions is transferred to
+ * Shortcodes, on the main page, if necessary.
+ *
+ * So its render can be displayed in a variable
  *
  * @author: Mirele
  * @version: 1.0.0
@@ -15,8 +15,8 @@
 
 /**
  * Register a template in the system. Based on registered
- * The final page will be generated through this template function.
- * Patterns are not stored in the database.
+ * The final page will be generated through this template function.
+ * Patterns are not stored in the database.
  *
  * * Attention! The function does NOT check if there is a template function passed to the registrar as an attribute
  *
@@ -46,8 +46,8 @@ function rosemary_template ($id=null, $body=null, $priority='classic') {
             /**
              * Outputs a template render to the main thread.
              * Using the function is not recommended for
-                     * registrar processing, since the screen will be
-                     * filled with template.
+                     * registrar processing, since the screen will be
+                     * filled with template.
              */
 
             case 'classic':
@@ -60,8 +60,8 @@ function rosemary_template ($id=null, $body=null, $priority='classic') {
             /**
              * Suppression of render output.
              * Vanimanie! It is not recommended to use the function
-                     * without acute need and with the possibility of getting a conclusion
-                     * to the main thread
+                     * without acute need and with the possibility of getting a conclusion
+                     * to the main thread
              */
 
             case 'depressed':
@@ -110,8 +110,8 @@ function rosemary_template ($id=null, $body=null, $priority='classic') {
 
 /**
  * Function for rendering a page based on
- * "Page Collection" data and database block data
- *
+ * "Page Collection" data and database block data
+ *
  * @author: Mirele
  * @version: 1.0.0
  * @package: Mirele
@@ -146,8 +146,8 @@ function rosemary_page ($page_id='null', $priority='classic') {
         /**
          * Outputs a template render to the main thread.
          * Using the function is not recommended for
-                 * registrar processing, since the screen will be
-                 * filled with template.
+                 * registrar processing, since the screen will be
+                 * filled with template.
          */
 
         case 'classic':
@@ -160,8 +160,8 @@ function rosemary_page ($page_id='null', $priority='classic') {
         /**
          * Suppression of render output.
          * Vanimanie! It is not recommended to use the function
-                 * without acute need and with the possibility of getting a conclusion
-                 * to the main thread
+                 * without acute need and with the possibility of getting a conclusion
+                 * to the main thread
          */
 
         case 'depressed':

@@ -16,31 +16,13 @@
  * @see         woocommerce_breadcrumb()
  */
 
-if ( ! defined( 'ABSPATH' ) ) {
-	exit;
+defined('ABSPATH') || exit;
+
+# Verify and correct the virtual environment
+if (!isset($breadcrumb)) {
+    global $breadcrumb;
 }
 
-if ( ! empty( $breadcrumb ) ) {
-
-	echo $wrap_before;
-
-	foreach ( $breadcrumb as $key => $crumb ) {
-
-		echo $before;
-
-		if ( ! empty( $crumb[1] ) && sizeof( $breadcrumb ) !== $key + 1 ) {
-			echo '<a href="' . esc_url( $crumb[1] ) . '">' . esc_html( $crumb[0] ) . '</a>';
-		} else {
-			echo esc_html( $crumb[0] );
-		}
-
-		echo $after;
-
-		if ( sizeof( $breadcrumb ) !== $key + 1 ) {
-			echo '  <i class="fas fa-angle-right woo-breadcrumb"></i>  ';
-		}
-	}
-
-	echo $wrap_after;
-
-}
+\Mirele\TWIG::Render('woocommerce/breadcrumb', [
+    'breadcrumb' => $breadcrumb
+]);

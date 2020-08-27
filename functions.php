@@ -14,8 +14,6 @@
  * go to iRTEX official Envato account and find
  * there a link to technical support.
  *
- * If you have suggestions or want to offer cooperation,
- * you can write to Wire: @maslof_deals
  *
  * Memo to the developers:
  * 1. GitHub is your friend and savior. Often make `git push`
@@ -23,29 +21,33 @@
  * 3. Document the code.
  */
 
-defined( 'ABSPATH' ) or die('Not defined ABSPATH');
+defined ( 'ABSPATH' ) or die('Not defined ABSPATH');
 
-define('MIRELE_FORCED_DISABLE_ANALYSIS', false);
+define ('MIRELE_FORCED_DISABLE_ANALYSIS', false);
 define ('MIRELE_INTEGRATION_HUBSPOT', true);
 define ('MIRELE_INTEGRATION_MAILCHIMP', true);
 define ('ROSEMARY_CANVAS', 'canvas.php');
 define ('ROSEMARY_TEMPLATES_DIR', get_template_directory() . '/templates');
+define ('ROSEMARY_TWIG_DIR', get_template_directory() . '/twig');
 define ('ROSEMARY_TEMPLATES_HTML_DIR', get_template_directory() . '/rosemary_html');
 define ('MIRELE_CORE_DIR', get_template_directory() . '/core');
 define ('MIRELE_SOURCE_DIR', get_template_directory_uri() . '/source');
 define ('MIRELE_SOURCE_PATH', get_template_directory() . '/source');
+define ('MIRELE_LOG_FILE', get_template_directory() . '/logger.log');
+define ('MIRELE_ERROR_FILE', get_template_directory() . '/.error');
 define ('ROSEMARY_FORBIDDEN_SYMBOLS', array(':', '/', "@"));
 define ('ROSEMARY_RIGHTS_FOR_VISUAL_EDIT', 'edit_themes');
 define ('ROSEMARY_VARCHAR_SIZE_DB', 512);
 define ('ROSEMARY_VARCHAR_INT_DB', 64);
 define ('ROSEMARY_DEVELOPER_MODE', false);
 define ('MIRELE_GET', $_GET);
-define ('MIRELE_TWITTER_ME', "mirele");
+define ('MIRELE_POST', $_POST);
 define ('MIRELE_VERSION', "1.0.0");
 define ('ROSEMARY_VERSION', "1.0.1");
 define ('ROSEMARY_INSTANCES', 'SMART');
 define ('MIRELE_URL', $_SERVER['REQUEST_SCHEME'] .'://'. $_SERVER['HTTP_HOST'] . explode('?', $_SERVER['REQUEST_URI'], 2)[0]);
 
+# Show errors
 if (!wp_doing_ajax() and true) {
     ini_set('error_reporting', E_ALL);
     ini_set('display_errors', 1);
@@ -57,12 +59,14 @@ if (true == true) {
 
 }
 
+# Connecting all dependencies
 $include = function ($e=null){
 
     if (!wp_doing_ajax()) {
         include_once 'vendor/autoload.php';
     }
 
+    # Standard set of environment
     include_once 'core/function/fault_tolerance.php';
     include_once 'core/function/lorem.php';
     include_once 'core/function/password_generate.php';
@@ -70,6 +74,8 @@ $include = function ($e=null){
     include_once 'core/function/size.php';
     include_once 'core/function/time.php';
 
+    # Arrhitectural Classes Sets (Mirele)
+    include_once 'core/class/MWPUI.php';
     include_once 'core/class/MApps.php';
     include_once 'core/class/MCache.php';
     include_once 'core/class/MData.php';
@@ -87,10 +93,28 @@ $include = function ($e=null){
     include_once 'core/class/MFile.php';
     include_once 'core/class/MBBPress.php';
     include_once 'core/class/MDemos.php';
+    include_once 'core/class/MNotification.php';
+    include_once 'core/class/MLogger.php';
 
+    # Main Core
+    include_once 'core/framework/String.php';
+    include_once 'core/framework/Storage.php';
+    include_once 'core/framework/Iterator.php';
+    include_once 'core/framework/TWIG.php';
+    include_once 'core/framework/TWIGWoocommerce.php';
+    include_once 'core/framework/Component.php';
+    include_once 'core/framework/Store.php';
+    include_once 'core/class/AJAX.php';
+    include_once 'core/class/TWIG.php';
+    include_once 'core/class/Router.php';
+    include_once 'core/Router.php';
+    include_once 'core/class/Rosemary.php';
+
+    # Architecture class sets
     include_once 'core/class/RDeveloper.php';
     include_once 'core/class/RManager.php';
 
+    # Mirele kernel functions set
     include_once 'core/function/ajax_events.php';
     include_once 'core/function/components.php';
     include_once 'core/function/autoloader.php';
@@ -106,11 +130,12 @@ $include = function ($e=null){
 
     include_once 'core/ui/rosemary/demos/template/demo.php';
 
+    # Integration
     include_once 'core/ui/mirele/integration/hubspot/hubspot_login.php';
     include_once 'core/ui/mirele/integration/hubspot/hubspot_main.php';
     include_once 'core/ui/mirele/integration/hubspot/hubspot_settings.php';
 
-    include_once 'core/ui/mirele/center/center_home.php';
+    # UI elements
     include_once 'core/ui/mirele/center/warnings.php';
     include_once 'core/ui/mirele/center/settings_theme.php';
     include_once 'core/ui/mirele/access/main.php';
@@ -119,8 +144,15 @@ $include = function ($e=null){
     include_once 'core/ui/wordpress/comments.php';
     include_once 'core/ui/wordpress/comment-form.php';
 
+    # Components
+    include_once 'Components/Sidebars/default.php';
+    include_once 'Components/Footers/default.php';
+    include_once 'Components/Navbars/default.php';
+    include_once 'Components/Menu/default_navbar.php';
+
     include_once 'kits/default.php';
 
+    # Plug-in support from other manufacturers
     include_once 'woocommerce/manager.php';
     include_once 'bbpress/manager.php';
 
@@ -128,60 +160,20 @@ $include = function ($e=null){
 
 $include();
 
-MAjax();
-MIMailChimp_ajax();
-MIHubSpot_ajax();
+//MAjax();
+//MIMailChimp_ajax();
+//MIHubSpot_ajax();
 
 woocommerce_manager ();
 bbpress_manager();
 
-global $rm;
-global $twig;
-global $mdata;
-global $mpackage;
-global $msafe;
-global $mwpsettings;
-global $bootloader_path;
-global $mwp_wait_subpages;
-global $mrouter;
-global $mpager;
-global $msettings;
-global $mapps;
-global $mstyler;
-global $majax;
+global $rm, $twig, $TWIG, $Router, $mdata, $mpackage, $msafe, $mwpsettings, $bootloader_path, $mwp_wait_subpages, $mrouter, $mpager, $msettings, $mapps, $mstyler, $majax, $mlogger, $mnotify;
 
-if (!wp_doing_ajax()) {
-    $twig_loader = new \Twig\Loader\FilesystemLoader(ROSEMARY_TEMPLATES_DIR);
-    $twig = new \Twig\Environment($twig_loader, [
-        'cache' => false,
-//    'cache' => ROSEMARY_TEMPLATES_DIR . '/cache',
-    ]);
+$majax = \Mirele\AJAX\Connector::getInstance();
+$TWIG = \Mirele\TWIG::getInstance();
+$Router = new \Mirele\Router();
 
-    class RosemaryUtiils {
-
-        function version () {
-            return "utils-1.0.0";
-        }
-
-        #
-        function settings_fields ($id='') {
-            return settings_fields($id);
-        }
-
-        #
-        function date_format ($time='', $format="Y/m/d H:i:s") {
-            return date_format(date_create($time), $format);
-        }
-
-        #
-        function get_option ($option="", $default=false) {
-            return get_option($option, $default);
-        }
-
-    }
-
-    $twig->addGlobal('utils', new RosemaryUtiils());
-}
+# \Mirele\Framework\Store::add((new \Mirele\Framework\Component)->setId("2343")->setProps([])->setFunction(function ($props) {})->build());
 
 $mrouter = new MRouter;
 $rm = new RManager;
@@ -192,12 +184,28 @@ $msettings = new MSettings;
 $mpager = new MPager;
 $mapps = new MApps;
 $mstyler = new MStyler;
-$majax = new MAjax;
+$mnotify = new MNotification;
+$mwpui = new Mirele\Framework\MWPUI;
+$mlogger = new MLogger (MIRELE_LOG_FILE);
+
+set_error_handler(function () {
+    global $mlogger;
+    $mlogger->warning(json_encode(func_get_args()));
+});
+
+if (!wp_doing_ajax()) {
+
+    $twig = new \Twig\Environment(new \Twig\Loader\FilesystemLoader(ROSEMARY_TWIG_DIR), [
+        'cache' => false
+    ]);
+
+}
+
 
 /**
  * UI render file.
- * This file is responsible for rendering the editor page
- * Rosemary elements
+ * This file is responsible for rendering the editor page
+ * Rosemary elements
  *
  * @author: Mirele
  * @version: 1.0.0
@@ -206,18 +214,32 @@ $majax = new MAjax;
 
 /**
  * Connection of all components that are displayed in
- * WordPress admin menu.
- *
- * This includes all Mirele components.
+ * WordPress admin menu.
+ *
+ * This includes all Mirele components.
  *
  * @version: 1.0.0
  */
+
+# Rest Redirect
+add_action('rest_api_init', function () {
+
+    register_rest_route( 'mirele/api/v1/', '(?P<package>[a-zA-Z0-9-]+)/(?P<method>[a-zA-Z0-9-]+)', [
+        'methods' => 'GET',
+        'callback' => function ($event) {
+            $props = (object) $event->get_params();
+            \Mirele\Router::dispatch("/rest_endpoint_v1/$props->package/$props->method");
+        },
+        'show_in_rest' => true
+    ]);
+
+});
 
 add_action ('admin_enqueue_scripts', function () {
 
     global $wp_version;
 
-    if ( 3.5 <= $wp_version ){
+    if ( 3.5 <= $wp_version ) {
         wp_enqueue_style( 'wp-color-picker' );
         wp_enqueue_script( 'wp-color-picker' );
     } else {
@@ -229,24 +251,23 @@ add_action ('admin_enqueue_scripts', function () {
 
 add_action ('wp_enqueue_scripts', function () {
 
-    global $mrouter;
+    wp_enqueue_script('vue');
+    wp_enqueue_script('axios');
+    wp_enqueue_script('babel');
+    wp_enqueue_script('popper');
+    wp_enqueue_script('babelui');
+    wp_enqueue_script('bootstrap4');
+    wp_enqueue_script('mireleapi');
+    wp_enqueue_script('fontAwesome');
 
-    $mrouter->execute('site');
-
-    if ( function_exists('is_woocommerce') and is_woocommerce()) {
-        get_header('shop');
-        $mrouter->execute('wp-page');
-        $mrouter->execute('woocommerce-page');
-    } elseif (!is_page_template(ROSEMARY_CANVAS)) {
-        $mrouter->execute('wp-page');
-    } elseif (is_page_template(ROSEMARY_CANVAS)) {
-        $mrouter->execute('mirele_canvas');
-    }
+    wp_enqueue_style('fontAwesome');
+    wp_enqueue_style('bootsrtap4');
+    wp_enqueue_style('main_style');
 
 });
 
 add_action ('wp_body_open', function () {
-
+    
     global $mirele_js_var;
     global $mstyler;
 
@@ -303,7 +324,39 @@ add_action ('wp_body_open', function () {
 
 });
 
+function mirele_endpoint_v1 () {
+    \Mirele\Router::dispatch('/ajax_endpoint_v1');
+}
+
+add_action('wp_ajax_nopriv_mirele_endpoint_v1', 'mirele_endpoint_v1');
+add_action('wp_ajax_mirele_endpoint_v1', 'mirele_endpoint_v1');
+
 add_action ('init', function () {
+
+    wp_register_script('fontAwesome', 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/js/all.min.js');
+    wp_register_script('vue', 'https://unpkg.com/vue@3.0.0-rc.9/dist/vue.global.prod.js');
+    wp_register_script('popper', 'https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js' );
+    wp_register_script('axios', 'https://unpkg.com/axios/dist/axios.min.js' );
+    wp_register_script('bootstrap4', 'https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js', array('jquery'));
+    wp_register_script('babel', 'https://unpkg.com/@babel/standalone/babel.min.js', array( 'jquery' ), '', false);
+    wp_register_script('mireleapi', MIRELE_SOURCE_DIR . '/js/API.js', array('jquery'), '', false);
+    wp_register_script('babelui', MIRELE_SOURCE_DIR . '/js/babel.js', array('babel', 'jquery'), '', false);
+
+    wp_register_style('fontAwesome', 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css');
+    wp_register_style('bootsrtap4', 'https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css', false);
+    wp_register_style('admin_dashboard', MIRELE_SOURCE_DIR . '/css/admin/admin.css', false);
+    wp_register_style('main_style', MIRELE_SOURCE_DIR . '/css/style.css', false);
+
+    wp_localize_script('mireleapi', 'MIRELE',
+        [
+            'urls' => [
+                'ajax' => esc_url(admin_url('admin-ajax.php')),
+                'rest' => esc_url(get_rest_url())
+            ],
+            'configs' => [
+            ]
+        ]
+    );
 
     global $majax;
     global $mdata;
@@ -327,17 +380,6 @@ add_action ('init', function () {
             }
         }
 
-    }
-
-    if ($_POST and (isset($_POST['mrl_action'])) and !is_admin()) {
-        if (isset($majax->all(false)[$_POST['mrl_action']])) {
-            if (isset($majax->all(false)[$_POST['mrl_action']]->function) and is_callable($majax->all(false)[$_POST['mrl_action']]->function)) {
-                die(call_user_func($majax->all(false)[$_POST['mrl_action']]->function, (object) $_POST));
-            }
-            die(false);
-        } else {
-            die(false);
-        }
     }
 
     rosemary_register_option('dynamic_shadow', 'choice', [
@@ -512,24 +554,24 @@ add_action ('init', function () {
     $mrouter->register('site', 'js', get_template_directory_uri() . '/source/js/jquery.mobile.min.js');
     $mrouter->register('site', 'js', get_template_directory_uri() . '/source/js/jquery.lazyload-dist.js');
 
-    $mrouter->register('site-footer', 'js', get_template_directory_uri() . '/source/js/color_recognition-dist.js');
-    $mrouter->register('site-footer', 'js', get_template_directory_uri() . '/source/js/bootstrap.min.js');
-    $mrouter->register('site-footer', 'js', get_template_directory_uri() . '/source/js/font-awesome.min.js');
-
-    $mrouter->register('site', 'js', get_template_directory_uri() . '/source/js/page/inits-dist.js');
-
-    $mrouter->register('site-footer', 'js', get_template_directory_uri() . '/source/js/page/extensions-dist.js');
-    $mrouter->register('site-footer', 'js', get_template_directory_uri() . '/source/js/page/fastcart-dist.js');
-    $mrouter->register('site-footer', 'js', get_template_directory_uri() . '/source/js/page/kristen-dist.js');
-    $mrouter->register('site-footer', 'js', get_template_directory_uri() . '/source/js/page/lightbox-dist.js');
-    $mrouter->register('site-footer', 'js', get_template_directory_uri() . '/source/js/page/scroll-dist.js');
-    $mrouter->register('site-footer', 'js', get_template_directory_uri() . '/source/js/page/delayed_launch_loader-dist.js');
-    $mrouter->register('site-footer', 'js', get_template_directory_uri() . '/source/js/page/theme/video-presentation-dist.js');
-    $mrouter->register('site-footer', 'js', get_template_directory_uri() . '/source/js/page/theme/quickcart-dist.js');
-    $mrouter->register('site-footer', 'js', get_template_directory_uri() . '/source/js/page/theme/mailchimp-dist.js');
-    $mrouter->register('site-footer', 'js', get_template_directory_uri() . '/source/js/page/theme/hubspot-dist.js');
-    $mrouter->register('site-footer', 'js', get_template_directory_uri() . '/source/js/javascript-dist.js');
-    $mrouter->register('site-footer', 'js', get_template_directory_uri() . '/source/js/page/woocommerce/main-dist.js');
+//    $mrouter->register('site-footer', 'js', get_template_directory_uri() . '/source/js/color_recognition-dist.js');
+//    $mrouter->register('site-footer', 'js', get_template_directory_uri() . '/source/js/bootstrap.min.js');
+//    $mrouter->register('site-footer', 'js', get_template_directory_uri() . '/source/js/font-awesome.min.js');
+//
+//    $mrouter->register('site', 'js', get_template_directory_uri() . '/source/js/page/inits-dist.js');
+//
+//    $mrouter->register('site-footer', 'js', get_template_directory_uri() . '/source/js/page/extensions-dist.js');
+//    $mrouter->register('site-footer', 'js', get_template_directory_uri() . '/source/js/page/fastcart-dist.js');
+//    $mrouter->register('site-footer', 'js', get_template_directory_uri() . '/source/js/page/kristen-dist.js');
+//    $mrouter->register('site-footer', 'js', get_template_directory_uri() . '/source/js/page/lightbox-dist.js');
+//    $mrouter->register('site-footer', 'js', get_template_directory_uri() . '/source/js/page/scroll-dist.js');
+//    $mrouter->register('site-footer', 'js', get_template_directory_uri() . '/source/js/page/delayed_launch_loader-dist.js');
+//    $mrouter->register('site-footer', 'js', get_template_directory_uri() . '/source/js/page/theme/video-presentation-dist.js');
+//    $mrouter->register('site-footer', 'js', get_template_directory_uri() . '/source/js/page/theme/quickcart-dist.js');
+//    $mrouter->register('site-footer', 'js', get_template_directory_uri() . '/source/js/page/theme/mailchimp-dist.js');
+//    $mrouter->register('site-footer', 'js', get_template_directory_uri() . '/source/js/page/theme/hubspot-dist.js');
+//    $mrouter->register('site-footer', 'js', get_template_directory_uri() . '/source/js/javascript-dist.js');
+//    $mrouter->register('site-footer', 'js', get_template_directory_uri() . '/source/js/page/woocommerce/main-dist.js');
 
     $mrouter->register('wp-page', 'css', get_template_directory_uri() . '/source/css/elements.css');
     $mrouter->register('wp-page', 'css', get_template_directory_uri() . '/source/css/general.css');
@@ -555,243 +597,23 @@ add_action ('admin_menu', function () {
 
     (new RManager)->database_markup();
 
+    wp_enqueue_style('admin_dashboard');
+    wp_enqueue_style('wp-color-picker');
+    wp_enqueue_media();
 
-    # $mrouter->register('admin', 'js', get_template_directory_uri() . '/source/js/jquery.min.js');
-
-    $mrouter->register('admin', 'css', get_template_directory_uri() . '/source/css/admin/mgDialog.css');
-    $mrouter->register('admin', 'css', get_template_directory_uri() . '/source/css/admin/admin.css');
-
-    $mrouter->register('admin', 'js', array('admin' => get_template_directory_uri() . '/source/js/karlin-dist.js'));
-    $mrouter->register('admin', 'js', array('admin' => get_template_directory_uri() . '/source/js/admin/mgDialog.js'));
-    $mrouter->register('admin', 'js', array('admin' => get_template_directory_uri() . '/source/js/admin/admin.js'));
-
-    $mrouter->register('admin_page_rosemary_render_market', 'js', get_template_directory_uri() . '/source/js/admin/rosemary.js');
-
-    $mrouter->register('admin_page_rosemary_render_editor', 'css', get_template_directory_uri() . '/source/css/admin/rosemary.css');
-    $mrouter->register('admin_page_rosemary_render_editor', 'css', get_template_directory_uri() . '/source/css/admin/mgDialog.css');
-
-    # $mrouter->register('admin_page_rosemary_render_editor', 'js', get_template_directory_uri() . '/source/js/jquery.min.js');
-    $mrouter->register('admin_page_rosemary_render_editor', 'js', array('admin' => get_template_directory_uri() . '/source/js/jquery-ui-dist.js'));
-    $mrouter->register('admin_page_rosemary_render_editor', 'js', array('admin' => get_template_directory_uri() . '/source/js/karlin-dist.js'));
-    $mrouter->register('admin_page_rosemary_render_editor', 'js', array('admin' => get_template_directory_uri() . '/source/js/admin/admin.js'));
-    $mrouter->register('admin_page_rosemary_render_editor', 'js', array('admin' => get_template_directory_uri() . '/source/js/admin/mgDialog.js'));
-    $mrouter->register('admin_page_rosemary_render_editor', 'js', array('admin' => get_template_directory_uri() . '/source/js/admin/rosemary.js'));
-
-    $majax->register('mirele_wp_edit', function ($e=null) {
-
-        foreach ($e as $option => $value) {
-            if ($option == "action" or $option == "option_page") {
-                continue;
-            }
-            update_option($option, $value);
-        }
-
-        return json_encode(array(
-            'form' => $e
-        ));
-    });
-    $majax->register('mirele_woo_edit', function ($e=null) {
-
-        foreach ($e as $option => $value) {
-            if ($option == "action" or $option == "option_page") {
-                continue;
-            }
-            update_option($option, $value);
-        }
-
-        return json_encode(array(
-            'form' => $e
-        ));
-    });
-    $majax->register('mirele_site', function ($e=null) {
-
-        if ($e->action_ == "default_") {
-            die(setup_robotstxt ('default'));
-        } elseif ($e->action_ == "google_") {
-            die(setup_robotstxt ('google'));
-        }
-
-        foreach ($e as $option => $value) {
-            if ($option == "action" or $option == "option_page") {
-                continue;
-            }
-            update_option($option, $value);
-        }
-
-        return json_encode(array(
-            'form' => $e
-        ));
-    });
-
-    $mpager->register('mirele_center', [
-        function ($e=null) {
-            MPager::ui_tabs([
-                [
-                    'content' => 'Home',
-                    'id' => 'main'
-                ],
-                [
-                    'content' => 'Settings',
-                    'id' => 'settings'
-                ],
-                [
-                    'content' => 'Theme appearance settings',
-                    'id' => 'tas'
-                ],
-                [
-                    'content' => 'Interrogation',
-                    'id' => 'interrogation'
-                ]
-            ]);
-        },
-        function ($e=null) {
-            if (MPager::ui_current_tab()->id == 'tas') {
-                do_action('ui_mirele_settings_theme');
-            } elseif (MPager::ui_current_tab()->id == 'settings') {
-                MPager::ui_settings ('mirele_analysis', 'analysis');
-            } elseif (MPager::ui_current_tab()->id == 'interrogation') {
-                do_action('ui_mirele_interrogation');
-            } else {
-                do_action('ui_mirele_center_home_page');
-            }
-        }
-    ]);
-    
-    # Apps page routing
-    $mpager->register('mirele_apps', [function() {
-
-        global $mapps;
-        do_action('rosemary_render_app_start');
-        MPager::render('apps/app.html', array(
-            "app_exists" => $mapps->app_exists($_GET['app']),
-            "app_id" => $_GET['app'],
-            "app_content" => $mapps->app_exists($_GET['app']) ? $mapps->app($_GET['app']) : "App not execute"
-        ));
-        do_action('rosemary_render_app_end');
-
-    }],  function () { return isset($_GET['app']) and !empty($_GET['app']); });
-    $mpager->register('mirele_apps', [function() {
-
-        global $mapps;
-        do_action('rosemary_render_apps_start');
-        MPager::render('apps/main.html', array("apps" => $mapps->all()));
-        do_action('rosemary_render_apps_end');
-
-    }],  function () { return !isset($_GET['app']); });
-
-    # Editor page routing
-    $mpager->register('rosemary_render_editor', [function() {
-
-        global $rm;
-        do_action('rosemary_render_pages_list_start');
-        MPager::render('editor/main.html', array("markup" => $rm->markup()));
-        do_action('rosemary_render_pages_list_end');
-
-    }],  function () { return !isset($_GET['page_id']); });
-    $mpager->register('rosemary_render_editor', [function() {
-
-        global $rm;
-
-        initialize_templates(true);
-        rosemary_page($_GET['page_id'], 'depressed');
-
-        MPager::render('editor/editor.html', array(
-            'id' => $_GET['page_id'],
-            'get_page' => $rm->get_page($_GET['page_id'])
-        ));
-
-    }],  function () { return isset($_GET['page_id']); });
-
-    $mpager->register('rosemary_render_demos', [
-        function ($e=null) {
-            MPager::ui_tabs([
-                [
-                    'content' => 'Home',
-                    'id' => 'main'
-                ],
-                [
-                    'content' => 'Build',
-                    'id' => 'build'
-                ]
-            ]);
-        },
-        function ($e=null) {
-
-            initialize_templates(true);
-
-            MDemos::export(12, array(
-                '9b150306468f14dc871b0109147386cd5f88de85'
-            ));
-
-            ?>
-
-            <div class="wrap">
-                <div class="root">
-
-                    <div class="theme-browser rendered">
-                        <div class="themes wp-clearfix">
-
-                            <?php foreach (MDemos::all() as $demo): ?>
-
-                                <?php do_action('mirele_ui_market_template_demo', $demo) ?>
-
-                            <?php endforeach; ?>
-
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-
-            <?php
-        }
-    ]);
-
-    if ($_POST and (isset($_POST['mrl_action']) or isset($_POST['option_page'])) and basename($_SERVER['REQUEST_URI']) != 'options.php') {
-
-        if (isset($_POST['mrl_action']) and isset($majax->all(true)[$_POST['mrl_action']])) {
-            if (isset($majax->all(true)[$_POST['mrl_action']]->function) and is_callable($majax->all(true)[$_POST['mrl_action']]->function)) {
-                die(call_user_func($majax->all(true)[$_POST['mrl_action']]->function, (object) $_POST));
-            }
-            die();
-        } else if (isset($_POST['option_page']) and isset($majax->all(true)[$_POST['option_page']])) {
-            if (isset($majax->all(true)[$_POST['option_page']]->function) and is_callable($majax->all(true)[$_POST['option_page']]->function)) {
-                die(call_user_func($majax->all(true)[$_POST['option_page']]->function, (object) $_POST));
-            }
-            die();
-        }else {
-            die(false);
-        }
-    }
-
-    if (empty($_POST)) {
-        $mrouter->execute('admin');
-        isset($_GET['page']) ? $mrouter->execute('admin_page_' . $_GET['page']) : false;
-    }
 
     add_menu_page('MIRELE', 'Mirele Center', 'manage_options', 'mirele_center', function () {
-
-        wp_enqueue_style( 'wp-color-picker' );
-
-        global $mpager;
-        $mpager->execute($_GET['page']);
-
+        
     }, '', 1);
     add_menu_page('MIRELE', 'Mirele Apps', 'manage_options', 'mirele_apps', function () {
-        global $mpager;
-        $mpager->execute($_GET['page']);
+        
     }, 'dashicons-screenoptions', 2);
     add_menu_page('MIRELE', 'Rosemary Editor', 'manage_options', 'rosemary_render_editor', function () {
-
-        wp_enqueue_media();
-
-        global $mpager;
-        $mpager->execute($_GET['page']);
+        
     }, 'dashicons-welcome-write-blog', 3);
     add_submenu_page('rosemary_render_editor', 'MIRELE', 'Demos', 'manage_options', 'rosemary_render_demos', function () {
-        global $mpager;
-        $mpager->execute($_GET['page']);
-    }, '', 4);
+        
+    }, '', 2);
 
     add_action('admin_bar_menu', function ($wp_admin_bar) {
         $wp_admin_bar->add_node(array(
@@ -1326,7 +1148,5 @@ add_action ('admin_menu', function () {
     ));
 
 });
-
-do_action ('mirele_any');
 
 wp_setups();

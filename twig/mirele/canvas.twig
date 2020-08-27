@@ -1,0 +1,14 @@
+{{ wp.header }}
+
+    {% if signature == true %}
+
+        {{ wp.wp_head }}
+        {{ wp.canvas }}
+
+    {% else %}
+
+        <h1>Error</h1>
+
+    {% endif %}
+
+{{ wp.footer }}

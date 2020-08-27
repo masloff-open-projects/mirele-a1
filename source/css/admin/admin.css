@@ -806,12 +806,12 @@ table.mirele-settings-element > tbody > tr > td.m-title > small {
 
 .card-center-box {
     position: relative;
-    /* min-width: 255px; */
+    min-width: 255px;
     border: 1px solid #ccd0d4;
     box-shadow: 0 1px 1px rgba(0, 0, 0, .04);
     background: #fff;
     width: 22%;
-    display: inline-box;
+    display: inline-grid;
     margin-right: 14px;
     margin-bottom: 24px;
     padding: 12px;
@@ -995,4 +995,39 @@ samp {
         margin: 24px 0px;
     }
 
+}
+
+
+.rosemary-blocks-placeholder {
+    border: 2px dashed #ccc;
+    /* height: 180px; */
+    display: block;
+    margin-bottom: 18px;
+}
+
+.wp-rosemary-table {
+    margin-bottom: 18px !important;
+}
+
+.block_element > p {
+    margin: 0;
+}
+
+*[data-image-hint] {
+    position: relative;
+}
+*[data-image-hint]:hover:after {
+    content: ' ';
+    position: absolute;
+    left: 72px;
+    bottom: 12px;
+    max-width: 200px;
+    z-index: 100;
+    background-color: #1d1d1da8;
+    line-height: 16px;
+    color: #fff;
+    padding: 4px;
+    border-radius: 6px;
+    border: 1px solid #474747;
+    font-size: 13px;
 }

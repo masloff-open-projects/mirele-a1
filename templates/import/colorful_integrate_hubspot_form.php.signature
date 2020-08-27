@@ -3,7 +3,7 @@
         "constants": {
             "MIRELE_INTEGRATION_HUBSPOT": {
                 "value": true,
-                "verify": 1593945804,
+                "verify": 1598524278,
                 "pass": false
             }
         }
@@ -22,7 +22,7 @@
                         "name": "meta"
                     }
                 ],
-                "verify": 1593945804,
+                "verify": 1598524278,
                 "pass": false
             }
         }
@@ -41,7 +41,7 @@
                         "name": "options"
                     }
                 ],
-                "verify": 1593945804,
+                "verify": 1598524278,
                 "pass": false
             }
         }
@@ -54,7 +54,7 @@
                         "name": "id"
                     }
                 ],
-                "verify": 1593945804,
+                "verify": 1598524278,
                 "pass": false
             }
         }
@@ -73,7 +73,7 @@
                         "name": "options"
                     }
                 ],
-                "verify": 1593945804,
+                "verify": 1598524278,
                 "pass": false
             }
         }
@@ -92,7 +92,7 @@
                         "name": "options"
                     }
                 ],
-                "verify": 1593945804,
+                "verify": 1598524278,
                 "pass": false
             }
         }

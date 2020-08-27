@@ -14,7 +14,7 @@
 
         <br>
 
-        {% if utils.get_option('mrli_hs_ajax_table') %}
+        {% if wp.get_option('mrli_hs_ajax_table') %}
 
             <div data-mpager-part="mui_hubspot_contacts">
 
@@ -34,7 +34,7 @@
 
                 <h3>Contacts list</h3>
 
-                {% include 'apps/app/hubspot.table.contacts.html' %}
+                {% include 'apps/app/hubspot.table.contacts.twig' %}
 
             </div>
 
@@ -42,7 +42,7 @@
 
                 <h3>Forms</h3>
 
-                {% include 'apps/app/hubspot.table.forms.html' %}
+                {% include 'apps/app/hubspot.table.forms.twig' %}
 
             </div>
 
@@ -50,7 +50,7 @@
 
                 <h3>Tickets</h3>
 
-                {% include 'apps/app/hubspot.table.tickets.html' %}
+                {% include 'apps/app/hubspot.table.tickets.twig' %}
 
             </div>
 

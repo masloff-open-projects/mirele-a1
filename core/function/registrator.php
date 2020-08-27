@@ -2,7 +2,7 @@
 
 /**
  * A set of functions for registering blocks and elements
- * for subsequent rendering on the page.
+ * for subsequent rendering on the page.
  *
  * @author: Mirele
  * @version: 1.0.0
@@ -12,8 +12,8 @@
 
 /**
  * Function for registering a block. As arguments
- * requires a block ID, other functions will then be accessed
- * and the function that will render the block
+ * requires a block ID, other functions will then be accessed
+ * and the function that will render the block
  *
  * @version: 1.0.0
  * @package: Mirele
@@ -86,9 +86,9 @@ function rosemary_register ($id='null', $function=null, $meta=null) {
 
 /**
  * The function that is responsible for registering the item.
- * It has global variables for interacting with a map of elements.
- * Based on this function, a set will be created in the database
- * block elements for further editing
+ * It has global variables for interacting with a map of elements.
+ * Based on this function, a set will be created in the database
+ * block elements for further editing
  *
  * @author: Mirele
  * @version: 1.0.0.
@@ -209,8 +209,8 @@ function rosemary_get_register_elements_of_block ($id='null', $page='null') {
 
 /**
  * Function for getting possible types of components.
- * These types are registered with the elements and transmitted
- * as a function return in the form of a sheet
+ * These types are registered with the elements and transmitted
+ * as a function return in the form of a sheet
  *
  * @author: Mirele
  * @version: 1.0.0
@@ -228,8 +228,8 @@ function rosemary_get_available_element_types () {
 
 /**
  * Function to get all available
- * templates that are registered within the system
- * and available for rendering
+ * templates that are registered within the system
+ * and available for rendering
  *
  * @author: Mirele
  * @version: 1.0.0
@@ -338,7 +338,7 @@ function rosemary_get_element_meta ($id='') {
 
 /**
  * Function to get item options.
- * If you do not pass the block ID, the newly registered block will be used.
+ * If you do not pass the block ID, the newly registered block will be used.
  *
  * @author: Mirele
  * @version: 1.0.0
@@ -366,7 +366,7 @@ function rosemary_get_options ($id=null) {
 
 /**
  * Function to get item options as HTML code.
- * If you do not pass the block ID, the newly registered block will be used.
+ * If you do not pass the block ID, the newly registered block will be used.
  *
  * @author: Mirele
  * @version: 1.0.0
@@ -483,8 +483,8 @@ function rosemary_options_html ($options) {
 
 /**
  * Function to get block visibility.
- * Attention! Use this function after registering a block, as the site may appear
- * artifacts
+ * Attention! Use this function after registering a block, as the site may appear
+ * artifacts
  *
  * @author: Mirele
  * @version: 1.0.0
@@ -532,8 +532,8 @@ function rosemary_get_full_id ($id=null) {
 
 /**
  * Function for taking a picture
- * published, issued after registration of the element with the type
- * data src
+ * published, issued after registration of the element with the type
+ * data src
  *
  * @author: Mirele
  * @version: 1.0.0

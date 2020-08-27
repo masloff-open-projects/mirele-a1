@@ -12,8 +12,8 @@ function MIHubSpot_ajax()
 
     /**
      * Register AJAX methods for
-     *  * Token authentication
-     *  * treatment of user information, etc.
+     *  * Token authentication
+     *  * treatment of user information, etc.
      *
      * @author: Mirele
      * @package: HubSpot
@@ -22,8 +22,8 @@ function MIHubSpot_ajax()
 
     /**
      * Authorization of the user with obtaining data about him.
-     *  * Based on this request, authorization works
-     *  * on the integration page in the WordPress admin area
+     *  * Based on this request, authorization works
+     *  * on the integration page in the WordPress admin area
      *
      * @author: Mirele
      * @package: HubSpot
@@ -70,8 +70,8 @@ function MIMailChimp_ajax()
 
     /**
      * Register AJAX methods for
-     *  * Token authentication
-     *  * treatment of user information, etc.
+     *  * Token authentication
+     *  * treatment of user information, etc.
      *
      * @author: Mirele
      * @package: MailChimp
@@ -80,8 +80,8 @@ function MIMailChimp_ajax()
 
     /**
      * Authorization of the user with obtaining data about him.
-     *  * Based on this request, authorization works
-     *  * on the integration page in the WordPress admin area
+     *  * Based on this request, authorization works
+     *  * on the integration page in the WordPress admin area
      *
      * @author: Mirele
      * @package: MailChimp
@@ -132,7 +132,7 @@ function MAjax()
 
     /**
      * Register AJAX hooks to work in asynchronous mode
-     *  * with individual system components.
+     *  * with individual system components.
      *
      * @author: Mirele
      * @version: 1.0.0
@@ -160,8 +160,8 @@ function MAjax()
 
         /**
          * Translation of settings into a readable form for the program
-         *      * After this procedure it will be possible to work with them - they will
-         *      * carefully sorted
+         *      * After this procedure it will be possible to work with them - they will
+         *      * carefully sorted
          *
          * @version: 1.0.0
          * @executetime: Light speed
@@ -185,8 +185,8 @@ function MAjax()
 
         /**
          * Saving settings in the system.
-         *      * The processed array is used as input
-         *      * form list
+         *      * The processed array is used as input
+         *      * form list
          *
          * @version: 1.0.0
          * @executetime: 0.0084 s
@@ -197,6 +197,14 @@ function MAjax()
         }
 
         die();
+    });
+
+    add_action('wp_ajax_user', function () {
+
+        ajax_protect() or die();
+
+        die('345');
+
     });
 
 
@@ -304,8 +312,8 @@ function MAjax()
 
     /**
      * Function to delete the page.
-     *  * All shortcodes on the pages will be
-     *  * unavailable after deleting page
+     *  * All shortcodes on the pages will be
+     *  * unavailable after deleting page
      *
      * @version: 1.0.0
      * @package: Mirele
@@ -329,7 +337,7 @@ function MAjax()
 
     /**
      * The function creates a WordPress page and embeds a shortcode there.
-     *  *
+     *  *
      * @version: 1.0.0
      * @package: Mirele
      * @author: Mirele
@@ -368,8 +376,8 @@ function MAjax()
 
     /**
      * Function to get all available registered templates
-     *  * inside the system at the time of the request
-     *  *
+     *  * inside the system at the time of the request
+     *  *
      * @version: 1.0.0
      * @package: Mirele
      * @author: Mirele
@@ -393,10 +401,10 @@ function MAjax()
 
     /**
      * Function to get information about the block.
-     *  * No need to use it in a loop, for
-     *  * getting information about blockages is generally better
-     *  * use the function above
-     *  *
+     *  * No need to use it in a loop, for
+     *  * getting information about blockages is generally better
+     *  * use the function above
+     *  *
      * @version: 1.0.0
      * @package: Mirele
      * @author: Mirele
@@ -420,7 +428,7 @@ function MAjax()
 
     /**
      * Function for getting markup of all page blocks
-     *  *
+     *  *
      * @version: 1.0.0
      * @package: Mirele
      * @author: Mirele
@@ -444,7 +452,7 @@ function MAjax()
 
     /**
      * Function for import blocks
-     *  *
+     *  *
      * @version: 1.0.0
      * @package: Mirele
      * @author: Mirele
@@ -504,7 +512,7 @@ function MAjax()
 
     /**
      * Function to get item options
-     *  *
+     *  *
      * @version: 1.0.0
      * @package: Mirele
      * @author: Mirele
@@ -530,7 +538,7 @@ function MAjax()
 
     /**
      * Function to get block options
-     *  *
+     *  *
      * @version: 1.0.0
      * @package: Mirele
      * @author: Mirele
@@ -552,7 +560,7 @@ function MAjax()
 
     /**
      * Function to set new options for element
-     *  *
+     *  *
      * @version: 1.0.0
      * @package: Mirele
      * @author: Mirele
@@ -579,7 +587,7 @@ function MAjax()
 
     /**
      * Function to set new options for block
-     *  *
+     *  *
      * @version: 1.0.0
      * @package: Mirele
      * @author: Mirele
@@ -608,7 +616,7 @@ function MAjax()
 
     /**
      * Function to get all
-     *  * active pages
+     *  * active pages
      *
      * @version: 1.0.0
      * @package: Mirele
@@ -627,7 +635,7 @@ function MAjax()
 
 
     /**
-     *  * Method for get json data of Kristen gallery
+     *  * Method for get json data of Kristen gallery
      *
      * @version: 1.0.0
      * @package: Mirele

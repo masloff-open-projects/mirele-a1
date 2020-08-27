@@ -2,11 +2,11 @@
 
 /**
  * API for working with the service.
- * This comment is a meta description for all integrations.
- * With this code you can register AJAX requests,
- * PHP classes, plug styles into the header.
- * Integrations connect low enough (bootloader) so you can
- * use the database, Mirele and Rosemary kernels
+ * This comment is a meta description for all integrations.
+ * With this code you can register AJAX requests,
+ * PHP classes, plug styles into the header.
+ * Integrations connect low enough (bootloader) so you can
+ * use the database, Mirele and Rosemary kernels
  *
  * @author: Mirele
  * @package: MailChimp

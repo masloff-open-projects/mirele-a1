@@ -4,8 +4,8 @@
  * Class Registration Woocommerce Functions
  * 
  *      If you wish to prioritize the loading of the WooCommerce subsystem for the 'Mirele Shop'
- *      change the settings of this particular file, but be careful when disabling scripts from the download,
- *      since this may disrupt WooCommerce and pages may not display correctly.
+ *      change the settings of this particular file, but be careful when disabling scripts from the download,
+ *      since this may disrupt WooCommerce and pages may not display correctly.
  * 
  *      ! DON`T DISABLE OR DELETE THIS SCRIPT ! 
  * 
