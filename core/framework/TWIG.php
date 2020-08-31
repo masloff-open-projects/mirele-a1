@@ -11,7 +11,7 @@ class TWIG
         get_header();
     }
 
-    public function e ($text, $namespace='mirele') {
+    public function e ($text, $namespace='Main') {
         return _e($text, $namespace);
     }
 
@@ -122,7 +122,7 @@ class TWIG
                 'id'    => isset($data['page']['id']) ? $data['page']['id'] : 'undefined',
                 'name'  => $name,
                 'count' => count($data) - 1,
-                'shortcode' => "<code>[rosemary page=\"$name\"]</code>"
+                'shortcode' => "<code>[Compound page=\"$name\"]</code>"
             ));
         }
 

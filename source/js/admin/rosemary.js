@@ -1,5 +1,5 @@
 /**
- * java engine for rosemary engine
+ * java engine for Compound engine
  */
 
 var $ = jQuery;
@@ -325,7 +325,7 @@ $(document).ready(function () {
 
         $(".root-blocks").sortable({
             cursor: "move",
-            placeholder: "rosemary-blocks-placeholder",
+            placeholder: "Compound-blocks-placeholder",
             distance: 24,
             animation: 500,
 

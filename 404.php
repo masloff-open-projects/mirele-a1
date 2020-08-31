@@ -12,5 +12,5 @@ if (rosemary_page_exists('404')) {
     initialize_templates(true);
     rosemary_page('404');
 } else {
-    \Mirele\TWIG::Render('mirele/404', []);
+    \Mirele\TWIG::Render('Main/404', []);
 }

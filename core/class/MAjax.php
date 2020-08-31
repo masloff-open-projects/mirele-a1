@@ -14,7 +14,7 @@
 
 namespace Mirele\AJAX;
 
-class Connector
+class connector
 {
 
     /**

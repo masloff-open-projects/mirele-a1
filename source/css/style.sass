@@ -29,6 +29,12 @@ $mainBorderColor: rgba(70, 77, 106, .1)
 $mainTransition: 1s
 $mainFontSize: inherit
 
+$UIErrorBorderColor: #EA4F4B
+$UIErrorBackground: #FAE9EC
+
+$UISuccessBorderColor: #9FD36A
+$UISuccessBackground: #F5FBEE
+
 $UIBackground: rgba(242, 242, 242, 1)
 $UIBorder: solid 1.4px
 $UIColor: #131313
@@ -37,20 +43,17 @@ $UIFont: $mainFont
 $UIFontSize: 13px
 $UITransition: all 0.1s 0s ease-in-out
 
+// Html
 html,
 body
   font: $mainFont
   font-size: 14px
-
-.example
-  display: grid
-  transition: all .5s
-  user-select: none
-  background: linear-gradient(to bottom, white, black)
-
+  scrollbar-face-color: rgba(193, 193, 193, .8)
+  scrollbar-track-color: #00000005
 
 // Imports
 @import components/navbar
 @import components/button
 @import components/link
 @import components/input
+@import components/scrollbar

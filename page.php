@@ -1,6 +1,6 @@
 <?php
 
-\Mirele\TWIG::Render('mirele/page', [
+\Mirele\TWIG::Render('Main/page', [
     'ww2as'       => get_option('mrl_wp_sidebar_width_2_active', 2),
     'ww1as'       => get_option('mrl_wp_sidebar_width_1_active', 4),
     'ars'         => is_active_sidebar('right-side-page', 'false') == 'true' ? true : false,

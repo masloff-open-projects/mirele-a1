@@ -1,2 +1,0 @@
-if("function"==typeof jQuery&&jQuery.fn.jquery){try{$.mobile.autoInitializePage=!1}catch(o){console.group("Mirele Syntax Error!"),console.warn(o),console.groupEnd()}$(window).on("load",(function(){try{window.fac=new FastAverageColor}catch(o){console.group("Mirele Syntax Error!"),console.warn(o),console.groupEnd()}if("object"==typeof AOS&&AOS.init(),"function"==typeof lazyload){lazyload($('[data-loading="lazy"]'))}}))}
-//# sourceMappingURL=inits-dist.js.map

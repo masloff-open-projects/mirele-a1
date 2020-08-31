@@ -4,7 +4,8 @@
 namespace Mirele\Framework;
 
 
-class Storage
+interface Storage
 {
-
+    static public function add ($Abstract);
+    static public function call ($Abstract, $Data);
 }

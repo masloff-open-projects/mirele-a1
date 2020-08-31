@@ -5,7 +5,7 @@
  * It is based on The github repository.
  *
  * If you decide to change the repository to your own, or find Another supported
- * UNOFFICIAL mirele repository, we do not resolve such issues.
+ * UNOFFICIAL Main repository, we do not resolve such issues.
  * Use only official Mirelle repositories
  *
  * @author: Mirele

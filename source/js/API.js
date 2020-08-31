@@ -1,9 +1,10 @@
 class WPAjax {
-    constructor (action='/', data={}) {
+    constructor (method='/', data={}) {
 
         // Create request body
         const body = Object.assign({
-            'action': action
+            'action': 'mirele_endpoint_v1',
+            'method': method
         }, data);
 
         // Create form

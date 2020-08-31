@@ -18,4 +18,4 @@ $Component->setFunction(function ($props) {
 
 });
 
-Store::add($Component->build());
+Store::add($Component);

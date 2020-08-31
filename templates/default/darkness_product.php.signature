@@ -13,7 +13,7 @@
                         "name": "options"
                     }
                 ],
-                "verify": 1598524278,
+                "verify": 1598807154,
                 "pass": false
             }
         }
@@ -22,7 +22,7 @@
         "constants": {
             "MIRELE_SOURCE_DIR": {
                 "value": "http:\/\/localhost\/wp-content\/themes\/mirele-a1\/source",
-                "verify": 1598524278,
+                "verify": 1598807154,
                 "pass": false
             }
         }

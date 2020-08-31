@@ -72,7 +72,7 @@ class __TwigTemplate_e2049c67e00d3be543e9eac004b328352a3c2f0cac09e60cc31ca1f5f76
         <th> <?php echo \$body['page']['id']; ?> </th>
         <th> <?php echo count(\$body) - 1; ?> </th>
         <th> <?php foreach (\$pages as \$key => \$value): ?>
-            <?php if ((strpos(\$value->post_content, \"[rosemary page=\\\"\" . \$body['page']['id'] . \"\\\"]\") !== false) || (strpos(\$value->post_content, \"[rosemary page='\" . \$body['page']['id'] . \"']\") !== false)): ?>
+            <?php if ((strpos(\$value->post_content, \"[Compound page=\\\"\" . \$body['page']['id'] . \"\\\"]\") !== false) || (strpos(\$value->post_content, \"[Compound page='\" . \$body['page']['id'] . \"']\") !== false)): ?>
             <span>
                                             <?php echo \$value->post_title; ?>
                 <?php if (get_option('page_on_front') == \$value->ID): ?>
@@ -81,7 +81,7 @@ class __TwigTemplate_e2049c67e00d3be543e9eac004b328352a3c2f0cac09e60cc31ca1f5f76
                                         </span>
             <?php endif; ?>
             <?php endforeach; ?> </th>
-        <th> <?php echo sprintf('<code> [rosemary page=\"%s\"] </code>', \$body['page']['id']); ?> </th>
+        <th> <?php echo sprintf('<code> [Compound page=\"%s\"] </code>', \$body['page']['id']); ?> </th>
     </tr>
     <?php endforeach; ?>
 
@@ -101,6 +101,6 @@ class __TwigTemplate_e2049c67e00d3be543e9eac004b328352a3c2f0cac09e60cc31ca1f5f76
 
     public function getSourceContext()
     {
-        return new Source("", "editor/pages.twig", "/var/www/html/wp-content/themes/mirele-a1/templates/editor/pages.twig");
+        return new Source("", "editor/pages.twig", "/var/www/html/wp-content/themes/Main-a1/templates/editor/pages.twig");
     }
 }

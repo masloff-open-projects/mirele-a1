@@ -8,6 +8,6 @@
 * @since: Mirele Canvas 1
 */
 
-\Mirele\TWIG::Render('mirele/canvas', [
-    'signature' => initialize_templates(true)
+\Mirele\TWIG::Render('Main/canvas', [
+//    'signature' => initialize_templates(true)
 ]);

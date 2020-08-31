@@ -7,7 +7,7 @@
  * @version 1.0.0
  */
 
-\Mirele\TWIG::Render('mirele/single', [
+\Mirele\TWIG::Render('Main/single', [
     'ww2as'       => get_option('mrl_wp_sidebar_width_2_active', 2),
     'ww1as'       => get_option('mrl_wp_sidebar_width_1_active', 4),
     'ars'         => is_active_sidebar('right-side-single', 'false') == 'true' ? true : false,
