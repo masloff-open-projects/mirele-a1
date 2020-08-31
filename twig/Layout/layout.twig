@@ -5,13 +5,13 @@
 
         {% if als == true %}
 
-            <div class="col-sm-4">
+            <div class="col-sm-{{ (als == true and ars == true) ? ww2as : ww1as }} {{ hsmp == true ? 'd-none d-sm-block' : '' }}">
                 {{ Component('default_sidebar', {'name': lsbn}) }}
             </div>
 
         {% endif %}
 
-        <div class="col-sm-{{ (als == true and ars == true) ? '4' : ((als == true or ars == true) ? '8' : '12') }}">
+        <div class="col-sm-{{ (als == true and ars == true) ? 12 - ww2as : ((als == true or ars == true) ? 12 - ww1as : '12') }} col-xs-12">
 
             {% block main %}
 
@@ -21,7 +21,7 @@
 
         {% if ars == true %}
 
-            <div class="col-sm-4">
+            <div class="col-sm-{{ (als == true and ars == true) ? ww2as : ww1as }} {{ hsmp == true ? 'd-none d-sm-block' : '' }}">
                 {{ Component('default_sidebar', {'name': rsbn}) }}
             </div>
 

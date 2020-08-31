@@ -10,3 +10,10 @@ __Old S1 Architecture branch__: https://github.com/irtex-web/mirele-a1/tree/aa5a
 __A1 Architecture__: https://github.com/irtex-web/mirele-a1/tree/313878ba2fd8a9ccfa69513ff78a77804f22def2
 
 __A2 Architecture__: this
+
+### Road Map 
+[x] Component Creation
+
+[x] Component Storage Creation
+
+[x] Component Storage Creation
