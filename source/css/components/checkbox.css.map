@@ -1,7 +1,0 @@
-{
-"version": 3,
-"mappings": ";;AACA,gBAAgB;;;;;EACd,qCAAoB;IAClB,OAAO,EAAE,IAAI;EAGf,oDAAmC;IACjC,WAAW,EAAE,WAAW;IACxB,OAAO,EAAE,YAAY;EAGvB,oDAAmC;IACjC,OAAO,EAAE,GAAO;EAGlB,oDAAmC;IACjC,cAAc,EAAE,IAAI;EAItB,4DAA2C;IACzC,OAAO,EAAE,GAAO;EAGlB,4DAA2C;IACzC,cAAc,EAAE,GAAG",
-"sources": ["checkbox.sass"],
-"names": [],
-"file": "checkbox.css"
-}
