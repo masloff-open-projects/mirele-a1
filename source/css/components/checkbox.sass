@@ -1,0 +1,49 @@
+// Checkbox
+
+$checkboxWidth: 14px
+$checkboxHeight: 14px
+
+input[type="checkbox"]
+  width: $checkboxWidth
+  height: $checkboxHeight
+  border-width: 0 2px 2px 0
+  position: revert
+  display: inline-flex
+  margin: 2px
+  cursor: pointer
+
+  // In normal condition.
+  &:before
+    content: ""
+    background-size: 110%
+    background-position: -70% -153%
+    background-repeat: no-repeat
+    background-color: $UIBackground
+    border: $UIBorder $mainBorderColor
+    width: $checkboxHeight + 4px
+    height: $checkboxHeight + 4px
+    display: inline-table
+    position: relative
+    opacity: 1
+    top: -2px
+    left: -2px
+    transition: $mainTransition
+
+  // In activated state
+  &:checked:before
+    content: ""
+    background-image: url('data:image/svg+xml;utf8, <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill=""><path d="M6.11719 13.6836L0.246094 7.84766C0.0820312 7.68359 0 7.47266 0 7.21484C0 6.95703 0.0820312 6.74609 0.246094 6.58203L1.54688 5.31641C1.71094 5.12891 1.91016 5.03516 2.14453 5.03516C2.40234 5.03516 2.625 5.12891 2.8125 5.31641L6.75 9.25391L15.1875 0.816406C15.375 0.628906 15.5859 0.535156 15.8203 0.535156C16.0781 0.535156 16.2891 0.628906 16.4531 0.816406L17.7539 2.08203C17.918 2.24609 18 2.45703 18 2.71484C18 2.97266 17.918 3.18359 17.7539 3.34766L7.38281 13.6836C7.21875 13.8711 7.00781 13.9648 6.75 13.9648C6.49219 13.9648 6.28125 13.8711 6.11719 13.6836Z"/></svg>')
+    background-color: $UIBackground
+    border: $UIBorder $mainBorderColor
+    width: $checkboxHeight + 4px
+    height: $checkboxHeight + 4px
+    display: inline-table
+    position: relative
+    opacity: 1
+    top: -2px
+    left: -2px
+
+  // Forbidden to change
+  &[disabled]:before,
+  &[disabled]:checked:before
+    background-image: url('data:image/svg+xml;utf8, <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="gray"><path d="M6.11719 13.6836L0.246094 7.84766C0.0820312 7.68359 0 7.47266 0 7.21484C0 6.95703 0.0820312 6.74609 0.246094 6.58203L1.54688 5.31641C1.71094 5.12891 1.91016 5.03516 2.14453 5.03516C2.40234 5.03516 2.625 5.12891 2.8125 5.31641L6.75 9.25391L15.1875 0.816406C15.375 0.628906 15.5859 0.535156 15.8203 0.535156C16.0781 0.535156 16.2891 0.628906 16.4531 0.816406L17.7539 2.08203C17.918 2.24609 18 2.45703 18 2.71484C18 2.97266 17.918 3.18359 17.7539 3.34766L7.38281 13.6836C7.21875 13.8711 7.00781 13.9648 6.75 13.9648C6.49219 13.9648 6.28125 13.8711 6.11719 13.6836Z"/></svg>')

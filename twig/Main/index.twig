@@ -16,12 +16,45 @@
         <input type="password" required data-ignore-behaviour>
         <input type="url" data-ignore-behaviour>
 
-        <input type="checkbox">
+        <input type="checkbox" id="checkbox" checked>
+        <input type="checkbox" id="checkbox" checked disabled>
+        <input type="checkbox" id="checkbox">
+        <input type="checkbox" id="checkbox">
+        <input type="checkbox" id="checkbox">
+        <input type="checkbox" id="checkbox">
+        <input type="checkbox" id="checkbox">
+
+        <input type="radio" name="'" checked>
+        <input type="radio" name="'" checked disabled>
+        <input type="radio" name="'">
+        <input type="radio" name="'">
 
         <button tyle="submit">submit</button>
 
     </form>
 
+
+    <form action="">
+        <input type="checkbox" id="checkbox">
+        <label for="checkbox">Welcome</label>
+
+        <select size="3" multiple name="hero[]">
+            <option disabled>Выберите героя</option>
+            <option value="Чебурашка">Чебурашка</option>
+            <option selected value="Крокодил Гена">Крокодил Гена</option>
+            <option value="Шапокляк">Шапокляк</option>
+            <option value="Крыса Лариса">Крыса Лариса</option>
+        </select>
+
+        <select name="hero[]">
+            <option disabled>Выберите героя</option>
+            <option value="Чебурашка">Чебурашка</option>
+            <option selected value="Крокодил Гена">Крокодил Гена</option>
+            <option value="Шапокляк">Шапокляк</option>
+            <option value="Крыса Лариса">Крыса Лариса</option>
+        </select>
+
+    </form>
 
 
 {% endblock %}

@@ -1,12 +1,12 @@
 /**
  * 1) What is Sass?
- * Sass is a CSS-based metalanguage designed to increase CSS abstraction and simplify
- * cascading style sheet files.
+ *  Sass is a CSS-based metalanguage designed to increase CSS abstraction and simplify
+ *  cascading style sheet files.
  *
  * 2) What should I edit to make changes?
- * You should only edit sass, scss, less files.
- * Changes in css files will cause them to be overwritten.
- * You should also remember to compile the SASS files.
+ *  You should only edit sass, scss, less files.
+ *  Changes in css files will cause them to be overwritten.
+ *  You should also remember to compile the SASS files.
  *
  *
  * ███╗░░░███╗██╗██████╗░███████╗██╗░░░░░███████╗        ██╗░░░██╗██╗
@@ -35,10 +35,15 @@ $UIErrorBackground: #FAE9EC
 $UISuccessBorderColor: #9FD36A
 $UISuccessBackground: #F5FBEE
 
+$UIFrozeComponentColor: #9a9a9a
+$UIFrozeComponentFilter: grayscale(1)
+
 $UIBackground: rgba(242, 242, 242, 1)
 $UIBorder: solid 1.4px
 $UIColor: #131313
 $UIPadding: 6px 12px
+$UIPaddingX: 12px
+$UIPaddingY: 6px
 $UIFont: $mainFont
 $UIFontSize: 13px
 $UITransition: all 0.1s 0s ease-in-out
@@ -57,3 +62,6 @@ body
 @import components/link
 @import components/input
 @import components/scrollbar
+@import components/checkbox
+@import components/radio
+@import components/select
