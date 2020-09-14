@@ -4,7 +4,7 @@
  *
  * In 2.1 we show methods per package. This allows for multiple methods per order if so desired.
  *
- * This template can be overridden by copying it to yourtheme/woocommerce/cart/cart-shipping.php.
+ * This template can be overridden by copying it to yourtheme/Woocommerce/cart/cart-shipping.php.
  *
  * HOWEVER, on occasion WooCommerce will need to update template files and you
  * (the theme developer) will need to copy the new files to your theme to
@@ -48,10 +48,10 @@ $calculator_text          = '';
 					<?php
 					if ( $formatted_destination ) {
 						// Translators: $s shipping destination.
-						printf( esc_html__( 'Shipping to %s.', 'woocommerce' ) . ' ', '<strong>' . esc_html( $formatted_destination ) . '</strong>' );
-						$calculator_text = esc_html__( 'Change address', 'woocommerce' );
+						printf( esc_html__( 'Shipping to %s.', 'Woocommerce' ) . ' ', '<strong>' . esc_html( $formatted_destination ) . '</strong>' );
+						$calculator_text = esc_html__( 'Change address', 'Woocommerce' );
 					} else {
-						echo wp_kses_post( apply_filters( 'woocommerce_shipping_estimate_html', __( 'Shipping options will be updated during checkout.', 'woocommerce' ) ) );
+						echo wp_kses_post( apply_filters( 'woocommerce_shipping_estimate_html', __( 'Shipping options will be updated during checkout.', 'Woocommerce' ) ) );
 					}
 					?>
 				</p>
@@ -59,21 +59,21 @@ $calculator_text          = '';
 			<?php
 		elseif ( ! $has_calculated_shipping || ! $formatted_destination ) :
 			if ( is_cart() && 'no' === get_option( 'woocommerce_enable_shipping_calc' ) ) {
-				echo wp_kses_post( apply_filters( 'woocommerce_shipping_not_enabled_on_cart_html', __( 'Shipping costs are calculated during checkout.', 'woocommerce' ) ) );
+				echo wp_kses_post( apply_filters( 'woocommerce_shipping_not_enabled_on_cart_html', __( 'Shipping costs are calculated during checkout.', 'Woocommerce' ) ) );
 			} else {
-				echo wp_kses_post( apply_filters( 'woocommerce_shipping_may_be_available_html', __( 'Enter your address to view shipping options.', 'woocommerce' ) ) );
+				echo wp_kses_post( apply_filters( 'woocommerce_shipping_may_be_available_html', __( 'Enter your address to view shipping options.', 'Woocommerce' ) ) );
 			}
 		elseif ( ! is_cart() ) :
-			echo wp_kses_post( apply_filters( 'woocommerce_no_shipping_available_html', __( 'There are no shipping options available. Please ensure that your address has been entered correctly, or contact us if you need any help.', 'woocommerce' ) ) );
+			echo wp_kses_post( apply_filters( 'woocommerce_no_shipping_available_html', __( 'There are no shipping options available. Please ensure that your address has been entered correctly, or contact us if you need any help.', 'Woocommerce' ) ) );
 		else :
 			// Translators: $s shipping destination.
-			echo wp_kses_post( apply_filters( 'woocommerce_cart_no_shipping_available_html', sprintf( esc_html__( 'No shipping options were found for %s.', 'woocommerce' ) . ' ', '<strong>' . esc_html( $formatted_destination ) . '</strong>' ) ) );
-			$calculator_text = esc_html__( 'Enter a different address', 'woocommerce' );
+			echo wp_kses_post( apply_filters( 'woocommerce_cart_no_shipping_available_html', sprintf( esc_html__( 'No shipping options were found for %s.', 'Woocommerce' ) . ' ', '<strong>' . esc_html( $formatted_destination ) . '</strong>' ) ) );
+			$calculator_text = esc_html__( 'Enter a different address', 'Woocommerce' );
 		endif;
 		?>
 
 		<?php if ( $show_package_details ) : ?>
-			<?php echo '<p class="woocommerce-shipping-contents"><small>' . esc_html( $package_details ) . '</small></p>'; ?>
+			<?php echo '<p class="Woocommerce-shipping-contents"><small>' . esc_html( $package_details ) . '</small></p>'; ?>
 		<?php endif; ?>
 
 		<?php if ( $show_shipping_calculator ) : ?>

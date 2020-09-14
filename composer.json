@@ -1,5 +1,6 @@
 {
     "require": {
-        "twig/twig": "^2.0"
+        "twig/twig": "^2.0",
+        "voku/anti-xss": "^4.1"
     }
 }

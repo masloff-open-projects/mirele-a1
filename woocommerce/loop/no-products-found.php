@@ -2,7 +2,7 @@
 /**
  * Displayed when no products are found matching the current query
  *
- * This template can be overridden by copying it to yourtheme/woocommerce/loop/no-products-found.php.
+ * This template can be overridden by copying it to yourtheme/Woocommerce/loop/no-products-found.php.
  *
  * HOWEVER, on occasion WooCommerce will need to update template files and you
  * (the theme developer) will need to copy the new files to your theme to
@@ -26,4 +26,4 @@ defined( 'ABSPATH' ) || exit;
     <p>Let`s go back to the store and start shopping?</p>
 </div>
 
-<p class="woocommerce-info"><?php esc_html_e( 'No products were found matching your selection.', 'woocommerce' ); ?></p>
+<p class="woocommerce-info"><?php esc_html_e( 'No products were found matching your selection.', 'Woocommerce' ); ?></p>

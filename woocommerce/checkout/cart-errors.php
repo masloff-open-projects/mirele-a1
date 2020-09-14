@@ -2,7 +2,7 @@
 /**
  * Cart errors page
  *
- * This template can be overridden by copying it to yourtheme/woocommerce/checkout/cart-errors.php.
+ * This template can be overridden by copying it to yourtheme/Woocommerce/checkout/cart-errors.php.
  *
  * HOWEVER, on occasion WooCommerce will need to update template files and you
  * (the theme developer) will need to copy the new files to your theme to
@@ -18,8 +18,8 @@
 defined( 'ABSPATH' ) || exit;
 ?>
 
-<p><?php esc_html_e( 'There are some issues with the items in your cart. Please go back to the cart page and resolve these issues before checking out.', 'woocommerce' ); ?></p>
+<p><?php esc_html_e( 'There are some issues with the items in your cart. Please go back to the cart page and resolve these issues before checking out.', 'Woocommerce' ); ?></p>
 
 <?php do_action( 'woocommerce_cart_has_errors' ); ?>
 
-<p><a class="button wc-backward" href="<?php echo esc_url( wc_get_cart_url() ); ?>"><?php esc_html_e( 'Return to cart', 'woocommerce' ); ?></a></p>
+<p><a class="button wc-backward" href="<?php echo esc_url( wc_get_cart_url() ); ?>"><?php esc_html_e( 'Return to cart', 'Woocommerce' ); ?></a></p>

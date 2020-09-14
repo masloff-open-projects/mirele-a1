@@ -2,7 +2,7 @@
 /**
  * Login form
  *
- * This template can be overridden by copying it to yourtheme/woocommerce/global/form-login.php.
+ * This template can be overridden by copying it to yourtheme/Woocommerce/global/form-login.php.
  *
  * HOWEVER, on occasion WooCommerce will need to update template files and you
  * (the theme developer) will need to copy the new files to your theme to
@@ -31,11 +31,11 @@ if ( is_user_logged_in() ) {
 	<?php echo ( $message ) ? wpautop( wptexturize( $message ) ) : ''; // @codingStandardsIgnoreLine ?>
 
 	<p class="form-row form-row-first">
-		<label for="username"><?php esc_html_e( 'Username or email', 'woocommerce' ); ?>&nbsp;<span class="required">*</span></label>
+		<label for="username"><?php esc_html_e( 'Username or email', 'Woocommerce' ); ?>&nbsp;<span class="required">*</span></label>
 		<input type="text" class="input-text" name="username" id="username" autocomplete="username" />
 	</p>
 	<p class="form-row form-row-last">
-		<label for="password"><?php esc_html_e( 'Password', 'woocommerce' ); ?>&nbsp;<span class="required">*</span></label>
+		<label for="password"><?php esc_html_e( 'Password', 'Woocommerce' ); ?>&nbsp;<span class="required">*</span></label>
 		<input class="input-text" type="password" name="password" id="password" autocomplete="current-password" />
 	</p>
 	<div class="clear"></div>
@@ -44,14 +44,14 @@ if ( is_user_logged_in() ) {
 
 	<p class="form-row">
 		<label class="woocommerce-form__label woocommerce-form__label-for-checkbox woocommerce-form-login__rememberme">
-			<input class="woocommerce-form__input woocommerce-form__input-checkbox" name="rememberme" type="checkbox" id="rememberme" value="forever" /> <span><?php esc_html_e( 'Remember me', 'woocommerce' ); ?></span>
+			<input class="woocommerce-form__input woocommerce-form__input-checkbox" name="rememberme" type="checkbox" id="rememberme" value="forever" /> <span><?php esc_html_e( 'Remember me', 'Woocommerce' ); ?></span>
 		</label>
-		<?php wp_nonce_field( 'woocommerce-login', 'woocommerce-login-nonce' ); ?>
+		<?php wp_nonce_field( 'Woocommerce-login', 'Woocommerce-login-nonce' ); ?>
 		<input type="hidden" name="redirect" value="<?php echo esc_url( $redirect ); ?>" />
-		<button type="submit" class="woocommerce-button button woocommerce-form-login__submit" name="login" value="<?php esc_attr_e( 'Login', 'woocommerce' ); ?>"><?php esc_html_e( 'Login', 'woocommerce' ); ?></button>
+		<button type="submit" class="woocommerce-button button woocommerce-form-login__submit" name="login" value="<?php esc_attr_e( 'Login', 'Woocommerce' ); ?>"><?php esc_html_e( 'Login', 'Woocommerce' ); ?></button>
 	</p>
 	<p class="lost_password">
-		<a href="<?php echo esc_url( wp_lostpassword_url() ); ?>"><?php esc_html_e( 'Lost your password?', 'woocommerce' ); ?></a>
+		<a href="<?php echo esc_url( wp_lostpassword_url() ); ?>"><?php esc_html_e( 'Lost your password?', 'Woocommerce' ); ?></a>
 	</p>
 
 	<div class="clear"></div>

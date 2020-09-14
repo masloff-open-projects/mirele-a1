@@ -3,7 +3,7 @@
 /**
  * The template for displaying product category thumbnails within loops
  *
- * This template can be overridden by copying it to yourtheme/woocommerce/content-product_cat.php.
+ * This template can be overridden by copying it to yourtheme/Woocommerce/content-product_cat.php.
  *
  * HOWEVER, on occasion WooCommerce will need to update template files and you
  * (the theme developer) will need to copy the new files to your theme to
@@ -23,6 +23,6 @@ if (!isset($category)) {
     global $category;
 }
 
-\Mirele\TWIG::Render('woocommerce/category-cart', [
+\Mirele\TWIG::Render('Woocommerce/category-cart', [
     'category' => $category
 ]);

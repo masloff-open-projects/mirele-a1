@@ -3,7 +3,7 @@
 /**
  * The template for displaying product content within loops
  *
- * This template can be overridden by copying it to yourtheme/woocommerce/content-product.php.
+ * This template can be overridden by copying it to yourtheme/Woocommerce/content-product.php.
  *
  * HOWEVER, on occasion WooCommerce will need to update template files and you
  * (the theme developer) will need to copy the new files to your theme to
@@ -23,9 +23,17 @@ if (!isset($product)) {
     global $product;
 }
 
+# Add vars
+$product->get_image_src = wp_get_attachment_url(get_post_thumbnail_id($product->get_id()));
+$product->get_placeholder_src = wc_placeholder_img_src();
+
 # If the product exists and is not hidden - output the product template
 if (!(empty($product) || !$product->is_visible())) {
-	\Mirele\TWIG::Render('woocommerce/product-cart', [
-		'product' => $product
+	\Mirele\TWIG::Render('Woocommerce/product-cart', [
+		'product' => $product,
+        'grid' => [
+            'columns' => get_option( 'woocommerce_catalog_columns', 4 ),
+            'rows' => get_option( 'woocommerce_catalog_rows', 8 ),
+        ]
 	]);
 }

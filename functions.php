@@ -23,7 +23,8 @@
 
 use Mirele\TWIG;
 use Mirele\Framework;
-use Mirele\Framework\Store;
+use Mirele\Compound\Store;
+use Mirele\Framework\Stringer;
 use Mirele\Router;
 
 # Checking the compatibility and legality of the file call
@@ -62,6 +63,7 @@ define('MIRELE_GET', $_GET);
 define('MIRELE_POST', $_POST);
 define('ROSEMARY_VARCHAR_SIZE_DB', 512);
 define('ROSEMARY_VARCHAR_INT_DB', 64);
+define('WOOCOMMERCE_SUPPORT', function_exists('is_woocommerce'));
 
 # Meta Constants
 define('MIRELE_VERSION', "1.0.0");
@@ -110,60 +112,64 @@ if (wp_doing_ajax() === false) {
 
         # Main Core
         include_once 'core/class/TWIG.php';
-        include_once 'core/class/Rosemary.php';
         include_once 'core/class/Router.php';
-        include_once 'core/class/MLogger.php';
         include_once 'core/Framework/Iterator.php';
         include_once 'core/Framework/WPGNU.php';
         include_once 'core/Framework/Buffer.php';
         include_once 'core/Framework/String.php';
         include_once 'core/Framework/Storage.php';
-        include_once 'core/Framework/Component.php';
-        include_once 'core/Framework/Option.php';
-        include_once 'core/Framework/Customizer.php';
         include_once 'core/Framework/TWIG.php';
         include_once 'core/Framework/TWIGWoocommerce.php';
-        include_once 'core/Framework/Store.php';
-
-
-        # Architecture class sets
-        include_once 'core/class/RDeveloper.php';
-        include_once 'core/class/RManager.php';
+        include_once 'core/Framework/Customizer.php';
+        include_once 'core/Framework/Option.php';
+        include_once 'core/Compound/Component.php';
+        include_once 'core/Compound/Store.php';
 
         # Arrhitectural Classes Sets (Mirele)
+        include_once 'core/class/MFile.php';
         include_once 'core/class/MApps.php';
         include_once 'core/class/MCache.php';
         include_once 'core/class/MHubSpot.php';
         include_once 'core/class/MMailChimp.php';
         include_once 'core/class/MSafe.php';
-        include_once 'core/class/MVersion.php';
-        include_once 'core/class/MRepository.php';
-        include_once 'core/class/MRouter.php';
-        include_once 'core/class/MAjax.php';
-        include_once 'core/class/MPager.php';
-        include_once 'core/class/MSettings.php';
-        include_once 'core/class/MStyler.php';
         include_once 'core/class/MBBPress.php';
         include_once 'core/class/MDemos.php';
         include_once 'core/class/MNotification.php';
+        include_once 'core/class/MLogger.php';
 
         # Meta
         include_once "meta.php";
+
+        # Abstract core files
+        include_once 'core/Option.php';
 
     # UI components must be connected strictly after
     # all building cores are ready for use.
 
         # Components
+        include_once 'Components/Grids/default.php';
+        include_once 'Components/Carts/default.php';
         include_once 'Components/Sidebars/default.php';
         include_once 'Components/Footers/default.php';
         include_once 'Components/Navbars/default.php';
-        include_once 'Components/Menu/default_navbar.php';
+        include_once 'Components/Menus/default_navbar.php';
+        include_once 'Components/Woocommerce/Carousel/default.php';
+        include_once 'Components/Woocommerce/Notices/default.php';
+        include_once 'Components/Woocommerce/Gallerys/default.php';
+        include_once 'Components/Woocommerce/Tables/Orders/default.php';
+        include_once 'Components/Woocommerce/Tables/Downloads/default.php';
+        include_once 'Components/Woocommerce/Tables/Cart/default.php';
+        include_once 'Components/Woocommerce/Placeholders/Orders/default.php';
+        include_once 'Components/Woocommerce/Placeholders/Downloads/default.php';
 
 } else {
 
     # Initially, Mirele needs to create its own infostructure,
     # which will already be used within the elements and components
     # of the interest.
+
+        # Arrhitectural Classes Sets (Mirele)
+        include_once 'core/class/MFile.php';
 
         # Main core
         include_once 'core/class/Router.php';
@@ -172,17 +178,15 @@ if (wp_doing_ajax() === false) {
         include_once 'core/Framework/WPGNU.php';
         include_once 'core/Framework/Buffer.php';
         include_once 'core/Framework/String.php';
+        include_once 'core/Framework/Int.php';
         include_once 'core/Framework/Storage.php';
         include_once 'core/Framework/Component.php';
         include_once 'core/Framework/Option.php';
         include_once 'core/Framework/Customizer.php';
 
-        # Arrhitectural Classes Sets (Mirele)
-        include_once 'core/class/MFile.php';
-
         # Abstract core files
-        include_once 'core/Router.php';
         include_once 'core/Option.php';
+        include_once 'core/Router.php';
 
 }
 
@@ -267,24 +271,71 @@ add_action(
     'init', function () {
 
         # Registration of some components of the Compound
-        add_shortcode('component_compound', function ($attr) {
-            Store::call($attr['name'], (array) $attr);
+        add_shortcode('Component', function ($attr, $content) {
+            Store::call($attr['name'], array_merge((array) $attr, (array) ['context_content' => $content]));
         });
 
-        # We will register all necessary scripts in the future.
-        wp_register_script('fontAwesome', 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/js/all.min.js');
-        wp_register_script('vue', 'https://cdn.jsdelivr.net/npm/vue');
-        wp_register_script('popper', 'https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js');
-        wp_register_script('axios', 'https://unpkg.com/axios/dist/axios.min.js');
-        wp_register_script('bootstrap4', 'https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js', array('jquery'));
-        wp_register_script('babel', 'https://unpkg.com/@babel/standalone/babel.min.js', array('jquery'), '', false);
-        wp_register_script('mirele_admin', MIRELE_SOURCE_DIR . '/js/admin.js', array('jquery', 'vue'), '', false);
-        wp_register_script('mireleapi', MIRELE_SOURCE_DIR . '/js/API.js', array('jquery'), '', false);
-        wp_register_script('babelui', MIRELE_SOURCE_DIR . '/js/babel.js', array('babel', 'jquery'), '', false);
+        # Register custom shortcodes
+        add_shortcode('Page', function ($attr, $content) {
+            \Mirele\TWIG::Render($attr['name'], $attr);
+        });
+
+        # Disable unnecessary scripts
+        wp_dequeue_style( 'woocommerce_frontend_styles' );
+        wp_dequeue_style( 'woocommerce-general');
+        wp_dequeue_style( 'woocommerce-layout' );
+        wp_dequeue_style( 'woocommerce-smallscreen' );
+        wp_dequeue_style( 'woocommerce_fancybox_styles' );
+        wp_dequeue_style( 'woocommerce_chosen_styles' );
+        wp_dequeue_style( 'woocommerce_prettyPhoto_css' );
+
+        wp_deregister_script( 'selectWoo' );
+
+        wp_dequeue_script( 'selectWoo' );
+        wp_dequeue_script( 'wc-add-payment-method' );
+        wp_dequeue_script( 'wc-lost-password' );
+        wp_dequeue_script( 'wc_price_slider' );
+        wp_dequeue_script( 'wc-single-product' );
+        wp_dequeue_script( 'wc-add-to-cart' );
+        wp_dequeue_script( 'wc-cart-fragments' );
+        wp_dequeue_script( 'wc-credit-card-form' );
+        wp_dequeue_script( 'wc-checkout' );
+        wp_dequeue_script( 'wc-add-to-cart-variation' );
+        wp_dequeue_script( 'wc-single-product' );
+        wp_dequeue_script( 'wc-cart' );
+        wp_dequeue_script( 'wc-chosen' );
+        wp_dequeue_script( 'woocommerce' );
+        wp_dequeue_script( 'prettyPhoto' );
+        wp_dequeue_script( 'prettyPhoto-init' );
+        wp_dequeue_script( 'jquery-blockui' );
+        wp_dequeue_script( 'jquery-placeholder' );
+        wp_dequeue_script( 'jquery-payment' );
+        wp_dequeue_script( 'fancybox' );
+        wp_dequeue_script( 'jqueryui' );
+
+        # Turn off unnecessary scripts through filters.
+        add_filter( 'woocommerce_enqueue_styles', '__return_empty_array' );
+
+         # We will register all necessary scripts in the future.
+        wp_register_script('fontAwesome', 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/js/all.min.js', array('jquery'), '', true);
+        wp_register_script('vue', 'https://cdn.jsdelivr.net/npm/vue', array('jquery'), '', true);
+        wp_register_script('popper', 'https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js', array('jquery'), '', true);
+        wp_register_script('axios', 'https://unpkg.com/axios/dist/axios.min.js', array('jquery'), '', true);
+        wp_register_script('bootstrap4', 'https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js', array('jquery'), '', true);
+        wp_register_script('babel', 'https://unpkg.com/@babel/standalone/babel.min.js', array('jquery'), '', true);
+        wp_register_script('mirele_admin', MIRELE_SOURCE_DIR . '/js/admin.min.js', array('jquery', 'vue'), '', true);
+        wp_register_script('mireleapi', MIRELE_SOURCE_DIR . '/js/API.min.js', array('babel', 'jquery', 'vue'), '', true);
+        wp_register_script('babelui', MIRELE_SOURCE_DIR . '/js/babel.js', array('babel', 'jquery'), '', true);
+
+        wp_register_script('woocommerceui_product', MIRELE_SOURCE_DIR . '/js/woocommerceui_product.min.js', array('babel', 'jquery', 'vue', 'mireleapi'), '', true);
+        wp_register_script('woocommerceui_products', MIRELE_SOURCE_DIR . '/js/woocommerceui_products.min.js', array('babel', 'jquery', 'vue', 'mireleapi'), '', true);
+        wp_register_script('woocommerceui_login', MIRELE_SOURCE_DIR . '/js/woocommerceui_login.min.js', array('babel', 'jquery', 'vue', 'mireleapi'), '', true);
+        wp_register_script('woocommerceui_signup', MIRELE_SOURCE_DIR . '/js/woocommerceui_signup.min.js', array('babel', 'jquery', 'vue', 'mireleapi'), '', true);
+        wp_register_script('woocommerceui_recovery_password', MIRELE_SOURCE_DIR . '/js/woocommerceui_recovery_password.min.js', array('babel', 'jquery', 'vue', 'mireleapi'), '', true);
 
         # We will register all styles necessary in the future.
         wp_register_style('fontAwesome', 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css');
-        wp_register_style('bootsrtap4', 'https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css', false);
+        wp_register_style('bootsrtap4', 'https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css', false);
         wp_register_style('main_style', MIRELE_SOURCE_DIR . '/css/style.css', false);
         wp_register_style('admin_style', MIRELE_SOURCE_DIR . '/css/admin.css', false);
 
@@ -305,6 +356,176 @@ add_action(
                 ]
             ]
         );
+
+        # If support for WooCommerce is provided,
+        # we reassign the routing of code shorts.
+        if (WOOCOMMERCE_SUPPORT) {
+
+            remove_shortcode ("woocommerce_my_account");
+            add_shortcode ("woocommerce_my_account", function () {
+
+                # If the user is authorized, let's display the page of his account.
+                if (is_user_logged_in() === true) {
+
+                    # User requests a page to edit the client profile
+                    if (is_wc_endpoint_url('edit-account')) {
+
+                        # User Generation
+                        $user = (object) wp_get_current_user();
+                        $user->avatar = get_avatar_url($user->ID);
+
+                        # Render
+                        TWIG::Render('Woocommerce/account/edit/profile', [
+                            'user' => (object) $user,
+                        ]);
+
+                    }
+
+                    # User does not ask for anything.
+                    else {
+
+                        # User Generation
+                        $user = (object) wp_get_current_user();
+                        $user->avatar = get_avatar_url($user->ID);
+
+                        # Generation of user downloads
+                        $downloads = wc_get_customer_available_downloads($user->ID);
+
+                        # Generation of user orders
+                        $orders = get_posts(array(
+                            'numberposts' => -1,
+                            'meta_key'    => '_customer_user',
+                            'meta_value'  => get_current_user_id(),
+                            'post_type'   => wc_get_order_types(),
+                            'post_status' => array_keys( wc_get_order_statuses() )
+                        ));
+
+                        foreach ($orders as $order) {
+                            $orders[(new Stringer(strtoupper($order->post_status)))->format(['WC-' => 'ORDERS_'])]++;
+                        }
+
+                        # Render
+                        TWIG::Render('Woocommerce/account', [
+                            'account'=> (object) [
+                                'user' => (object) $user,
+                                'orders' => (array) $orders,
+                                'downloads' => (array) $downloads
+                            ]
+                        ]);
+
+                    }
+
+                # Otherwise we will send to the authorization page
+                } else {
+
+                    # Render
+                    # Checking to see if a page has been opened purposefully
+                    # or if a user has accessed it in order to access the account.
+                    if (isset((MIRELE_GET)['action'])) {
+
+                        switch ((MIRELE_GET)['action']) {
+
+                            case 'login':
+
+                                # Include scripts and styles
+                                wp_enqueue_script('woocommerceui_login');
+
+                                # Render page
+                                TWIG::Render('@login', [
+                                    'content' => [
+                                        'title' => Framework\Customizer::get('authorization_login', 'mrl_wp_title_login', []),
+                                        'description' => Framework\Customizer::get('authorization_login', 'mrl_wp_description_login', []),
+                                    ]
+                                ]);
+                                break;
+
+                            case 'register':
+
+                                # Include scripts and styles
+                                wp_enqueue_script('woocommerceui_signup');
+
+                                # Render page
+                                TWIG::Render('@signup', [
+                                    'content' => [
+                                        'title' => Framework\Customizer::get('authorization_signup', 'mrl_wp_title_signup', []),
+                                        'description' => Framework\Customizer::get('authorization_signup', 'mrl_wp_description_signup', [])
+                                    ]
+                                ]);
+                                break;
+
+                            default:
+
+                                # Include scripts and styles
+                                wp_enqueue_script('woocommerceui_login');
+
+                                # Render page
+                                TWIG::Render('@login', [
+                                    'content' => [
+                                        'title' => Framework\Customizer::get('authorization_login', 'mrl_wp_title_login', []),
+                                        'description' => Framework\Customizer::get('authorization_login', 'mrl_wp_description_login', [])
+                                    ]
+                                ]);
+                                break;
+                        }
+
+                    } else {
+
+                        if (false) {
+
+                        }
+
+                        # User requests a password recovery page
+                        elseif (is_wc_endpoint_url('lost-password')) {
+
+                            # Include scripts and styles
+                            wp_enqueue_script('woocommerceui_recovery_password');
+
+                            # Render
+                            TWIG::Render('@passwordRecovery', [
+                                'content' => [
+                                    'title' => Framework\Customizer::get('authorization_recovery_password', 'mrl_wp_title_recovery_password', []),
+                                    'description' => Framework\Customizer::get('authorization_recovery_password', 'mrl_wp_description_recovery_password', [])
+                                ]
+                            ]);
+
+                        } else {
+
+                            # Redirect the user to the authorization,
+                            # as he is not authorized and entered the page
+                            # without a specific purpose.
+
+                            # Include scripts and styles
+                            wp_enqueue_script('woocommerceui_login');
+
+                            # Render page
+                            TWIG::Render('@login', [
+                                'content' => [
+                                    'title' => Framework\Customizer::get('authorization_login', 'mrl_wp_title_login', []),
+                                    'description' => Framework\Customizer::get('authorization_login', 'mrl_wp_description_login', [])
+                                ]
+                            ]);
+
+                        }
+
+
+                    }
+
+                }
+
+            });
+
+        }
+
+        # Writing data filters
+        # Register URL
+        add_filter('register_url', function ($data) {
+            return get_permalink(get_option('woocommerce_myaccount_page_id')) . '?action=register';
+        }, 1, 1);
+        
+        # Login URL
+        add_filter('login_url', function ($data) {
+            return get_permalink(get_option('woocommerce_myaccount_page_id')) . '?action=login';
+        }, 1, 1);
 
 });
 
@@ -330,6 +551,7 @@ add_action(
 add_action(
     'wp_enqueue_scripts', function () {
 
+        # Scripts and styles for all pages
         wp_enqueue_script('vue');
         wp_enqueue_script('axios');
         wp_enqueue_script('babel');
@@ -375,7 +597,26 @@ add_action(
     
         add_menu_page(
             'MIRELE', 'Compound Editor', MIRELE_MIN_PERMISSIONS_FOR_EDIT, 'сompound_render_editor', function () {
-            TWIG::Render('Compound/main');
+
+                if (isset((MIRELE_GET)['page_id']) ? (MIRELE_GET)['page_id'] : false) {
+
+                    # Render Page Editor
+                    TWIG::Render('Compound/editor', [
+                        'pages' => ''
+                    ]);
+
+                } else {
+
+                    # Render list of all pages or welcome message if there are no pages
+                    TWIG::Render('Compound/main', [
+                        'pages' => get_pages( array(
+                            'meta_key' => '_wp_page_template',
+                            'meta_value' => ROSEMARY_CANVAS
+                        ))
+                    ]);
+
+                }
+
         }, 'dashicons-welcome-write-blog', 3);
     
         add_submenu_page(

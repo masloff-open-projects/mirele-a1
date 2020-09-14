@@ -1,0 +1,32 @@
+{# User Block #}
+
+<div class="blocks user px-2 py-2 my-4 mb-5">
+    <div class="container p-1">
+        <div class="row p-0">
+            <div class="col-md-2 text-right float-right px-5 py-4">
+                <img class="img-fluid d-block avatar" src="{{ account.user.avatar }}">
+            </div>
+            <div class="col-md-6 py-4 px-0 float-left">
+
+                {% if account.user.first_name and account.user.last_name %}
+                    <h5 class="font-weight-bold pb-1">{{ account.user.first_name }} {{ account.user.last_name }}</h5>
+                {% elseif (account.user.first_name and account.user.last_name) == false%}
+                    <h5 class="font-weight-bold pb-1">{{ account.user.display_name }}</h5>
+                {% else %}
+                    <h5 class="font-weight-bold pb-1">Unknown</h5>
+                {% endif %}
+
+
+
+                <h6 class="pb-3">{{ account.user.user_email }}</h6>
+                <small class="text-muted">{{ account.user.roles|join(', ')|capitalize }}</small>
+            </div>
+            <div class="col-md-4 text-right float-right">
+                <ul class="nav nav-pills float-right p-2">
+                    <li class="nav-item"> <a href="{{ url.customer.edit }}" class="nav-link p-2"><i class="d-block fa fa-pen"></i></a> </li>
+                    <li class="nav-item"> <a href="{{ url.logout }}" class="nav-link p-2"><i class="d-block fa fa-sign-out-alt"></i></a> </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>

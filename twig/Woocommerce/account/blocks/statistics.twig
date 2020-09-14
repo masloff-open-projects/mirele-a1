@@ -1,0 +1,40 @@
+{# Statistics Block #}
+
+<div class="blocks px-2 py-2 my-4">
+    <div class="container p-1">
+        <div class="row blocks statistics">
+            <div class="col-md-3">
+                <h3>
+                    {{ account.orders.ORDERS_COMPLETED ? account.orders.ORDERS_COMPLETED : 0 }}
+                </h3>
+                <p>
+                    Completed orders
+                </p>
+            </div>
+            <div class="col-md-3">
+                <h3>
+                    {{ account.orders.ORDERS_PROCESSING ? account.orders.ORDERS_PROCESSING : 0 }}
+                </h3>
+                <p>
+                    Orders in Processing
+                </p>
+            </div>
+            <div class="col-md-3">
+                <h3>
+                    ...
+                </h3>
+                <p>
+                    Orders are waiting to be paid
+                </p>
+            </div>
+            <div class="col-md-3">
+                <h3>
+                    ...
+                </h3>
+                <p>
+                    Failed orders
+                </p>
+            </div>
+        </div>
+    </div>
+</div>

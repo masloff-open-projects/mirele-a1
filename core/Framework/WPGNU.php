@@ -14,9 +14,11 @@ class WPGNU
     }
 
     static private function _WPTable () {
-        return new class extends \WP_List_Table
+        $class = new class extends \WP_List_Table
         {
 
+            private $bulk = array();
+            private $bulkActions = array();
             private $columns = array();
             private $hidden_columns = array();
             private $sortable_columns = array();
@@ -24,16 +26,39 @@ class WPGNU
             private $perPage = 10;
             private $actionOnID = array();
 
-            public function __construct()
+            public function __construct($props=array(
+                'singular' => 'singular_form',
+                'plural'   => 'plural_form',
+                'ajax'     => true
+            ))
+
             {
-                parent::__construct( array(
-                    'ajax'     => true
-                ));
+
+                global $status, $page;
+
+                parent::__construct($props);
+            }
+
+            function display() {
+
+                /**
+                 * Adds a nonce field
+                 */
+                wp_nonce_field( 'ajax-custom-list-nonce', '_ajax_custom_list_nonce' );
+
+                /**
+                 * Adds field order and orderby
+                 */
+                echo '<input type="hidden" id="order" name="order" value="' . $this->_pagination_args['order'] . '" />';
+                echo '<input type="hidden" id="orderby" name="orderby" value="' . $this->_pagination_args['orderby'] . '" />';
+
+                parent::display();
             }
 
             public function render() {
                 return $this->display();
             }
+
 
             /**
              * @param array $sortable_columns
@@ -41,6 +66,14 @@ class WPGNU
             public function setSortableColumns($sortable_columns)
             {
                 $this->sortable_columns = (array) $sortable_columns;
+            }
+
+            /**
+             * @param array $bulk
+             */
+            public function setBulk(array $bulk)
+            {
+                $this->bulk = $bulk;
             }
 
             /**
@@ -109,6 +142,31 @@ class WPGNU
                 $this->data = $data;
             }
 
+            public function process_bulk_action() {
+
+                // security check!
+                if ( isset( $_POST['_wpnonce'] ) && ! empty( $_POST['_wpnonce'] ) ) {
+
+                    $nonce  = filter_input( INPUT_POST, '_wpnonce', FILTER_SANITIZE_STRING );
+                    $action = 'bulk-' . $this->_args['plural'];
+
+                    if ( ! wp_verify_nonce( $nonce, $action ) )
+                        wp_die( 'Nope! Security check failed!' );
+
+                }
+
+                $action = $this->current_action();
+
+                return;
+            }
+
+            function column_cb($item){
+                return sprintf(
+                    '<input type="checkbox" name="%1$s[]" value="%2$s" />',
+                    /*$1%s*/ $this->_args['singular'],
+                    /*$2%s*/ isset($item['id']) ? $item['id'] : (isset($item['ID']) ? $item['ID'] : (''))
+                );
+            }
 
             /**
              * Prepare the items for the table to process
@@ -130,7 +188,8 @@ class WPGNU
 
                 $this->set_pagination_args( array(
                     'total_items' => $totalItems,
-                    'per_page'    => $perPage
+                    'per_page'    => $perPage,
+                    'total_pages' => ceil($totalItems/$perPage)
                 ) );
 
                 $data = array_slice($data,(($currentPage-1)*$perPage),$perPage);
@@ -139,6 +198,7 @@ class WPGNU
                 $this->items = $data;
 
                 $this->process_bulk_action();
+
             }
 
             /**
@@ -166,7 +226,7 @@ class WPGNU
              *
              * @return Array
              */
-            public function get_sortable_columns()
+            protected function get_sortable_columns()
             {
                 return $this->sortable_columns;
             }
@@ -176,7 +236,7 @@ class WPGNU
              *
              * @return Array
              */
-            private function table_data()
+            protected function table_data()
             {
                 return $this->data;
             }
@@ -189,7 +249,7 @@ class WPGNU
              *
              * @return Mixed
              */
-            public function column_default( $item, $column_name )
+            protected function column_default( $item, $column_name )
             {
                 if (isset($item[$column_name]) === true) {
                     return $item[$column_name];
@@ -203,7 +263,7 @@ class WPGNU
              *
              * @return Mixed
              */
-            private function sort_data( $a, $b )
+            protected function sort_data( $a, $b )
             {
                 // Set defaults
                 $orderby = 'title';
@@ -232,7 +292,12 @@ class WPGNU
                 return -$result;
             }
 
+            protected function get_bulk_actions() {
+                return $this->bulk;
+            }
+
         };
+        return $class;
     }
 
     static public function Table () {

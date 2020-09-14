@@ -11,6 +11,12 @@ class Customizer extends Iterator
     private static $lastNamespace = "*";
     private static $options = [];
 
+    static private function alias () {
+        return [
+            '{WEBSITE_NAME}' => get_bloginfo ('name', 'display')
+        ];
+    }
+
     static private function _namespace ($namespace) {
         return (new Stringer($namespace))::format([
             '{LAST}' => self::$lastNamespace,
@@ -49,7 +55,31 @@ class Customizer extends Iterator
         $namespace = self::_namespace($namespace);
 
         if (isset(self::$options[$namespace][$name])) {
-            return (object) self::$options[$namespace][$name]->build();
+            return (object) array_merge(
+                (array) self::$options[$namespace][$name]->build(),
+                (array) $props
+            );
+        } else {
+            return false;
+        }
+
+    }
+
+    static public function get (string $namespace, string $name, array $props) {
+
+        $namespace = self::_namespace($namespace);
+
+        if (isset(self::$options[$namespace][$name])) {
+
+            $instance = (object) array_merge(
+                (array) self::$options[$namespace][$name]->build(),
+                (array) $props
+            );
+            $value = $instance->value;
+            $default = $instance->default;
+
+            return (new Stringer((new Stringer($value))::get("") ? $value : $default))::format(self::alias());
+
         } else {
             return false;
         }

@@ -2,7 +2,7 @@
 /**
  * Checkout Payment Section
  *
- * This template can be overridden by copying it to yourtheme/woocommerce/checkout/payment.php.
+ * This template can be overridden by copying it to yourtheme/Woocommerce/checkout/payment.php.
  *
  * HOWEVER, on occasion WooCommerce will need to update template files and you
  * (the theme developer) will need to copy the new files to your theme to
@@ -30,7 +30,7 @@ if ( ! is_ajax() ) {
 					wc_get_template( 'checkout/payment-method.php', array( 'gateway' => $gateway ) );
 				}
 			} else {
-				echo '<li class="woocommerce-notice woocommerce-notice--info woocommerce-info">' . apply_filters( 'woocommerce_no_available_payment_methods_message', WC()->customer->get_billing_country() ? esc_html__( 'Sorry, it seems that there are no available payment methods for your state. Please contact us if you require assistance or wish to make alternate arrangements.', 'woocommerce' ) : esc_html__( 'Please fill in your details above to see available payment methods.', 'woocommerce' ) ) . '</li>'; // @codingStandardsIgnoreLine
+				echo '<li class="Woocommerce-notice Woocommerce-notice--info Woocommerce-info">' . apply_filters( 'woocommerce_no_available_payment_methods_message', WC()->customer->get_billing_country() ? esc_html__( 'Sorry, it seems that there are no available payment methods for your state. Please contact us if you require assistance or wish to make alternate arrangements.', 'Woocommerce' ) : esc_html__( 'Please fill in your details above to see available payment methods.', 'Woocommerce' ) ) . '</li>'; // @codingStandardsIgnoreLine
 			}
 			?>
 		</ul>
@@ -39,9 +39,9 @@ if ( ! is_ajax() ) {
 		<noscript>
 			<?php
 			/* translators: $1 and $2 opening and closing emphasis tags respectively */
-			printf( esc_html__( 'Since your browser does not support JavaScript, or it is disabled, please ensure you click the %1$sUpdate Totals%2$s button before placing your order. You may be charged more than the amount stated above if you fail to do so.', 'woocommerce' ), '<em>', '</em>' );
+			printf( esc_html__( 'Since your browser does not support JavaScript, or it is disabled, please ensure you click the %1$sUpdate Totals%2$s button before placing your order. You may be charged more than the amount stated above if you fail to do so.', 'Woocommerce' ), '<em>', '</em>' );
 			?>
-			<br/><button type="submit" class="button alt" name="woocommerce_checkout_update_totals" value="<?php esc_attr_e( 'Update totals', 'woocommerce' ); ?>"><?php esc_html_e( 'Update totals', 'woocommerce' ); ?></button>
+			<br/><button type="submit" class="button alt" name="woocommerce_checkout_update_totals" value="<?php esc_attr_e( 'Update totals', 'Woocommerce' ); ?>"><?php esc_html_e( 'Update totals', 'Woocommerce' ); ?></button>
 		</noscript>
 
 		<?php wc_get_template( 'checkout/terms.php' ); ?>
@@ -52,7 +52,7 @@ if ( ! is_ajax() ) {
 
 		<?php do_action( 'woocommerce_review_order_after_submit' ); ?>
 
-		<?php wp_nonce_field( 'woocommerce-process_checkout', 'woocommerce-process-checkout-nonce' ); ?>
+		<?php wp_nonce_field( 'Woocommerce-process_checkout', 'Woocommerce-process-checkout-nonce' ); ?>
 	</div>
 </div>
 <?php

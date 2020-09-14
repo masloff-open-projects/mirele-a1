@@ -4,7 +4,7 @@
  *
  * Contains the markup for the proceed to checkout button on the cart.
  *
- * This template can be overridden by copying it to yourtheme/woocommerce/cart/proceed-to-checkout-button.php.
+ * This template can be overridden by copying it to yourtheme/Woocommerce/cart/proceed-to-checkout-button.php.
  *
  * HOWEVER, on occasion WooCommerce will need to update template files and you
  * (the theme developer) will need to copy the new files to your theme to
@@ -23,5 +23,5 @@ if ( ! defined( 'ABSPATH' ) ) {
 ?>
 
 <a href="<?php echo esc_url( wc_get_checkout_url() ); ?>" class="checkout-button alt">
-	<?php esc_html_e( 'Continue', 'woocommerce' ); ?>
+	<?php esc_html_e( 'Continue', 'Woocommerce' ); ?>
 </a>

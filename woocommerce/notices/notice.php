@@ -2,7 +2,7 @@
 /**
  * Show messages
  *
- * This template can be overridden by copying it to yourtheme/woocommerce/notices/notice.php.
+ * This template can be overridden by copying it to yourtheme/Woocommerce/notices/notice.php.
  *
  * HOWEVER, on occasion WooCommerce will need to update template files and you
  * (the theme developer) will need to copy the new files to your theme to
@@ -15,23 +15,19 @@
  * @version 3.9.0
  */
 
-if ( ! defined( 'ABSPATH' ) ) {
-	exit; // Exit if accessed directly.
+# Compatibility check
+defined( 'ABSPATH' ) or exit;
+(isset($notices) and $notices) or exit;
+
+# Output of notifications
+foreach ($notices as $notice) {
+
+    # Call the notification component
+    \Mirele\Compound\Store::call('default_notice', [
+        'notice' => $notice,
+        'text' => $notice['notice'],
+        'type' => 'primary',
+        'attributes' => wc_get_notice_data_attr($notice)
+    ]);
+
 }
-
-if ( ! $notices ) {
-	return;
-}
-
-?>
-
-<?php foreach ( $notices as $notice ) : ?>
-
-<div class="alert woo-alert-info alert-dismissible" role="alert" <?php echo wc_get_notice_data_attr( $notice ); ?>>
-	<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-	<div class="woo-alert-body">
-		<?php echo wc_kses_notice( $notice['notice'] ); ?>
-	</div>
-</div>
-
-<?php endforeach; ?>

@@ -2,7 +2,7 @@
 /**
  * Checkout login form
  *
- * This template can be overridden by copying it to yourtheme/woocommerce/checkout/form-login.php.
+ * This template can be overridden by copying it to yourtheme/Woocommerce/checkout/form-login.php.
  *
  * HOWEVER, on occasion WooCommerce will need to update template files and you
  * (the theme developer) will need to copy the new files to your theme to
@@ -23,13 +23,13 @@ if ( is_user_logged_in() || 'no' === get_option( 'woocommerce_enable_checkout_lo
 
 ?>
 <div class="woocommerce-form-login-toggle">
-	<?php wc_print_notice( apply_filters( 'woocommerce_checkout_login_message', esc_html__( 'Returning customer?', 'woocommerce' ) ) . ' <a href="#" class="showlogin">' . esc_html__( 'Click here to login', 'woocommerce' ) . '</a>', 'notice' ); ?>
+	<?php wc_print_notice( apply_filters( 'woocommerce_checkout_login_message', esc_html__( 'Returning customer?', 'Woocommerce' ) ) . ' <a href="#" class="showlogin">' . esc_html__( 'Click here to login', 'Woocommerce' ) . '</a>', 'notice' ); ?>
 </div>
 <?php
 
 woocommerce_login_form(
 	array(
-		'message'  => esc_html__( 'If you have shopped with us before, please enter your details below. If you are a new customer, please proceed to the Billing section.', 'woocommerce' ),
+		'message'  => esc_html__( 'If you have shopped with us before, please enter your details below. If you are a new customer, please proceed to the Billing section.', 'Woocommerce' ),
 		'redirect' => wc_get_checkout_url(),
 		'hidden'   => true,
 	)

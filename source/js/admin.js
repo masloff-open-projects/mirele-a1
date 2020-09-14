@@ -52,7 +52,11 @@ jQuery(document).ready(init => {
             // Tabs on page (Render)
             tabs: [
                 {name: 'Basic settings', namespace: 'basic', id: 'basic'},
-                {name: 'Main', namespace: 'main', id: 'main'},
+                {name: 'Woocommerce Appearance', namespace: 'woocommerce_card', id: 'woocommerce_card'},
+                {name: 'Shop', namespace: 'woocommerce_shop', id: 'woocommerce_shop'},
+                {name: 'Shop cart', namespace: 'woocommerce_cart', id: 'woocommerce_cart'},
+                {name: 'Login page', namespace: 'authorization_login', id: 'authorization_login'},
+                {name: 'Signup page', namespace: 'authorization_signup', id: 'authorization_signup'},
             ],
 
             // Setting on page (Render)
@@ -94,13 +98,27 @@ jQuery(document).ready(init => {
 
                     // Option page exists?
                     if (namespace in this.options) {
-                        this.settings = this.options[this.active].map(function (option) {
-                            return Object(option);
-                        });
+                        if (typeof this.options === "object") {
+                            if (this.active in this.options && this.options[this.active]) {
+                                this.settings = this.options[this.active].map(function (option) {
+                                    return Object(option);
+                                });
 
-                        this.changes = this.settings.map(function (option) {
-                            return option.name || 0;
-                        });
+                                this.changes = this.settings.map(function (option) {
+                                    return option.name || 0;
+                                });
+                            }
+
+                            // Show message about error
+                            else {
+                                this.settings = false;
+                            }
+                        }
+
+                        // Show message about error
+                        else {
+                            this.settings = false;
+                        }
                     }
 
                     // Show message about error

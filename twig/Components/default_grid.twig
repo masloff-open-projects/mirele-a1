@@ -1,0 +1,11 @@
+<div class="container">
+    <div class="row">
+        {% for component in components|split('|') %}
+            {% if component %}
+                <div class="col-md-{{ (12 / columns)|round }}">
+                    {{ Component(component, []) }}
+                </div>
+            {% endif %}
+        {% endfor %}
+    </div>
+</div>

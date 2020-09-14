@@ -2,7 +2,7 @@
 /**
  * Checkout billing information form
  *
- * This template can be overridden by copying it to yourtheme/woocommerce/checkout/form-billing.php.
+ * This template can be overridden by copying it to yourtheme/Woocommerce/checkout/form-billing.php.
  *
  * HOWEVER, on occasion WooCommerce will need to update template files and you
  * (the theme developer) will need to copy the new files to your theme to
@@ -45,7 +45,7 @@ defined( 'ABSPATH' ) || exit;
 
 			<p class="form-row form-row-wide create-account">
 				<label>
-					<input id="createaccount" <?php checked( ( true === $checkout->get_value( 'createaccount' ) || ( true === apply_filters( 'woocommerce_create_account_default_checked', false ) ) ), true ); ?> type="checkbox" name="createaccount" value="1" /> <span><?php esc_html_e( 'Create an account?', 'woocommerce' ); ?></span>
+					<input id="createaccount" <?php checked( ( true === $checkout->get_value( 'createaccount' ) || ( true === apply_filters( 'woocommerce_create_account_default_checked', false ) ) ), true ); ?> type="checkbox" name="createaccount" value="1" /> <span><?php esc_html_e( 'Create an account?', 'Woocommerce' ); ?></span>
 				</label>
 			</p>
 

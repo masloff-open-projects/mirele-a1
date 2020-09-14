@@ -18,4 +18,9 @@ final class Stringer
         return str_replace(array_keys($array), array_values($array), self::$string);
     }
 
+    public static function get($string)
+    {
+        return (self::$string).$string;
+    }
+
 }

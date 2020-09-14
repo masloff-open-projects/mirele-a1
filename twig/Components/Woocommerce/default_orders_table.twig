@@ -1,0 +1,51 @@
+<table class="table table-bordered table-hover">
+    <thead>
+        <tr>
+            <th>Order ID</th>
+            <th>Date</th>
+            <th>Status</th>
+            <th>Total</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+
+    <tbody>
+            {% for order in orders %}
+            <tr>
+
+                <td>
+                    {{ order.get_id }}
+                </td>
+
+                <td>
+                    <time datetime="{{ order.get_date_created }}"> {{ order.formated_time }} </time>
+                </td>
+
+                <td>
+                    {{ order.status_name }}
+                </td>
+
+                <td>
+                    {{ wp.xxs(order.format_total_price)|raw }}
+                </td>
+
+                <td>
+
+                    {# TODO: Normalize #}
+                    <div class="dropdown">
+                        <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                            Order Management
+                            <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu woo-dropdown-menu" aria-labelledby="woo-dropdown-manager-order">
+                            <li><a href="$">Remove</a></li>
+                        </ul>
+                    </div>
+
+                </td>
+
+            </tr>
+            {% endfor %}
+    </tbody>
+
+</table>

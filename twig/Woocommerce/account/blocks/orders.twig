@@ -1,0 +1,15 @@
+{# Orders Block #}
+
+<div class="blocks px-2 py-2 my-4">
+    <div class="container p-1">
+        <div class="row blocks orders">
+            <div class="col-md-12">
+                {% if account.orders|length > 0 %}
+                    {{ Component('default_orders_table', []) }}
+                {% else %}
+                    {{ Component('default_orders_placeholder', []) }}
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>

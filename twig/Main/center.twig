@@ -23,8 +23,10 @@
 
                 <td valign="top" class="content">
 
-                    <div v-if="active == false">
-                        <h1>Welcom</h1>
+                    <div v-if="active == false" class="wp-welcome-page">
+                        <h1>Customize your distribution to suit yourself</h1>
+                        <p>You can hide, change, speed up, animate design elements of your distribution. Switch between the tabs on the left to get to the desired settings menu.</p>
+                        <small>Change, optimize, create with <b>Mirele</b></small>
                     </div>
 
                     <div v-else-if="typeof settings === typeof []">
@@ -60,7 +62,7 @@
 
                                        <input v-if="option.type === 'toggle'"   v-model="options[active][index]['value']" @change="save(option, options[active][index]['value'])" :name="option.name" type="checkbox" value="option.value || option.default" true-value="true" false-value="false">
                                        <input v-if="option.type === 'text'"     v-model="options[active][index]['value']" @blur="saveWaitKeyUp(option, options[active][index]['value'])" @keyup="saveWaitKeyUp(option, options[active][index]['value'])" :name="option.name" type="text" :value="option.value || option.default">
-                                       <input v-if="option.type === 'integer'"  v-model="options[active][index]['value']" @blur="saveWaitKeyUp(option, options[active][index]['value'])" @keyup="saveWaitKeyUp(option, options[active][index]['value'])" :name="option.name" type="number" :value="option.value || option.default" :step="option.props.step || 1" :min="option.props.min || 1" :max="option.props.max">
+                                       <input v-if="option.type === 'integer' || option.type === 'int'"  v-model="options[active][index]['value']" @blur="saveWaitKeyUp(option, options[active][index]['value'])" @keyup="saveWaitKeyUp(option, options[active][index]['value'])" :name="option.name" type="number" :value="option.value || option.default" :step="option.props.step || 1" :min="option.props.min || 1" :max="option.props.max">
 
                                        <label v-if="option.type === 'switch'"class="toggle-switch">
                                            <input v-model="options[active][index]['value']" @change="save(option, options[active][index]['value'])" :name="option.name" type="checkbox" value="option.value || option.default" true-value="true" false-value="false">

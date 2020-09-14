@@ -2,7 +2,7 @@
 /**
  * Product quantity inputs
  *
- * This template can be overridden by copying it to yourtheme/woocommerce/global/quantity-input.php.
+ * This template can be overridden by copying it to yourtheme/Woocommerce/global/quantity-input.php.
  *
  * HOWEVER, on occasion WooCommerce will need to update template files and you
  * (the theme developer) will need to copy the new files to your theme to
@@ -25,7 +25,7 @@ if ( $max_value && $min_value === $max_value ) {
 	<?php
 } else {
 	/* translators: %s: Quantity. */
-	$label = ! empty( $args['product_name'] ) ? sprintf( esc_html__( '%s quantity', 'woocommerce' ), wp_strip_all_tags( $args['product_name'] ) ) : esc_html__( 'Quantity', 'woocommerce' );
+	$label = ! empty( $args['product_name'] ) ? sprintf( esc_html__( '%s quantity', 'Woocommerce' ), wp_strip_all_tags( $args['product_name'] ) ) : esc_html__( 'Quantity', 'Woocommerce' );
 	?>
 	<div class="quantity">
 		<?php do_action( 'woocommerce_before_quantity_input_field' ); ?>
@@ -39,7 +39,7 @@ if ( $max_value && $min_value === $max_value ) {
 			max="<?php echo esc_attr( 0 < $max_value ? $max_value : '' ); ?>"
 			name="<?php echo esc_attr( $input_name ); ?>"
 			value="<?php echo esc_attr( $input_value ); ?>"
-			title="<?php echo esc_attr_x( 'Qty', 'Product quantity input tooltip', 'woocommerce' ); ?>"
+			title="<?php echo esc_attr_x( 'Qty', 'Product quantity input tooltip', 'Woocommerce' ); ?>"
 			size="4"
 			placeholder="<?php echo esc_attr( $placeholder ); ?>"
 			inputmode="<?php echo esc_attr( $inputmode ); ?>" />

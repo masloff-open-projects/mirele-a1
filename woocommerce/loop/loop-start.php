@@ -2,7 +2,7 @@
 /**
  * Product Loop Start
  *
- * This template can be overridden by copying it to yourtheme/woocommerce/loop/loop-start.php.
+ * This template can be overridden by copying it to yourtheme/Woocommerce/loop/loop-start.php.
  *
  * HOWEVER, on occasion WooCommerce will need to update template files and you
  * (the theme developer) will need to copy the new files to your theme to
@@ -15,8 +15,10 @@
  * @version     3.3.0
  */
 
-if ( ! defined( 'ABSPATH' ) ) {
-	exit;
-}
+defined( 'ABSPATH' ) || exit;
 ?>
-<div class="row products" style="display: inline-table; width: 100%;">
+
+<div class="row" id="products">
+
+        <!--<div class="container">-->
+<!--    <div class="row products" style="display: inline-table; width: 100%;">-->

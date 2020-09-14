@@ -2,7 +2,7 @@
 /**
  * Pay for order form
  *
- * This template can be overridden by copying it to yourtheme/woocommerce/checkout/form-pay.php.
+ * This template can be overridden by copying it to yourtheme/Woocommerce/checkout/form-pay.php.
  *
  * HOWEVER, on occasion WooCommerce will need to update template files and you
  * (the theme developer) will need to copy the new files to your theme to
@@ -24,9 +24,9 @@ $totals = $order->get_order_item_totals(); // phpcs:ignore WordPress.WP.GlobalVa
 	<table class="shop_table">
 		<thead>
 			<tr>
-				<th class="product-name"><?php esc_html_e( 'Product', 'woocommerce' ); ?></th>
-				<th class="product-quantity"><?php esc_html_e( 'Qty', 'woocommerce' ); ?></th>
-				<th class="product-total"><?php esc_html_e( 'Totals', 'woocommerce' ); ?></th>
+				<th class="product-name"><?php esc_html_e( 'Product', 'Woocommerce' ); ?></th>
+				<th class="product-quantity"><?php esc_html_e( 'Qty', 'Woocommerce' ); ?></th>
+				<th class="product-total"><?php esc_html_e( 'Totals', 'Woocommerce' ); ?></th>
 			</tr>
 		</thead>
 		<tbody>
@@ -76,7 +76,7 @@ $totals = $order->get_order_item_totals(); // phpcs:ignore WordPress.WP.GlobalVa
 						wc_get_template( 'checkout/payment-method.php', array( 'gateway' => $gateway ) );
 					}
 				} else {
-					echo '<li class="woocommerce-notice woocommerce-notice--info woocommerce-info">' . apply_filters( 'woocommerce_no_available_payment_methods_message', esc_html__( 'Sorry, it seems that there are no available payment methods for your location. Please contact us if you require assistance or wish to make alternate arrangements.', 'woocommerce' ) ) . '</li>'; // @codingStandardsIgnoreLine
+					echo '<li class="Woocommerce-notice Woocommerce-notice--info Woocommerce-info">' . apply_filters( 'woocommerce_no_available_payment_methods_message', esc_html__( 'Sorry, it seems that there are no available payment methods for your location. Please contact us if you require assistance or wish to make alternate arrangements.', 'Woocommerce' ) ) . '</li>'; // @codingStandardsIgnoreLine
 				}
 				?>
 			</ul>
@@ -92,7 +92,7 @@ $totals = $order->get_order_item_totals(); // phpcs:ignore WordPress.WP.GlobalVa
 
 			<?php do_action( 'woocommerce_pay_order_after_submit' ); ?>
 
-			<?php wp_nonce_field( 'woocommerce-pay', 'woocommerce-pay-nonce' ); ?>
+			<?php wp_nonce_field( 'Woocommerce-pay', 'Woocommerce-pay-nonce' ); ?>
 		</div>
 	</div>
 </form>

@@ -2,7 +2,7 @@
 /**
  * Related Products
  *
- * This template can be overridden by copying it to yourtheme/woocommerce/single-product/related.php.
+ * This template can be overridden by copying it to yourtheme/Woocommerce/single-product/related.php.
  *
  * HOWEVER, on occasion WooCommerce will need to update template files and you
  * (the theme developer) will need to copy the new files to your theme to
@@ -24,7 +24,7 @@ if ( $related_products ) : ?>
 	<section class="related products">
 
 		<?php
-		$heading = apply_filters( 'woocommerce_product_related_products_heading', __( 'Related products', 'woocommerce' ) );
+		$heading = apply_filters( 'woocommerce_product_related_products_heading', __( 'Related products', 'Woocommerce' ) );
 
 		if ( $heading ) :
 			?>

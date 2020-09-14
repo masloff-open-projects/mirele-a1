@@ -7,6 +7,8 @@
  * @version 1.0.0
  */
 
+use \Mirele\Framework\Customizer;
+
 \Mirele\TWIG::Render('Layout/header', [
     'blog' => [
         'name' => get_bloginfo ('name', 'display'),
@@ -31,5 +33,8 @@
         'account' => [
             'main' => get_permalink(wc_get_page_id('myaccount'))
         ]
+    ],
+    'option' => [
+        'navbar_fixed' => Customizer::get ('basic', 'mrl_wp_navbar_fixed', []) == 'true'
     ]
 ]);

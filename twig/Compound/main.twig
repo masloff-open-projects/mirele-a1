@@ -11,7 +11,7 @@
 
 {% block main %}
 
-    {% if markup|length > 0 %}
+    {% if pages|length > 0 %}
         {% include 'Compound/pages.twig' %}
     {% else %}
         {% include 'Compound/start.twig' %}
@@ -22,14 +22,14 @@
 {% block box %}
 
     <h2 class="wp-mrl-header">
-        <span>Rosemary pages</span>
+        <span>Compound editor</span>
     </h2>
 
     <div class="inner">
 
-        <h2>Create new Rosemary page!</h2>
-        <p>Create Mirele Pages, Convert Them to WordPress pages and use them as regular page of your site.</p>
-        <p>Maybe it sounded scary, but working with Rosemary's pages is very easy.</p>
+        <h2>Create new Compound page!</h2>
+        <p>Create Compound Page, Convert Them to WordPress pages and use them as regular page of your site.</p>
+        <p>Maybe it sounded scary, but working with Compound's pages is very easy.</p>
 
         <h3>Actions</h3>
         <ul>

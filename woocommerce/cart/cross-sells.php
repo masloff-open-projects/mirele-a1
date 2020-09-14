@@ -2,7 +2,7 @@
 /**
  * Cross-sells
  *
- * This template can be overridden by copying it to yourtheme/woocommerce/cart/cross-sells.php.
+ * This template can be overridden by copying it to yourtheme/Woocommerce/cart/cross-sells.php.
  *
  * HOWEVER, on occasion WooCommerce will need to update template files and you
  * (the theme developer) will need to copy the new files to your theme to
@@ -21,7 +21,7 @@ if ( $cross_sells ) : ?>
 
 	<div class="cross-sells">
 
-		<h2><?php esc_html_e( 'You may be interested in&hellip;', 'woocommerce' ); ?></h2>
+		<h2><?php esc_html_e( 'You may be interested in&hellip;', 'Woocommerce' ); ?></h2>
 
 		<?php woocommerce_product_loop_start(); ?>
 

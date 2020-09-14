@@ -2,7 +2,7 @@
 /**
  * Thankyou page
  *
- * This template can be overridden by copying it to yourtheme/woocommerce/checkout/thankyou.php.
+ * This template can be overridden by copying it to yourtheme/Woocommerce/checkout/thankyou.php.
  *
  * HOWEVER, on occasion WooCommerce will need to update template files and you
  * (the theme developer) will need to copy the new files to your theme to
@@ -31,8 +31,8 @@ defined( 'ABSPATH' ) || exit;
 			<div class="text-center el_809696160">
 				<img width="64px" src="<?php echo PATH_EMOJI_DEAD; ?>" alt="error" class="el_698985002">
 				<h1>Error. Order not accept.</h1>
-				<p> <?php esc_html_e( 'Unfortunately your order cannot be processed as the originating bank/merchant has declined your transaction. Please attempt your purchase again.', 'woocommerce' ); ?> </p>
-				<p> You can try to <a href="<?php echo esc_url( $order->get_checkout_payment_url() ); ?>"><?php esc_html_e( 'pay', 'woocommerce' ); ?></a> for the order again. </p> 
+				<p> <?php esc_html_e( 'Unfortunately your order cannot be processed as the originating bank/merchant has declined your transaction. Please attempt your purchase again.', 'Woocommerce' ); ?> </p>
+				<p> You can try to <a href="<?php echo esc_url( $order->get_checkout_payment_url() ); ?>"><?php esc_html_e( 'pay', 'Woocommerce' ); ?></a> for the order again. </p>
 			</div>
 
 
@@ -42,7 +42,7 @@ defined( 'ABSPATH' ) || exit;
 				<img width="64px" src="<?php echo PATH_EMOJI_LOVE; ?>" alt="Thank you very much" class="el_698985002">
 				<h1>Thank you</h1>
 				<p>
-					<?php echo apply_filters( 'woocommerce_thankyou_order_received_text', esc_html__( 'Thank you very much for placing your order! Ordering information you can be found below. You can manage orders from your account.', 'woocommerce' ), $order ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
+					<?php echo apply_filters( 'woocommerce_thankyou_order_received_text', esc_html__( 'Thank you very much for placing your order! Ordering information you can be found below. You can manage orders from your account.', 'Woocommerce' ), $order ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 				</p>
 			</div>
 
@@ -83,7 +83,7 @@ defined( 'ABSPATH' ) || exit;
 
 	<?php else : ?>
 
-		<p class="woocommerce-notice woocommerce-notice--success woocommerce-thankyou-order-received"><?php echo apply_filters( 'woocommerce_thankyou_order_received_text', esc_html__( 'Thank you. Your order has been received.', 'woocommerce' ), null ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></p>
+		<p class="woocommerce-notice woocommerce-notice--success woocommerce-thankyou-order-received"><?php echo apply_filters( 'woocommerce_thankyou_order_received_text', esc_html__( 'Thank you. Your order has been received.', 'Woocommerce' ), null ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></p>
 
 	<?php endif; ?>
 

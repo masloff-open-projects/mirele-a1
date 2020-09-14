@@ -2,7 +2,7 @@
 /**
  * Review order table
  *
- * This template can be overridden by copying it to yourtheme/woocommerce/checkout/review-order.php.
+ * This template can be overridden by copying it to yourtheme/Woocommerce/checkout/review-order.php.
  *
  * HOWEVER, on occasion WooCommerce will need to update template files and you
  * (the theme developer) will need to copy the new files to your theme to
@@ -22,8 +22,8 @@ defined( 'ABSPATH' ) || exit;
 <table class="table table-bordered table-hover">
 	<thead>
 		<tr>
-			<th> <?php esc_html_e( 'Product', 'woocommerce' ); ?> </th>
-			<th> <?php esc_html_e( 'Subtotal', 'woocommerce' ); ?> </th>
+			<th> <?php esc_html_e( 'Product', 'Woocommerce' ); ?> </th>
+			<th> <?php esc_html_e( 'Subtotal', 'Woocommerce' ); ?> </th>
 		</tr>
 	</thead>
 	<tbody>
@@ -54,7 +54,7 @@ defined( 'ABSPATH' ) || exit;
 	</tbody>
 	<tfoot>
 		<tr class="cart-subtotal">
-			<th><?php esc_html_e( 'Subtotal', 'woocommerce' ); ?></th>
+			<th><?php esc_html_e( 'Subtotal', 'Woocommerce' ); ?></th>
 			<td><?php wc_cart_totals_subtotal_html(); ?></td>
 		</tr>
 
@@ -101,7 +101,7 @@ defined( 'ABSPATH' ) || exit;
 		<?php do_action( 'woocommerce_review_order_before_order_total' ); ?>
 
 		<tr class="order-total">
-			<th><?php esc_html_e( 'Total', 'woocommerce' ); ?></th>
+			<th><?php esc_html_e( 'Total', 'Woocommerce' ); ?></th>
 			<td><?php wc_cart_totals_order_total_html(); ?></td>
 		</tr>
 

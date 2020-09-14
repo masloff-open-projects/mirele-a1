@@ -2,8 +2,8 @@
 
 namespace Mirele\Components;
 
-use Mirele\Framework\Component;
-use Mirele\Framework\Store;
+use Mirele\Compound\Component;
+use Mirele\Compound\Store;
 
 $Component = new Component ();
 $Component->setId('default_sidebar');

@@ -3,6 +3,6 @@ module.exports = {
         require('autoprefixer')
     ],
     autoprefixer: {
-        browsers: "> 59%"
+        browsers: "> 98%"
     }
 }

@@ -180,11 +180,11 @@ add_action('widgets_init', function () {
         'single_image_width' => 300,
 
         'product_grid' => array(
-            'default_rows' => get_option('woo_markup_rows', 5),
+            'default_rows' => 8,
             'min_rows' => 2,
             'max_rows' => 8,
-            'default_columns' => get_option('woo_column', 4),
-            'min_columns' => 8,
+            'default_columns' => 4,
+            'min_columns' => 4,
             'max_columns' => 12,
         ),
     ));

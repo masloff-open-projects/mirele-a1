@@ -2,8 +2,8 @@
 
 namespace Mirele\Components;
 
-use Mirele\Framework\Component;
-use Mirele\Framework\Store;
+use Mirele\Compound\Component;
+use Mirele\Compound\Store;
 use Mirele\TWIG;
 
 $Component = new Component ();

@@ -2,6 +2,7 @@
 
 namespace Mirele;
 
+use Mirele\Framework\Stringer;
 use \Twig\Extension\AbstractExtension;
 use \Twig\TwigFunction;
 
@@ -19,6 +20,12 @@ class TWIG
     private static $instances = [];
     private static $twig;
     private static $ready;
+    private static $alias = [
+        '@woocommerce' => 'Woocommerce',
+        "@login" => 'Woocommerce/authorization/login',
+        "@signup" => 'Woocommerce/authorization/signup',
+        "@passwordRecovery" => 'Woocommerce/authorization/password_recovery',
+    ];
 
 
     /**
@@ -74,12 +81,10 @@ class TWIG
     static public function init () {
 
         self::$twig = new \Twig\Environment(new \Twig\Loader\FilesystemLoader(ROSEMARY_TWIG_DIR), [
-            'cache' => false,
-            # 'cache' => ROSEMARY_TEMPLATES_DIR . '/cache',
+            'cache' => false
         ]);
         self::$twig->addGlobal('wp', new \Mirele\Framework\TWIG);
-        self::$twig->addGlobal('woocommerce', new \Mirele\Framework\TWIGWoocommerce);
-
+        self::$twig->addGlobal('Woocommerce', new \Mirele\Framework\TWIGWoocommerce);
         self::$twig->addExtension (new class extends AbstractExtension
         {
             public function getFunctions()
@@ -90,7 +95,7 @@ class TWIG
             }
 
             public function Component (string $id, array $props) {
-                \Mirele\Framework\Store::call($id, $props);
+                \Mirele\Compound\Store::call($id, $props);
             }
 
             public function getName() {
@@ -103,12 +108,15 @@ class TWIG
     }
 
 
-    static public function Render ($template="main", $params=Array()) {
+    static public function Render ($template="main", $params=Array(), $noPrint=false) {
 
         # If TWIG is not already
         if (!self::$ready) {
             self::init();
         }
+
+        # Processing template name
+        $template = (new Stringer($template))::format(self::$alias);
 
         $template = pathinfo($template);
 
@@ -119,14 +127,29 @@ class TWIG
                     'source' => MIRELE_SOURCE_DIR,
                     'url_without_params' => MIRELE_URL,
                     'page_id' => isset($_GET['page']) ? $_GET['page'] : false,
+                    "url" => [
+                        'registration' => wp_registration_url(),
+                        'login' => wp_login_url(),
+                        'logout' => wp_logout_url(),
+                        'lost_password' => wp_lostpassword_url(),
+                        'profile' => [
+                            'edit' => get_edit_profile_url(),
+                        ],
+                        'customer' => [
+                            'edit' => wc_customer_edit_account_url(),
+                        ]
+                    ]
                 ),
                 (array) $params
             );
 
-            print self::$twig->render($template['dirname'] . '/' . $template['basename'] . '.twig', $params);
+            if ($noPrint) {
+                return self::$twig->render($template['dirname'] . '/' . $template['basename'] . '.twig', $params);
+            } else {
+                print self::$twig->render($template['dirname'] . '/' . $template['basename'] . '.twig', $params);
+            }
 
         } else {
-
             return false;
         }
 

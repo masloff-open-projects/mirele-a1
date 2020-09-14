@@ -4,7 +4,7 @@
  *
  * Contains the markup for the mini-cart, used by the cart widget.
  *
- * This template can be overridden by copying it to yourtheme/woocommerce/cart/mini-cart.php.
+ * This template can be overridden by copying it to yourtheme/Woocommerce/cart/mini-cart.php.
  *
  * HOWEVER, on occasion WooCommerce will need to update template files and you
  * (the theme developer) will need to copy the new files to your theme to
@@ -51,7 +51,7 @@ do_action( 'woocommerce_before_mini_cart' ); ?>
 
 <?php else : ?>
 
-	<p class="woocommerce-mini-cart__empty-message"><?php esc_html_e( 'No products in the cart.', 'woocommerce' ); ?></p>
+	<p class="woocommerce-mini-cart__empty-message"><?php esc_html_e( 'No products in the cart.', 'Woocommerce' ); ?></p>
 
 <?php endif; ?>
 

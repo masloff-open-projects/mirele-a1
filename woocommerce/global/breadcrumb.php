@@ -2,7 +2,7 @@
 /**
  * Shop breadcrumb
  *
- * This template can be overridden by copying it to yourtheme/woocommerce/global/breadcrumb.php.
+ * This template can be overridden by copying it to yourtheme/Woocommerce/global/breadcrumb.php.
  *
  * HOWEVER, on occasion WooCommerce will need to update template files and you
  * (the theme developer) will need to copy the new files to your theme to
@@ -23,6 +23,6 @@ if (!isset($breadcrumb)) {
     global $breadcrumb;
 }
 
-\Mirele\TWIG::Render('woocommerce/breadcrumb', [
+\Mirele\TWIG::Render('Woocommerce/breadcrumb', [
     'breadcrumb' => $breadcrumb
 ]);

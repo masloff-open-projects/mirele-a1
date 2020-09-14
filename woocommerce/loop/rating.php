@@ -2,7 +2,7 @@
 /**
  * Loop Rating
  *
- * This template can be overridden by copying it to yourtheme/woocommerce/loop/rating.php.
+ * This template can be overridden by copying it to yourtheme/Woocommerce/loop/rating.php.
  *
  * HOWEVER, on occasion WooCommerce will need to update template files and you
  * (the theme developer) will need to copy the new files to your theme to
