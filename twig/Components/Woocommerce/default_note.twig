@@ -1,0 +1,9 @@
+{% if text %}
+
+    <li  class="woo-{{ sender|default('shop') }}-note">
+        <p>
+            {{ text }}
+        </p>
+    </li>
+
+{% endif %}

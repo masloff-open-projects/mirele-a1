@@ -1,6 +1,13 @@
 // <input>
 input:not([type="checkbox"]),
+input:not([type="radio"]),
 input:not([type="submit"])
+  -webkit-appearance: none
+  -moz-appearance: none
+  appearance: none
+  background-clip: padding-box
+  background-image: linear-gradient(transparent, transparent)
+
   background: $UIBackground
   border: $UIBorder $mainBorderColor
   color: $UIColor
@@ -9,7 +16,8 @@ input:not([type="submit"])
   font-size: $UIFontSize
   font-weight: normal
   outline: none
-  border-radius: 0px
+  border-radius: 0
+  box-shadow: none !important
 
   &:-webkit-autofill,
   &:-webkit-autofill:hover,

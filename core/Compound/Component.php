@@ -11,6 +11,7 @@ class Component
     private $name;
     private $props;
     private $function;
+    private $data;
 
     /**
      * @param mixed $id
@@ -41,6 +42,27 @@ class Component
     {
         $this->props = (array) $props;
         return $this;
+    }
+
+    /**
+     * @param mixed $data
+     */
+    public function setData(string $key, $data)
+    {
+        $this->data[$key] = $data;
+        return $this;
+    }
+
+    /**
+     * @param mixed $data
+     */
+    public function getData(string $key)
+    {
+        if (isset($this->data[$key])) {
+            return $this->data[$key];
+        }
+
+        return false;
     }
 
 

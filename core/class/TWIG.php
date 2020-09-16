@@ -80,7 +80,7 @@ class TWIG
 
     static public function init () {
 
-        self::$twig = new \Twig\Environment(new \Twig\Loader\FilesystemLoader(ROSEMARY_TWIG_DIR), [
+        self::$twig = new \Twig\Environment(new \Twig\Loader\FilesystemLoader(COMPOUND_TWIG_DIR), [
             'cache' => false
         ]);
         self::$twig->addGlobal('wp', new \Mirele\Framework\TWIG);
@@ -120,7 +120,7 @@ class TWIG
 
         $template = pathinfo($template);
 
-        if (file_exists(ROSEMARY_TWIG_DIR . '/' . $template['dirname'] . '/' . $template['basename'] . '.twig')) {
+        if (file_exists(COMPOUND_TWIG_DIR . '/' . $template['dirname'] . '/' . $template['basename'] . '.twig')) {
 
             $params = array_merge(
                 array (

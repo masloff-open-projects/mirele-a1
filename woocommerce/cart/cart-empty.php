@@ -1,4 +1,4 @@
-<?php
+    <?php
 /**
  * Empty cart page
  *
@@ -19,12 +19,6 @@ defined( 'ABSPATH' ) || exit;
 
 do_action('woocommerce_cart_mirele_empty');
 
-?>
+use \Mirele\Compound\Store;
 
-    <div class="text-center woo-content-center">
-        <img width="64px" src="<?php echo MIRELE_SOURCE_DIR . '/img/icons/cart.png' ?>" alt="You cart is empty!" class="el_698985002">
-        <h2>You cart is empty!</h2>
-        <p>Let`s go back to the store and start shopping?</p>
-    </div>
-
-<?php
+Store::call('default_cart_placeholder', []);

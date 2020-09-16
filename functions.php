@@ -24,6 +24,7 @@
 use Mirele\TWIG;
 use Mirele\Framework;
 use Mirele\Compound\Store;
+use Mirele\Compound\Grider;
 use Mirele\Framework\Stringer;
 use Mirele\Router;
 
@@ -61,26 +62,26 @@ if (version_compare(PHP_VERSION, '7.0.0') <= 0) {
 # Main Constants
 define('MIRELE_GET', $_GET);
 define('MIRELE_POST', $_POST);
-define('ROSEMARY_VARCHAR_SIZE_DB', 512);
-define('ROSEMARY_VARCHAR_INT_DB', 64);
+define('COMPOUND_VARCHAR_SIZE_DB', 512);
+define('COMPOUND_VARCHAR_INT_DB', 64);
 define('WOOCOMMERCE_SUPPORT', function_exists('is_woocommerce'));
 
 # Meta Constants
 define('MIRELE_VERSION', "1.0.0");
-define('ROSEMARY_VERSION', "1.0.1");
-define('ROSEMARY_INSTANCES', 'SMART');
+define('COMPOUND_VERSION', "1.0.1");
+define('COMPOUND_INSTANCES', 'SMART');
 define('MIRELE_URL', $_SERVER['REQUEST_SCHEME'] . '://' . $_SERVER['HTTP_HOST'] . explode('?', $_SERVER['REQUEST_URI'], 2)[0]);
 
 # Constants regulators
 define('MIRELE_MIN_PERMISSIONS_FOR_EDIT', 'edit_themes');
-define('ROSEMARY_FORBIDDEN_SYMBOLS', array(':', '/', "@"));
-define('ROSEMARY_RIGHTS_FOR_VISUAL_EDIT', 'edit_themes');
-define('ROSEMARY_CANVAS', 'canvas.php');
+define('COMPOUND_FORBIDDEN_SYMBOLS', array(':', '/', "@"));
+define('COMPOUND_RIGHTS_FOR_VISUAL_EDIT', 'edit_themes');
+define('COMPOUND_CANVAS', 'canvas.php');
 
 # File path constants
-define('ROSEMARY_TEMPLATES_DIR', get_template_directory() . '/templates');
-define('ROSEMARY_TWIG_DIR', get_template_directory() . '/twig');
-define('ROSEMARY_TEMPLATES_HTML_DIR', get_template_directory() . '/rosemary_html');
+define('COMPOUND_TEMPLATES_DIR', get_template_directory() . '/templates');
+define('COMPOUND_TWIG_DIR', get_template_directory() . '/twig');
+define('COMPOUND_TEMPLATES_HTML_DIR', get_template_directory() . '/rosemary_html');
 define('MIRELE_CORE_DIR', get_template_directory() . '/core');
 define('MIRELE_SOURCE_DIR', get_template_directory_uri() . '/source');
 define('MIRELE_SOURCE_PATH', get_template_directory() . '/source');
@@ -124,6 +125,8 @@ if (wp_doing_ajax() === false) {
         include_once 'core/Framework/Option.php';
         include_once 'core/Compound/Component.php';
         include_once 'core/Compound/Store.php';
+        include_once 'core/Compound/Grider.php';
+        include_once 'core/Compound/Template.php';
 
         # Arrhitectural Classes Sets (Mirele)
         include_once 'core/class/MFile.php';
@@ -147,12 +150,24 @@ if (wp_doing_ajax() === false) {
     # all building cores are ready for use.
 
         # Components
+        include_once 'Components/Abstract/Inputs/default.php';
+        include_once 'Components/Abstract/Textareas/default.php';
+        include_once 'Components/Abstract/Selects/default.php';
+        include_once 'Components/Abstract/Buttons/default.php';
+        include_once 'Components/Abstract/Checkboxs/default.php';
+        include_once 'Components/Abstract/Radios/default.php';
+
         include_once 'Components/Grids/default.php';
         include_once 'Components/Carts/default.php';
         include_once 'Components/Sidebars/default.php';
         include_once 'Components/Footers/default.php';
         include_once 'Components/Navbars/default.php';
         include_once 'Components/Menus/default_navbar.php';
+        include_once 'Components/Woocommerce/Notes/default.php';
+        include_once 'Components/Woocommerce/Steps/default.php';
+        include_once 'Components/Woocommerce/Field/default.php';
+        include_once 'Components/Woocommerce/Forms/default_billing.php';
+        include_once 'Components/Woocommerce/Forms/default_shipping.php';
         include_once 'Components/Woocommerce/Carousel/default.php';
         include_once 'Components/Woocommerce/Notices/default.php';
         include_once 'Components/Woocommerce/Gallerys/default.php';
@@ -161,6 +176,11 @@ if (wp_doing_ajax() === false) {
         include_once 'Components/Woocommerce/Tables/Cart/default.php';
         include_once 'Components/Woocommerce/Placeholders/Orders/default.php';
         include_once 'Components/Woocommerce/Placeholders/Downloads/default.php';
+        include_once 'Components/Woocommerce/Placeholders/Cart/default.php';
+
+        # Templates
+        include_once 'Templates/Headers/default.php';
+
 
 } else {
 
@@ -200,6 +220,7 @@ set_error_handler(
     }
 
 );
+
 
 # Another error handler
 register_shutdown_function(function () {
@@ -272,7 +293,27 @@ add_action(
 
         # Registration of some components of the Compound
         add_shortcode('Component', function ($attr, $content) {
-            Store::call($attr['name'], array_merge((array) $attr, (array) ['context_content' => $content]));
+            Store::call($attr['name'], array_merge((array) $attr, ['attr' => (array) $attr], (array) ['context_content' => $content]));
+        });
+
+        # Registration of some components in VM grid of the Compound
+        add_shortcode('Compound', function ($attr, $content) {
+
+            $components = (object) ((new Stringer(html_entity_decode($content)))::format([
+                "“" => '"',
+                "”" => '"'
+            ]));
+
+            if ($components) {
+
+            }
+
+            // Store::call($attr['name'], [((array) $attr, (array) ['context_content' => $content]));
+        });
+
+        # Registration of some components in VM grid of the Compound
+        add_shortcode('Template', function ($attr, $content) {
+            return Grider::call($attr['name'], $attr);
         });
 
         # Register custom shortcodes
@@ -378,6 +419,36 @@ add_action(
                         TWIG::Render('Woocommerce/account/edit/profile', [
                             'user' => (object) $user,
                         ]);
+
+                    }
+
+                    # Viewing a specific order
+                    elseif (is_wc_endpoint_url('view-order')) {
+
+                        # Globalize
+                        global $wp;
+
+                        # User Generation
+                        $user = (object) wp_get_current_user();
+                        $user->avatar = get_avatar_url($user->ID);
+
+                        # Generating order
+                        $order = wc_get_order($wp->query_vars['view-order']);
+
+                        # Render
+                        TWIG::Render('Woocommerce/order', [
+                            'user'   => (object) $user,
+                            'id'     => (integer) $wp->query_vars['view-order'],
+                            'order'  => $order,
+                            'note'   => wc_get_order_notes(['order_id' => (integer) $wp->query_vars['view-order']]),
+                            'access' => $user->ID === $order->get_user_id(),
+                            'time'   => [
+                                'modified' => date("m.d.y H:i", strtotime($order->get_date_modified())),
+                                'created' => date("m.d.y H:i", strtotime($order->get_date_created())),
+                                'paid' => $order->get_date_paid()
+                            ]
+                        ]);
+
 
                     }
 
@@ -571,7 +642,7 @@ add_action(
 add_action(
     'wp_body_open', function () {
 
-        if (is_page_template(ROSEMARY_CANVAS)) {
+        if (is_page_template(COMPOUND_CANVAS)) {
 
         }
 
@@ -611,7 +682,7 @@ add_action(
                     TWIG::Render('Compound/main', [
                         'pages' => get_pages( array(
                             'meta_key' => '_wp_page_template',
-                            'meta_value' => ROSEMARY_CANVAS
+                            'meta_value' => COMPOUND_CANVAS
                         ))
                     ]);
 

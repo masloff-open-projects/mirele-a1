@@ -1,7 +1,7 @@
 <?php
 
 /**
- * The Template for displaying product archives, including the main shop page which is a post type archive
+ * The Templates for displaying product archives, including the main shop page which is a post type archive
  *
  * This template can be overridden by copying it to yourtheme/Woocommerce/archive-product.php.
  *

@@ -4,7 +4,7 @@
 
     <div class="container-fluid">
         <div class="row">
-            <div class="col-md-6">
+            <div class="col-md-6 mx-0 px-0">
 
                 {% if checkout.get_checkout_fields == true %}
 
@@ -22,13 +22,9 @@
                 {% endif %}
 
             </div>
-            <div class="col-md-6">
+            <div class="col-md-6 mx-0 px-0 pl-4">
 
                 {{ wp.do_action('woocommerce_checkout_before_order_review_heading') }}
-
-                <h3 id="order_review_heading">
-                    {{ wp.e('Your order', 'Woocommerce') }}
-                </h3>
 
                 {{ wp.do_action('woocommerce_checkout_before_order_review') }}
 

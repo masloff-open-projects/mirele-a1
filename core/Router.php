@@ -355,11 +355,12 @@ Router::post('/ajax_endpoint_v1/WCAddToCart', function () {
                 wc_add_to_cart_message(array($ID => $QTY), true);
             }
 
-            wp_send_json([
+            wp_send_json_success([
                 'id' => $CartItem
             ]);
+
         } else {
-            wp_send_json([
+            wp_send_json_error([
                 'error' => 'This product was not added to the cart.'
             ]);
         }

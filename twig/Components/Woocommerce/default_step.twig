@@ -1,0 +1,9 @@
+<div class="steps{{ type ? "_" ~ type|lower : '' }}">
+    <h5>{{ title }}
+        {% if time %}
+            <small class="text-muted text-small">{{ time }}</small>
+        {% endif %}
+    </h5>
+
+    <p>{{ text|raw }}</p>
+</div>

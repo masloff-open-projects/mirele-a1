@@ -27,7 +27,7 @@ class MLogger
             "# Welcome to the system action log file.",
             "# The file was created: $this->time",
             "# Mirele Core Version: " . MIRELE_VERSION,
-            "# Rosemary Core Version: " . ROSEMARY_VERSION,
+            "# Rosemary Core Version: " . COMPOUND_VERSION,
             "",
             ""
         ]);

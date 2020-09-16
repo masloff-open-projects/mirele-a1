@@ -3,7 +3,7 @@
 /**
  * Class MSafe
  * A small antivirus code that checks the PHP source code for malicious code.
- * This class is not abstract, it contains information about virus blocks that can write to the system
+ * This class is not Abstract, it contains information about virus blocks that can write to the system
  *
  * @version 1.0.0
  * @author Mirele

@@ -38,6 +38,13 @@ class Store extends Iterator
         return false;
     }
 
+    static public function get (string $id) {
+        if (isset(self::$store[$id])) {
+            return self::$store[$id];
+        }
+        return false;
+    }
+
     /**
      * @return array
      */

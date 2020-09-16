@@ -1,7 +1,7 @@
 <?php
 
 /**
-* Template Name: Mirele Canvas
+* Templates Name: Mirele Canvas
 *
 * @package: WordPress
 * @subpackage: Mirele

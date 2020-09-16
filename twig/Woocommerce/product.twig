@@ -2,6 +2,8 @@
 
 {% block main %}
 
+    {{ wp.wc_print_notices }}
+
     {{ wp.do_action( 'woocommerce_before_main_content' ) }}
 
     <div class="container-fluid woocommerce-product_{{product.get_id}}" id="productObject">
