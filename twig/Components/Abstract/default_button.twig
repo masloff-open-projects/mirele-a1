@@ -15,4 +15,4 @@
     {% endfor %}
 
     {# Ready-made attributes #}
-    {{ inline }}>{{ attr.text|default(attr.value) }}</button>
+    {{ inline }}>{{ attr.text|default(attr.value)|default(attributes.text)|default(attributes.value) }}</button>

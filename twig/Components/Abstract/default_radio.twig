@@ -20,6 +20,6 @@
     {# Ready-made attributes #}
     {{ inline }}>
 
-    {{ attr.text|default(attr.value) }}
+    {{ attr.text|default(attr.value)|default(attributes.text)|default(attributes.value) }}
 
 </label>

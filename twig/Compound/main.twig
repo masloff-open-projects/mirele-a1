@@ -1,25 +1,33 @@
 {% extends "Compound/layout.twig" %}
 
+{% if pages|length > 0 %}
+    {% import 'Compound/pages.twig' as export %}
+{% else %}
+    {% import 'Compound/start.twig' as export %}
+{% endif %}
+
 {% block header %}
 
-    <h1 class="wp-heading-inline">Pages</h1>
-    <a href="javascript:;" class="page-title-action" data-action="create_page">Add New</a>
-
-    <hr class="wp-header-end">
+    {{ export.import() is defined ? export.import() }}
+    {{ export.header() is defined ? export.header() }}
 
 {% endblock %}
 
 {% block main %}
 
-     {% if pages|length > 0 %}
-        {% include 'Compound/pages.twig' %}
-    {% else %}
-        {% include 'Compound/start.twig' %}
-    {% endif %}
+    {{ export.main({}) is defined ? export.main({
+        pages: pages,
+        source: source
+    })}}
 
 {% endblock %}
 
 {% block box %}
+
+    {{ export.box({}) is defined ? export.box({
+        pages: pages,
+        source: source
+    })}}
 
     <h2 class="wp-mrl-header">
         <span>Compound editor</span>

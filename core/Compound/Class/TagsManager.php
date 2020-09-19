@@ -5,32 +5,33 @@ namespace Mirele\Compound;
 
 
 use Mirele\Framework\Iterator;
-use Mirele\Compound\Component;
+use Mirele\Compound\Tag;
+use Mirele\Framework\Stringer;
 
 
-class Store extends Iterator
+class TagsManager extends Iterator
 {
 
     private static $store = [];
 
     /**
-     * @param \Mirele\Compound\Component $Component
+     * @param \Mirele\Compound\Tag $Tag
      * @throws \Exception
      */
-    static public function add (Component $Component) {
+    static public function add (Tag $Tag) {
 
-        if ($Component instanceof Component) {
+        if ($Tag instanceof Tag) {
 
-            if (!isset(self::$store[$Component->getId()])) {
-                self::$store[$Component->getId()] = $Component;
+            if (!isset(self::$store[$Tag->getTag()])) {
+                self::$store[$Tag->getTag()] = $Tag;
             } else {
-                throw new \Exception((new Stringer("The component with identifier {ID} already exists"))::format([
-                    '{ID}' => $Component->getId()
+                throw new \Exception((new Stringer("The tag with identifier {ID} already exists"))::format([
+                    '{ID}' => $Tag->getTag()
                 ]));
             }
 
         } else {
-            throw new \TypeError('The passed class does not match the class of the component');
+            throw new \TypeError('The passed class does not match the class of the tag');
         }
 
     }
@@ -42,7 +43,7 @@ class Store extends Iterator
      */
     static public function call (string $id, array $props) {
         if (isset(self::$store[$id])) {
-            return self::$store[$id]->render($props ? (array) $props : []);
+            return self::$store[$id];
         }
         return false;
     }

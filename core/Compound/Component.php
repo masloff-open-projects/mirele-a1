@@ -65,6 +65,21 @@ class Component
         return false;
     }
 
+    /**
+     * @return mixed
+     */
+    public function getProps()
+    {
+        return $this->props;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
 
     /**
      * @param mixed $function

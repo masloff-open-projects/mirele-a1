@@ -14,24 +14,79 @@ class Template
     private $name;
     private $props;
     private $components;
+    private $fields;
     private $componentsProps;
     private $twig;
 
     /**
-     * @param mixed $id
+     * @param string $id
+     * @return $this
      */
-
     public function setId(string $id)
     {
         $this->id = (string) $id;
         return $this;
     }
 
+    /**
+     * @param string $name
+     * @param $field
+     * @return $this
+     */
+    public function setField(string $name, $field)
+    {
+        $this->fields[$name] = $field;
+        return $this;
+    }
+
+    /**
+     * @param $field
+     * @return $this
+     */
+    public function addField($field)
+    {
+        $this->fields[] = $field;
+        return $this;
+    }
 
     /**
      * @return mixed
      */
+    public function getFields()
+    {
+        return $this->fields;
+    }
 
+    /**
+     * @param $name
+     * @return mixed
+     */
+    public function getField($name)
+    {
+        return $this->fields[$name];
+    }
+
+    /**
+     * @param $name
+     * @return $this
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    /**
+     * @return mixed
+     */
     public function getId()
     {
         return $this->id;
@@ -39,9 +94,9 @@ class Template
 
 
     /**
-     * @param mixed $props
+     * @param array $props
+     * @return $this
      */
-
     public function setProps(array $props)
     {
         $this->props = (array) $props;
@@ -50,11 +105,9 @@ class Template
 
 
     /**
-     * @param mixed $function
-     */
-
-    /**
-     * @return mixed
+     * @param string $name
+     * @param Component $component
+     * @return $this
      */
     public function setComponent(string $name, Component $component)
     {
@@ -63,7 +116,8 @@ class Template
     }
 
     /**
-     * @param mixed $componentsProps
+     * @param string $name
+     * @param array $componentsProps
      */
     public function setComponentProps(string $name, array $componentsProps)
     {
@@ -71,7 +125,8 @@ class Template
     }
 
     /**
-     * @return mixed
+     * @param string $name
+     * @return $this
      */
     public function removeComponent(string $name)
     {
@@ -80,7 +135,8 @@ class Template
     }
 
     /**
-     * @return mixed
+     * @param Component $component
+     * @return $this
      */
     public function addComponent(Component $component)
     {
@@ -89,7 +145,8 @@ class Template
     }
 
     /**
-     * @param mixed $twig
+     * @param string $twig
+     * @return $this
      */
     public function setTwig(string $twig)
     {
@@ -105,6 +162,11 @@ class Template
         return $this->twig;
     }
 
+    /**
+     * @param array $props
+     * @param bool $np
+     * @return false
+     */
     public function render (array $props, $np=true) {
         return TWIG::Render($this->twig, array_merge((array) $this->props, (array) $props, (array) $this->components, [
             'components' => (object) array_merge(
@@ -117,10 +179,20 @@ class Template
                 (array) $this->props,
                 (array) $props
             ),
-            'componentProps' => (object) $this->componentsProps
+            'componentProps' => (object) $this->componentsProps,
+        ], [
+            'template' => [
+                'id' => $this->getId(),
+                'name' => $this->getName(),
+                'fields' => $this->getFields()
+            ],
+            'this' => $this
         ]), $np);
     }
 
+    /**
+     * @return $this
+     */
     public function build () {
         return $this;
     }

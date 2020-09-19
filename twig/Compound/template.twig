@@ -1,0 +1,19 @@
+{% macro render(name, instance, tags) %}
+
+    <small> {{ name }} - {{ instance }} </small>
+    <div class="wp-mrl-block">
+
+        {% for id, complex in tags %}
+            <div>
+                {{ id }}
+
+                {% for tag in complex %}
+                    {{ wp.dump(tag.getTag) }}
+                    {{ wp.dump(tag.getAttributes) }}
+                {% endfor %}
+            </div>
+        {% endfor %}
+
+    </div>
+
+{% endmacro %}

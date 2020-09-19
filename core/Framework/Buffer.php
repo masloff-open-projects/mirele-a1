@@ -58,6 +58,21 @@ class Buffer
         }
     }
 
+
+    /**
+     * @return array
+     */
+    public function toString($namespace='*', $separator="\n")
+    {
+        if ($namespace === 'all') {
+            return join($separator, $this->buffer);
+        } else {
+            return isset($this->buffer[$namespace]) ? join($separator, $this->buffer[$namespace]) : false;
+        }
+    }
+
+
+
     public function clearBuffer () {
         return $this->buffer = array();
     }

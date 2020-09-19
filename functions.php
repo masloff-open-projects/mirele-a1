@@ -25,6 +25,11 @@ use Mirele\TWIG;
 use Mirele\Framework;
 use Mirele\Compound\Store;
 use Mirele\Compound\Grider;
+use Mirele\Compound\Lexer;
+use Mirele\Compound\Duplicator;
+use Mirele\Compound\Component;
+use Mirele\Compound\Template;
+use Mirele\Compound\Field;
 use Mirele\Framework\Stringer;
 use Mirele\Router;
 
@@ -112,8 +117,8 @@ if (wp_doing_ajax() === false) {
     # of the interest.
 
         # Main Core
-        include_once 'core/class/TWIG.php';
         include_once 'core/class/Router.php';
+        include_once 'core/class/TWIG.php';
         include_once 'core/Framework/Iterator.php';
         include_once 'core/Framework/WPGNU.php';
         include_once 'core/Framework/Buffer.php';
@@ -123,9 +128,19 @@ if (wp_doing_ajax() === false) {
         include_once 'core/Framework/TWIGWoocommerce.php';
         include_once 'core/Framework/Customizer.php';
         include_once 'core/Framework/Option.php';
+        include_once 'core/Compound/Class/Signature.php';
+        include_once 'core/Compound/Class/Tag.php';
+        include_once 'core/Compound/Class/TagsManager.php';
+        include_once 'core/Compound/Class/Constructor.php';
+        include_once 'core/Compound/Class/Construction.php';
+        include_once 'core/Compound/Class/Lexer.php';
+        include_once 'core/Compound/Class/Lexer/Converter.php';
+        include_once 'core/Compound/Class/Lexer/Directive.php';
         include_once 'core/Compound/Component.php';
         include_once 'core/Compound/Store.php';
         include_once 'core/Compound/Grider.php';
+        include_once 'core/Compound/Field.php';
+        include_once 'core/Compound/Duplicator.php';
         include_once 'core/Compound/Template.php';
 
         # Arrhitectural Classes Sets (Mirele)
@@ -145,6 +160,7 @@ if (wp_doing_ajax() === false) {
 
         # Abstract core files
         include_once 'core/Option.php';
+        include_once 'core/Tags.php';
 
     # UI components must be connected strictly after
     # all building cores are ready for use.
@@ -181,6 +197,11 @@ if (wp_doing_ajax() === false) {
         # Templates
         include_once 'Templates/Headers/default.php';
 
+        # Constructions
+        include_once 'core/Compound/Prototypes/Constructions/Template.php';
+        include_once 'core/Compound/Prototypes/Constructions/Props.php';
+
+
 
 } else {
 
@@ -200,13 +221,14 @@ if (wp_doing_ajax() === false) {
         include_once 'core/Framework/String.php';
         include_once 'core/Framework/Int.php';
         include_once 'core/Framework/Storage.php';
-        include_once 'core/Framework/Component.php';
+        include_once 'core/Compound/Component.php';
         include_once 'core/Framework/Option.php';
         include_once 'core/Framework/Customizer.php';
 
         # Abstract core files
         include_once 'core/Option.php';
         include_once 'core/Router.php';
+        include_once 'core/Tags.php';
 
 }
 
@@ -299,26 +321,64 @@ add_action(
         # Registration of some components in VM grid of the Compound
         add_shortcode('Compound', function ($attr, $content) {
 
-            $components = (object) ((new Stringer(html_entity_decode($content)))::format([
-                "“" => '"',
-                "”" => '"'
-            ]));
+            # Create a code vocabulary parsing object
+            $Lexer = new Lexer("[Compound role=\"\"] $content [/Compound]");
+            $lex = $Lexer->parse();
 
-            if ($components) {
+            # Create an environment for template renderer
+            $Buffer = new Framework\Buffer();
 
+            foreach ($lex->getTemplates() as $name => $template) {
+                foreach ($template as $instance) {
+                    if (isset($instance['field']) and (is_array($instance['field']) or is_object($instance['field']))) {
+
+                        $components = [];
+
+                        foreach ($instance['field'] as $field => $content) {
+                            foreach ($content as $index => $component) {
+                                if ($component instanceof \Mirele\Compound\Tag) {
+
+                                    $attr = (object) $component->getAttributes();
+
+                                    if (isset($attr->name)) {
+
+                                        $component_ = Store::get($attr->name);
+
+                                        if ($component_ instanceof Component) {
+
+                                            $instance_ = new Duplicator();
+                                            $instance_->setProps((array) $component->getAttributes());
+                                            $instance_->setFieldName($field);
+                                            $instance_->setComponent($component_);
+                                            $components[] = $instance_;
+
+                                        }
+                                    }
+
+                                }
+                            }
+
+                        }
+                    }
+
+                    $Buffer->append(Grider::call($name, array_merge(
+                        (array) $attr,
+                        (array) [
+                            'call' => [
+                                'components' => $components
+                            ]
+                        ]
+                    ), true));
+
+                    unset($components);
+
+                }
             }
 
-            // Store::call($attr['name'], [((array) $attr, (array) ['context_content' => $content]));
-        });
+            # Return the page with the template
+            return $Buffer->toString('*', '');
 
-        # Registration of some components in VM grid of the Compound
-        add_shortcode('Template', function ($attr, $content) {
-            return Grider::call($attr['name'], $attr);
-        });
 
-        # Register custom shortcodes
-        add_shortcode('Page', function ($attr, $content) {
-            \Mirele\TWIG::Render($attr['name'], $attr);
         });
 
         # Disable unnecessary scripts
@@ -652,6 +712,8 @@ add_action(
 add_action(
     'admin_menu', function () {
 
+        add_thickbox();
+
         add_menu_page(
             'MIRELE', 'Mirele Center', MIRELE_MIN_PERMISSIONS_FOR_EDIT, 'mirele_center', function () {
             if (current_user_can(MIRELE_MIN_PERMISSIONS_FOR_EDIT)) {
@@ -669,11 +731,74 @@ add_action(
         add_menu_page(
             'MIRELE', 'Compound Editor', MIRELE_MIN_PERMISSIONS_FOR_EDIT, 'сompound_render_editor', function () {
 
+
                 if (isset((MIRELE_GET)['page_id']) ? (MIRELE_GET)['page_id'] : false) {
+
+                    $page = get_post((MIRELE_GET)['page_id']);
+                    $is = (object) [
+                        'template' => has_shortcode($page->post_content, 'Compound')
+                    ];
+
+                    $document = (object) [
+                        'fields' => []
+                    ];
+
+                    # If a shortcode is found on the page
+                    if ($is->template) {
+
+                        # Create a code vocabulary parsing object
+                        $Lexer = new Lexer($page->post_content);
+
+                        # Return the page with the template
+                        $lex = $Lexer->parse();
+
+                        if ($lex) {
+
+                            foreach ($lex->getTemplates() as $name => $layout) {
+
+                                foreach ($layout as $id => $instance) {
+
+                                    $Template = Grider::get($name);
+
+                                    if ($Template instanceof Template) {
+
+                                        $fields = $Template->getFields();
+
+                                        if ($fields) {
+
+                                            foreach ($fields as $field => $object) {
+
+                                                if ($object instanceof Field) {
+
+                                                    $local = $lex->getTemplateField((string) $name, $object->getName(), $id);
+
+                                                    if ($local) {
+                                                        $document->fields[$name][$id][$object->getName()] = $local;
+                                                    }
+
+                                                }
+
+                                            }
+
+                                        }
+                                    }
+
+                                }
+
+                            }
+
+                        }
+
+                    }
 
                     # Render Page Editor
                     TWIG::Render('Compound/editor', [
-                        'pages' => ''
+                        'page' => $page,
+                        'is_template' => has_shortcode($page->post_content, 'Compound'),
+                        'lex' => [
+                            'templates' => $is->template ? $lex->getTemplates() : (object) []
+                        ],
+                        'document' => $document
                     ]);
 
                 } else {

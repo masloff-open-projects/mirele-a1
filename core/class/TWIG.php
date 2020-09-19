@@ -2,6 +2,9 @@
 
 namespace Mirele;
 
+use Mirele\Compound\Duplicator;
+use Mirele\Compound\Field;
+use Mirele\Compound\Template;
 use Mirele\Framework\Stringer;
 use \Twig\Extension\AbstractExtension;
 use \Twig\TwigFunction;
@@ -91,11 +94,37 @@ class TWIG
             {
                 return [
                     new TwigFunction('Component', [$this, 'Component']),
+                    new TwigFunction('Field',     [$this, 'Field']),
                 ];
             }
 
             public function Component (string $id, array $props) {
                 \Mirele\Compound\Store::call($id, $props);
+            }
+
+            public function Field (string $name, array $props) {
+                if ($props and isset($props['template']) and $props['template'] instanceof Template) {
+
+                    $Template = $props['template'];
+                    $Field = $Template->getField($name);
+
+                    if ($Field instanceof Field) {
+                        if (isset($props['components'])) {
+
+                            foreach ($props['components'] as $Name => $Component) {
+                                if ($Component instanceof Duplicator) {
+                                    if ($Component->getFieldName() == $Field->getName()) {
+                                        return $Component->build()->render([
+                                            'attr' => isset($props['attr']) ? $props['attr'] : []
+                                        ]);
+                                    }
+                                }
+                            }
+
+                        }
+                    }
+
+                }
             }
 
             public function getName() {

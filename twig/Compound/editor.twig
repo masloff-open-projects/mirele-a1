@@ -1,3 +1,5 @@
+{% import 'Compound/template.twig' as template %}
+
 <div class="wrap">
 
     <div class="root">
@@ -10,26 +12,30 @@
 
         <hr class="wp-header-end">
 
+        <div class="wp-mrl-tools">
+            ...
+        </div>
+
         <div class="wp-mrl-column-1">
             <div class="root-blocks">
 
-                {% if get_page|length > 0 %}
+                {% if is_template %}
 
-                    {% for page, body in get_page %}
-                        {% include 'Compound/block.twig' %}
+{#                    {{ wp.dump(document) }}#}
+
+                    {% for template, instance in document.fields %}
+                        {% for name, tags in instance %}
+
+                            {{ template.render(template, name, tags) }}
+
+                        {% endfor %}
                     {% endfor %}
 
-                {% else %}
+{#                    {% if page %}#}
+{#                        <textarea name="" id="" cols="60" rows="30" style="width: 100%; height: 100%;">{{ wp.dump(page) }}</textarea>#}
+{#                    {% else %}#}
 
-                    <div class="wrap">
-                        <div class="root menu-center">
-
-                            <img src="<?php echo PATH_CREATE_BLOCK_IMG; ?>" alt="" width="256px">
-                            <h3>Create a block to start editing the page</h3>
-                            <p></p>
-
-                        </div>
-                    </div>
+{#                    {% endif %}#}
 
                 {% endif %}
 
@@ -45,7 +51,7 @@
 
             <div class="wp-mrl-box">
                 <h2 class="wp-mrl-header">
-                    <span>Rosemary page</span>
+                    <span>Compound page</span>
                 </h2>
 
                 <div class="inner">

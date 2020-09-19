@@ -12,6 +12,10 @@ class Grider extends Iterator
 
     private static $store = [];
 
+    /**
+     * @param Template $Template
+     * @throws \Exception
+     */
     static public function add (Template $Template) {
 
         if ($Template instanceof Template) {
@@ -30,6 +34,12 @@ class Grider extends Iterator
 
     }
 
+    /**
+     * @param string $id
+     * @param array $props
+     * @param bool $np
+     * @return false
+     */
     static public function call (string $id, array $props, $np=true) {
         if (isset(self::$store[$id])) {
             return self::$store[$id]->render($props ? (array) $props : [], $np);
@@ -37,6 +47,10 @@ class Grider extends Iterator
         return false;
     }
 
+    /**
+     * @param string $id
+     * @return false|mixed
+     */
     static public function get (string $id) {
         if (isset(self::$store[$id])) {
             return self::$store[$id];

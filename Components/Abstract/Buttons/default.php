@@ -8,9 +8,7 @@ use Mirele\TWIG;
 
 $Component = new Component ();
 $Component->setId('default_abstract_button');
-$Component->setProps([
-
-]);
+$Component->setProps([]);
 $Component->setFunction(function ($props) {
 
     $props = (object) $props;
