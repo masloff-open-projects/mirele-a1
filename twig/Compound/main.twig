@@ -8,7 +8,10 @@
 
 {% block header %}
 
-    {{ export.import() is defined ? export.import() }}
+    {{ export.import({}) is defined ? export.import({
+        source: source,
+        templates: templates
+    }) }}
     {{ export.header() is defined ? export.header() }}
 
 {% endblock %}
@@ -17,7 +20,8 @@
 
     {{ export.main({}) is defined ? export.main({
         pages: pages,
-        source: source
+        source: source,
+        templates: templates
     })}}
 
 {% endblock %}
@@ -26,7 +30,8 @@
 
     {{ export.box({}) is defined ? export.box({
         pages: pages,
-        source: source
+        source: source,
+        templates: templates
     })}}
 
     <h2 class="wp-mrl-header">

@@ -57,34 +57,42 @@ class Directive {
     }
 
     /**
-     * @param mixed $tag
+     * @param string $tag
+     * @return $this
      */
     public function setTag(string $tag)
     {
         $this->tag = $tag;
+        return $this;
     }
 
     /**
-     * @param mixed $attributes
+     * @param object $attributes
+     * @return $this
      */
     public function setAttributes(object $attributes)
     {
         $this->attributes = $attributes;
+        return $this;
     }
 
     /**
-     * @param mixed $content
+     * @param $content
+     * @return $this
      */
     public function setContent($content)
     {
         $this->content = $content;
+        return $this;
     }
 
     /**
-     * @param mixed $next
+     * @param $next
+     * @return $this
      */
     public function setNext($next)
     {
         $this->next = $next;
+        return $this;
     }
 }

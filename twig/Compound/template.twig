@@ -1,19 +1,30 @@
-{% macro render(name, instance, tags) %}
-
-    <small> {{ name }} - {{ instance }} </small>
+{% macro render(name, instance, package) %}
     <div class="wp-mrl-block">
 
-        {% for id, complex in tags %}
-            <div>
-                {{ id }}
+        <div class="wp-mrl-fields">
+            {% for id, complex in package %}
 
-                {% for tag in complex %}
-                    {{ wp.dump(tag.getTag) }}
-                    {{ wp.dump(tag.getAttributes) }}
-                {% endfor %}
-            </div>
-        {% endfor %}
+                <div class="wp-mrl-field wp-mrl-field-grid-{{ wp.dump(complex.field.instance.getMeta('editor').getData('grid')) }}">
+                    {% if complex.package is empty %}
+                        <div>
+
+                        </div>
+                    {% else %}
+                        {% for tag in complex.package %}
+
+                            {# Every component #}
+                            <div>
+                                {{ wp.dump(tag.getTag) }}
+                                {{ wp.dump(tag.getAttributes) }}
+                            </div>
+
+                        {% endfor %}
+                    {% endif %}
+                </div>
+
+            {% endfor %}
+        </div>
+
 
     </div>
-
 {% endmacro %}

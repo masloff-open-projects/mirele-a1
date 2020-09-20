@@ -1,5 +1,6 @@
-{% macro import() %}
-    {% include 'Compound/pages/modal/create_page.twig' %}
+{% macro import(event) %}
+    {% import 'Compound/pages/modal/create_page.twig' as modal %}
+    {{ modal.render(event) }}
 {% endmacro %}
 
 {% macro header() %}

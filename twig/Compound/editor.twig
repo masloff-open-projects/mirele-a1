@@ -6,43 +6,42 @@
 
         <h1 class="wp-heading-inline">Blocks</h1>
 
-        <a href="javascript:;" class="page-title-action" data-action="create_block">Create block</a>
-        <a href="javascript:;" class="page-title-action" data-action="export_blocks">Export</a>
-        <a href="javascript:;" class="page-title-action" data-action="import_blocks">Import</a>
-
         <hr class="wp-header-end">
-
-        <div class="wp-mrl-tools">
-            ...
-        </div>
 
         <div class="wp-mrl-column-1">
             <div class="root-blocks">
 
-                {% if is_template %}
+                <div class="wp-mrl-box">
+                    <h2 class="wp-mrl-header">
+                        <span>Editor</span>
+                    </h2>
 
-{#                    {{ wp.dump(document) }}#}
+                    <div class="wp-mrl-tools">
+                        <span class="dashicons dashicons-plus"></span>
+                    </div>
 
-                    {% for template, instance in document.fields %}
-                        {% for name, tags in instance %}
+                    <div class="inner">
 
-                            {{ template.render(template, name, tags) }}
+                        {% if is_template %}
 
-                        {% endfor %}
-                    {% endfor %}
+                            {% for template, instance in document.fields %}
+                                {% for name, package in instance %}
+                                    {{ template.render(template, name, package) }}
+                                {% endfor %}
+                            {% endfor %}
 
-{#                    {% if page %}#}
-{#                        <textarea name="" id="" cols="60" rows="30" style="width: 100%; height: 100%;">{{ wp.dump(page) }}</textarea>#}
-{#                    {% else %}#}
+                        {% endif %}
 
-{#                    {% endif %}#}
+                    </div>
 
-                {% endif %}
+                    <a href="#">
+                        <div class="wp-mrl-add">
+                            <span class="dashicons dashicons-plus"></span>
+                        </div>
+                    </a>
 
-            </div>
+                </div>
 
-            <div class="add_block_button" data-action="create_block">
-                Create new block
             </div>
 
         </div>

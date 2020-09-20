@@ -17,6 +17,59 @@ class Template
     private $fields;
     private $componentsProps;
     private $twig;
+    private $meta;
+    private $handler;
+
+    /**
+     * Template constructor.
+     */
+    function __construct() {
+        $this->setHandler(function ($event) {
+            return $event;
+        });
+    }
+
+    /**
+     * @param callable $handler
+     * @return $this
+     */
+    public function setHandler(callable $handler)
+    {
+        $this->handler = $handler;
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getHandler()
+    {
+        return $this->handler;
+    }
+
+    /**
+     * @param string $meta
+     * @param mixed $value
+     * @return $this
+     */
+    public function setMeta(string $meta, $value)
+    {
+        $this->meta[$meta] = $value;
+        return $this;
+    }
+
+    /**
+     * @param string $meta
+     * @return false|mixed
+     */
+    public function getMeta(string $meta)
+    {
+        if (isset($this->meta[$meta])) {
+            return $this->meta[$meta];
+        }
+
+        return false;
+    }
 
     /**
      * @param string $id
@@ -103,6 +156,28 @@ class Template
         return $this;
     }
 
+    /**
+     * @return mixed
+     */
+    public function getProps()
+    {
+        return $this->props;
+    }
+
+    /**
+     * @param $key
+     * @return false|mixed
+     */
+
+    public function getProp($key)
+    {
+        if (isset($this->props[$key])) {
+            return $this->props[$key];
+        }
+        return false;
+    }
+
+
 
     /**
      * @param string $name
@@ -168,6 +243,13 @@ class Template
      * @return false
      */
     public function render (array $props, $np=true) {
+
+        # Check if a handler is available and call it if it is.
+        if (is_callable($this->getHandler())) {
+            call_user_func($this->getHandler(), $this);
+        }
+
+        # Render
         return TWIG::Render($this->twig, array_merge((array) $this->props, (array) $props, (array) $this->components, [
             'components' => (object) array_merge(
                 (array) $this->components,

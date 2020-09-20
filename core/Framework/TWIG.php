@@ -274,4 +274,7 @@ class TWIG
 
     }
 
+    function nonce () {
+        return wp_create_nonce(MIRELE_NONCE);
+    }
 }

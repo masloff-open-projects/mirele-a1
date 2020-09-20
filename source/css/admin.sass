@@ -106,14 +106,38 @@ table.vertical-mirele-table-tabs
     width: 70%
 
 .wp-mrl-tools
-  background: #FFFFFF
-  border: 1px solid #ccd0d4
+  background: #0073AA
+  color: white
   position: relative
-  -webkit-box-shadow: 0 1px 1px rgba(0,0,0,0.04)
-  -moz-box-shadow: 0 1px 1px rgba(0,0,0,0.04)
-  box-shadow: 0 1px 1px rgba(0,0,0,0.04)
-  margin-bottom: 12px
   padding: 12px 24px
+
+.wp-mrl-add
+  border: 1px dashed rgba(125,125,125,.4)
+  margin: 14px
+  font-size: 14px
+  text-align: center
+  padding: 20px
+  cursor: pointer
+
+.wp-mrl-field
+  background: #F5F5F5
+  padding: 12px
+  height: 60px
+  margin: 4px
+  width: auto
+  width: -webkit-fill-available
+  min-width: 40px
+
+
+.wp-mrl-field-grid-inline
+  //display: inline-block
+
+.wp-mrl-fields
+  display: flex
+  flex-direction: row
+  justify-content: space-around
+  overflow: hidden
+  align-self: stretch
 
 .wp-mrl-block
   background: #FFFFFF
@@ -203,7 +227,8 @@ table.vertical-mirele-table-tabs
 .inner-center-box-margin 
   margin: 24px 256px
 
-
-
+.wp-mrl-modal-center
+  text-align: center
 
 @import components/switch
+@import compound/modal

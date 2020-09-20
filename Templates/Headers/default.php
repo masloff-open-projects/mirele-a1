@@ -31,6 +31,8 @@ $Template->setField('button',
         ->setComponentProps([])
 );
 
+$Template->setMeta('name', 'Header');
+
 $Template->setTwig('Templates/Headers/default');
 
 Grider::add($Template);

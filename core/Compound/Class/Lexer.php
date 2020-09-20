@@ -4,6 +4,7 @@
 namespace Mirele\Compound;
 
 
+use Mirele\Framework\Buffer;
 use Mirele\Framework\Stringer;
 use Mirele\Compound\Children;
 use voku\helper\AntiXSS;
@@ -16,10 +17,18 @@ class Lexer
     private $entities = [];
     private $signature = [];
 
+    /**
+     * Lexer constructor.
+     * @param string $fragment
+     */
     function __construct(string $fragment) {
+        $this->signature = new Signature();
         $this->fragment = (string) $fragment;
     }
 
+    /**
+     * @return Signature
+     */
     public function parse () {
 
         $Signature = new Signature();
@@ -58,8 +67,11 @@ class Lexer
                         $next = $iterator->getNext();
                         $name = $iterator->getAttribute('name');
                         $instance = $iterator->getAttribute('instance') ? $iterator->getAttribute('instance') : $index;
+                        $props = $iterator->getAttributes();
 
                         $Signature->addTemplate($name, [], $instance);
+
+                        $Signature->setTemplateProps($name, (object) $props, $instance);
 
                         if (is_array($next) or is_object($next)) {
 
@@ -75,13 +87,8 @@ class Lexer
                                         $package = Constructor::call((string) $nesting->getTag(), (array) $nesting->getNext());
                                         $field_name = $nesting->getAttribute('name') ? $nesting->getAttribute('name') : 'default';
 
-                                        if ($field_name) {
-
+                                        if ($field_name and $package) {
                                             $Signature->addTemplateField($name, $field_name, $package, $instance);
-//
-//                                            # Add a directive to local memory
-//                                            array_push($this->entities, $Signature);
-
                                         }
 
                                     }
@@ -100,6 +107,79 @@ class Lexer
         }
 
         return $Signature;
+
+    }
+
+    /**
+     * @return Signature
+     */
+    public function getSignature()
+    {
+        return $this->signature;
+    }
+
+    public function addDirective(string $name, Directive $directive)
+    {
+        $this->directives[$name] = $directive;
+        return $this;
+    }
+
+    public function generateCode () {
+
+        // TODO IT;
+
+        $Buffer = new Buffer();
+
+        # Get signature
+        $signature = $this->getSignature();
+
+        if ($signature instanceof Signature) {
+
+            $Buffer->append('<root>');
+
+            $templates = $signature->getTemplates();
+
+            if ($templates) {
+
+                foreach ($templates as $name => $template) {
+
+                    foreach ($template as $id => $instance) {
+
+                        $Buffer->append("<template name=\"$name\" instance=\"$id\">");
+
+                        if (isset($instance['field'])) {
+
+
+                            foreach ($instance['field'] as $field => $tags) {
+
+                                $Buffer->append("<field name=\"$field\">");
+
+                                foreach ($tags as $tag) {
+                                    if ($tag instanceof Tag) {
+                                        $tagName = $tag->getTag();
+                                        $Buffer->append("<$tagName/>");
+                                    }
+                                }
+                                
+                                $Buffer->append('</field>');
+
+                            }
+
+                        }
+
+                        $Buffer->append('</template>');
+
+                    }
+
+                }
+
+            }
+
+            $Buffer->append('</root>');
+
+        }
+
+        return $Buffer->toString('*', "\n");
 
     }
 

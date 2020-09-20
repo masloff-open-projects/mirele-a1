@@ -12,6 +12,31 @@ class Field
     private $component;
     private $data;
     private $componentProps;
+    private $meta;
+
+    /**
+     * @param string $meta
+     * @param mixed $value
+     * @return $this
+     */
+    public function setMeta(string $meta, $value)
+    {
+        $this->meta[$meta] = $value;
+        return $this;
+    }
+
+    /**
+     * @param string $meta
+     * @return false|mixed
+     */
+    public function getMeta(string $meta)
+    {
+        if (isset($this->meta[$meta])) {
+            return $this->meta[$meta];
+        }
+
+        return false;
+    }
 
     /**
      * @param array $props

@@ -79,9 +79,17 @@ define('MIRELE_URL', $_SERVER['REQUEST_SCHEME'] . '://' . $_SERVER['HTTP_HOST'] 
 
 # Constants regulators
 define('MIRELE_MIN_PERMISSIONS_FOR_EDIT', 'edit_themes');
+define('MIRELE_RIGHTS', [
+    'page' => [
+        'create' => 'edit_themes',
+        'edit' => 'edit_themes',
+        'remove' => 'edit_themes',
+    ]
+]);
 define('COMPOUND_FORBIDDEN_SYMBOLS', array(':', '/', "@"));
 define('COMPOUND_RIGHTS_FOR_VISUAL_EDIT', 'edit_themes');
 define('COMPOUND_CANVAS', 'canvas.php');
+define('MIRELE_NONCE', 'mrl-wp-nonce');
 
 # File path constants
 define('COMPOUND_TEMPLATES_DIR', get_template_directory() . '/templates');
@@ -94,7 +102,7 @@ define('MIRELE_LOG_FILE', get_template_directory() . '/logger.log');
 define('MIRELE_ERROR_FILE', get_template_directory() . '/.error');
 
 # Show errors
-if (wp_doing_ajax() == false and true) {
+if (wp_doing_ajax() == true and true) {
     ini_set('error_reporting', E_ALL);
     ini_set('display_errors', 1);
     ini_set('display_startup_errors', 1);
@@ -128,14 +136,15 @@ if (wp_doing_ajax() === false) {
         include_once 'core/Framework/TWIGWoocommerce.php';
         include_once 'core/Framework/Customizer.php';
         include_once 'core/Framework/Option.php';
-        include_once 'core/Compound/Class/Signature.php';
-        include_once 'core/Compound/Class/Tag.php';
         include_once 'core/Compound/Class/TagsManager.php';
         include_once 'core/Compound/Class/Constructor.php';
-        include_once 'core/Compound/Class/Construction.php';
         include_once 'core/Compound/Class/Lexer.php';
         include_once 'core/Compound/Class/Lexer/Converter.php';
-        include_once 'core/Compound/Class/Lexer/Directive.php';
+        include_once 'core/Compound/Config.php';
+        include_once 'core/Compound/Construction.php';
+        include_once 'core/Compound/Tag.php';
+        include_once 'core/Compound/Signature.php';
+        include_once 'core/Compound/Directive.php';
         include_once 'core/Compound/Component.php';
         include_once 'core/Compound/Store.php';
         include_once 'core/Compound/Grider.php';
@@ -194,14 +203,10 @@ if (wp_doing_ajax() === false) {
         include_once 'Components/Woocommerce/Placeholders/Downloads/default.php';
         include_once 'Components/Woocommerce/Placeholders/Cart/default.php';
 
-        # Templates
-        include_once 'Templates/Headers/default.php';
-
-        # Constructions
-        include_once 'core/Compound/Prototypes/Constructions/Template.php';
-        include_once 'core/Compound/Prototypes/Constructions/Props.php';
-
-
+        # Connecting Vendor files except Composer
+        include_once 'Routes/vendor.php';
+        include_once 'Templates/vendor.php';
+        include_once 'Prototypes/vendor.php';
 
 } else {
 
@@ -228,7 +233,10 @@ if (wp_doing_ajax() === false) {
         # Abstract core files
         include_once 'core/Option.php';
         include_once 'core/Router.php';
-        include_once 'core/Tags.php';
+
+        # Connecting Vendor files except Composer
+        include_once 'Routes/vendor.php';
+
 
 }
 
@@ -366,8 +374,9 @@ add_action(
                         (array) [
                             'call' => [
                                 'components' => $components
-                            ]
-                        ]
+                            ],
+                        ],
+                        (array) $instance['prop']
                     ), true));
 
                     unset($components);
@@ -658,6 +667,9 @@ add_action(
             return get_permalink(get_option('woocommerce_myaccount_page_id')) . '?action=login';
         }, 1, 1);
 
+        Router::error(function () {});
+        Router::dispatch(parse_url($_SERVER["REQUEST_URI"], PHP_URL_PATH));
+
 });
 
 # Admin front-end
@@ -731,7 +743,6 @@ add_action(
         add_menu_page(
             'MIRELE', 'Compound Editor', MIRELE_MIN_PERMISSIONS_FOR_EDIT, 'сompound_render_editor', function () {
 
-
                 if (isset((MIRELE_GET)['page_id']) ? (MIRELE_GET)['page_id'] : false) {
 
                     $page = get_post((MIRELE_GET)['page_id']);
@@ -772,9 +783,13 @@ add_action(
 
                                                     $local = $lex->getTemplateField((string) $name, $object->getName(), $id);
 
-                                                    if ($local) {
-                                                        $document->fields[$name][$id][$object->getName()] = $local;
-                                                    }
+                                                    $document->fields[$name][$id][$object->getName()] = (object) [
+                                                        'field' => (object) [
+                                                            'name' => $field,
+                                                            'instance' => $object
+                                                        ],
+                                                        'package' => is_array($local) ? $local : []
+                                                    ];
 
                                                 }
 
@@ -798,7 +813,8 @@ add_action(
                         'lex' => [
                             'templates' => $is->template ? $lex->getTemplates() : (object) []
                         ],
-                        'document' => $document
+                        'document' => $is->template ? $document : (object) [],
+                        'templates' => Grider::all()
                     ]);
 
                 } else {
@@ -808,7 +824,8 @@ add_action(
                         'pages' => get_pages( array(
                             'meta_key' => '_wp_page_template',
                             'meta_value' => COMPOUND_CANVAS
-                        ))
+                        )),
+                        'templates' => Grider::all()
                     ]);
 
                 }

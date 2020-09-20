@@ -18,8 +18,9 @@
                     <div v-if="message.text != false" v-html="message.text">
                     </div>
                     <div class="checkbox mb-3">
-                        <label>
-                            <input type="checkbox" v-model="remember"/> Check me out
+                        <label for="remember">
+                            <input type="checkbox" v-model="remember" id="remember"/>
+                            <span>Check me out</span>
                         </label>
                     </div>
                 </div>
