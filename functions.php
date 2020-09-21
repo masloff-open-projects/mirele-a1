@@ -168,7 +168,6 @@ if (wp_doing_ajax() === false) {
         include_once "meta.php";
 
         # Abstract core files
-        include_once 'core/Option.php';
         include_once 'core/Tags.php';
 
     # UI components must be connected strictly after
@@ -207,6 +206,7 @@ if (wp_doing_ajax() === false) {
         include_once 'Routes/vendor.php';
         include_once 'Templates/vendor.php';
         include_once 'Prototypes/vendor.php';
+        include_once 'Options/vendor.php';
 
 } else {
 
@@ -230,12 +230,9 @@ if (wp_doing_ajax() === false) {
         include_once 'core/Framework/Option.php';
         include_once 'core/Framework/Customizer.php';
 
-        # Abstract core files
-        include_once 'core/Option.php';
-        include_once 'core/Router.php';
-
         # Connecting Vendor files except Composer
         include_once 'Routes/vendor.php';
+        include_once 'Options/vendor.php';
 
 
 }
