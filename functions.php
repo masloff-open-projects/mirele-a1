@@ -131,35 +131,19 @@ if (wp_doing_ajax() === false) {
     # which will already be used within the elements and components
     # of the interest.
 
+        # Connection of all prototypes and instances
+        include_once 'Interface/vendor.php';
+        include_once 'Instance/vendor.php';
+        include_once 'Сontroller/vendor.php';
+
         # Main Core
         include_once 'core/class/Router.php';
         include_once 'core/TWIG/Converter.php';
         include_once 'core/class/TWIG.php';
-        include_once 'core/Framework/Iterator.php';
         include_once 'core/Framework/WPGNU.php';
-        include_once 'core/Framework/Buffer.php';
         include_once 'core/Framework/String.php';
-        include_once 'core/Framework/Storage.php';
         include_once 'core/Framework/TWIG.php';
         include_once 'core/Framework/TWIGWoocommerce.php';
-        include_once 'core/Framework/Customizer.php';
-        include_once 'core/Framework/Option.php';
-        include_once 'core/Compound/TagsManager.php';
-        include_once 'core/Compound/Constructor.php';
-        include_once 'core/Compound/Lexer.php';
-        include_once 'core/Compound/Lexer/Converter.php';
-        include_once 'core/Compound/Config.php';
-        include_once 'core/Compound/Construction.php';
-        include_once 'core/Compound/Tag.php';
-        include_once 'core/Compound/Lex.php';
-        include_once 'core/Compound/Signature.php';
-        include_once 'core/Compound/Directive.php';
-        include_once 'core/Compound/Component.php';
-        include_once 'core/Compound/Store.php';
-        include_once 'core/Compound/Grider.php';
-        include_once 'core/Compound/Field.php';
-        include_once 'core/Compound/Duplicator.php';
-        include_once 'core/Compound/Template.php';
 
         # Arrhitectural Classes Sets (Mirele)
         include_once 'core/class/MFile.php';
@@ -193,21 +177,20 @@ if (wp_doing_ajax() === false) {
     # which will already be used within the elements and components
     # of the interest.
 
+        # Connection of all prototypes and instances
+        include_once 'Interface/vendor.php';
+        include_once 'Instance/vendor.php';
+        include_once 'Сontroller/vendor.php';
+
         # Arrhitectural Classes Sets (Mirele)
         include_once 'core/class/MFile.php';
 
         # Main core
         include_once 'core/class/Router.php';
         include_once 'core/class/MLogger.php';
-        include_once 'core/Framework/Iterator.php';
         include_once 'core/Framework/WPGNU.php';
-        include_once 'core/Framework/Buffer.php';
         include_once 'core/Framework/String.php';
         include_once 'core/Framework/Int.php';
-        include_once 'core/Framework/Storage.php';
-        include_once 'core/Compound/Component.php';
-        include_once 'core/Framework/Option.php';
-        include_once 'core/Framework/Customizer.php';
 
         # Connecting Vendor files except Composer
         include_once 'Routes/vendor.php';
