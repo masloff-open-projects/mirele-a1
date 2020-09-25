@@ -29,7 +29,7 @@ Router::post('/wp-admin/admin.php', function () {
                 # Create a work sub-environment
                 $user = wp_get_current_user();
                 $author_id = $user->ID;
-                $title = $name;
+                $title = str_replace(COMPOUND_FORBIDDEN_SYMBOLS, '', $name);
                 $slug = sanitize_title($title);
 
                 # Lexer object for generating $lex code

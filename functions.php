@@ -103,7 +103,7 @@ define('MIRELE_SOURCE_PATH', get_template_directory() . '/source');
 define('MIRELE_LOG_FILE', get_template_directory() . '/logger.log');
 define('MIRELE_ERROR_FILE', get_template_directory() . '/.error');
 
-# URL
+# Bureaucratic information
 define('MIRELE_URLS', [
     'DOC' => 'https://irtex-mirele.github.io'
 ]);
@@ -137,7 +137,6 @@ if (wp_doing_ajax() === false) {
         include_once 'Сontroller/vendor.php';
 
         # Main Core
-        include_once 'core/class/Router.php';
         include_once 'core/TWIG/Converter.php';
         include_once 'core/class/TWIG.php';
         include_once 'core/Framework/WPGNU.php';
@@ -147,7 +146,6 @@ if (wp_doing_ajax() === false) {
 
         # Arrhitectural Classes Sets (Mirele)
         include_once 'core/class/MFile.php';
-        include_once 'core/class/MApps.php';
         include_once 'core/class/MCache.php';
         include_once 'core/class/MHubSpot.php';
         include_once 'core/class/MMailChimp.php';
@@ -186,7 +184,6 @@ if (wp_doing_ajax() === false) {
         include_once 'core/class/MFile.php';
 
         # Main core
-        include_once 'core/class/Router.php';
         include_once 'core/class/MLogger.php';
         include_once 'core/Framework/WPGNU.php';
         include_once 'core/Framework/String.php';

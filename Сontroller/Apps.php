@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Class MApps
+ * Class Apps
  * Class for working with Mirele.
  * Mirele applications are like WordPress plugins,
  * only built into the distribution
@@ -11,7 +11,7 @@
  * @package: Mirele
  */
 
-class MApps {
+class Apps {
 
     private $apps = array();
 

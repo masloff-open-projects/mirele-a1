@@ -1,5 +1,8 @@
 <?php
+
+
 namespace Mirele;
+
 
 /**
  * @method static Router get(string $route, Callable $callback)

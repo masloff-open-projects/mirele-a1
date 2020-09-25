@@ -30,4 +30,6 @@ include_once 'Duplicator.php';
 include_once 'Grider.php';
 include_once 'Lexer.php';
 include_once 'Store.php';
+include_once 'Router.php';
+include_once 'Apps.php';
 include_once 'TagsManager.php';
