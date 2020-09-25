@@ -40,8 +40,6 @@ jQuery(document).ready(init => {
         throw 'jQuery not include';
     }
 
-    // Main code
-
     // VUE Components
     new Vue({
         delimiters: ['{', '}'],
@@ -52,11 +50,6 @@ jQuery(document).ready(init => {
             // Tabs on page (Render)
             tabs: [
                 {name: 'Basic settings', namespace: 'basic', id: 'basic'},
-                {name: 'Woocommerce Appearance', namespace: 'woocommerce_card', id: 'woocommerce_card'},
-                {name: 'Shop', namespace: 'woocommerce_shop', id: 'woocommerce_shop'},
-                {name: 'Shop cart', namespace: 'woocommerce_cart', id: 'woocommerce_cart'},
-                {name: 'Login page', namespace: 'authorization_login', id: 'authorization_login'},
-                {name: 'Signup page', namespace: 'authorization_signup', id: 'authorization_signup'},
             ],
 
             // Setting on page (Render)
@@ -69,6 +62,26 @@ jQuery(document).ready(init => {
             changes: []
         },
         mounted: function () {
+
+            // Try get all namespaces
+            new WPAjax('namespaces', {}).then(event => {
+
+                if (event.data) {
+
+                    // Clear tabs content
+                    this.tabs = [];
+
+                    for (const [index, name] of Object.entries(event.data)) {
+                        this.tabs.push({
+                            name: name,
+                            namespace: name,
+                            id: name
+                        });
+                    }
+
+                }
+
+            });
 
             // Try get all options
             new WPAjax('options', {

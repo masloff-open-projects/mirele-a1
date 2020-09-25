@@ -23,8 +23,12 @@
  * @template vendor
  */
 
-// AJAX
+// Complex
 require_once 'Complex/wp-admin/Compound-createPage.php';
+require_once 'Complex/wp-admin/Compound-insertTemplate.php';
+
+// AJAX
+require_once 'AJAX/namespaces.php';
 require_once 'AJAX/login.php';
 require_once 'AJAX/signup.php';
 require_once 'AJAX/recoveryPassword.php';

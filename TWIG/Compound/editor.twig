@@ -1,0 +1,127 @@
+{% import 'Compound/editor/modal/insert_template.twig' as modal_insert_template %}
+{% import 'Compound/editor/modal/insert_component.twig' as modal_insert_component %}
+{% import 'Compound/template.twig' as template %}
+
+{{ modal_insert_template.render({
+    id: page.ID,
+    templates: store.templates
+}) }}
+
+{{ modal_insert_component.render({
+    id: page.ID
+}) }}
+
+<div class="wrap">
+    <h1>Compound Block</h1>
+
+    <hr class="wp-header-end" />
+
+    <div id="poststuff">
+        <div id="post-body" class="metabox-holder columns-2">
+            <div id="post-body-content" style="position: relative;">
+                <div class="root-blocks">
+
+                    <div class="wp-mrl-box">
+                        <h2 class="wp-mrl-header">
+                            <span>Editor</span>
+                        </h2>
+
+                        <div class="wp-mrl-tools">
+                            <span class="dashicons dashicons-plus wp-mrl-controll-icon"></span>
+                            <span class="dashicons dashicons-welcome-write-blog wp-mrl-controll-icon"></span>
+                            <span class="dashicons dashicons-external wp-mrl-controll-icon"></span>
+                        </div>
+
+                        <div class="inner" id="compound-editor-body">
+
+                            {% if is_template %}
+
+                                {% for template, instance in document.fields %}
+
+                                    {% for name, package in instance %}
+                                        {{ template.render(template, name, package) }}
+                                    {% endfor %}
+
+                                {% endfor %}
+
+                            {% endif %}
+
+                        </div>
+
+                        <a href="#TB_inline?width=600&height=550&inlineId=modal_insert_template" title="Insert template" class="thickbox">
+                            <div class="wp-mrl-add">
+                                <span class="dashicons dashicons-plus"></span>
+                            </div>
+                        </a>
+
+                    </div>
+
+                </div>
+            </div>
+            <div id="postbox-container-1" class="postbox-container">
+                <div id="side-sortables" class="meta-box-sortables ui-sortable" >
+                    <div id="submitdiv" class="postbox">
+                        <div class="postbox-header">
+                            <h2 class="hndle ui-sortable-handle">Publish</h2>
+                        </div>
+                        <div class="inside">
+                            <div class="submitbox" id="submitpost">
+                                <div id="minor-publishing">
+                                    <div style="display: none;">
+                                        <p class="submit">
+                                            <input type="submit" name="save" id="save" class="button" value="Save" />
+                                        </p>
+                                    </div>
+
+                                    <div id="misc-publishing-actions">
+                                        <div class="misc-pub-section misc-pub-post-status">
+                                            Status: <span id="post-status-display"> {{ page.post_status|capitalize }} </span>
+                                        </div>
+
+                                        <div class="misc-pub-section misc-pub-post-status">
+                                            Comment status: <span id="post-visibility-display"> {{ page.comment_status|capitalize }} </span>
+                                        </div>
+
+                                        <div class="misc-pub-section misc-pub-post-status">
+                                            Ping status: <span id="post-visibility-display"> {{ page.ping_status|capitalize }} </span>
+                                        </div>
+
+                                        <div class="misc-pub-section curtime misc-pub-curtime">
+                                            <span id="timestamp">
+                                                Published on: <b>{{ page.post_date|date("M d, Y H:i", false) }}</b>
+                                            </span>
+                                        </div>
+
+                                        <div class="misc-pub-section curtime misc-pub-curtime">
+                                            <span id="timestamp">
+                                                Last edit on: <b>{{ page.post_modified|date("M d, Y H:i", false) }}</b>
+                                            </span>
+                                        </div>
+
+                                    </div>
+                                    <div class="clear"></div>
+                                </div>
+
+                                <div id="major-publishing-actions">
+                                    <div id="delete-action">
+                                        <a class="submitdelete deletion" href="#">Move to Trash</a>
+                                    </div>
+
+                                    <div id="publishing-action">
+                                        <span class="spinner"></span>
+                                        <input name="original_publish" type="hidden" id="original_publish" value="Update" />
+                                        <input type="submit" name="save" id="publish" class="button button-primary button-large" value="Update" />
+                                    </div>
+                                    <div class="clear"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <br class="clear" />
+    </div>
+</div>
+

@@ -1,99 +1,3 @@
-// Mirele center table
-table.vertical-mirele-table-tabs
-  min-height: 820px
-  border: 1px solid #ccd0d4
-  box-shadow: 0 1px 1px rgba(0,0,0,.04)
-  background: white
-
-  // Table header
-  > thead > tr > td
-    background: white
-    padding: 8px 12px
-    margin: 0
-    border-bottom: 1px solid #ccd0d4
-    font-size: 14px
-    font-weight: bold
-
-
-  // Table body
-  > tbody > tr
-    > td
-      background: #f5f5f5
-      width: 260px
-
-      // Title
-      > label
-        font-size: 13px
-        color: #222
-
-      // Tabs container
-      > ul
-        margin: 0 0 0 0
-
-        // Tab wrap
-        > li
-          margin: 0 0 0 0
-          transition: 0.3s all
-
-          // Tab link
-          > a
-            padding: 8px 12px 8px 12px
-            display: grid
-            font-size: 13px
-            color: #222
-            text-decoration: none
-            border-bottom: 1px solid #e2dddb
-            word-wrap: break-word
-            -webkit-box-shadow: none
-            -moz-box-shadow: none
-            box-shadow: none
-
-          &:active,
-          &:hover,
-          &:focus
-            background-color: white
-
-      // Setting GRID
-      > div
-        > table
-          margin-bottom: 28px
-
-          > tbody
-            > tr
-              > td.body
-                width: 70%
-
-              > td
-                background: transparent
-
-                // Title
-                > h4
-                  padding: 0px
-                  margin: 0px
-                  margin-bottom: 4px
-
-                // Alert
-                > div
-                  margin-top: 6px
-
-                  table > tbody > tr > td
-                    padding: 4px
-
-                > small,
-                > p
-                  color: #939393
-
-
-    td.tabs
-      min-width: 50px
-      width: 50px
-      border-right: 1px solid #e2dddb
-
-    td.content
-      padding: 20px 20px 20px 20px
-      background: #ffffff
-
-
 // Welcome screen
 .wp-welcome-page
   text-align: center
@@ -109,7 +13,7 @@ table.vertical-mirele-table-tabs
   background: #0073AA
   color: white
   position: relative
-  padding: 12px 24px
+  padding: 12px 12px
 
 .wp-mrl-add
   border: 1px dashed rgba(125,125,125,.4)
@@ -119,110 +23,18 @@ table.vertical-mirele-table-tabs
   padding: 20px
   cursor: pointer
 
-.wp-mrl-field
-  background: #F5F5F5
-  padding: 12px
-  height: 60px
-  margin: 4px
-  width: auto
-  width: -webkit-fill-available
-  min-width: 40px
-
-
 .wp-mrl-field-grid-inline
   //display: inline-block
 
-.wp-mrl-fields
-  display: flex
-  flex-direction: row
-  justify-content: space-around
-  overflow: hidden
-  align-self: stretch
-
-.wp-mrl-block
-  background: #FFFFFF
-  border: 1px solid #ccd0d4
-  position: relative
-  -webkit-box-shadow: 0 1px 1px rgba(0,0,0,0.04)
-  -moz-box-shadow: 0 1px 1px rgba(0,0,0,0.04)
-  box-shadow: 0 1px 1px rgba(0,0,0,0.04)
-  margin-bottom: 12px
-  padding: 12px 24px
-
-.wp-mrl-box
-  background: #FFFFFF
-  border: 1px solid #ccd0d4
-  position: relative
-  -webkit-box-shadow: 0 1px 1px rgba(0,0,0,0.04)
-  -moz-box-shadow: 0 1px 1px rgba(0,0,0,0.04)
-  box-shadow: 0 1px 1px rgba(0,0,0,0.04)
-
-.wp-mrl-column-1 
-  width: -webkit-calc(100% - 278px)
-  width: -moz-calc(100% - 278px)
-  width: -webkit-calc(100% - 276px)
-  width: -moz-calc(100% - 276px)
-  width: calc(100% - 276px)
-  float: left
-
-
-.wp-mrl-column-2 
-  width: 260px
-  float: right
-
-
-.wp-mrl-box > .inner 
-  padding: 18px
-
-
-.wp-mrl-box > .inner > h3 
-  margin: 1.5em 0 0
-
-
-.wp-mrl-box > .inner > ul > li > a 
-  text-decoration: none
-
-
-.wp-mrl-box > .inner > h2 
-  font-size: 22px
-  line-height: 1.25em
-  margin: 0 0 0.75em
-  padding: 0
-
-
-.wp-mrl-box > .footer 
-  padding: 12px
-  font-size: 13px
-  line-height: 1.5
-  border-top: 1px solid #ddd
-  background: #f5f5f5
-
-
-.wp-mrl-box > .footer > p 
-  margin: 0
-
-
 .wp-wrap-tabs 
   margin: 1.6em 0px 0px 0px
-
-
-.wp-mrl-header 
-  font-size: 14px
-  padding: 8px 12px
-  margin: 0
-  line-height: 1.4
-  border-bottom: 1px solid #ddd
-
-
 
 .inner-center-box 
   margin: 24px 12%
   text-align: center
 
-
 .inner-center-box > .align-left 
   text-align: left
-
 
 .inner-center-box-margin 
   margin: 24px 256px
@@ -232,3 +44,15 @@ table.vertical-mirele-table-tabs
 
 @import components/switch
 @import compound/modal
+@import compound/wp-native/insert
+@import compound/wp-native/box
+@import compound/wp-native/table
+@import compound/wp-native/header
+@import compound/wp-native/field
+@import compound/wp-native/fields
+@import compound/wp-native/block
+@import compound/wp-native/tag
+@import compound/wp-native/grid
+@import compound/wp-native/controll-icon
+@import compound/wp-native/placeholder
+

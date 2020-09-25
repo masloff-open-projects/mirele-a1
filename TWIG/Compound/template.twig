@@ -1,0 +1,52 @@
+{% macro nothing() %}
+    <div>
+        <a href="#TB_inline?width=600&height=300&inlineId=modal_insert_component" title="Insert component" class="thickbox">
+            <div class="wp-mrl-insert">
+                <span class="dashicons dashicons-plus"></span>
+                <span class="wp-mrl-insert-span">Insert component</span>
+            </div>
+        </a>
+    </div>
+{% endmacro %}
+
+{% macro render(name, instance, package) %}
+    <div class="wp-mrl-block">
+
+        <div class="wp-mrl-fields">
+            {% for id, complex in package %}
+
+                <div class="wp-mrl-field wp-mrl-field-grid-{{ wp.dump(complex.field.instance.getMeta('editor').getData('grid')) }}">
+                    {% if complex.package is empty %}
+
+                        {# Every component #}
+                        {{ _self.nothing() }}
+
+                    {% else %}
+                        {% for tag in complex.package %}
+
+                            {# Every component #}
+                            {% if tag.getTag == 'component' %}
+
+                                {% if tag.getAttributes.name  %}
+
+                                    <div>
+                                        <h4 style="margin: 0;">{{ tag.getAttributes.name|capitalize }} <a href="#">Edit</a> </h4>
+                                    </div>
+
+                                {% else %}
+                                    {{ _self.nothing() }}
+                                {% endif %}
+
+
+                            {% endif %}
+
+                        {% endfor %}
+                    {% endif %}
+                </div>
+
+            {% endfor %}
+        </div>
+
+
+    </div>
+{% endmacro %}

@@ -59,7 +59,7 @@ foreach (wc_get_products([
     'rsbn'          => 'right-side-list-products',
     'lsbn'          => 'left-side-list-products',
     'show_header'   => apply_filters('woocommerce_show_page_title', true),
-    'show_carousel' => Customizer::get('woocommerce_shop', 'mrl_wp_show_carousel', []),
+    'show_carousel' => Customizer::get('@wc-shop', 'mrl_wp_show_carousel', []),
     'shadows'       => $shadows->getBuffer(),
     'grid' => [
         'columns' => get_option( 'woocommerce_catalog_columns', 4 ),

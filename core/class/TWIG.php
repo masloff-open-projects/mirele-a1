@@ -2,10 +2,11 @@
 
 namespace Mirele;
 
-use Mirele\Compound\Duplicator;
-use Mirele\Compound\Field;
-use Mirele\Compound\Template;
-use Mirele\Framework\Stringer;
+use \Mirele\Utils\Converter;
+use \Mirele\Compound\Duplicator;
+use \Mirele\Compound\Field;
+use \Mirele\Compound\Template;
+use \Mirele\Framework\Stringer;
 use \Twig\Extension\AbstractExtension;
 use \Twig\TwigFunction;
 
@@ -87,6 +88,7 @@ class TWIG
             'cache' => false
         ]);
         self::$twig->addGlobal('wp', new \Mirele\Framework\TWIG);
+        self::$twig->addGlobal('converter', clone new Converter);
         self::$twig->addGlobal('Woocommerce', new \Mirele\Framework\TWIGWoocommerce);
         self::$twig->addExtension (new class extends AbstractExtension
         {
@@ -155,6 +157,7 @@ class TWIG
                 array (
                     'source' => MIRELE_SOURCE_DIR,
                     'url_without_params' => MIRELE_URL,
+                    'GET' => MIRELE_GET,
                     'page_id' => isset($_GET['page']) ? $_GET['page'] : false,
                     "url" => [
                         'registration' => wp_registration_url(),
@@ -165,8 +168,9 @@ class TWIG
                             'edit' => get_edit_profile_url(),
                         ],
                         'customer' => [
-                            'edit' => wc_customer_edit_account_url(),
-                        ]
+                            'edit' => WOOCOMMERCE_SUPPORT ? wc_customer_edit_account_url() : '',
+                        ],
+                        'service' => MIRELE_URLS
                     ]
                 ),
                 (array) $params

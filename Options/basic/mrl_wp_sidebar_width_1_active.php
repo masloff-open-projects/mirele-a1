@@ -14,5 +14,5 @@ Customizer::add( (new Option)
         'min' => 1,
         'max' => 4
     ])
-    ->setNamespace('basic')
+    ->setNamespace('@basic')
 );

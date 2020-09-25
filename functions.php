@@ -69,12 +69,14 @@ define('MIRELE_GET', $_GET);
 define('MIRELE_POST', $_POST);
 define('COMPOUND_VARCHAR_SIZE_DB', 512);
 define('COMPOUND_VARCHAR_INT_DB', 64);
+define('MIRELE_SUPPORT', true);
 define('WOOCOMMERCE_SUPPORT', function_exists('is_woocommerce'));
+define('BBPRESS_SUPPORT', function_exists('is_bbpress'));
+define('BUDDYPRESS_SUPPORT', function_exists('is_buddypress'));
 
 # Meta Constants
 define('MIRELE_VERSION', "1.0.0");
 define('COMPOUND_VERSION', "1.0.1");
-define('COMPOUND_INSTANCES', 'SMART');
 define('MIRELE_URL', $_SERVER['REQUEST_SCHEME'] . '://' . $_SERVER['HTTP_HOST'] . explode('?', $_SERVER['REQUEST_URI'], 2)[0]);
 
 # Constants regulators
@@ -93,7 +95,7 @@ define('MIRELE_NONCE', 'mrl-wp-nonce');
 
 # File path constants
 define('COMPOUND_TEMPLATES_DIR', get_template_directory() . '/templates');
-define('COMPOUND_TWIG_DIR', get_template_directory() . '/twig');
+define('COMPOUND_TWIG_DIR', get_template_directory() . '/TWIG');
 define('COMPOUND_TEMPLATES_HTML_DIR', get_template_directory() . '/rosemary_html');
 define('MIRELE_CORE_DIR', get_template_directory() . '/core');
 define('MIRELE_SOURCE_DIR', get_template_directory_uri() . '/source');
@@ -101,8 +103,13 @@ define('MIRELE_SOURCE_PATH', get_template_directory() . '/source');
 define('MIRELE_LOG_FILE', get_template_directory() . '/logger.log');
 define('MIRELE_ERROR_FILE', get_template_directory() . '/.error');
 
+# URL
+define('MIRELE_URLS', [
+    'DOC' => 'https://irtex-mirele.github.io'
+]);
+
 # Show errors
-if (wp_doing_ajax() == true and true) {
+if (wp_doing_ajax() == false and true) {
     ini_set('error_reporting', E_ALL);
     ini_set('display_errors', 1);
     ini_set('display_startup_errors', 1);
@@ -126,6 +133,7 @@ if (wp_doing_ajax() === false) {
 
         # Main Core
         include_once 'core/class/Router.php';
+        include_once 'core/TWIG/Converter.php';
         include_once 'core/class/TWIG.php';
         include_once 'core/Framework/Iterator.php';
         include_once 'core/Framework/WPGNU.php';
@@ -136,13 +144,14 @@ if (wp_doing_ajax() === false) {
         include_once 'core/Framework/TWIGWoocommerce.php';
         include_once 'core/Framework/Customizer.php';
         include_once 'core/Framework/Option.php';
-        include_once 'core/Compound/Class/TagsManager.php';
-        include_once 'core/Compound/Class/Constructor.php';
-        include_once 'core/Compound/Class/Lexer.php';
-        include_once 'core/Compound/Class/Lexer/Converter.php';
+        include_once 'core/Compound/TagsManager.php';
+        include_once 'core/Compound/Constructor.php';
+        include_once 'core/Compound/Lexer.php';
+        include_once 'core/Compound/Lexer/Converter.php';
         include_once 'core/Compound/Config.php';
         include_once 'core/Compound/Construction.php';
         include_once 'core/Compound/Tag.php';
+        include_once 'core/Compound/Lex.php';
         include_once 'core/Compound/Signature.php';
         include_once 'core/Compound/Directive.php';
         include_once 'core/Compound/Component.php';
@@ -158,9 +167,7 @@ if (wp_doing_ajax() === false) {
         include_once 'core/class/MCache.php';
         include_once 'core/class/MHubSpot.php';
         include_once 'core/class/MMailChimp.php';
-        include_once 'core/class/MSafe.php';
         include_once 'core/class/MBBPress.php';
-        include_once 'core/class/MDemos.php';
         include_once 'core/class/MNotification.php';
         include_once 'core/class/MLogger.php';
 
@@ -173,36 +180,8 @@ if (wp_doing_ajax() === false) {
     # UI components must be connected strictly after
     # all building cores are ready for use.
 
-        # Components
-        include_once 'Components/Abstract/Inputs/default.php';
-        include_once 'Components/Abstract/Textareas/default.php';
-        include_once 'Components/Abstract/Selects/default.php';
-        include_once 'Components/Abstract/Buttons/default.php';
-        include_once 'Components/Abstract/Checkboxs/default.php';
-        include_once 'Components/Abstract/Radios/default.php';
-
-        include_once 'Components/Grids/default.php';
-        include_once 'Components/Carts/default.php';
-        include_once 'Components/Sidebars/default.php';
-        include_once 'Components/Footers/default.php';
-        include_once 'Components/Navbars/default.php';
-        include_once 'Components/Menus/default_navbar.php';
-        include_once 'Components/Woocommerce/Notes/default.php';
-        include_once 'Components/Woocommerce/Steps/default.php';
-        include_once 'Components/Woocommerce/Field/default.php';
-        include_once 'Components/Woocommerce/Forms/default_billing.php';
-        include_once 'Components/Woocommerce/Forms/default_shipping.php';
-        include_once 'Components/Woocommerce/Carousel/default.php';
-        include_once 'Components/Woocommerce/Notices/default.php';
-        include_once 'Components/Woocommerce/Gallerys/default.php';
-        include_once 'Components/Woocommerce/Tables/Orders/default.php';
-        include_once 'Components/Woocommerce/Tables/Downloads/default.php';
-        include_once 'Components/Woocommerce/Tables/Cart/default.php';
-        include_once 'Components/Woocommerce/Placeholders/Orders/default.php';
-        include_once 'Components/Woocommerce/Placeholders/Downloads/default.php';
-        include_once 'Components/Woocommerce/Placeholders/Cart/default.php';
-
         # Connecting Vendor files except Composer
+        include_once 'Components/vendor.php';
         include_once 'Routes/vendor.php';
         include_once 'Templates/vendor.php';
         include_once 'Prototypes/vendor.php';
@@ -433,6 +412,7 @@ add_action(
         wp_register_script('mirele_admin', MIRELE_SOURCE_DIR . '/js/admin.min.js', array('jquery', 'vue'), '', true);
         wp_register_script('mireleapi', MIRELE_SOURCE_DIR . '/js/API.min.js', array('babel', 'jquery', 'vue'), '', true);
         wp_register_script('babelui', MIRELE_SOURCE_DIR . '/js/babel.js', array('babel', 'jquery'), '', true);
+        wp_register_script('compound', MIRELE_SOURCE_DIR . '/js/compound.js', array('babel', 'jquery', 'vue'), '', true);
 
         wp_register_script('woocommerceui_product', MIRELE_SOURCE_DIR . '/js/woocommerceui_product.min.js', array('babel', 'jquery', 'vue', 'mireleapi'), '', true);
         wp_register_script('woocommerceui_products', MIRELE_SOURCE_DIR . '/js/woocommerceui_products.min.js', array('babel', 'jquery', 'vue', 'mireleapi'), '', true);
@@ -570,8 +550,8 @@ add_action(
                                 # Render page
                                 TWIG::Render('@login', [
                                     'content' => [
-                                        'title' => Framework\Customizer::get('authorization_login', 'mrl_wp_title_login', []),
-                                        'description' => Framework\Customizer::get('authorization_login', 'mrl_wp_description_login', []),
+                                        'title' => Framework\Customizer::get('@wc-login', 'mrl_wp_title_login', []),
+                                        'description' => Framework\Customizer::get('@wc-login', 'mrl_wp_description_login', []),
                                     ]
                                 ]);
                                 break;
@@ -584,8 +564,8 @@ add_action(
                                 # Render page
                                 TWIG::Render('@signup', [
                                     'content' => [
-                                        'title' => Framework\Customizer::get('authorization_signup', 'mrl_wp_title_signup', []),
-                                        'description' => Framework\Customizer::get('authorization_signup', 'mrl_wp_description_signup', [])
+                                        'title' => Framework\Customizer::get('@wc-signup', 'mrl_wp_title_signup', []),
+                                        'description' => Framework\Customizer::get('@wc-signup', 'mrl_wp_description_signup', [])
                                     ]
                                 ]);
                                 break;
@@ -598,8 +578,8 @@ add_action(
                                 # Render page
                                 TWIG::Render('@login', [
                                     'content' => [
-                                        'title' => Framework\Customizer::get('authorization_login', 'mrl_wp_title_login', []),
-                                        'description' => Framework\Customizer::get('authorization_login', 'mrl_wp_description_login', [])
+                                        'title' => Framework\Customizer::get('@wc-login', 'mrl_wp_title_login', []),
+                                        'description' => Framework\Customizer::get('@wc-login', 'mrl_wp_description_login', [])
                                     ]
                                 ]);
                                 break;
@@ -620,8 +600,8 @@ add_action(
                             # Render
                             TWIG::Render('@passwordRecovery', [
                                 'content' => [
-                                    'title' => Framework\Customizer::get('authorization_recovery_password', 'mrl_wp_title_recovery_password', []),
-                                    'description' => Framework\Customizer::get('authorization_recovery_password', 'mrl_wp_description_recovery_password', [])
+                                    'title' => Framework\Customizer::get('@wc-recovery', 'mrl_wp_title_recovery_password', []),
+                                    'description' => Framework\Customizer::get('@wc-recovery', 'mrl_wp_description_recovery_password', [])
                                 ]
                             ]);
 
@@ -637,8 +617,8 @@ add_action(
                             # Render page
                             TWIG::Render('@login', [
                                 'content' => [
-                                    'title' => Framework\Customizer::get('authorization_login', 'mrl_wp_title_login', []),
-                                    'description' => Framework\Customizer::get('authorization_login', 'mrl_wp_description_login', [])
+                                    'title' => Framework\Customizer::get('@wc-login', 'mrl_wp_title_login', []),
+                                    'description' => Framework\Customizer::get('@wc-login', 'mrl_wp_description_login', [])
                                 ]
                             ]);
 
@@ -677,7 +657,10 @@ add_action(
         wp_enqueue_script('mireleapi');
         wp_enqueue_script('vue');
         wp_enqueue_script('mirele_admin');
+        wp_enqueue_script('compound');
         wp_enqueue_script('fontAwesome');
+        wp_enqueue_script('jquery');
+        wp_enqueue_script('jquery-ui-core');
 
         wp_enqueue_style('fontAwesome');
         wp_enqueue_style('wp-color-picker');
@@ -762,41 +745,47 @@ add_action(
 
                         if ($lex) {
 
-                            foreach ($lex->getTemplates() as $name => $layout) {
+                            foreach ($lex->getOrders() as $index => $order) {
+                                if (is_string($order)) {
 
-                                foreach ($layout as $id => $instance) {
+                                    $instances = $lex->getTemplate($order);
 
-                                    $Template = Grider::get($name);
+                                    if (is_array($instances)) {
 
-                                    if ($Template instanceof Template) {
+                                        foreach ($instances as $id => $instance) {
 
-                                        $fields = $Template->getFields();
+                                            $Template = Grider::get($order);
 
-                                        if ($fields) {
+                                            if ($Template instanceof Template) {
 
-                                            foreach ($fields as $field => $object) {
+                                                $fields = $Template->getFields();
 
-                                                if ($object instanceof Field) {
+                                                if ($fields) {
 
-                                                    $local = $lex->getTemplateField((string) $name, $object->getName(), $id);
+                                                    foreach ($fields as $field => $object) {
 
-                                                    $document->fields[$name][$id][$object->getName()] = (object) [
-                                                        'field' => (object) [
-                                                            'name' => $field,
-                                                            'instance' => $object
-                                                        ],
-                                                        'package' => is_array($local) ? $local : []
-                                                    ];
+                                                        if ($object instanceof Field) {
+
+                                                            $local = $lex->getTemplateField((string) $order, $object->getName(), $id);
+
+                                                            $document->fields[$order][$id][$object->getName()] = (object) [
+                                                                'field' => (object) [
+                                                                    'name' => $field,
+                                                                    'instance' => $object
+                                                                ],
+                                                                'package' => is_array($local) ? $local : []
+                                                            ];
+
+                                                        }
+
+                                                    }
 
                                                 }
-
                                             }
 
                                         }
                                     }
-
                                 }
-
                             }
 
                         }
@@ -811,7 +800,10 @@ add_action(
                             'templates' => $is->template ? $lex->getTemplates() : (object) []
                         ],
                         'document' => $is->template ? $document : (object) [],
-                        'templates' => Grider::all()
+                        'templates' => Grider::all(),
+                        'store' => [
+                            'templates' => Grider::all()
+                        ]
                     ]);
 
                 } else {

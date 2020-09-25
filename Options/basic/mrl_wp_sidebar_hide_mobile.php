@@ -9,5 +9,5 @@ Customizer::add( (new Option)
     ->setName("mrl_wp_sidebar_hide_mobile")
     ->setTitle("Hide Sidebar on mobile device")
     ->setDescription("On all devices, whose screen is already 576px sidebars will be completely hidden")
-    ->setNamespace('basic')
+    ->setNamespace('@basic')
 );

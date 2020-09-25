@@ -31,7 +31,7 @@ use \Mirele\Framework\Customizer;
     'user' => (object) wp_get_current_user(),
     'permalink' => [
         'account' => [
-            'main' => get_permalink(wc_get_page_id('myaccount'))
+            'main' => get_permalink(WOOCOMMERCE_SUPPORT ? wc_get_page_id('myaccount') : '')
         ]
     ],
     'option' => [

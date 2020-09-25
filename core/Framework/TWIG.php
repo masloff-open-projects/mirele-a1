@@ -6,6 +6,7 @@ namespace Mirele\Framework;
 
 use voku\helper\AntiXSS;
 
+
 class TWIG
 {
 
@@ -47,6 +48,10 @@ class TWIG
 
     public function footer () {
         get_footer();
+    }
+
+    public function params ($object) {
+        return http_build_query($object);
     }
 
     #
@@ -130,7 +135,7 @@ class TWIG
     }
 
     #
-    function rosemary_pages_table ($markup) {
+    function rosemary_pages_table (array $markup) {
 
         $table = WPGNU::Table();
 
@@ -163,15 +168,15 @@ class TWIG
             $data = (object) $data;
 
             $table->appendData(array(
-                'id'    => isset($data->ID) ? $data->ID : 'undefined',
-                'name'  => isset($data->post_title) ? $data->post_title : 'undefined',
-                'status'  => isset($data->post_status) ? strtoupper($data->post_status) : 'undefined',
-                'modified'  => isset($data->post_modified) ? $data->post_modified : 'undefined',
+                'id'        =>  (string) isset($data->ID) ? $data->ID : 'undefined',
+                'name'      =>  (string) isset($data->post_title) ? $data->post_title : 'undefined',
+                'status'    =>  (string) isset($data->post_status) ? strtoupper($data->post_status) : 'undefined',
+                'modified'  =>  (string) isset($data->post_modified) ? $data->post_modified : 'undefined',
             ));
         }
 
         $table->prepare_items();
-        $table->render();
+        return $table->render();
 
     }
 
