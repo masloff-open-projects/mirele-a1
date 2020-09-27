@@ -7,9 +7,16 @@ namespace Mirele\Compound;
 use Mirele\Framework\Iterator;
 
 
+/**
+ * Class Grider
+ * @package Mirele\Compound
+ */
 class Grider extends Iterator
 {
 
+    /**
+     * @var array
+     */
     private static $store = [];
 
     /**

@@ -9,9 +9,16 @@ use Mirele\Compound\Tag;
 use Mirele\Framework\Stringer;
 
 
+/**
+ * Class TagsManager
+ * @package Mirele\Compound
+ */
 class TagsManager extends Iterator
 {
 
+    /**
+     * @var array
+     */
     private static $store = [];
 
     /**

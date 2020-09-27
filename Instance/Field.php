@@ -4,14 +4,39 @@
 namespace Mirele\Compound;
 
 
+/**
+ * Class Field
+ * @package Mirele\Compound
+ */
 class Field
 {
+    /**
+     * @var
+     */
     private $id;
+    /**
+     * @var
+     */
     private $name;
+    /**
+     * @var
+     */
     private $props;
+    /**
+     * @var
+     */
     private $component;
+    /**
+     * @var
+     */
     private $data;
+    /**
+     * @var
+     */
     private $componentProps;
+    /**
+     * @var
+     */
     private $meta;
 
     /**

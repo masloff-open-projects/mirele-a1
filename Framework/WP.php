@@ -7,7 +7,7 @@ namespace Mirele\Framework;
 use voku\helper\AntiXSS;
 
 
-class TWIG
+class WP
 {
 
     public function xxs($string) {

@@ -4,12 +4,28 @@
 namespace Mirele\Compound;
 
 
+/**
+ * Class Directive
+ * @package Mirele\Compound
+ */
 class Directive {
 
+    /**
+     * @var
+     */
     private $tag;
+    /**
+     * @var
+     */
     private $attributes;
+    /**
+     * @var
+     */
     private $content;
 
+    /**
+     * @var
+     */
     var $next;
 
     /**
@@ -36,6 +52,10 @@ class Directive {
         return $this->attributes;
     }
 
+    /**
+     * @param string $name
+     * @return false|mixed
+     */
     public function getAttribute(string $name)
     {
 

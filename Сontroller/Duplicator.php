@@ -4,12 +4,28 @@
 namespace Mirele\Compound;
 
 
+/**
+ * Class Duplicator
+ * @package Mirele\Compound
+ */
 class Duplicator
 {
 
+    /**
+     * @var
+     */
     private $component;
+    /**
+     * @var
+     */
     private $props;
+    /**
+     * @var
+     */
     private $field;
+    /**
+     * @var
+     */
     private $fieldName;
 
     /**
@@ -84,6 +100,9 @@ class Duplicator
         return $this->props;
     }
 
+    /**
+     * @return Component
+     */
     public function build() {
         if ($this->component instanceof Component) {
             $this->component->setProps(array_merge(
@@ -97,6 +116,10 @@ class Duplicator
         }
     }
 
+    /**
+     * @param $props
+     * @return mixed
+     */
     public function render ($props) {
         if ($this->component instanceof Component) {
             return $this->component->render((array) $props);

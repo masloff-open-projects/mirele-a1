@@ -15,17 +15,41 @@ namespace Mirele;
 
 class Router
 {
+    /**
+     * @var bool
+     */
     public static $halts = false;
+    /**
+     * @var array
+     */
     public static $routes = array();
+    /**
+     * @var array
+     */
     public static $methods = array();
+    /**
+     * @var array
+     */
     public static $callbacks = array();
+    /**
+     * @var array
+     */
     public static $maps = array();
+    /**
+     * @var string[]
+     */
     public static $patterns = array(
         ':any' => '[^/]+',
         ':num' => '[0-9]+',
         ':all' => '.*'
     );
+    /**
+     * @var
+     */
     public static $error_callback;
+    /**
+     * @var
+     */
     public static $root;
 
     /**
@@ -46,6 +70,10 @@ class Router
         throw new Exception("Cannot unserialize a singleton.");
     }
 
+    /**
+     * @param $method
+     * @param $params
+     */
     public static function __callstatic($method, $params)
     {
 
@@ -68,16 +96,25 @@ class Router
         array_push(self::$callbacks, $callback);
     }
 
+    /**
+     * @param $callback
+     */
     public static function error($callback)
     {
         self::$error_callback = $callback;
     }
 
+    /**
+     * @param bool $flag
+     */
     public static function haltOnMatch($flag = true)
     {
         self::$halts = $flag;
     }
 
+    /**
+     * @param false $uri
+     */
     public static function dispatch($uri = false)
     {
         $uri = $uri ? $uri : rtrim(parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH) , '/');
@@ -216,6 +253,134 @@ class Router
             }
             call_user_func(self::$error_callback);
         }
+    }
+
+    /**
+     * @param bool $halts
+     */
+    public static function setHalts($halts)
+    {
+        self::$halts = $halts;
+    }
+
+    /**
+     * @param array $routes
+     */
+    public static function setRoutes($routes)
+    {
+        self::$routes = $routes;
+    }
+
+    /**
+     * @param array $methods
+     */
+    public static function setMethods($methods)
+    {
+        self::$methods = $methods;
+    }
+
+    /**
+     * @param array $callbacks
+     */
+    public static function setCallbacks($callbacks)
+    {
+        self::$callbacks = $callbacks;
+    }
+
+    /**
+     * @param array $maps
+     */
+    public static function setMaps($maps)
+    {
+        self::$maps = $maps;
+    }
+
+    /**
+     * @param string[] $patterns
+     */
+    public static function setPatterns($patterns)
+    {
+        self::$patterns = $patterns;
+    }
+
+    /**
+     * @param mixed $error_callback
+     */
+    public static function setErrorCallback($error_callback)
+    {
+        self::$error_callback = $error_callback;
+    }
+
+    /**
+     * @param mixed $root
+     */
+    public static function setRoot($root)
+    {
+        self::$root = $root;
+    }
+
+    /**
+     * @return bool
+     */
+    public static function isHalts()
+    {
+        return self::$halts;
+    }
+
+    /**
+     * @return array
+     */
+    public static function getRoutes()
+    {
+        return self::$routes;
+    }
+
+    /**
+     * @return array
+     */
+    public static function getMethods()
+    {
+        return self::$methods;
+    }
+
+    /**
+     * @return array
+     */
+    public static function getCallbacks()
+    {
+        return self::$callbacks;
+    }
+
+    /**
+     * @return array
+     */
+    public static function getMaps()
+    {
+        return self::$maps;
+    }
+
+    /**
+     * @return string[]
+     */
+    public static function getPatterns()
+    {
+        return self::$patterns;
+    }
+
+    /**
+     * @return mixed
+     */
+    public static function getErrorCallback()
+    {
+        return self::$error_callback;
+    }
+
+    /**
+     * @return mixed
+     */
+    public static function getRoot()
+    {
+        return self::$root;
     }
 }
 

@@ -4,12 +4,28 @@
 namespace Mirele\Compound;
 
 
+/**
+ * Class Tag
+ * @package Mirele\Compound
+ */
 class Tag
 {
 
+    /**
+     * @var
+     */
     private $tag;
+    /**
+     * @var
+     */
     private $essence;
+    /**
+     * @var
+     */
     private $reference;
+    /**
+     * @var
+     */
     private $attributes;
 
     /**

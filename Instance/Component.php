@@ -4,13 +4,32 @@
 namespace Mirele\Compound;
 
 
+/**
+ * Class Component
+ * @package Mirele\Compound
+ */
 class Component
 {
 
+    /**
+     * @var
+     */
     private $id;
+    /**
+     * @var
+     */
     private $name;
+    /**
+     * @var
+     */
     private $props;
+    /**
+     * @var
+     */
     private $function;
+    /**
+     * @var
+     */
     private $data;
 
     /**
@@ -95,10 +114,17 @@ class Component
         }
     }
 
+    /**
+     * @param array $props
+     * @return mixed
+     */
     public function render (array $props) {
         return ($this->function)(array_merge($this->props, $props));
     }
 
+    /**
+     * @return $this
+     */
     public function build () {
         return $this;
     }

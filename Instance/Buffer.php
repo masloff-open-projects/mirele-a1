@@ -4,9 +4,19 @@
 namespace Mirele\Framework;
 
 
+/**
+ * Class Buffer
+ * @package Mirele\Framework
+ */
 class Buffer
 {
+    /**
+     * @var array
+     */
     private $buffer = array();
+    /**
+     * @var string
+     */
     private $namespace = "*";
 
     /**
@@ -72,7 +82,9 @@ class Buffer
     }
 
 
-
+    /**
+     * @return array
+     */
     public function clearBuffer () {
         return $this->buffer = array();
     }

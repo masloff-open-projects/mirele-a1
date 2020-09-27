@@ -24,3 +24,4 @@
  */
 
 include_once 'Storage.php';
+include_once 'Iterator_Interface.php';

@@ -4,12 +4,28 @@
 namespace Mirele\Framework;
 
 
+/**
+ * Class Customizer
+ * @package Mirele\Framework
+ */
 class Customizer extends Iterator
 {
 
+    /**
+     * @var string
+     */
     private static $globalNamespace = "*";
+    /**
+     * @var string
+     */
     private static $lastNamespace = "*";
+    /**
+     * @var array
+     */
     private static $options = [];
+    /**
+     * @var string[]
+     */
     private static $alias = [
         '@basic' => 'Basic',
         '@wc-login' => 'Page > Authorization login',

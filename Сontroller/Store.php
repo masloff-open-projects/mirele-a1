@@ -8,9 +8,16 @@ use Mirele\Framework\Iterator;
 use Mirele\Compound\Component;
 
 
+/**
+ * Class Store
+ * @package Mirele\Compound
+ */
 class Store extends Iterator
 {
 
+    /**
+     * @var array
+     */
     private static $store = [];
 
     /**

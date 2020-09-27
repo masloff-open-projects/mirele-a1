@@ -11,11 +11,27 @@ use Mirele\Compound\Children;
 use voku\helper\AntiXSS;
 
 
+/**
+ * Class Lexer
+ * @package Mirele\Compound
+ */
 class Lexer
 {
+    /**
+     * @var string
+     */
     private $fragment = "";
+    /**
+     * @var array
+     */
     private $directives = [];
+    /**
+     * @var array
+     */
     private $entities = [];
+    /**
+     * @var Signature
+     */
     private $signature = [];
 
     /**
@@ -129,12 +145,20 @@ class Lexer
         return $this->signature;
     }
 
+    /**
+     * @param string $name
+     * @param Directive $directive
+     * @return $this
+     */
     public function addDirective(string $name, Directive $directive)
     {
         $this->directives[$name] = $directive;
         return $this;
     }
 
+    /**
+     * @return array|false
+     */
     public function generateCode () {
 
         // TODO IT;

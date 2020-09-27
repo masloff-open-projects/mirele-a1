@@ -4,15 +4,43 @@
 namespace Mirele\Framework;
 
 
+/**
+ * Class Option
+ * @package Mirele\Framework
+ */
 class Option
 {
+    /**
+     * @var string
+     */
     private $namespace = '*';
+    /**
+     * @var string
+     */
     private $type = 'toggle';
+    /**
+     * @var string
+     */
     private $name = '';
+    /**
+     * @var string
+     */
     private $default = 'false';
+    /**
+     * @var string
+     */
     private $description = '';
+    /**
+     * @var string
+     */
     private $title = '';
+    /**
+     * @var array
+     */
     private $props = [];
+    /**
+     * @var bool
+     */
     private $warning = false;
 
     /**
@@ -155,6 +183,9 @@ class Option
         return $this->name;
     }
 
+    /**
+     * @return object
+     */
     public function build()
     {
         return (object) [

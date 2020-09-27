@@ -69,60 +69,63 @@ if (version_compare(PHP_VERSION, '7.0.0') <= 0) {
 }
 
 # Main Constants
+
 /**
- * GETS
+ * Unchangeable GET parameters
  */
 define('MIRELE_GET', $_GET);
+
 /**
- *
+ * Unchangeable POST parameters
  */
 define('MIRELE_POST', $_POST);
+
 /**
- *
- */
-define('COMPOUND_VARCHAR_SIZE_DB', 512);
-/**
- *
- */
-define('COMPOUND_VARCHAR_INT_DB', 64);
-/**
- *
+ * The constant of Mirele plugin template support at the moment
  */
 define('MIRELE_SUPPORT', true);
+
 /**
- *
+ * The constant of WooCommerce plugin template support at the moment
  */
 define('WOOCOMMERCE_SUPPORT', function_exists('is_woocommerce'));
+
 /**
- *
+ * The constant of bbPress plugin template support at the moment
  */
 define('BBPRESS_SUPPORT', function_exists('is_bbpress'));
+
 /**
- *
+ * The constant of BuddyPress plugin template support at the moment
  */
 define('BUDDYPRESS_SUPPORT', function_exists('is_buddypress'));
 
 # Meta Constants
+
 /**
- *
+ * Mirele version
  */
 define('MIRELE_VERSION', "1.0.0");
+
 /**
- *
+ * COMPOUND version
  */
 define('COMPOUND_VERSION', "1.0.1");
+
 /**
- *
+ * Unchangeable URL string without GET parameters
  */
 define('MIRELE_URL', $_SERVER['REQUEST_SCHEME'] . '://' . $_SERVER['HTTP_HOST'] . explode('?', $_SERVER['REQUEST_URI'], 2)[0]);
 
 # Constants regulators
+
 /**
- *
+ * @deprecated deprecated since version 2.0
  */
 define('MIRELE_MIN_PERMISSIONS_FOR_EDIT', 'edit_themes');
+
 /**
- *
+ * Constant with user rights packet for certain actions
  */
 define('MIRELE_RIGHTS', [
     'page' => [
@@ -131,64 +134,70 @@ define('MIRELE_RIGHTS', [
         'remove' => 'edit_themes',
     ]
 ]);
+
 /**
- *
+ * Constant with a prohibited character packet for entering names, IDs or other data entered by the user
  */
 define('COMPOUND_FORBIDDEN_SYMBOLS', array(':', '/', "@"));
+
 /**
- *
- */
-define('COMPOUND_RIGHTS_FOR_VISUAL_EDIT', 'edit_themes');
-/**
- *
+ * Constant with the name of the compound canvas template
  */
 define('COMPOUND_CANVAS', 'canvas.php');
+
 /**
- *
+ * Constant with the name of the security code
  */
 define('MIRELE_NONCE', 'mrl-wp-nonce');
 
 # File path constants
+
 /**
- *
+ * Constant with by folder to templates
  */
 define('COMPOUND_TEMPLATES_DIR', get_template_directory() . '/templates');
+
 /**
- *
+ * Constant with folder path to TWIG templates
  */
 define('COMPOUND_TWIG_DIR', get_template_directory() . '/TWIG');
+
 /**
- *
- */
-define('COMPOUND_TEMPLATES_HTML_DIR', get_template_directory() . '/rosemary_html');
-/**
- *
- */
-define('MIRELE_CORE_DIR', get_template_directory() . '/core');
-/**
- *
+ * Constant with by public data folder
+ * @deprecated
  */
 define('MIRELE_SOURCE_DIR', get_template_directory_uri() . '/source');
+
 /**
- *
+ * Constant with by public data folder
+ * @deprecated
  */
 define('MIRELE_SOURCE_PATH', get_template_directory() . '/source');
+
 /**
- *
+ * Constant with by log file
  */
 define('MIRELE_LOG_FILE', get_template_directory() . '/logger.log');
+
 /**
- *
+ * Constant with the emergency log file error if the log file is not available for writing
  */
 define('MIRELE_ERROR_FILE', get_template_directory() . '/.error');
 
 # Bureaucratic information
+
 /**
- *
+ * A constant with a package of links to external resources
+ * @deprecated
  */
 define('MIRELE_URLS', [
     'DOC' => 'https://irtex-mirele.github.io'
 ]);
+
+/**
+ * Constant with reference to the documentation file
+ */
+define('MIRELE_URL_DOC', 'https://irtex-mirele.github.io');
 
 # Show errors
 if (wp_doing_ajax() == false and true) {
@@ -219,20 +228,17 @@ if (wp_doing_ajax() === false) {
         include_once 'Сontroller/vendor.php';
 
         # Main Core
-        include_once 'core/TWIG/Converter.php';
-        include_once 'core/Framework/WPGNU.php';
-        include_once 'core/Framework/TWIG.php';
-        include_once 'core/Framework/TWIGWoocommerce.php';
+        include_once 'Framework/Converter.php';
+        include_once 'Framework/WPGNU.php';
+        include_once 'Framework/WP.php';
 
         # Arrhitectural Classes Sets (Mirele)
-        include_once 'core/class/MCache.php';
-        include_once 'core/class/MNotification.php';
+        include_once 'Framework/MCache.php';
+        include_once 'Framework/MNotification.php';
 
         # Meta
         include_once "meta.php";
 
-        # Abstract core files
-        include_once 'core/Tags.php';
 
     # UI components must be connected strictly after
     # all building cores are ready for use.
@@ -243,6 +249,7 @@ if (wp_doing_ajax() === false) {
         include_once 'Templates/vendor.php';
         include_once 'Prototypes/vendor.php';
         include_once 'Options/vendor.php';
+        include_once 'Tags/vandor.php';
 
 } else {
 
@@ -256,12 +263,12 @@ if (wp_doing_ajax() === false) {
         include_once 'Сontroller/vendor.php';
 
         # Main core
-        include_once 'core/Framework/WPGNU.php';
+        include_once 'Framework/WPGNU.php';
 
         # Connecting Vendor files except Composer
         include_once 'Routes/vendor.php';
         include_once 'Options/vendor.php';
-
+        include_once 'Tags/vandor.php';
 
 }
 
@@ -269,12 +276,14 @@ if (wp_doing_ajax() === false) {
 # Setup an error handler
 set_error_handler(
 
-/**
- * @param $errno
- * @param $errstr
- * @param $errfile
- * @param $errline
- */ function ($errno, $errstr, $errfile, $errline) {
+    /**
+     * @param $errno
+     * @param $errstr
+     * @param $errfile
+     * @param $errline
+     */
+
+    function ($errno, $errstr, $errfile, $errline) {
         $logger = new Logger(MIRELE_LOG_FILE);
         $logger->warning("(line $errline:$errfile) >>> $errstr");
     }

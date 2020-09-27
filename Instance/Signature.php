@@ -4,9 +4,19 @@
 namespace Mirele\Compound;
 
 
+/**
+ * Class Signature
+ * @package Mirele\Compound
+ */
 class Signature
 {
+    /**
+     * @var
+     */
     private $templates;
+    /**
+     * @var
+     */
     private $order;
 
     /**

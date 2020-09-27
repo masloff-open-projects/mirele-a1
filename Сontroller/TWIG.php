@@ -103,9 +103,8 @@ class TWIG
         self::$twig = new \Twig\Environment(new \Twig\Loader\FilesystemLoader(COMPOUND_TWIG_DIR), [
             'cache' => false
         ]);
-        self::$twig->addGlobal('wp', new \Mirele\Framework\TWIG);
+        self::$twig->addGlobal('wp', new \Mirele\Framework\WP);
         self::$twig->addGlobal('converter', clone new Converter);
-        self::$twig->addGlobal('Woocommerce', new \Mirele\Framework\TWIGWoocommerce);
         self::$twig->addExtension (new class extends AbstractExtension
         {
             public function getFunctions()

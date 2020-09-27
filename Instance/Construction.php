@@ -4,10 +4,23 @@
 namespace Mirele\Compound;
 
 
+/**
+ * Class Construction
+ * @package Mirele\Compound
+ */
 class Construction
 {
+    /**
+     * @var
+     */
     private $name;
+    /**
+     * @var
+     */
     private $handler;
+    /**
+     * @var
+     */
     private $data;
 
 
@@ -59,6 +72,10 @@ class Construction
         return $this->handler;
     }
 
+    /**
+     * @param array $props
+     * @return false|mixed
+     */
     public function call (array $props)
     {
         if (is_callable($this->getHandler())) {

@@ -7,17 +7,48 @@ namespace Mirele\Compound;
 use Mirele\TWIG;
 
 
+/**
+ * Class Template
+ * @package Mirele\Compound
+ */
 class Template
 {
 
+    /**
+     * @var
+     */
     private $id;
+    /**
+     * @var
+     */
     private $name;
+    /**
+     * @var
+     */
     private $props;
+    /**
+     * @var
+     */
     private $components;
+    /**
+     * @var
+     */
     private $fields;
+    /**
+     * @var
+     */
     private $componentsProps;
+    /**
+     * @var
+     */
     private $twig;
+    /**
+     * @var
+     */
     private $meta;
+    /**
+     * @var
+     */
     private $handler;
 
     /**

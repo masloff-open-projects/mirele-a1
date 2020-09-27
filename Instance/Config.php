@@ -4,9 +4,16 @@
 namespace Mirele\Compound;
 
 
+/**
+ * Class Config
+ * @package Mirele\Compound
+ */
 class Config
 {
 
+    /**
+     * @var array
+     */
     private $data;
 
     /**

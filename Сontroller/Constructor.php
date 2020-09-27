@@ -9,9 +9,16 @@ use Mirele\Compound\Construction;
 use Mirele\Framework\Stringer;
 
 
+/**
+ * Class Constructor
+ * @package Mirele\Compound
+ */
 class Constructor extends Iterator
 {
 
+    /**
+     * @var array
+     */
     private static $store = [];
 
     /**
