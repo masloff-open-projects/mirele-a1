@@ -41,7 +41,9 @@ if (version_compare(PHP_VERSION, '7.0.0') <= 0) {
 
     # The current server configuration is not suitable for starting Mirele
     add_action(
-        'admin_bar_menu', function ($wp_admin_bar) {
+    /**
+     * @param $wp_admin_bar
+     */ 'admin_bar_menu', function ($wp_admin_bar) {
             $wp_admin_bar->add_node(
             array(
                 'id' => 'mcp',
@@ -57,7 +59,9 @@ if (version_compare(PHP_VERSION, '7.0.0') <= 0) {
 
     # Create page
     add_menu_page(
-        'MIRELE', 'Mirele Repair', 'edit_themes', 'mirele_repair', function () {
+    /**
+     *
+     */ 'MIRELE', 'Mirele Repair', 'edit_themes', 'mirele_repair', function () {
             echo "Install PHP 7.0.0 or next";
     }, '', 1);
 
@@ -65,22 +69,61 @@ if (version_compare(PHP_VERSION, '7.0.0') <= 0) {
 }
 
 # Main Constants
+/**
+ * GETS
+ */
 define('MIRELE_GET', $_GET);
+/**
+ *
+ */
 define('MIRELE_POST', $_POST);
+/**
+ *
+ */
 define('COMPOUND_VARCHAR_SIZE_DB', 512);
+/**
+ *
+ */
 define('COMPOUND_VARCHAR_INT_DB', 64);
+/**
+ *
+ */
 define('MIRELE_SUPPORT', true);
+/**
+ *
+ */
 define('WOOCOMMERCE_SUPPORT', function_exists('is_woocommerce'));
+/**
+ *
+ */
 define('BBPRESS_SUPPORT', function_exists('is_bbpress'));
+/**
+ *
+ */
 define('BUDDYPRESS_SUPPORT', function_exists('is_buddypress'));
 
 # Meta Constants
+/**
+ *
+ */
 define('MIRELE_VERSION', "1.0.0");
+/**
+ *
+ */
 define('COMPOUND_VERSION', "1.0.1");
+/**
+ *
+ */
 define('MIRELE_URL', $_SERVER['REQUEST_SCHEME'] . '://' . $_SERVER['HTTP_HOST'] . explode('?', $_SERVER['REQUEST_URI'], 2)[0]);
 
 # Constants regulators
+/**
+ *
+ */
 define('MIRELE_MIN_PERMISSIONS_FOR_EDIT', 'edit_themes');
+/**
+ *
+ */
 define('MIRELE_RIGHTS', [
     'page' => [
         'create' => 'edit_themes',
@@ -88,22 +131,61 @@ define('MIRELE_RIGHTS', [
         'remove' => 'edit_themes',
     ]
 ]);
+/**
+ *
+ */
 define('COMPOUND_FORBIDDEN_SYMBOLS', array(':', '/', "@"));
+/**
+ *
+ */
 define('COMPOUND_RIGHTS_FOR_VISUAL_EDIT', 'edit_themes');
+/**
+ *
+ */
 define('COMPOUND_CANVAS', 'canvas.php');
+/**
+ *
+ */
 define('MIRELE_NONCE', 'mrl-wp-nonce');
 
 # File path constants
+/**
+ *
+ */
 define('COMPOUND_TEMPLATES_DIR', get_template_directory() . '/templates');
+/**
+ *
+ */
 define('COMPOUND_TWIG_DIR', get_template_directory() . '/TWIG');
+/**
+ *
+ */
 define('COMPOUND_TEMPLATES_HTML_DIR', get_template_directory() . '/rosemary_html');
+/**
+ *
+ */
 define('MIRELE_CORE_DIR', get_template_directory() . '/core');
+/**
+ *
+ */
 define('MIRELE_SOURCE_DIR', get_template_directory_uri() . '/source');
+/**
+ *
+ */
 define('MIRELE_SOURCE_PATH', get_template_directory() . '/source');
+/**
+ *
+ */
 define('MIRELE_LOG_FILE', get_template_directory() . '/logger.log');
+/**
+ *
+ */
 define('MIRELE_ERROR_FILE', get_template_directory() . '/.error');
 
 # Bureaucratic information
+/**
+ *
+ */
 define('MIRELE_URLS', [
     'DOC' => 'https://irtex-mirele.github.io'
 ]);
@@ -138,20 +220,13 @@ if (wp_doing_ajax() === false) {
 
         # Main Core
         include_once 'core/TWIG/Converter.php';
-        include_once 'core/class/TWIG.php';
         include_once 'core/Framework/WPGNU.php';
-        include_once 'core/Framework/String.php';
         include_once 'core/Framework/TWIG.php';
         include_once 'core/Framework/TWIGWoocommerce.php';
 
         # Arrhitectural Classes Sets (Mirele)
-        include_once 'core/class/MFile.php';
         include_once 'core/class/MCache.php';
-        include_once 'core/class/MHubSpot.php';
-        include_once 'core/class/MMailChimp.php';
-        include_once 'core/class/MBBPress.php';
         include_once 'core/class/MNotification.php';
-        include_once 'core/class/MLogger.php';
 
         # Meta
         include_once "meta.php";
@@ -180,14 +255,8 @@ if (wp_doing_ajax() === false) {
         include_once 'Instance/vendor.php';
         include_once 'Сontroller/vendor.php';
 
-        # Arrhitectural Classes Sets (Mirele)
-        include_once 'core/class/MFile.php';
-
         # Main core
-        include_once 'core/class/MLogger.php';
         include_once 'core/Framework/WPGNU.php';
-        include_once 'core/Framework/String.php';
-        include_once 'core/Framework/Int.php';
 
         # Connecting Vendor files except Composer
         include_once 'Routes/vendor.php';
@@ -200,8 +269,13 @@ if (wp_doing_ajax() === false) {
 # Setup an error handler
 set_error_handler(
 
-    function ($errno, $errstr, $errfile, $errline) {
-        $logger = new MLogger(MIRELE_LOG_FILE);
+/**
+ * @param $errno
+ * @param $errstr
+ * @param $errfile
+ * @param $errline
+ */ function ($errno, $errstr, $errfile, $errline) {
+        $logger = new Logger(MIRELE_LOG_FILE);
         $logger->warning("(line $errline:$errfile) >>> $errstr");
     }
 
@@ -209,11 +283,13 @@ set_error_handler(
 
 
 # Another error handler
-register_shutdown_function(function () {
+register_shutdown_function(/**
+ *
+ */ function () {
 
     if (error_get_last()) {
         $error = (object) error_get_last();
-        $logger = new MLogger(MIRELE_LOG_FILE);
+        $logger = new Logger(MIRELE_LOG_FILE);
         $logger->error("(line $error->line:$error->file) >>> $error->message");
     }
 
@@ -221,7 +297,9 @@ register_shutdown_function(function () {
 
 # Rest Redirect
 add_action(
-    'rest_api_init', function () {
+/**
+ *
+ */ 'rest_api_init', function () {
 
     register_rest_route(
         'Main/api/v1/', '(?P<package>[a-zA-Z0-9-]+)/(?P<method>[a-zA-Z0-9-]+)', [
@@ -236,7 +314,9 @@ add_action(
 });
 
 # AJAX Redirect
-add_action('wp_ajax_nopriv_mirele_endpoint_v1', function ()
+add_action(/**
+ *
+ */ 'wp_ajax_nopriv_mirele_endpoint_v1', function ()
 {
 
     if (isset((MIRELE_POST)['action']) and isset((MIRELE_POST)['method'])) {
@@ -254,7 +334,9 @@ add_action('wp_ajax_nopriv_mirele_endpoint_v1', function ()
     }
 
 });
-add_action('wp_ajax_mirele_endpoint_v1', function ()
+add_action(/**
+ *
+ */ 'wp_ajax_mirele_endpoint_v1', function ()
 {
 
     if (isset((MIRELE_POST)['action']) and isset((MIRELE_POST)['method'])) {
@@ -275,7 +357,9 @@ add_action('wp_ajax_mirele_endpoint_v1', function ()
 
 # Init WP
 add_action(
-    'init', function () {
+/**
+ *
+ */ 'init', function () {
 
         # Registration of some components of the Compound
         add_shortcode('Component', function ($attr, $content) {
@@ -631,7 +715,9 @@ add_action(
 
 # Admin front-end
 add_action(
-    'admin_enqueue_scripts', function () {
+/**
+ *
+ */ 'admin_enqueue_scripts', function () {
 
         wp_enqueue_script('axios');
         wp_enqueue_script('mireleapi');
@@ -652,7 +738,9 @@ add_action(
 
 # User front-end
 add_action(
-    'wp_enqueue_scripts', function () {
+/**
+ *
+ */ 'wp_enqueue_scripts', function () {
 
         # Scripts and styles for all pages
         wp_enqueue_script('vue');
@@ -672,7 +760,9 @@ add_action(
 
 # User front-end body open tag
 add_action(
-    'wp_body_open', function () {
+/**
+ *
+ */ 'wp_body_open', function () {
 
         if (is_page_template(COMPOUND_CANVAS)) {
 
@@ -682,7 +772,9 @@ add_action(
 
 # Admin front end
 add_action(
-    'admin_menu', function () {
+/**
+ *
+ */ 'admin_menu', function () {
 
         add_thickbox();
 

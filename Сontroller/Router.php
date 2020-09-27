@@ -28,6 +28,24 @@ class Router
     public static $error_callback;
     public static $root;
 
+    /**
+     * Loners should not be cloned.
+     */
+
+    protected function __clone() { }
+
+
+    /**
+     * Single units should not be recovered from lines.
+     *
+     * @throws Exception
+     */
+
+    public function __wakeup()
+    {
+        throw new Exception("Cannot unserialize a singleton.");
+    }
+
     public static function __callstatic($method, $params)
     {
 

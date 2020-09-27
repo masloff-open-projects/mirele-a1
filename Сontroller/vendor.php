@@ -24,6 +24,8 @@
  */
 
 include_once 'Lexer/Converter.php';
+include_once 'Logger.php';
+include_once 'TWIG.php';
 include_once 'Customizer.php';
 include_once 'Constructor.php';
 include_once 'Duplicator.php';

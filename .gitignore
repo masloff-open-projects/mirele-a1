@@ -617,3 +617,7 @@ dist
 # idea
 .DS_Store
 .idea
+
+# Compilers other data
+phpDocumentor.phar
+./phpDocumentor.phar

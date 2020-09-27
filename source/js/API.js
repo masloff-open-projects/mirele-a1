@@ -25,6 +25,7 @@ class WPAjax {
 }
 
 class Interface {
+
     constructor(data={}) {
 
         // Checking to see if there

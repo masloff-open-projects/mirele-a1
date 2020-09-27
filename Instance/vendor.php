@@ -38,3 +38,6 @@ include_once 'Component.php';
 include_once 'Option.php';
 include_once 'Construction.php';
 include_once 'Iterator.php';
+include_once 'Inter.php';
+include_once 'Stringer.php';
+include_once 'MFile.php';
