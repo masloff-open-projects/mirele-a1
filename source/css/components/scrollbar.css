@@ -1,0 +1,47 @@
+/*
+Error: Base-level rules cannot contain the parent-selector-referencing character '&'.
+        on line 1 of scrollbar.sass
+
+1: &::-webkit-scrollbar
+2:   width: 10px
+3:   height: 8px
+4: 
+5: &::-webkit-scrollbar-track
+6:   background: #00000005
+
+Backtrace:
+scrollbar.sass:1
+/usr/lib/ruby/vendor_ruby/sass/selector/comma_sequence.rb:31:in `resolve_parent_refs'
+/usr/lib/ruby/vendor_ruby/sass/tree/visitors/perform.rb:435:in `visit_rule'
+/usr/lib/ruby/vendor_ruby/sass/tree/visitors/base.rb:36:in `visit'
+/usr/lib/ruby/vendor_ruby/sass/tree/visitors/perform.rb:158:in `block in visit'
+/usr/lib/ruby/vendor_ruby/sass/stack.rb:79:in `block in with_base'
+/usr/lib/ruby/vendor_ruby/sass/stack.rb:135:in `with_frame'
+/usr/lib/ruby/vendor_ruby/sass/stack.rb:79:in `with_base'
+/usr/lib/ruby/vendor_ruby/sass/tree/visitors/perform.rb:158:in `visit'
+/usr/lib/ruby/vendor_ruby/sass/tree/visitors/base.rb:52:in `block in visit_children'
+/usr/lib/ruby/vendor_ruby/sass/tree/visitors/base.rb:52:in `map'
+/usr/lib/ruby/vendor_ruby/sass/tree/visitors/base.rb:52:in `visit_children'
+/usr/lib/ruby/vendor_ruby/sass/tree/visitors/perform.rb:167:in `block in visit_children'
+/usr/lib/ruby/vendor_ruby/sass/tree/visitors/perform.rb:179:in `with_environment'
+/usr/lib/ruby/vendor_ruby/sass/tree/visitors/perform.rb:166:in `visit_children'
+/usr/lib/ruby/vendor_ruby/sass/tree/visitors/base.rb:36:in `block in visit'
+/usr/lib/ruby/vendor_ruby/sass/tree/visitors/perform.rb:186:in `visit_root'
+/usr/lib/ruby/vendor_ruby/sass/tree/visitors/base.rb:36:in `visit'
+/usr/lib/ruby/vendor_ruby/sass/tree/visitors/perform.rb:157:in `visit'
+/usr/lib/ruby/vendor_ruby/sass/tree/visitors/perform.rb:10:in `visit'
+/usr/lib/ruby/vendor_ruby/sass/tree/root_node.rb:36:in `css_tree'
+/usr/lib/ruby/vendor_ruby/sass/tree/root_node.rb:29:in `render_with_sourcemap'
+/usr/lib/ruby/vendor_ruby/sass/engine.rb:389:in `_render_with_sourcemap'
+/usr/lib/ruby/vendor_ruby/sass/engine.rb:307:in `render_with_sourcemap'
+/usr/lib/ruby/vendor_ruby/sass/exec/sass_scss.rb:383:in `run'
+/usr/lib/ruby/vendor_ruby/sass/exec/sass_scss.rb:63:in `process_result'
+/usr/lib/ruby/vendor_ruby/sass/exec/base.rb:50:in `parse'
+/usr/lib/ruby/vendor_ruby/sass/exec/base.rb:18:in `parse!'
+/usr/bin/sass:8:in `<main>'
+*/
+body:before {
+  white-space: pre;
+  font-family: monospace;
+  content: "Error: Base-level rules cannot contain the parent-selector-referencing character '&'.\A         on line 1 of scrollbar.sass\A \A 1: &::-webkit-scrollbar\A 2:   width: 10px\A 3:   height: 8px\A 4: \A 5: &::-webkit-scrollbar-track\A 6:   background: #00000005"; }
+/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNjcm9sbGJhci5jc3MiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBQUE7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7O0NBeUNDO0FBQ0Q7RUFDRSxnQkFBZ0I7RUFDaEIsc0JBQXNCO0VBQ3RCLDRRQUE0USxFQUFFIiwiZmlsZSI6InNjcm9sbGJhci5jc3MiLCJzb3VyY2VzQ29udGVudCI6WyIvKlxuRXJyb3I6IEJhc2UtbGV2ZWwgcnVsZXMgY2Fubm90IGNvbnRhaW4gdGhlIHBhcmVudC1zZWxlY3Rvci1yZWZlcmVuY2luZyBjaGFyYWN0ZXIgJyYnLlxuICAgICAgICBvbiBsaW5lIDEgb2Ygc2Nyb2xsYmFyLnNhc3NcblxuMTogJjo6LXdlYmtpdC1zY3JvbGxiYXJcbjI6ICAgd2lkdGg6IDEwcHhcbjM6ICAgaGVpZ2h0OiA4cHhcbjQ6IFxuNTogJjo6LXdlYmtpdC1zY3JvbGxiYXItdHJhY2tcbjY6ICAgYmFja2dyb3VuZDogIzAwMDAwMDA1XG5cbkJhY2t0cmFjZTpcbnNjcm9sbGJhci5zYXNzOjFcbi91c3IvbGliL3J1YnkvdmVuZG9yX3J1Ynkvc2Fzcy9zZWxlY3Rvci9jb21tYV9zZXF1ZW5jZS5yYjozMTppbiBgcmVzb2x2ZV9wYXJlbnRfcmVmcydcbi91c3IvbGliL3J1YnkvdmVuZG9yX3J1Ynkvc2Fzcy90cmVlL3Zpc2l0b3JzL3BlcmZvcm0ucmI6NDM1OmluIGB2aXNpdF9ydWxlJ1xuL3Vzci9saWIvcnVieS92ZW5kb3JfcnVieS9zYXNzL3RyZWUvdmlzaXRvcnMvYmFzZS5yYjozNjppbiBgdmlzaXQnXG4vdXNyL2xpYi9ydWJ5L3ZlbmRvcl9ydWJ5L3Nhc3MvdHJlZS92aXNpdG9ycy9wZXJmb3JtLnJiOjE1ODppbiBgYmxvY2sgaW4gdmlzaXQnXG4vdXNyL2xpYi9ydWJ5L3ZlbmRvcl9ydWJ5L3Nhc3Mvc3RhY2sucmI6Nzk6aW4gYGJsb2NrIGluIHdpdGhfYmFzZSdcbi91c3IvbGliL3J1YnkvdmVuZG9yX3J1Ynkvc2Fzcy9zdGFjay5yYjoxMzU6aW4gYHdpdGhfZnJhbWUnXG4vdXNyL2xpYi9ydWJ5L3ZlbmRvcl9ydWJ5L3Nhc3Mvc3RhY2sucmI6Nzk6aW4gYHdpdGhfYmFzZSdcbi91c3IvbGliL3J1YnkvdmVuZG9yX3J1Ynkvc2Fzcy90cmVlL3Zpc2l0b3JzL3BlcmZvcm0ucmI6MTU4OmluIGB2aXNpdCdcbi91c3IvbGliL3J1YnkvdmVuZG9yX3J1Ynkvc2Fzcy90cmVlL3Zpc2l0b3JzL2Jhc2UucmI6NTI6aW4gYGJsb2NrIGluIHZpc2l0X2NoaWxkcmVuJ1xuL3Vzci9saWIvcnVieS92ZW5kb3JfcnVieS9zYXNzL3RyZWUvdmlzaXRvcnMvYmFzZS5yYjo1MjppbiBgbWFwJ1xuL3Vzci9saWIvcnVieS92ZW5kb3JfcnVieS9zYXNzL3RyZWUvdmlzaXRvcnMvYmFzZS5yYjo1MjppbiBgdmlzaXRfY2hpbGRyZW4nXG4vdXNyL2xpYi9ydWJ5L3ZlbmRvcl9ydWJ5L3Nhc3MvdHJlZS92aXNpdG9ycy9wZXJmb3JtLnJiOjE2NzppbiBgYmxvY2sgaW4gdmlzaXRfY2hpbGRyZW4nXG4vdXNyL2xpYi9ydWJ5L3ZlbmRvcl9ydWJ5L3Nhc3MvdHJlZS92aXNpdG9ycy9wZXJmb3JtLnJiOjE3OTppbiBgd2l0aF9lbnZpcm9ubWVudCdcbi91c3IvbGliL3J1YnkvdmVuZG9yX3J1Ynkvc2Fzcy90cmVlL3Zpc2l0b3JzL3BlcmZvcm0ucmI6MTY2OmluIGB2aXNpdF9jaGlsZHJlbidcbi91c3IvbGliL3J1YnkvdmVuZG9yX3J1Ynkvc2Fzcy90cmVlL3Zpc2l0b3JzL2Jhc2UucmI6MzY6aW4gYGJsb2NrIGluIHZpc2l0J1xuL3Vzci9saWIvcnVieS92ZW5kb3JfcnVieS9zYXNzL3RyZWUvdmlzaXRvcnMvcGVyZm9ybS5yYjoxODY6aW4gYHZpc2l0X3Jvb3QnXG4vdXNyL2xpYi9ydWJ5L3ZlbmRvcl9ydWJ5L3Nhc3MvdHJlZS92aXNpdG9ycy9iYXNlLnJiOjM2OmluIGB2aXNpdCdcbi91c3IvbGliL3J1YnkvdmVuZG9yX3J1Ynkvc2Fzcy90cmVlL3Zpc2l0b3JzL3BlcmZvcm0ucmI6MTU3OmluIGB2aXNpdCdcbi91c3IvbGliL3J1YnkvdmVuZG9yX3J1Ynkvc2Fzcy90cmVlL3Zpc2l0b3JzL3BlcmZvcm0ucmI6MTA6aW4gYHZpc2l0J1xuL3Vzci9saWIvcnVieS92ZW5kb3JfcnVieS9zYXNzL3RyZWUvcm9vdF9ub2RlLnJiOjM2OmluIGBjc3NfdHJlZSdcbi91c3IvbGliL3J1YnkvdmVuZG9yX3J1Ynkvc2Fzcy90cmVlL3Jvb3Rfbm9kZS5yYjoyOTppbiBgcmVuZGVyX3dpdGhfc291cmNlbWFwJ1xuL3Vzci9saWIvcnVieS92ZW5kb3JfcnVieS9zYXNzL2VuZ2luZS5yYjozODk6aW4gYF9yZW5kZXJfd2l0aF9zb3VyY2VtYXAnXG4vdXNyL2xpYi9ydWJ5L3ZlbmRvcl9ydWJ5L3Nhc3MvZW5naW5lLnJiOjMwNzppbiBgcmVuZGVyX3dpdGhfc291cmNlbWFwJ1xuL3Vzci9saWIvcnVieS92ZW5kb3JfcnVieS9zYXNzL2V4ZWMvc2Fzc19zY3NzLnJiOjM4MzppbiBgcnVuJ1xuL3Vzci9saWIvcnVieS92ZW5kb3JfcnVieS9zYXNzL2V4ZWMvc2Fzc19zY3NzLnJiOjYzOmluIGBwcm9jZXNzX3Jlc3VsdCdcbi91c3IvbGliL3J1YnkvdmVuZG9yX3J1Ynkvc2Fzcy9leGVjL2Jhc2UucmI6NTA6aW4gYHBhcnNlJ1xuL3Vzci9saWIvcnVieS92ZW5kb3JfcnVieS9zYXNzL2V4ZWMvYmFzZS5yYjoxODppbiBgcGFyc2UhJ1xuL3Vzci9iaW4vc2Fzczo4OmluIGA8bWFpbj4nXG4qL1xuYm9keTpiZWZvcmUge1xuICB3aGl0ZS1zcGFjZTogcHJlO1xuICBmb250LWZhbWlseTogbW9ub3NwYWNlO1xuICBjb250ZW50OiBcIkVycm9yOiBCYXNlLWxldmVsIHJ1bGVzIGNhbm5vdCBjb250YWluIHRoZSBwYXJlbnQtc2VsZWN0b3ItcmVmZXJlbmNpbmcgY2hhcmFjdGVyICcmJy5cXEEgICAgICAgICBvbiBsaW5lIDEgb2Ygc2Nyb2xsYmFyLnNhc3NcXEEgXFxBIDE6ICY6Oi13ZWJraXQtc2Nyb2xsYmFyXFxBIDI6ICAgd2lkdGg6IDEwcHhcXEEgMzogICBoZWlnaHQ6IDhweFxcQSA0OiBcXEEgNTogJjo6LXdlYmtpdC1zY3JvbGxiYXItdHJhY2tcXEEgNjogICBiYWNrZ3JvdW5kOiAjMDAwMDAwMDVcIjsgfVxuIl19 */

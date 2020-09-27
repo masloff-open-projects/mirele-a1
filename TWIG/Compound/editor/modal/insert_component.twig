@@ -1,0 +1,28 @@
+{# Modal window for inserting a component on a section #}
+
+{% macro render(event) %}
+
+    <div id="modal_insert_component" style="display:none;">
+        <div class="Compound">
+
+            {# Modal content #}
+            <div class="CModal">
+
+                <form action="" method="post">
+
+
+{#                    <div>#}
+{#                        <input type="hidden" name="method" value="Compound-insertTemplate">#}
+{#                        <input type="hidden" name="nonce" value="{{ wp.nonce() }}">#}
+{#                        <input type="hidden" name="page" value="{{ event.id }}">#}
+{#                        <input type="hidden" name="template" value="default_header">#}
+{#                        <button type="submit" class="button button-primary button-large">Create and continue</button>#}
+{#                    </div>#}
+
+                </form>
+
+            </div>
+        </div>
+    </div>
+
+{% endmacro %}

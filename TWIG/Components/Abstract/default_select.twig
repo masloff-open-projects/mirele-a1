@@ -1,0 +1,50 @@
+<select
+
+{# First type of attribute #}
+    {% for arg, value in attr %}
+        {% if value != false  %}
+            {{ arg|replace({input_class: 'class'}) }}="{{ value }}"
+        {% endif %}
+    {% endfor %}
+
+    {# The second attribute type #}
+    {% for arg, value in attributes %}
+        {% if value != false  %}
+            {{ arg|replace({input_class: 'class'}) }}="{{ value }}"
+        {% endif %}
+    {% endfor %}
+
+    {# Ready-made attributes #}
+    {{ inline }}>
+
+    {% for key, value in options %}
+
+        {% if value is iterable %}
+
+            <option value="{{ value.value }}"
+
+            {% for arg, value in value.attr %}
+                {% if value != false  %}
+                    {{ arg }}="{{ value }}"
+                {% endif %}
+            {% endfor %}
+
+            {# The second attribute type #}
+            {% for arg, value in value.attributes %}
+                {% if value != false  %}
+                    {{ arg }}="{{ value }}"
+                {% endif %}
+            {% endfor %}
+
+            >{{ value.text|default(value.value)|raw }}</option>
+
+        {% else %}
+
+            <option value="{{ key }}">{{ value|raw }}</option>
+
+        {% endif %}
+
+
+    {% endfor%}
+
+</select>

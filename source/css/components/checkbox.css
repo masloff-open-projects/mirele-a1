@@ -1,0 +1,25 @@
+@charset "UTF-8";
+/*** Custom Checkboxes START ** */
+.custom-checkbox {
+  /* to hide the checkbox itself */
+  /* unchecked icon */
+  /* space between checkbox and label */
+  /* checked icon */ }
+  .custom-checkbox input[type=checkbox] {
+    display: none; }
+  .custom-checkbox input[type=checkbox] + label:before {
+    font-family: FontAwesome;
+    display: inline-block; }
+  .custom-checkbox input[type=checkbox] + label:before {
+    content: ""; }
+  .custom-checkbox input[type=checkbox] + label:before {
+    letter-spacing: 10px; }
+  .custom-checkbox input[type=checkbox]:checked + label:before {
+    content: ""; }
+  .custom-checkbox input[type=checkbox]:checked + label:before {
+    letter-spacing: 8px; }
+
+/* allow space for check mark */
+/*** Custom Checkboxes END ** */
+
+/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbImNoZWNrYm94LmNzcyIsImNoZWNrYm94LnNhc3MiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBQUEsZ0JBQWdCO0FBQ2hCLGlDQUFpQztBQ0FqQztFREVFLGdDQUFnQztFQUNoQyxtQkFBbUI7RUFDbkIscUNBQXFDO0VBQ3JDLGlCQUFpQixFQUFFO0VDSm5CO0lBQ0UsYUFBYSxFQUFBO0VBR2Y7SUFDRSx3QkFBd0I7SUFDeEIscUJBQXFCLEVBQUE7RUFHdkI7SUFDRSxZQUFnQixFQUFBO0VBR2xCO0lBQ0Usb0JBQW9CLEVBQUE7RUFJdEI7SUFDRSxZQUFnQixFQUFBO0VBR2xCO0lBQ0UsbUJBQW1CLEVBQUE7O0FESnZCLCtCQUErQjtBQUMvQiwrQkFBK0IiLCJmaWxlIjoiY2hlY2tib3guY3NzIn0= */

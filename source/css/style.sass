@@ -1,0 +1,87 @@
+/**
+ * 1) What is Sass?
+ *  Sass is a CSS-based metalanguage designed to increase CSS abstraction and simplify
+ *  cascading style sheet files.
+ *
+ * 2) What should I edit to make changes?
+ *  You should only edit sass, scss, less files.
+ *  Changes in css files will cause them to be overwritten.
+ *  You should also remember to compile the SASS files.
+ *
+ *
+ * ███╗░░░███╗██╗██████╗░███████╗██╗░░░░░███████╗        ██╗░░░██╗██╗
+ * ████╗░████║██║██╔══██╗██╔════╝██║░░░░░██╔════╝        ██║░░░██║██║
+ * ██╔████╔██║██║██████╔╝█████╗░░██║░░░░░█████╗░░        ██║░░░██║██║
+ * ██║╚██╔╝██║██║██╔══██╗██╔══╝░░██║░░░░░██╔══╝░░        ██║░░░██║██║
+ * ██║░╚═╝░██║██║██║░░██║███████╗███████╗███████╗        ╚██████╔╝██║
+ * ╚═╝░░░░░╚═╝╚═╝╚═╝░░╚═╝╚══════╝╚══════╝╚══════╝        ░╚═════╝░╚═╝
+ *
+ * @version 1.0.0
+ * @package Mirele UI
+ * @author Mirele
+ * @see https://sass-lang.com
+ * @main style.sass
+ */
+
+@import url("https://use.typekit.net/gsl1isv.css")
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&display=swap')
+
+$mainFont: noto-sans, 'Noto Sans', 'Roboto Regular', -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu, Fira Sans, Droid Sans, Helvetica Neue, sans-serif
+$mainHoverBorderColor: #80b1e0
+$mainBorderColor: rgba(70, 77, 106, .1)
+$mainTransition: 1s
+$mainFontSize: inherit
+
+$UIErrorBorderColor: #EA4F4B
+$UIErrorBackground: #FAE9EC
+
+$UISuccessBorderColor: #9FD36A
+$UISuccessBackground: #F5FBEE
+
+$UIFrozeComponentColor: #9a9a9a
+$UIFrozeComponentFilter: grayscale(1)
+
+$UIBackground: rgba(242, 242, 242, 1)
+$UIBorder: solid 1px
+$UIColor: #131313
+$UIPadding: 6px 12px
+$UIPaddingX: 12px
+$UIPaddingY: 6px
+$UIFont: $mainFont
+$UIFontSize: 13px
+$UITransition: all 0.1s 0s ease-in-out
+$UISoftShadow: 0px 2px 78px 8px rgba(217, 217, 217, 0.44)
+
+// Html
+html,
+body
+  font-family: $mainFont
+  font-size: 14px
+  font-weight: normal
+  scrollbar-face-color: rgba(193, 193, 193, .8)
+  scrollbar-track-color: #00000005
+
+// Imports
+@import components/navbar
+@import components/footer
+@import components/button
+@import components/note
+@import components/link
+@import components/label
+@import components/input
+@import components/textarea
+@import components/step
+@import components/scrollbar
+@import components/checkbox
+@import components/radio
+@import components/select
+@import components/breadcrumds
+@import components/product
+@import components/blocks/user
+@import components/blocks/placeholder
+@import components/cart/default
+@import components/controller
+@import components/carousel
+@import components/prototype/product
+@import components/bootstrap/container
+@import components/animate

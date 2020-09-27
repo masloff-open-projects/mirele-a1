@@ -1,0 +1,78 @@
+// <nav>
+.navbar-light
+  background: white
+  border-bottom: 1px solid rgba(128, 128, 128, 0.3)
+  color: $UIColor
+  padding: 0px
+
+  div
+    .navbar-brand
+      color: $UIColor
+      font-weight: bold
+      font-size: $UIFontSize
+
+      a
+        font-size: $UIFontSize
+
+    .navbar-nav
+      .nav-link
+        color: $UIColor
+
+        &.disabled
+          color: $UIColor
+
+      .show > .nav-link,
+      .active > .nav-link,
+      .nav-link.show,
+      .nav-link.active
+        color: $UIColor
+
+    .navbar-toggler
+      color: $UIColor
+      border-color: white
+
+    .navbar-text
+      color: white
+
+      a
+        color: white
+
+// Small devices (landscape phones, 576px and down)
+@media (max-width: 576px)
+  .navbar-light
+    padding: 4px
+
+  .nav-item
+    padding: 4px 16px
+
+// Small devices (landscape phones, 576px and up)
+@media (min-width: 576px)
+  .navbar-light
+    padding: 4px
+
+  .nav-item
+    padding: 7px
+
+// Medium devices (tablets, 768px and up)
+@media (min-width: 768px)
+  .navbar-light
+    padding: 4px
+
+  .nav-item
+    padding: 7px
+
+// Large devices (desktops, 992px and up)
+@media (min-width: 992px)
+  .navbar-light
+    padding: 2px
+
+  .nav-item
+    padding: 0
+
+// Extra large devices (large desktops, 1200px and up)
+@media (min-width: 1200px)
+  .navbar-light
+    padding: 0px
+
+  .nav-item
+    padding: 0

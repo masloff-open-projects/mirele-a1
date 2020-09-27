@@ -1,0 +1,35 @@
+<div class="wrap">
+
+    {% block header %} {% endblock %}
+
+    {% if block("root") is defined %}
+
+        <div class="root">
+
+            {% block root %} {% endblock %}
+
+        </div>
+
+    {% endif %}
+
+    {% if block("main") is defined %}
+
+        <div class="wp-mrl-column-1">
+
+            {% block main %} {% endblock %}
+
+        </div>
+
+        <div class="wp-mrl-column-2">
+
+            <div class="wp-mrl-box">
+
+                {% block box %} {% endblock %}
+
+            </div>
+
+        </div>
+
+    {% endif %}
+
+</div>

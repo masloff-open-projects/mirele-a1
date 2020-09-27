@@ -1,0 +1,20 @@
+<?php
+
+namespace Mirele\Components;
+
+use Mirele\Compound\Component;
+use Mirele\Compound\Store;
+use Mirele\TWIG;
+
+$Component = new Component ();
+$Component->setId('default_note');
+$Component->setProps([]);
+$Component->setFunction(function ($props) {
+
+    $props = (object) $props;
+
+    TWIG::Render('Components/Woocommerce/default_note', $props);
+
+});
+
+Store::add($Component);
