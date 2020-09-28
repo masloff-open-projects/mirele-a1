@@ -13,22 +13,24 @@ $Template->setProps([
     'color' => 'red'
 ]);
 
-$Template->setComponent('input', Store::get('default_abstract_input'));
-$Template->setComponent('button', Store::get('default_abstract_button'));
+//$Template->setComponent('input', Store::get('default_abstract_input'));
+//$Template->setComponent('button', Store::get('default_abstract_button'));
 
 // Fields
+$Template->setField('label',
+    (new Field())
+        ->setName('label')
+        ->setComponent(Store::get('default_abstract_label'))
+);
+
 $Template->setField('input',
     (new Field())
         ->setName('input')
-        ->setComponent(Store::get('default_abstract_input'))
-        ->setComponentProps([])
 );
 
 $Template->setField('button',
     (new Field())
         ->setName('button')
-        ->setComponent(Store::get('default_abstract_button'))
-        ->setComponentProps([])
 );
 
 $Template->setMeta('name', 'Header');

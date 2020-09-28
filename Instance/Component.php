@@ -31,6 +31,53 @@ class Component
      * @var
      */
     private $data;
+    /**
+     * @var
+     */
+    private $meta;
+    private $alias;
+
+
+    /**
+     * @param $alias
+     * @return $this
+     */
+    public function setAlias($alias)
+    {
+        $this->alias = $alias;
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getAlias()
+    {
+        return $this->alias;
+    }
+    /**
+     * @param string $meta
+     * @param mixed $value
+     * @return $this
+     */
+    public function setMeta(string $meta, $value)
+    {
+        $this->meta[$meta] = $value;
+        return $this;
+    }
+
+    /**
+     * @param string $meta
+     * @return false|mixed
+     */
+    public function getMeta(string $meta)
+    {
+        if (isset($this->meta[$meta])) {
+            return $this->meta[$meta];
+        }
+
+        return false;
+    }
 
     /**
      * @param mixed $id

@@ -8,9 +8,8 @@ use Mirele\TWIG;
 
 $Component = new Component ();
 $Component->setId('default_abstract_input');
-$Component->setProps([
-
-]);
+$Component->setProps([]);
+$Component->setAlias('@input');
 $Component->setFunction(function ($props) {
 
     $props = (object) $props;

@@ -51,6 +51,26 @@ class Template
      */
     private $handler;
 
+    private $alias;
+
+    /**
+     * @param $alias
+     * @return $this
+     */
+    public function setAlias($alias)
+    {
+        $this->alias = $alias;
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getAlias()
+    {
+        return $this->alias;
+    }
+
     /**
      * Template constructor.
      */
@@ -66,7 +86,9 @@ class Template
      */
     public function setHandler(callable $handler)
     {
-        $this->handler = $handler;
+        if (!is_callable($this->handler)) {
+            $this->handler = $handler;
+        }
         return $this;
     }
 
@@ -208,7 +230,13 @@ class Template
         return false;
     }
 
-
+    /**
+     * @return mixed
+     */
+    public function getComponents()
+    {
+        return $this->components;
+    }
 
     /**
      * @param string $name
@@ -280,8 +308,15 @@ class Template
             call_user_func($this->getHandler(), $this);
         }
 
+        # Standart
+        $components = [
+            'input' => Store::get('@input'),
+            'button' => Store::get('@button'),
+            'label' => Store::get('@label'),
+        ];
+
         # Render
-        return TWIG::Render($this->twig, array_merge((array) $this->props, (array) $props, (array) $this->components, [
+        return TWIG::Render($this->twig, array_merge((array) $this->props, (array) $props, (array) $components, (array) $this->components, [
             'components' => (object) array_merge(
                 (array) $this->components,
                 (array) [

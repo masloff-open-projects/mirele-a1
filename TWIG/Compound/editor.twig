@@ -1,6 +1,5 @@
 {% import 'Compound/editor/modal/insert_template.twig' as modal_insert_template %}
 {% import 'Compound/editor/modal/insert_component.twig' as modal_insert_component %}
-{% import 'Compound/template.twig' as template %}
 
 {{ modal_insert_template.render({
     id: page.ID,
@@ -18,7 +17,29 @@
 
     <div id="poststuff">
         <div id="post-body" class="metabox-holder columns-2">
+
             <div id="post-body-content" style="position: relative;">
+
+                <div id="titlediv">
+                    <div id="titlewrap">
+                        <input type="text" name="post_title" size="30" value="{{ page.post_title|default(page.post_name) }}" id="title" spellcheck="true" autocomplete="off">
+                    </div>
+                    <div class="inside">
+                        <div id="edit-slug-box" class="hide-if-no-js">
+                            <strong>Permalink:</strong>
+                            <span id="sample-permalink">
+                            <b>
+                                <a href="{{ page.guid }}">
+                                    {{ page.guid }}
+                                </a>
+                            </b>
+                        </span>
+                        </div>
+                    </div>
+                </div>
+
+                <br>
+
                 <div class="root-blocks">
 
                     <div class="wp-mrl-box">
@@ -34,17 +55,43 @@
 
                         <div class="inner" id="compound-editor-body">
 
-                            {% if is_template %}
 
-                                {% for template, instance in document.fields %}
+                            {% for instance in markup %}
+                            <div class="wp-mrl-block">
+                                <div class="wp-mrl-fields">
+                                    {% for field in instance.fields %}
+                                        <div class="wp-mrl-field wp-mrl-field-grid-{{ wp.dump(complex.field.instance.getMeta('editor').getData('grid')) }}">
 
-                                    {% for name, package in instance %}
-                                        {{ template.render(template, name, package) }}
+                                            {% if instance.lex.fields[field.getName] %}
+
+                                                <div data-field-name="{{ field.getName }}">
+                                                    {% for field in instance.lex.fields[field.getName] %}
+                                                        {% if field.getTagName == 'component' %}
+                                                            <a href="#">
+                                                                {{ field.getAttributes.name }}
+                                                            </a>
+                                                        {% endif %}
+                                                    {% endfor %}
+                                                </div>
+
+                                            {% else %}
+
+                                                <div data-field-name="{{ field.getName }}">
+                                                    <a href="#TB_inline?width=600&height=300&inlineId=modal_insert_component" title="Insert component" class="thickbox">
+                                                        <div class="wp-mrl-insert">
+                                                            <span class="dashicons dashicons-plus"></span>
+                                                            <span class="wp-mrl-insert-span">Insert component</span>
+                                                        </div>
+                                                    </a>
+                                                </div>
+
+                                            {% endif %}
+
+                                        </div>
                                     {% endfor %}
-
-                                {% endfor %}
-
-                            {% endif %}
+                                </div>
+                            </div>
+                            {% endfor %}
 
                         </div>
 

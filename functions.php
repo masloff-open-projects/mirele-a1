@@ -226,6 +226,7 @@ if (wp_doing_ajax() === false) {
         include_once 'Interface/vendor.php';
         include_once 'Instance/vendor.php';
         include_once 'Сontroller/vendor.php';
+        include_once 'Patterns/vendor.php';
 
         # Main Core
         include_once 'Framework/Converter.php';
@@ -261,6 +262,7 @@ if (wp_doing_ajax() === false) {
         include_once 'Interface/vendor.php';
         include_once 'Instance/vendor.php';
         include_once 'Сontroller/vendor.php';
+        include_once 'Patterns/vendor.php';
 
         # Main core
         include_once 'Framework/WPGNU.php';
@@ -380,61 +382,7 @@ add_action(
 
             # Create a code vocabulary parsing object
             $Lexer = new Lexer("[Compound role=\"\"] $content [/Compound]");
-            $lex = $Lexer->parse();
 
-            # Create an environment for template renderer
-            $Buffer = new Framework\Buffer();
-
-            foreach ($lex->getTemplates() as $name => $template) {
-                foreach ($template as $instance) {
-                    if (isset($instance['field']) and (is_array($instance['field']) or is_object($instance['field']))) {
-
-                        $components = [];
-
-                        foreach ($instance['field'] as $field => $content) {
-                            foreach ($content as $index => $component) {
-                                if ($component instanceof \Mirele\Compound\Tag) {
-
-                                    $attr = (object) $component->getAttributes();
-
-                                    if (isset($attr->name)) {
-
-                                        $component_ = Store::get($attr->name);
-
-                                        if ($component_ instanceof Component) {
-
-                                            $instance_ = new Duplicator();
-                                            $instance_->setProps((array) $component->getAttributes());
-                                            $instance_->setFieldName($field);
-                                            $instance_->setComponent($component_);
-                                            $components[] = $instance_;
-
-                                        }
-                                    }
-
-                                }
-                            }
-
-                        }
-                    }
-
-                    $Buffer->append(Grider::call($name, array_merge(
-                        (array) $attr,
-                        (array) [
-                            'call' => [
-                                'components' => $components
-                            ],
-                        ],
-                        (array) $instance['prop']
-                    ), true));
-
-                    unset($components);
-
-                }
-            }
-
-            # Return the page with the template
-            return $Buffer->toString('*', '');
 
 
         });
@@ -788,8 +736,8 @@ add_action(
         add_thickbox();
 
         add_menu_page(
-            'MIRELE', 'Mirele Center', MIRELE_MIN_PERMISSIONS_FOR_EDIT, 'mirele_center', function () {
-            if (current_user_can(MIRELE_MIN_PERMISSIONS_FOR_EDIT)) {
+            'MIRELE', 'Mirele Center', MIRELE_RIGHTS['page']['edit'], 'mirele_center', function () {
+            if (current_user_can(MIRELE_RIGHTS['page']['edit'])) {
                 \Mirele\TWIG::Render('Main/center');
             } else {
                 \Mirele\TWIG::Render('Main/no-access');
@@ -797,26 +745,21 @@ add_action(
         }, '', 1);
     
         add_menu_page(
-            'MIRELE', 'Mirele Apps', MIRELE_MIN_PERMISSIONS_FOR_EDIT, 'mirele_apps', function () {
+            'MIRELE', 'Mirele Apps', MIRELE_RIGHTS['page']['edit'], 'mirele_apps', function () {
     
         }, 'dashicons-screenoptions', 2);
     
         add_menu_page(
-            'MIRELE', 'Compound Editor', MIRELE_MIN_PERMISSIONS_FOR_EDIT, 'сompound_render_editor', function () {
+            'MIRELE', 'Compound Editor', MIRELE_RIGHTS['page']['edit'], 'сompound_render_editor', function () {
 
                 if (isset((MIRELE_GET)['page_id']) ? (MIRELE_GET)['page_id'] : false) {
 
-                    $page = get_post((MIRELE_GET)['page_id']);
-                    $is = (object) [
-                        'template' => has_shortcode($page->post_content, 'Compound')
-                    ];
+                    # Vars
+                    $Markup = [];
+                    $page   = get_post((MIRELE_GET)['page_id']);
 
-                    $document = (object) [
-                        'fields' => []
-                    ];
-
-                    # If a shortcode is found on the page
-                    if ($is->template) {
+                    # Generate a block editing page
+                    if (has_shortcode($page->post_content, 'Compound')) {
 
                         # Create a code vocabulary parsing object
                         $Lexer = new Lexer($page->post_content);
@@ -824,49 +767,60 @@ add_action(
                         # Return the page with the template
                         $lex = $Lexer->parse();
 
-                        if ($lex) {
+                        # We check the essence of the lecturer
+                        if ((object) $lex) {
 
-                            foreach ($lex->getOrders() as $index => $order) {
-                                if (is_string($order)) {
+                            # Variable $lex has full markup of
+                            # all data that the user has marked
+                            # up in the code, BUT
+                            # it has no possible fields that were missed by the user.
+                            #
+                            # Signature lex:
+                            # (id of template) dc2cebec9a14a69c103f5e0d3076269c:
+                            #   (object) props:
+                            #       name => value
+                            #   (array) fields:
+                            #       (index of template):
+                            #           (template)
 
-                                    $instances = $lex->getTemplate($order);
+                            $Layout = $lex->getLayout();
+                            
+                            foreach ($Layout as $ID => $Template) {
 
-                                    if (is_array($instances)) {
+                                $fields = [];
 
-                                        foreach ($instances as $id => $instance) {
+                                # We will get all the registered fields
+                                # in the template, already from them we
+                                # will get the markup from the token data.
 
-                                            $Template = Grider::get($order);
+                                if (isset($Template->props->name)) {
 
-                                            if ($Template instanceof Template) {
+                                    $template = Grider::get($Template->props->name);
 
-                                                $fields = $Template->getFields();
+                                    if ($template instanceof Template) {
 
-                                                if ($fields) {
-
-                                                    foreach ($fields as $field => $object) {
-
-                                                        if ($object instanceof Field) {
-
-                                                            $local = $lex->getTemplateField((string) $order, $object->getName(), $id);
-
-                                                            $document->fields[$order][$id][$object->getName()] = (object) [
-                                                                'field' => (object) [
-                                                                    'name' => $field,
-                                                                    'instance' => $object
-                                                                ],
-                                                                'package' => is_array($local) ? $local : []
-                                                            ];
-
-                                                        }
-
-                                                    }
-
-                                                }
+                                        foreach ($template->getFields() as $index => $field) {
+                                            if ($field instanceof Field) {
+                                                $fields[$field->getName()] = $field;
                                             }
-
                                         }
+
                                     }
+
                                 }
+
+
+                                # Adding templates with unindexed
+                                # objects is the best solution that
+                                # allows you not to worry about sorting problems.
+
+                                $Markup[] = (object) [
+                                    'name' => (string) $Template->props->name,
+                                    'ID' => (string) $ID,
+                                    'lex' => $Template,
+                                    'fields' => $fields
+                                ];
+
                             }
 
                         }
@@ -876,12 +830,8 @@ add_action(
                     # Render Page Editor
                     TWIG::Render('Compound/editor', [
                         'page' => $page,
-                        'is_template' => has_shortcode($page->post_content, 'Compound'),
-                        'lex' => [
-                            'templates' => $is->template ? $lex->getTemplates() : (object) []
-                        ],
-                        'document' => $is->template ? $document : (object) [],
-                        'templates' => Grider::all(),
+                        'markup' => $Markup,
+                        'layout' => $lex->getLayout(),
                         'store' => [
                             'templates' => Grider::all()
                         ]
@@ -903,7 +853,7 @@ add_action(
         }, 'dashicons-welcome-write-blog', 3);
     
         add_submenu_page(
-            'сompound_render_editor', 'MIRELE', 'Demos', MIRELE_MIN_PERMISSIONS_FOR_EDIT, 'сompound_render_demos', function () {
+            'сompound_render_editor', 'MIRELE', 'Demos', MIRELE_RIGHTS['page']['edit'], 'сompound_render_demos', function () {
     
         }, '', 2);
     

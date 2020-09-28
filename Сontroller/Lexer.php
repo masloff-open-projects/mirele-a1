@@ -35,6 +35,28 @@ class Lexer
     private $signature = [];
 
     /**
+     * @var string[]
+     */
+    private $glossary = [
+        // "indent" => "\t",
+        "indent" => "   ",
+        "space" => " ",
+        "delimiter" => "\n"
+    ];
+    /**
+     * @var int
+     */
+    private $indent = 1;
+    /**
+     * @var string
+     */
+    private $source_code = "";
+    /**
+     * @var int
+     */
+    private $level = 0;
+
+    /**
      * Lexer constructor.
      * @param string $data
      */
@@ -49,6 +71,52 @@ class Lexer
         if (is_string($data)) {
             $this->fragment = (string) $data;
         }
+    }
+
+    /**
+     * @param $attr
+     * @return string
+     */
+    private function __xml_array2attr ($attr) {
+        return implode(' ', array_map(
+            function ($k, $v) { return $k .'="'. htmlspecialchars($v) .'"'; },
+            array_keys($attr), $attr
+        ));
+    }
+
+    /**
+     * @param string $tag
+     * @param object $attrs
+     */
+    private function __xml_add_open_tag (string $tag, object $attrs) {
+        $indent = str_repeat($this->glossary['indent'], ((int) $this->level) * $this->indent);
+        $delimiter = $this->glossary['delimiter'];
+        $attrs_inline = $this->__xml_array2attr((array) $attrs);
+        $this->source_code .= "$indent<$tag $attrs_inline>$delimiter";
+        $this->level = ((int) $this->level) + 1;
+    }
+
+    /**
+     * @param string $tag
+     * @param object $attrs
+     */
+    private function __xml_add_close_tag (string $tag, object $attrs) {
+        $this->level = ((int) $this->level) - 1;
+        $indent = str_repeat($this->glossary['indent'], ((int) $this->level) * $this->indent);
+        $delimiter = $this->glossary['delimiter'];
+        $attrs_inline = $this->__xml_array2attr((array) $attrs);
+        $this->source_code .= "$indent</$tag $attrs_inline>$delimiter";
+    }
+
+    /**
+     * @param string $tag
+     * @param object $attrs
+     */
+    private function __xml_add_single_tag (string $tag, object $attrs) {
+        $indent = str_repeat($this->glossary['indent'], ((int) $this->level) * $this->indent);
+        $delimiter = $this->glossary['delimiter'];
+        $attrs_inline = $this->__xml_array2attr((array) $attrs);
+        $this->source_code .= "$indent<$tag $attrs_inline/>$delimiter";
     }
 
     /**
@@ -89,10 +157,16 @@ class Lexer
                     # Top Level Directive - Template
                     if ($iterator->getTag() === 'template') {
 
+                        # Generate
+                        $id = $iterator->getAttribute('id') ? $iterator->getAttribute('id') : (string) md5(rand(0, PHP_INT_MAX));
                         $next = $iterator->getNext();
                         $name = $iterator->getAttribute('name');
-                        $instance = $iterator->getAttribute('instance') ? $iterator->getAttribute('instance') : $index;
+                        $instance = $iterator->getAttribute('instance') ? $iterator->getAttribute('instance') : md5(rand(0, PHP_INT_MAX));
                         $props = $iterator->getAttributes();
+
+                        $Signature->markupTemplate($id, $name);
+
+                        $Signature->setLayoutProps((string) $id, (array) $props);
 
                         $Signature->addTemplate($name, [], $instance);
 
@@ -114,6 +188,7 @@ class Lexer
 
                                         if ($field_name and $package) {
                                             $Signature->addTemplateField($name, $field_name, $package, $instance);
+                                            $Signature->setLayoutField($id, $field_name, $package);
                                         }
 
                                     }
@@ -157,64 +232,79 @@ class Lexer
     }
 
     /**
-     * @return array|false
+     * @return string
      */
-    public function generateCode () {
+    public function generateCode ($minify=false) {
 
         // TODO IT;
-
-        $Buffer = new Buffer();
 
         # Get signature
         $signature = $this->getSignature();
 
         if ($signature instanceof Signature) {
 
-            $Buffer->append('<root>');
+            $this->source_code = "";
 
-            $templates = $signature->getTemplates();
+            $this->__xml_add_open_tag('root', (object) array());
 
-            if ($templates) {
+            $Layout = $signature->getLayout();
+            
+            if (is_array($Layout) or is_object($Layout)) {
+                foreach ($Layout as $index => $template) {
+                    /**
+                     * @deprecated
+                     */
+                    $this->__xml_add_open_tag('template', (object) $template->props);
 
-                foreach ($templates as $name => $template) {
+                        /// Props
+                        $this->__xml_add_open_tag((string) 'props', (object) []);
 
-                    foreach ($template as $id => $instance) {
+                        foreach ($template->props as $key => $value) {
+                            $this->__xml_add_single_tag('prop', (object) array(
+                                'name' => (string) $key,
+                                'value' => (string) $value,
+                            ));
+                        }
 
-                        $Buffer->append("<template name=\"$name\" instance=\"$id\">");
+                        $this->__xml_add_close_tag((string) 'props', (object) array());
 
-                        if (isset($instance['field'])) {
+                        /// Fields
+                        foreach ($template->fields as $name => $components) {
 
+                            $this->__xml_add_open_tag((string) 'field', (object) [
+                                'name' => (string) $name
+                            ]);
 
-                            foreach ($instance['field'] as $field => $tags) {
+                            foreach ($components as $index => $tag) {
 
-                                $Buffer->append("<field name=\"$field\">");
+                                if ($tag instanceof Tag) {
 
-                                foreach ($tags as $tag) {
-                                    if ($tag instanceof Tag) {
-                                        $tagName = $tag->getTag();
-                                        $Buffer->append("<$tagName/>");
+                                    if (isset($tag->getAttributes()['name'])) {
+                                        $this->__xml_add_single_tag($tag->getTagName(), (object) array_merge(
+                                            (array) $tag->getAttributes(),
+                                            (array) array(
+                                                'name' => $tag->getAttributes()['name']
+                                            ))
+                                        );
                                     }
+
                                 }
-                                
-                                $Buffer->append('</field>');
 
                             }
 
+                            $this->__xml_add_close_tag((string) 'field', (object) array());
+
                         }
 
-                        $Buffer->append('</template>');
-
-                    }
-
+                    $this->__xml_add_close_tag('template', (object) array());
                 }
-
             }
 
-            $Buffer->append('</root>');
+            $this->__xml_add_close_tag('root', (object) array());
+
+            return $this->source_code;
 
         }
-
-        return $Buffer->toString('*', "\n");
 
     }
 

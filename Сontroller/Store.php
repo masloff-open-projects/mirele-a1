@@ -19,6 +19,7 @@ class Store extends Iterator
      * @var array
      */
     private static $store = [];
+    private static $alias = [];
 
     /**
      * @param \Mirele\Compound\Component $Component
@@ -29,6 +30,9 @@ class Store extends Iterator
         if ($Component instanceof Component) {
 
             if (!isset(self::$store[$Component->getId()])) {
+                if ($Component->getAlias()) {
+                    self::$alias[$Component->getAlias()] = $Component->getId();
+                }
                 self::$store[$Component->getId()] = $Component;
             } else {
                 throw new \Exception((new Stringer("The component with identifier {ID} already exists"))::format([
@@ -48,6 +52,9 @@ class Store extends Iterator
      * @return false
      */
     static public function call (string $id, array $props) {
+
+        $id = str_replace(array_keys(self::$alias), array_values(self::$alias), $id);
+
         if (isset(self::$store[$id])) {
             return self::$store[$id]->render($props ? (array) $props : []);
         }
@@ -59,6 +66,9 @@ class Store extends Iterator
      * @return false|mixed
      */
     static public function get (string $id) {
+
+        $id = str_replace(array_keys(self::$alias), array_values(self::$alias), $id);
+
         if (isset(self::$store[$id])) {
             return self::$store[$id];
         }

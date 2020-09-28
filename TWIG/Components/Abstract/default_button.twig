@@ -1,18 +1,1 @@
-<button
-
-{# First type of attribute #}
-    {% for arg, value in attr %}
-        {% if value != false  %}
-            {{ arg|replace({input_class: 'class'}) }}="{{ value }}"
-        {% endif %}
-    {% endfor %}
-
-    {# The second attribute type #}
-    {% for arg, value in attributes %}
-        {% if value != false  %}
-            {{ arg|replace({input_class: 'class'}) }}="{{ value }}"
-        {% endif %}
-    {% endfor %}
-
-    {# Ready-made attributes #}
-    {{ inline }}>{{ attr.text|default(attr.value)|default(attributes.text)|default(attributes.value) }}</button>
+{{ Tag('button', attributes, attr, {inline: inline})|raw }}

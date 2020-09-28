@@ -7,6 +7,7 @@ namespace Mirele\Compound;
 /**
  * Class Duplicator
  * @package Mirele\Compound
+ * @deprecated
  */
 class Duplicator
 {

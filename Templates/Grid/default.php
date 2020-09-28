@@ -22,8 +22,6 @@ foreach (range(1, $Template->getProp('grid')) as $i) {
     $Template->setField("col$i",
         clone (new Field())
             ->setName("col$i")
-            ->setComponent(Store::get('default_abstract_button'))
-            ->setComponentProps([])
             ->setMeta('editor', ((new Config())
                 ->setData('grid', 'inline')
             ))

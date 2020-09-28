@@ -39,4 +39,21 @@ class Converter
         return (string) "$string_url?$string_params";
     }
 
+    /**
+     * Converter object to HTML attrs string
+     *
+     * @version 1.0.0
+     * @author Mirele
+     * @alias obj2htmlattr
+     * @param array $object
+     * @return string
+     */
+
+    public function obj2htmlattr (array $object) {
+        return implode(' ', array_map(
+            function ($k, $v) { return $k .'="'. htmlspecialchars($v) .'"'; },
+            array_keys($object), $object
+        ));
+    }
+
 }

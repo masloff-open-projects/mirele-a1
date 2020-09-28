@@ -2,6 +2,7 @@
 
 namespace Mirele;
 
+use Mirele\Compound\Component;
 use \Mirele\Utils\Converter;
 use \Mirele\Compound\Duplicator;
 use \Mirele\Compound\Field;
@@ -16,6 +17,61 @@ use \Twig\TwigFunction;
  */
 class TWIG
 {
+    /**
+     * @inheritDoc
+     */
+    public function __destruct()
+    {
+        // TODO: Implement __destruct() method.
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function __call($name, $arguments)
+    {
+        // TODO: Implement __call() method.
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function __unset($name)
+    {
+        // TODO: Implement __unset() method.
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function __sleep()
+    {
+        // TODO: Implement __sleep() method.
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function __toString()
+    {
+        // TODO: Implement __toString() method.
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function __serialize()
+    {
+        // TODO: Implement __serialize() method.
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function __unserialize(array $data)
+    {
+        // TODO: Implement __unserialize() method.
+    }
 
 
     /**
@@ -112,7 +168,35 @@ class TWIG
                 return [
                     new TwigFunction('Component', [$this, 'Component']),
                     new TwigFunction('Field',     [$this, 'Field']),
+                    new TwigFunction('Tag',       [$this, 'Tag']),
                 ];
+            }
+
+            public function Tag (string $tag, ... $props) {
+
+                $attrs = [];
+
+                foreach ($props as $object) {
+                    if (is_array($object) or is_object($object)) {
+                        $attrs = array_merge((array) $attrs, (array) $object);
+                    }
+                }
+
+                $inline = (new Converter)->obj2htmlattr((array) $attrs);
+                $value = "";
+
+                if (isset($attrs['value'])) {
+                    $value = $attrs['value'];
+
+                    if (isset($attrs['text'])) {
+                        $value = $attrs['text'];
+                    }
+                }
+
+                $attr_inline = isset($attrs['inline']) ? $attrs['inline'] : '';
+
+                return "<$tag $inline $attr_inline>$value</$tag>";
+
             }
 
             public function Component (string $id, array $props) {
@@ -123,21 +207,34 @@ class TWIG
                 if ($props and isset($props['template']) and $props['template'] instanceof Template) {
 
                     $Template = $props['template'];
-                    $Field = $Template->getField($name);
+                    if ($Template instanceof Template) {
+                        $Field = $Template->getField($name);
 
-                    if ($Field instanceof Field) {
-                        if (isset($props['components'])) {
+                        if ($Field instanceof Field) {
 
-                            foreach ($props['components'] as $Name => $Component) {
-                                if ($Component instanceof Duplicator) {
-                                    if ($Component->getFieldName() == $Field->getName()) {
-                                        return $Component->build()->render([
-                                            'attr' => isset($props['attr']) ? $props['attr'] : []
-                                        ]);
+                            if (isset($props['components'][$name])) {
+                                foreach ($props['components'][$name] as $component) {
+                                    if ($component instanceof Component) {;
+                                        print ($component->build()->render([
+                                            'attributes' => array_merge(
+                                                (array) $component->getProps(),
+                                                (array) isset($props['attr']) ? $props['attr'] : []
+                                            )
+                                        ]));
                                     }
                                 }
-                            }
+                            } elseif (isset($props['default'])) {
 
+                                if ($props['default'] instanceof Component) {
+                                    print $props['default']->build()->render([
+                                        'attributes' => array_merge(
+                                            (array) $props['default']->getProps(),
+                                            (array) isset($props['attr']) ? $props['attr'] : []
+                                        )
+                                    ]);
+                                }
+
+                            }
                         }
                     }
 

@@ -59,11 +59,24 @@ class Tag
     }
 
     /**
-     * @param mixed $attributes
+     * @param $attributes
+     * @return $this
      */
-    public function setAttributes($attributes)
+    public function setAttributes(array $attributes)
     {
         $this->attributes = $attributes;
+        return $this;
+    }
+
+    /**
+     * @param string $name
+     * @param $value
+     * @return $this
+     */
+    public function setAttribute(string $name, $value)
+    {
+        $this->attributes[$name] = $value;
+        return $this;
     }
 
     /**
@@ -83,9 +96,18 @@ class Tag
     }
 
     /**
+     * @deprecated
      * @return mixed
      */
     public function getTag()
+    {
+        return $this->tag;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getTagName()
     {
         return $this->tag;
     }
