@@ -9,12 +9,13 @@ use Mirele\Compound\Directive;
 /**
  * @param string $XML
  * @return XMLElement|mixed
+ * @deprecated
  */
 
 function XTO (string $XML)
 {
     $parser = xml_parser_create();
-    
+
     xml_parser_set_option($parser, XML_OPTION_CASE_FOLDING, 0);
     xml_parser_set_option($parser, XML_OPTION_SKIP_WHITE, 1);
     xml_parse_into_struct($parser, $XML, $values);

@@ -1,12 +1,15 @@
 {% import 'Compound/editor/modal/insert_template.twig' as modal_insert_template %}
 {% import 'Compound/editor/modal/insert_component.twig' as modal_insert_component %}
+{% import 'Compound/editor/modal/edit_props.twig' as modal_edit_props %}
 
 {{ modal_insert_template.render({
     id: page.ID,
     templates: store.templates
 }) }}
 
-{{ modal_insert_component.render({
+{{ modal_edit_props.render({}) }}
+
+{{ modal_edit_props.render({
     id: page.ID
 }) }}
 
@@ -55,29 +58,40 @@
 
                         <div class="inner" id="compound-editor-body">
 
-
                             {% for instance in markup %}
-                            <div class="wp-mrl-block">
+                            <div class="wp-mrl-block" data-template="{{ instance.name }}" data-id="{{ instance.ID }}" data-page-id="{{ page.ID }}">
                                 <div class="wp-mrl-fields">
                                     {% for field in instance.fields %}
-                                        <div class="wp-mrl-field wp-mrl-field-grid-{{ wp.dump(complex.field.instance.getMeta('editor').getData('grid')) }}">
+                                        <div class="wp-mrl-field wp-mrl-field-grid-{{ complex.field.instance.getMeta('editor').getData('grid') }}">
 
                                             {% if instance.lex.fields[field.getName] %}
 
                                                 <div data-field-name="{{ field.getName }}">
-                                                    {% for field in instance.lex.fields[field.getName] %}
-                                                        {% if field.getTagName == 'component' %}
-                                                            <a href="#">
-                                                                {{ field.getAttributes.name }}
-                                                            </a>
+                                                    {% for component in instance.lex.fields[field.getName] %}
+                                                        {% if component.getTagName == 'component' %}
+
+                                                            <div class="wp-mrl-component" @click="editProps({field: '{{ field.getName }}', component: '{{ component.getAttributes.name }}', template: '{{ instance.ID }}', id: '{{ page.ID }}'})">
+                                                                <span class="dashicons dashicons-edit"></span>
+                                                                <span class="wp-mrl-insert-span">{{ component.getAttributes.name }}</span>
+                                                            </div>
+
                                                         {% endif %}
                                                     {% endfor %}
+
                                                 </div>
 
                                             {% else %}
 
+                                                {{ modal_insert_component.render({
+                                                    id: page.ID,
+                                                    components: store.components,
+                                                    field: field.getName,
+                                                    name: field.getName,
+                                                    template: instance.ID
+                                                }) }}
+
                                                 <div data-field-name="{{ field.getName }}">
-                                                    <a href="#TB_inline?width=600&height=300&inlineId=modal_insert_component" title="Insert component" class="thickbox">
+                                                    <a href="#TB_inline?width=600&height=800&inlineId=modal_insert_component_{{ field.getName }}" title="Insert component" class="thickbox">
                                                         <div class="wp-mrl-insert">
                                                             <span class="dashicons dashicons-plus"></span>
                                                             <span class="wp-mrl-insert-span">Insert component</span>
@@ -93,6 +107,10 @@
                             </div>
                             {% endfor %}
 
+                        </div>
+
+                        <div class="wp-mrl-trash" id="compound-editor-trash-area">
+                            <span class="dashicons dashicons-trash"></span>
                         </div>
 
                         <a href="#TB_inline?width=600&height=550&inlineId=modal_insert_template" title="Insert template" class="thickbox">
@@ -159,7 +177,9 @@
                                         <input name="original_publish" type="hidden" id="original_publish" value="Update" />
                                         <input type="submit" name="save" id="publish" class="button button-primary button-large" value="Update" />
                                     </div>
+
                                     <div class="clear"></div>
+
                                 </div>
                             </div>
                         </div>

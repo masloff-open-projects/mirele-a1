@@ -10,7 +10,6 @@ use Mirele\Compound\Tag;
 use Mirele\Compound\TagsManager;
 use Mirele\Framework\Buffer;
 
-
 $Construction = new Construction();
 $Construction->setName('field');
 $Construction->setHandler(function ($root) {

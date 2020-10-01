@@ -15,6 +15,7 @@ class Signature
      */
     private $templates;
 
+    private $map = [];
     private $layout;
     private $id;
     private $last;
@@ -29,7 +30,8 @@ class Signature
     {
         $this->layout[$id] = (object) [
             'props' => (array) [
-                'name' => $template
+                'name' => $template,
+                'id' => $id
             ],
             'fields' => (array) []
         ];
@@ -44,6 +46,72 @@ class Signature
     {
         return $this->layout;
     }
+
+    /**
+     * @param string $id
+     * @return false|object
+     */
+    public function getRootInstanceById(string $id) {
+
+        if (isset($this->layout[$id])) {
+            return (object) $this->layout[$id];
+        }
+
+        return false;
+
+    }
+
+    /**
+     * @param string $id
+     * @param object $props
+     * @return $this
+     */
+    public function setRootInstanceById(string $id, object $props) {
+        $this->layout[$id] = $props;
+        return $this;
+    }
+
+    /**
+     * @param string $id
+     * @return $this
+     */
+    public function removeTemplate(string $id) {
+        unset($this->layout[$id]);
+        return $this;
+    }
+
+    /**
+     * @param string $template
+     * @param string $name
+     * @return bool
+     */
+    public function removeField(string $template, string $name) {
+        if (isset($this->layout[$template]->fields)) {
+            unset($this->layout[$template]->fields[$name]);
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * @param integer $integer
+     * @return false|mixed
+     */
+    public function getRootInstanceByIndex(integer $integer) {
+
+        $keys = array_keys($this->layout);
+
+        if (isset($keys[$integer])) {
+            $key = $keys[$integer];
+            if (isset($this->layout[$key]->fields)) {
+                return (object) $this->layout[$key];
+            }
+        }
+
+        return false;
+
+    }
+
 
     /**
      * @param string $id

@@ -1,3 +1,32 @@
+var $exports = {};
+
+class __project {
+
+    constructor() {
+        this.$export = {};
+    }
+    
+    export (name='', object) {
+        if (!(name in this.$export)) {
+            this.$export[name] = object;
+        } else {
+            throw `Component '${name}' has already been exported and cannot be overwritten.`;
+        }
+    }
+
+    import (name='') {
+        if (name in this.$export) {
+            return this.$export[name];
+        } else {
+            throw `Component '${name}' is not registered in the system and cannot be imported.`;
+        }
+    }
+
+}
+
+const Project = new __project();
+
+
 class WPAjax {
     constructor (method='/', data={}) {
 
@@ -52,7 +81,7 @@ class Interface {
         jQuery(document).ready(init => {
 
             if ('ready' in data) {
-                data.ready(init, jQuery);
+                this.ready = data.ready(init, jQuery);
             }
 
             // Checking for instances of DOM elements
@@ -69,7 +98,7 @@ class Interface {
 
                 // Creating a VUE instance
                 if ('vue' in data) {
-                    new Vue(data.vue);
+                    this.vue = new Vue(data.vue);
                 }
 
             }
@@ -78,7 +107,7 @@ class Interface {
             if ('mounted' in data) {
                 for (const [element, argument] of Object.entries(data.mounted)) {
                     if (jQuery(element).length) {
-                        argument(init, $, data.instances);
+                        this.mounted = argument(init, $, data.instances);
                     }
                 }
             }

@@ -7,7 +7,7 @@ use Mirele\Compound\Store;
 use Mirele\TWIG;
 
 $Component = new Component ();
-$Component->setId('grid');
+$Component->setId('default_grid');
 $Component->setProps([]);
 $Component->setFunction(function ($props) {
 

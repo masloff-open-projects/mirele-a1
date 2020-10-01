@@ -2,7 +2,7 @@
 
 {% macro render(event) %}
 
-    <div id="modal_insert_component" style="display:none;">
+    <div id="modal_insert_component_{{ event.name }}" style="display:none;">
         <div class="Compound">
 
             {# Modal content #}
@@ -10,14 +10,24 @@
 
                 <form action="" method="post">
 
+                    <h4>Component ({{ event.components|length }})</h4>
 
-{#                    <div>#}
-{#                        <input type="hidden" name="method" value="Compound-insertTemplate">#}
-{#                        <input type="hidden" name="nonce" value="{{ wp.nonce() }}">#}
-{#                        <input type="hidden" name="page" value="{{ event.id }}">#}
-{#                        <input type="hidden" name="template" value="default_header">#}
-{#                        <button type="submit" class="button button-primary button-large">Create and continue</button>#}
-{#                    </div>#}
+                    {% for component in event.components %}
+                        <div class="left">
+                            <label for="{{ component.getId }}">
+                                <input type="radio" value="{{ component.getId }}" name="component">  {{ component.getMeta('editor').getData('title')|default(component.getId) }}
+                            </label>
+                        </div>
+                    {% endfor %}
+
+                    <div>
+                        <input type="hidden" name="method" value="Compound-insertComponent">
+                        <input type="hidden" name="nonce" value="{{ wp.nonce() }}">
+                        <input type="hidden" name="page" value="{{ event.id }}">
+                        <input type="hidden" name="field" value="{{ event.field }}">
+                        <input type="hidden" name="template" value="{{ event.template }}">
+                        <button type="submit" class="button button-primary button-large">Create and continue</button>
+                    </div>
 
                 </form>
 

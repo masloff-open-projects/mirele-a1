@@ -26,7 +26,6 @@ use Mirele\Framework;
 use Mirele\Compound\Store;
 use Mirele\Compound\Grider;
 use Mirele\Compound\Lexer;
-use Mirele\Compound\Duplicator;
 use Mirele\Compound\Component;
 use Mirele\Compound\Template;
 use Mirele\Compound\Field;
@@ -263,6 +262,8 @@ if (wp_doing_ajax() === false) {
         include_once 'Instance/vendor.php';
         include_once 'Сontroller/vendor.php';
         include_once 'Patterns/vendor.php';
+        include_once 'Prototypes/vendor.php';
+        include_once 'Components/vendor.php';
 
         # Main core
         include_once 'Framework/WPGNU.php';
@@ -433,7 +434,9 @@ add_action(
         wp_register_script('mirele_admin', MIRELE_SOURCE_DIR . '/js/admin.min.js', array('jquery', 'vue'), '', true);
         wp_register_script('mireleapi', MIRELE_SOURCE_DIR . '/js/API.min.js', array('babel', 'jquery', 'vue'), '', true);
         wp_register_script('babelui', MIRELE_SOURCE_DIR . '/js/babel.js', array('babel', 'jquery'), '', true);
-        wp_register_script('compound', MIRELE_SOURCE_DIR . '/js/compound.js', array('babel', 'jquery', 'vue'), '', true);
+
+        wp_register_script('compound', MIRELE_SOURCE_DIR . '/js/compound.min.js', array('babel', 'jquery', 'vue'), '', true);
+        wp_register_script('compound_form_props', MIRELE_SOURCE_DIR . '/js/compound/form/props.min.js', array('babel', 'jquery', 'vue'), '', true);
 
         wp_register_script('woocommerceui_product', MIRELE_SOURCE_DIR . '/js/woocommerceui_product.min.js', array('babel', 'jquery', 'vue', 'mireleapi'), '', true);
         wp_register_script('woocommerceui_products', MIRELE_SOURCE_DIR . '/js/woocommerceui_products.min.js', array('babel', 'jquery', 'vue', 'mireleapi'), '', true);
@@ -684,6 +687,9 @@ add_action(
         wp_enqueue_script('fontAwesome');
         wp_enqueue_script('jquery');
         wp_enqueue_script('jquery-ui-core');
+        wp_enqueue_script( 'jquery-ui-draggable' );
+        wp_enqueue_script( 'jquery-ui-droppable' );
+        wp_enqueue_script('compound_form_props');
 
         wp_enqueue_style('fontAwesome');
         wp_enqueue_style('wp-color-picker');
@@ -833,7 +839,8 @@ add_action(
                         'markup' => $Markup,
                         'layout' => $lex->getLayout(),
                         'store' => [
-                            'templates' => Grider::all()
+                            'templates' => Grider::all(),
+                            'components' => Store::all()
                         ]
                     ]);
 

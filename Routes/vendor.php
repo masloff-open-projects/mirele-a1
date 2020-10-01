@@ -26,6 +26,7 @@
 // Complex
 require_once 'Complex/wp-admin/Compound-createPage.php';
 require_once 'Complex/wp-admin/Compound-insertTemplate.php';
+require_once 'Complex/wp-admin/Compound-insertComponent.php';
 
 // AJAX
 require_once 'AJAX/namespaces.php';
@@ -35,6 +36,9 @@ require_once 'AJAX/recoveryPassword.php';
 require_once 'AJAX/options.php';
 require_once 'AJAX/product.php';
 require_once 'AJAX/WCAddToCart.php';
+require_once 'AJAX/wp-admin/Compound-getProps.php';
+require_once 'AJAX/wp-admin/Compound-updateProps.php';
+require_once 'AJAX/wp-admin/Compound-removeTemplate.php';
 
 // REST
 require_once 'REST/options/get.php';

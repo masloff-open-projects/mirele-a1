@@ -1,0 +1,27 @@
+{# Modal window for inserting a component on a section #}
+
+{% macro render(event) %}
+
+    <div id="modal_edit_props" style="display:none;">
+        <div class="Compound">
+
+            {# Modal content #}
+            <div class="CModal">
+                <form action="" method="post" id="modal_edit_props_form" @submit.prevent="submit">
+
+                    <div v-for="field in fields">
+                        <label for="#">
+                            {field.name}
+                        </label>
+                        <input type="text" :value="field.value" :name="field.name" v-model="props[field.name]">
+                    </div>
+
+                    <button type="submit" class="button button-primary button-large" value="update" name="submit" @click="type='update'">Save and update</button>
+                    <button type="submit" class="button button-large" value="remove" name="submit" @click="type='remove'">Remove</button>
+
+                </form>
+            </div>
+        </div>
+    </div>
+
+{% endmacro %}

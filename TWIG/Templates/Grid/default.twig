@@ -2,7 +2,7 @@
     <div class="row">
         {% for class, components in template.fields %}
 
-            <div class="col-1">
+            <div class="col-{{ (12 / template.fields|length)|number_format }}">
                 {{ Field(class, {
                     template: this,
                     components: call.components,

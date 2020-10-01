@@ -74,6 +74,101 @@ class Lexer
     }
 
     /**
+     * @param string $data
+     * @return string
+     */
+    private function __protection (string $data) {
+
+        // Fix &entity\n;
+        $data = str_replace(array('&amp;','&lt;','&gt;'), array('&amp;amp;','&amp;lt;','&amp;gt;'), $data);
+        $data = preg_replace('/(&#*\w+)[\x00-\x20]+;/u', '$1;', $data);
+        $data = preg_replace('/(&#x*[0-9A-F]+);*/iu', '$1;', $data);
+        $data = html_entity_decode($data, ENT_COMPAT, 'UTF-8');
+
+        // Remove any attribute starting with "on" or xmlns
+        $data = preg_replace('#(<[^>]+?[\x00-\x20"\'])(?:on|xmlns)[^>]*+>#iu', '$1>', $data);
+
+        // Remove javascript: and vbscript: protocols
+        $data = preg_replace('#([a-z]*)[\x00-\x20]*=[\x00-\x20]*([`\'"]*)[\x00-\x20]*j[\x00-\x20]*a[\x00-\x20]*v[\x00-\x20]*a[\x00-\x20]*s[\x00-\x20]*c[\x00-\x20]*r[\x00-\x20]*i[\x00-\x20]*p[\x00-\x20]*t[\x00-\x20]*:#iu', '$1=$2nojavascript...', $data);
+        $data = preg_replace('#([a-z]*)[\x00-\x20]*=([\'"]*)[\x00-\x20]*v[\x00-\x20]*b[\x00-\x20]*s[\x00-\x20]*c[\x00-\x20]*r[\x00-\x20]*i[\x00-\x20]*p[\x00-\x20]*t[\x00-\x20]*:#iu', '$1=$2novbscript...', $data);
+        $data = preg_replace('#([a-z]*)[\x00-\x20]*=([\'"]*)[\x00-\x20]*-moz-binding[\x00-\x20]*:#u', '$1=$2nomozbinding...', $data);
+
+        // Only works in IE: <span style="width: expression(alert('Ping!'));"></span>
+        $data = preg_replace('#(<[^>]+?)style[\x00-\x20]*=[\x00-\x20]*[`\'"]*.*?expression[\x00-\x20]*\([^>]*+>#i', '$1>', $data);
+        $data = preg_replace('#(<[^>]+?)style[\x00-\x20]*=[\x00-\x20]*[`\'"]*.*?behaviour[\x00-\x20]*\([^>]*+>#i', '$1>', $data);
+        $data = preg_replace('#(<[^>]+?)style[\x00-\x20]*=[\x00-\x20]*[`\'"]*.*?s[\x00-\x20]*c[\x00-\x20]*r[\x00-\x20]*i[\x00-\x20]*p[\x00-\x20]*t[\x00-\x20]*:*[^>]*+>#iu', '$1>', $data);
+
+        // Remove namespaced elements (we do not need them)
+        $data = preg_replace('#</*\w+:\w[^>]*+>#i', '', $data);
+
+        return $data;
+
+    }
+
+    /**
+     * @param string $data
+     * @return array|false|mixed
+     */
+    private function __xml_to_object (string $data) {
+
+        if (function_exists('xml_parser_create')) {
+
+            $parser = xml_parser_create();
+
+            xml_parser_set_option($parser, XML_OPTION_CASE_FOLDING, 0);
+            xml_parser_set_option($parser, XML_OPTION_SKIP_WHITE, 1);
+            xml_parser_set_option($parser, XML_OPTION_TARGET_ENCODING, 'UTF-8');
+            xml_parse_into_struct($parser, $data, $values);
+            xml_parser_free($parser);
+
+            $class = array();
+            $last = array();
+            $Next = &$class;
+
+            foreach($values as $XKey => $XValue)
+            {
+                $index = count($Next);
+                if($XValue["type"] == "complete")
+                {
+
+                    $Next[$index] = new Directive;
+                    $Next[$index]->setTag((string) $XValue["tag"]);
+                    $Next[$index]->setAttributes((object) $XValue["attributes"]);
+                    $Next[$index]->setContent($XValue["value"]);
+
+                }
+                elseif($XValue["type"] == "open")
+                {
+
+                    $Next[$index] = new Directive;
+                    $Next[$index]->setTag((string) $XValue["tag"]);
+                    $Next[$index]->setAttributes((object) $XValue["attributes"]);
+                    $Next[$index]->setContent($XValue["value"]);
+                    $Next[$index]->setNext([]);
+
+                    $last[count($last)] = &$Next;
+                    $Next = &$Next[$index]->next;
+
+                }
+                elseif($XValue["type"] == "close")
+                {
+
+                    $Next = &$last[count($last) - 1];
+                    unset($last[count($last) - 1]);
+
+                }
+
+            }
+
+            return $class;
+
+        }
+
+        return false;
+
+    }
+
+    /**
      * @param $attr
      * @return string
      */
@@ -125,7 +220,6 @@ class Lexer
     public function parse () {
 
         $Signature = new Signature();
-        $xss = new AntiXSS();
 
         # We get the code from the shortscode
         preg_match_all('#\[Compound(.*)\](\s|)(.+?)\[/Compound\]#is', $this->fragment, $fragment);
@@ -134,61 +228,75 @@ class Lexer
         # At the first stage, the token
         # is not ready for processing as an object,
         # it is just a line ready for parsing and lexical analysis.
-        $pre_lexicon = (string) str_replace(['“', '”'], ['"', '"'], $xss->xss_clean(stripslashes(stripcslashes(strip_tags(html_entity_decode(isset($fragment[3][0]) ? $fragment[3][0] : $this->fragment), '<root><template><field><component><props>')))));
-
+        $pre_lexicon = (string) str_replace(
+            ['“', '”'],
+            ['"', '"'],
+            $this->__protection(
+                stripslashes(
+                    stripcslashes(
+                        strip_tags(
+                            html_entity_decode(isset($fragment[3][0]) ? $fragment[3][0] : $this->fragment),
+                            '<root><template><field><component><props>'
+                        )
+                    )
+                )
+            )
+        );
 
         # We perform the primary lexical parsing of code on an attached object
-        $lexicon = (array) Children\XTO($pre_lexicon);
+        $lexicon = (array) $this->__xml_to_object($pre_lexicon);
 
+        if (isset($lexicon[0])) {
 
-        if ($lexicon[0]->getTag() == 'root') {
-            $root = (array) $lexicon[0]->getNext();
-        } else {
-            $root = (array) $lexicon;
-        }
+            if ($lexicon[0]->getTag() == 'root') {
+                $root = (array) $lexicon[0]->getNext();
+            } else {
+                $root = (array) $lexicon;
+            }
 
-        # If a root derivative is installed, we iterate it.
-        if ($root) {
+            # If a root derivative is installed, we iterate it.
+            if ($root) {
 
-            # Iteration
-            foreach ($root as $index => $iterator) {
-                if ($iterator instanceof Directive) {
+                # Iteration
+                foreach ($root as $index => $iterator) {
+                    if ($iterator instanceof Directive) {
 
-                    # Top Level Directive - Template
-                    if ($iterator->getTag() === 'template') {
+                        # Top Level Directive - Template
+                        if ($iterator->getTag() === 'template') {
 
-                        # Generate
-                        $id = $iterator->getAttribute('id') ? $iterator->getAttribute('id') : (string) md5(rand(0, PHP_INT_MAX));
-                        $next = $iterator->getNext();
-                        $name = $iterator->getAttribute('name');
-                        $instance = $iterator->getAttribute('instance') ? $iterator->getAttribute('instance') : md5(rand(0, PHP_INT_MAX));
-                        $props = $iterator->getAttributes();
+                            # Generate
+                            $id = $iterator->getAttribute('id') ? $iterator->getAttribute('id') : (string) md5(rand(0, PHP_INT_MAX));
+                            $name = $iterator->getAttribute('name');
+                            $props = $iterator->getAttributes();
+                            $next = (object) $iterator->getNext();
 
-                        $Signature->markupTemplate($id, $name);
+                            $Signature->markupTemplate($id, $name);
 
-                        $Signature->setLayoutProps((string) $id, (array) $props);
+                            $Signature->setLayoutProps((string) $id, (array) $props);
 
-                        $Signature->addTemplate($name, [], $instance);
+                            if (is_array($next) or is_object($next)) {
 
-                        $Signature->setTemplateProps($name, (object) $props, $instance);
+                                foreach ($next as $nesting) {
 
-                        if (is_array($next) or is_object($next)) {
+                                    if ($nesting instanceof Directive) {
 
-                            $next = (object) $next;
+                                        $tag = (string) $nesting->getTag();
+                                        $next_ = (array) $nesting->getNext();
 
-                            foreach ($next as $nesting) {
+                                        if (isset($next_) and !empty($next_)) {
 
-                                if ($nesting instanceof Directive) {
+                                            # The system has a tag alias structure, call the handler
+                                            if (Constructor::get($tag)) {
 
-                                    # The system has a tag alias structure, call the handler
-                                    if (Constructor::get($nesting->getTag())) {
+                                                $package = Constructor::call($tag, $next_);
+                                                $field_name = $nesting->getAttribute('name');
 
-                                        $package = Constructor::call((string) $nesting->getTag(), (array) $nesting->getNext());
-                                        $field_name = $nesting->getAttribute('name') ? $nesting->getAttribute('name') : 'default';
+                                                if ($field_name and $package) {
+                                                    $Signature->setLayoutField($id, $field_name, $package);
+                                                }
 
-                                        if ($field_name and $package) {
-                                            $Signature->addTemplateField($name, $field_name, $package, $instance);
-                                            $Signature->setLayoutField($id, $field_name, $package);
+                                            }
+
                                         }
 
                                     }
@@ -200,15 +308,17 @@ class Lexer
                         }
 
                     }
-
                 }
+
             }
+
+            $this->signature = $Signature;
+
+            return $Signature;
 
         }
 
-        $this->signature = $Signature;
-
-        return $Signature;
+        return false;
 
     }
 

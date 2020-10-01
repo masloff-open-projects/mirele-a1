@@ -88,6 +88,19 @@ class Tag
     }
 
     /**
+     * @param string $name
+     * @return false|mixed
+     */
+    public function getAttribute(string $name)
+    {
+        if (isset($this->attributes[$name])) {
+            return $this->attributes[$name];
+        }
+
+        return false;
+    }
+
+    /**
      * @return mixed
      */
     public function getReference()

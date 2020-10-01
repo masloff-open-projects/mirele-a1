@@ -13,14 +13,11 @@
 
                     {% for template in event.templates %}
                         {% if template.getId %}
-                           <div>
-                                <div>
-                                    <img src="http://placehold.it/200x200" alt="">
-                                </div>
+                            <button type="submit" value="{{ template.getId }}" name="template">
+                                <img src="http://placehold.it/200x200" alt="">
+                                {{ template.getId }}
+                            </button>
 
-                               <input type="radio" value="{{ template.getId }}" name="template">
-                               <span>{{ template.getMeta('name')|default(template.getId) }}</span>
-                           </div>
                         {% endif %}
                     {% endfor %}
 

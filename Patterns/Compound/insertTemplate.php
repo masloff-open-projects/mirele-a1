@@ -108,7 +108,7 @@ class insertTemplate
 
                                     $tag = new Tag();
                                     $tag->setTag('component');
-                                    $tag->setAttributes($object->getComponentProps());
+                                    $tag->setAttributes((array) $object->getComponentProps());
 
                                     $tag->setAttribute('name', $component->getAlias() ? $component->getAlias() : $component->getId());
 

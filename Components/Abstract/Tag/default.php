@@ -8,23 +8,26 @@ use Mirele\Compound\Store;
 use Mirele\TWIG;
 
 $Component = new Component ();
-$Component->setId('default_abstract_input');
+$Component->setId('default_abstract_tag');
 $Component->setProps([
-    'value' => ''
+    'tag' => 'h1',
+    'value' => 'Hello world',
+    'style' => ''
 ]);
 $Component->setMeta('editor',
     (new Config())
-        ->setData('title', 'Input')
+        ->setData('title', 'Tag')
         ->setData('description', '')
         ->setData('alias', '')
 );
-
-$Component->setAlias('@input');
+$Component->setAlias('@tag');
 $Component->setFunction(function ($props) {
 
     $props = (object) $props;
 
-    TWIG::Render('Components/Abstract/default_input', $props);
+    TWIG::Render('Components/Abstract/default_tag', (object) [
+        'props' => $props
+    ]);
 
 });
 

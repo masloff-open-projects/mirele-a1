@@ -16,7 +16,6 @@ use Mirele\Compound\Tag;
 use Mirele\Compound\Store;
 use Mirele\Compound\Component;
 use Mirele\Framework\Buffer;
-use Mirele\Compound\Duplicator;
 
 global $post;
 

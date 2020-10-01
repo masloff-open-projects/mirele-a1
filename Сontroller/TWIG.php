@@ -4,7 +4,6 @@ namespace Mirele;
 
 use Mirele\Compound\Component;
 use \Mirele\Utils\Converter;
-use \Mirele\Compound\Duplicator;
 use \Mirele\Compound\Field;
 use \Mirele\Compound\Template;
 use \Mirele\Framework\Stringer;

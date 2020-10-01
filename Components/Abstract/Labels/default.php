@@ -8,7 +8,9 @@ use Mirele\TWIG;
 
 $Component = new Component ();
 $Component->setId('default_abstract_label');
-$Component->setProps([]);
+$Component->setProps([
+    'text' => 'Hello world'
+]);
 $Component->setAlias('@label');
 $Component->setFunction(function ($props) {
 

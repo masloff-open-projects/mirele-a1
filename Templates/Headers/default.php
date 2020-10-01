@@ -2,6 +2,7 @@
 
 namespace Mirele\Templates;
 
+use Mirele\Compound\Config;
 use Mirele\Compound\Grider;
 use Mirele\Compound\Store;
 use Mirele\Compound\Template;
@@ -13,8 +14,6 @@ $Template->setProps([
     'color' => 'red'
 ]);
 
-//$Template->setComponent('input', Store::get('default_abstract_input'));
-//$Template->setComponent('button', Store::get('default_abstract_button'));
 
 // Fields
 $Template->setField('label',
@@ -23,17 +22,11 @@ $Template->setField('label',
         ->setComponent(Store::get('default_abstract_label'))
 );
 
-$Template->setField('input',
-    (new Field())
-        ->setName('input')
-);
-
-$Template->setField('button',
-    (new Field())
-        ->setName('button')
-);
-
 $Template->setMeta('name', 'Header');
+$Template->setMeta('editor',
+    (new Config())
+        ->setData('title', 'Header')
+);
 
 $Template->setTwig('Templates/Headers/default');
 

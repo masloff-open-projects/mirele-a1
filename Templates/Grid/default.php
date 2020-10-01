@@ -11,7 +11,7 @@ use Mirele\Compound\Field;
 $Template = new Template();
 $Template->setId('default_grid');
 $Template->setProps([
-    'grid' => 5
+    'grid' => 4
 ]);
 
 $Template->setComponent('input', Store::get('default_abstract_input'));
@@ -22,8 +22,9 @@ foreach (range(1, $Template->getProp('grid')) as $i) {
     $Template->setField("col$i",
         clone (new Field())
             ->setName("col$i")
-            ->setMeta('editor', ((new Config())
-                ->setData('grid', 'inline')
+            ->setMeta('editor', (
+                (new Config())
+                    ->setData('grid', 'inline')
             ))
     );
 }

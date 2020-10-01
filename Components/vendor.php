@@ -23,6 +23,7 @@
  * @template vendor
  */
 
+include_once 'Abstract/Tag/default.php';
 include_once 'Abstract/Inputs/default.php';
 include_once 'Abstract/Textareas/default.php';
 include_once 'Abstract/Selects/default.php';
