@@ -9,11 +9,22 @@
             <div class="CModal">
                 <form action="" method="post" id="modal_edit_props_form" @submit.prevent="submit">
 
-                    <div v-for="field in fields">
-                        <label for="#">
-                            {field.name}
-                        </label>
-                        <input type="text" :value="field.value" :name="field.name" v-model="props[field.name]">
+                    <div id="component-meta" class="left" v-if="meta">
+                        <h3 class="title" v-if="meta.title">{meta.title}</h3>
+                        <p class="paragraph" v-if="meta.description">{meta.description}</p>
+                    </div>
+
+                    <div id="component-body">
+                        <div class="field-box" v-for="field in fields">
+                            <div class="field-title-box left">
+                                <h4 class="title">{field.name}</h4>
+                                <small class="small">Lorem ipsum dolor sit.</small>
+                            </div>
+
+                            <div>
+                                <input type="text" :value="field.value" :name="field.name" v-model="props[field.name]">
+                            </div>
+                        </div>
                     </div>
 
                     <button type="submit" class="button button-primary button-large" value="update" name="submit" @click="type='update'">Save and update</button>

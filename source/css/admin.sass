@@ -13,7 +13,20 @@
   background: #0073AA
   color: white
   position: relative
-  padding: 12px 12px
+
+  .action-link
+    transition: 0.3s ease-in-out
+    display: inline-block
+    padding: 12px 12px
+    color: white
+    text-decoration: none
+
+    a
+      color: white
+      text-decoration: none
+
+    &:hover
+      background: #004a6d
 
 .wp-mrl-add
   border: 1px dashed rgba(125,125,125,.4)
@@ -29,6 +42,13 @@
 .wp-mrl-trash-hover
   border: 1px dashed #EE4D4D !important
 
+.wp-mrl-placeholder
+  border: 1px dashed rgba(125,125,125,.4)
+  height: 60px
+  margin: 24px 0
+  display: block
+
+
 .wp-mrl-trash
   border: 1px dashed rgba(125,125,125,.4)
   margin: 14px
@@ -38,9 +58,49 @@
   cursor: pointer
   color: red
 
+.wp-mrl-component-box
+  border: 1px solid #ddd
+  border-radius: 8px
+  overflow: hidden
+  background: white
+  cursor: pointer
+
+.wp-mrl-tabs
+  .components-header
+    background: rgb(158,210,106)
+    background: -moz-linear-gradient(90deg, rgba(158,210,106,1) 0%, rgba(158,210,106,1) 35%, rgba(137,192,83,1) 100%)
+    background: -webkit-linear-gradient(90deg, rgba(158,210,106,1) 0%, rgba(158,210,106,1) 35%, rgba(137,192,83,1) 100%)
+    background: linear-gradient(90deg, rgba(158,210,106,1) 0%, rgba(158,210,106,1) 35%, rgba(137,192,83,1) 100%)
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#9ed26a",endColorstr="#89c053",GradientType=1)
+
+  .templates-header
+    background: rgb(179,141,255)
+    background: -moz-linear-gradient(90deg, rgba(179,141,255,1) 0%, rgba(160,113,255,1) 35%, rgba(144,101,229,1) 100%)
+    background: -webkit-linear-gradient(90deg, rgba(179,141,255,1) 0%, rgba(160,113,255,1) 35%, rgba(144,101,229,1) 100%)
+    background: linear-gradient(90deg, rgba(179,141,255,1) 0%, rgba(160,113,255,1) 35%, rgba(144,101,229,1) 100%)
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#b38dff",endColorstr="#9065e5",GradientType=1)
+
+  .wp-mrl-tab
+    background: #fff
+    /* min-height: 40px; */
+    border-top-right-radius: 8px
+    border-top-left-radius: 8px
+    padding: 3px 8px
+    margin-right: 4px
+    display: inline-block
+    font-size: 10px
+
+  .wp-mrl-tabs-container
+    margin-left: 24px
+
+  .wp-mrl-tools-line
+    background: #f7f7f7
 
 .wp-mrl-field-grid-inline
-  //display: inline-block
+  display: inline-block
+
+.wp-mrl-field-grid-block
+  display: block
 
 .wp-wrap-tabs 
   margin: 1.6em 0px 0px 0px
@@ -58,6 +118,7 @@
 .wp-mrl-modal-center
   text-align: center
 
+@import compound/grid/grid
 @import components/switch
 @import compound/modal
 @import compound/wp-native/insert

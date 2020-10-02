@@ -6,26 +6,49 @@
         <div class="Compound">
 
             {# Modal content #}
-            <div class="CModal">
+            <div class="CModal ignore">
 
                 <form action="" method="post">
 
+                    <div class="wp-mrl-tabs">
+                        <div class="templates-header">
+                            <div class="grid-container">
+                                <div class="col-12 left">
+                                    <div class="margin-buttom-2 margin-top-2 display-block padding-y-10 padding-x-8">
+                                        <h3 class="margin-0 font-weight-3 font-size-4 display-contents color-white">Templates</h3>
+                                        <p class="color-white">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Animi assumenda praesentium repellendus soluta temporibus! Architecto distinctio doloribus esse, inventore iste iusto laudantium sapiente.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 
-                    {% for template in event.templates %}
-                        {% if template.getId %}
-                            <button type="submit" value="{{ template.getId }}" name="template">
-                                <img src="http://placehold.it/200x200" alt="">
-                                {{ template.getId }}
-                            </button>
+                    <div class="grid-container">
+                        <div class="padding-6 col-12">
+                            <div class="grid-container">
 
-                        {% endif %}
-                    {% endfor %}
+                                {% for template in event.templates %}
+                                    {% if template.getId %}
+
+                                        <button type="submit" class="col-6 left margin-x-2 margin-y-2 margin-buttom-2 padding-3 wp-mrl-component-box" value="{{ template.getId }}" name="template">
+{#                                            <img src="http://placehold.it/200x200" width="100%" alt="">#}
+
+                                            <h5 class="margin-0 padding-0">{{ template.getId }}</h5>
+                                            {#                                            <small class="margin-0 padding-0">{{ component.getMeta('editor').getData('title')|default(component.getId) }}</small>#}
+                                        </button>
+
+                                    {% endif %}
+                                {% endfor %}
+
+
+                            </div>
+                        </div>
+                    </div>
 
                     <div>
                         <input type="hidden" name="method" value="Compound-insertTemplate">
                         <input type="hidden" name="nonce" value="{{ wp.nonce() }}">
                         <input type="hidden" name="page" value="{{ event.id }}">
-                        <button type="submit" class="button button-primary button-large">Create and continue</button>
                     </div>
 
                 </form>

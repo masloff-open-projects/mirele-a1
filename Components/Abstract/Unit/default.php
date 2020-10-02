@@ -8,15 +8,12 @@ use Mirele\Compound\Store;
 use Mirele\TWIG;
 
 $Component = new Component ();
-$Component->setId('default_abstract_button');
-$Component->setAlias('@button');
-$Component->setProps([
-    'value' => 'Hello world',
-    'href' => false
-]);
+$Component->setId('default_unit');
+$Component->setAlias('@unit');
+$Component->setProps(range(1, 20));
 $Component->setMeta('editor',
     (new Config())
-        ->setData('title', 'Button')
+        ->setData('title', 'Unit')
         ->setData('description', '')
         ->setData('alias', '')
 );

@@ -5,6 +5,7 @@ use Mirele\Compound\Lexer;
 use Mirele\Compound\Tag;
 use Mirele\Compound\Store;
 use Mirele\Compound\Component;
+use Mirele\Compound\Config;
 
 
 # ...
@@ -39,10 +40,17 @@ Router::post('/ajax_endpoint_v1/Compound-getProps', function () {
                             if ($component instanceof Component) {
                                 $propsOfComponent = (array) $component->getProps();
                                 $propsOfTag = (array) $tag->getAttributes();
-                                $props = array_merge($propsOfComponent, $propsOfTag);
+                                $propsOfMeta = array();
+                                $meta = $component->getMeta('editor');
+                                if ($meta instanceof Config) {
+                                    $propsOfMeta['meta'] = $meta->all();
+                                }
+                                $props = array_merge($propsOfMeta, [
+                                    'props' => array_merge($propsOfComponent, $propsOfTag)
+                                ]);
                                 ksort($props);
-                                unset($props['name']);
-                                unset($props['id']);
+                                unset($props['props']['name']);
+                                unset($props['props']['id']);
                                 wp_send_json_success($props);
                                 return;
                             }

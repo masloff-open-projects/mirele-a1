@@ -10,6 +10,7 @@ Project.export('@form-props', new Interface ({
         delimiters: ['{', '}'],
         el: "#modal_edit_props",
         data: {
+            meta: {},
             fields: [],
             component: [],
             props: [],
@@ -28,21 +29,28 @@ Project.export('@form-props', new Interface ({
                 const Request = new WPAjax('Compound-getProps', event);
 
                 this.fields = [];
+                this.meta = {};
 
                 Request.then(Event => {
-                    if (Event.data.success == true) {
-                        for (const [name, value] of Object.entries(Event.data.data)) {
-                            this.fields.push({
-                                name: name,
-                                value: value
-                            });
+                    if (Event.data.success === true) {
+                        if (typeof Event.data.data.props == 'object') {
+                            for (const [name, value] of Object.entries(Event.data.data.props)) {
+                                this.fields.push({
+                                    name: name,
+                                    value: value
+                                });
 
-                            this.props[name] = value;
+                                this.props[name] = value;
+                            }
+                        }
+
+                        if (typeof Event.data.data.meta == 'object') {
+                            this.meta = Event.data.data.meta;
                         }
                     }
                 });
 
-                tb_show('Edit props of component', '/?TB_inline&inlineId=modal_edit_props&width=700&height=500');
+                tb_show('Edit props of component', '/?TB_inline&inlineId=modal_edit_props&width=600&height=700');
 
             },
 
@@ -52,6 +60,10 @@ Project.export('@form-props', new Interface ({
                 }, {
                     props: this.props
                 }));
+
+                Request.then(Event => {
+                    tb_remove();
+                })
             }
         }
     },

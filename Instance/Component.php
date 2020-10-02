@@ -35,7 +35,103 @@ class Component
      * @var
      */
     private $meta;
+    /**
+     * @var
+     */
     private $alias;
+
+    /**
+     * is triggered when invoking inaccessible methods in an object context.
+     *
+     * @param $name string
+     * @param $arguments array
+     * @return mixed
+     * @link https://php.net/manual/en/language.oop5.overloading.php#language.oop5.overloading.methods
+     */
+    public function __call($name, $arguments)
+    {
+    }
+
+    /**
+     * The __invoke method is called when a script tries to call an object as a function.
+     *
+     * @return mixed
+     * @link https://php.net/manual/en/language.oop5.magic.php#language.oop5.magic.invoke
+     */
+    public function __invoke($props)
+    {
+        return $this->render($props);
+    }
+
+    /**
+     * This method is called by var_dump() when dumping an object to get the properties that should be shown.
+     * If the method isn't defined on an object, then all public, protected and private properties will be shown.
+     * @return array
+     * @since 5.6
+     *
+     * @link https://php.net/manual/en/language.oop5.magic.php#language.oop5.magic.debuginfo
+     */
+    public function __debugInfo()
+    {
+        return array(
+            'alias' => $this->alias,
+            'name' => $this->name,
+            'id' => $this->id,
+            'props' => $this->props,
+            'data' => $this->data,
+            'meta' => $this->meta,
+        );
+    }
+
+
+    /**
+     * is utilized for reading data from inaccessible members.
+     *
+     * @param $name string
+     * @return mixed
+     * @link https://php.net/manual/en/language.oop5.overloading.php#language.oop5.overloading.members
+     */
+    public function __get($name)
+    {
+        return $this->getProp((string) $name);
+    }
+
+    /**
+     * run when writing data to inaccessible members.
+     *
+     * @param $name string
+     * @param $value mixed
+     * @return void
+     * @link https://php.net/manual/en/language.oop5.overloading.php#language.oop5.overloading.members
+     */
+    public function __set($name, $value)
+    {
+        $this->setProp((string) $name, (string) $value);
+    }
+
+    /**
+     * is triggered by calling isset() or empty() on inaccessible members.
+     *
+     * @param $name string
+     * @return bool
+     * @link https://php.net/manual/en/language.oop5.overloading.php#language.oop5.overloading.members
+     */
+    public function __isset($name)
+    {
+        return isset($this->props[$name]);
+    }
+
+    /**
+     * is invoked when unset() is used on inaccessible members.
+     *
+     * @param $name string
+     * @return void
+     * @link https://php.net/manual/en/language.oop5.overloading.php#language.oop5.overloading.members
+     */
+    public function __unset($name)
+    {
+        unset($this->props[$name]);
+    }
 
 
     /**
@@ -111,6 +207,17 @@ class Component
     }
 
     /**
+     * @param string $name
+     * @param string $value
+     * @return $this
+     */
+    public function setProp(string $name, string $value)
+    {
+        $this->props[$name] = $value;
+        return $this;
+    }
+
+    /**
      * @param mixed $data
      */
     public function setData(string $key, $data)
@@ -126,6 +233,19 @@ class Component
     {
         if (isset($this->data[$key])) {
             return $this->data[$key];
+        }
+
+        return false;
+    }
+
+    /**
+     * @param string $key
+     * @return false|mixed
+     */
+    public function getProp(string $key)
+    {
+        if (isset($this->props[$key])) {
+            return $this->props[$key];
         }
 
         return false;

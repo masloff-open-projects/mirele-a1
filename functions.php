@@ -721,18 +721,6 @@ add_action(
 
 });
 
-# User front-end body open tag
-add_action(
-/**
- *
- */ 'wp_body_open', function () {
-
-        if (is_page_template(COMPOUND_CANVAS)) {
-
-        }
-
-});
-
 # Admin front end
 add_action(
 /**
@@ -824,7 +812,10 @@ add_action(
                                     'name' => (string) $Template->props->name,
                                     'ID' => (string) $ID,
                                     'lex' => $Template,
-                                    'fields' => $fields
+                                    'fields' => $fields,
+                                    'template' => [
+                                        'fields' => $template->getFields()
+                                    ]
                                 ];
 
                             }

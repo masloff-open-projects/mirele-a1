@@ -29,7 +29,7 @@ include_once 'Template.php';
 include_once 'Field.php';
 include_once 'Tag.php';
 include_once 'Lex.php';
-include_once 'Signature.php';
+include_once 'Layout.php';
 include_once 'Directive.php';
 include_once 'Component.php';
 include_once 'Config.php';

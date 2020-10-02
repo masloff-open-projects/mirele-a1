@@ -19,16 +19,14 @@ $Template->setComponent('button', Store::get('default_abstract_button'));
 
 // Fields
 foreach (range(1, $Template->getProp('grid')) as $i) {
+    $config = new Config();
+    $config->col = 12 / $Template->getProp('grid');
     $Template->setField("col$i",
         clone (new Field())
             ->setName("col$i")
-            ->setMeta('editor', (
-                (new Config())
-                    ->setData('grid', 'inline')
-            ))
+            ->setMeta('editor', $config)
     );
 }
-
 
 $Template->setMeta('name', 'Grid');
 

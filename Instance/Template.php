@@ -51,7 +51,106 @@ class Template
      */
     private $handler;
 
+    /**
+     * @var
+     */
+    private $type;
+    /**
+     * @var
+     */
     private $alias;
+
+    /**
+     * is utilized for reading data from inaccessible members.
+     *
+     * @param $name string
+     * @return mixed
+     * @link https://php.net/manual/en/language.oop5.overloading.php#language.oop5.overloading.members
+     */
+    public function __get($name)
+    {
+        return $this->getProp($name);
+    }
+
+    /**
+     * run when writing data to inaccessible members.
+     *
+     * @param $name string
+     * @param $value mixed
+     * @return void
+     * @link https://php.net/manual/en/language.oop5.overloading.php#language.oop5.overloading.members
+     */
+    public function __set($name, $value)
+    {
+        $this->setProp((string) $name, $value);
+    }
+
+    /**
+     * is triggered by calling isset() or empty() on inaccessible members.
+     *
+     * @param $name string
+     * @return bool
+     * @link https://php.net/manual/en/language.oop5.overloading.php#language.oop5.overloading.members
+     */
+    public function __isset($name)
+    {
+        return isset($this->props[$name]);
+    }
+
+    /**
+     * is invoked when unset() is used on inaccessible members.
+     *
+     * @param $name string
+     * @return void
+     * @link https://php.net/manual/en/language.oop5.overloading.php#language.oop5.overloading.members
+     */
+    public function __unset($name)
+    {
+        unset($this->props[$name]);
+    }
+
+    /**
+     * The __toString method allows a class to decide how it will react when it is converted to a string.
+     *
+     * @return string
+     * @link https://php.net/manual/en/language.oop5.magic.php#language.oop5.magic.tostring
+     */
+    public function __toString()
+    {
+        return (string) json_encode($this->props);
+    }
+
+    /**
+     * The __invoke method is called when a script tries to call an object as a function.
+     *
+     * @return mixed
+     * @link https://php.net/manual/en/language.oop5.magic.php#language.oop5.magic.invoke
+     */
+    public function __invoke(array $props)
+    {
+        return $this->render($props);
+    }
+
+    /**
+     * This method is called by var_dump() when dumping an object to get the properties that should be shown.
+     * If the method isn't defined on an object, then all public, protected and private properties will be shown.
+     * @return array
+     * @since 5.6
+     *
+     * @link https://php.net/manual/en/language.oop5.magic.php#language.oop5.magic.debuginfo
+     */
+    public function __debugInfo()
+    {
+        return array(
+            'alias' => $this->alias,
+            'name' => $this->name,
+            'id' => $this->id,
+            'props' => $this->props,
+            'type' => $this->type,
+            'meta' => $this->meta,
+        );
+    }
+
 
     /**
      * @param $alias
@@ -62,6 +161,43 @@ class Template
         $this->alias = $alias;
         return $this;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getComponentsProps()
+    {
+        return $this->componentsProps;
+    }
+
+    /**
+     * @param mixed $componentsProps
+     * @return Template
+     */
+    public function setComponentsProps($componentsProps)
+    {
+        $this->componentsProps = $componentsProps;
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getType()
+    {
+        return $this->type;
+    }
+
+    /**
+     * @param string $type
+     * @return Template
+     */
+    public function setType(string $type)
+    {
+        $this->type = $type;
+        return $this;
+    }
+
 
     /**
      * @return mixed
@@ -206,6 +342,17 @@ class Template
     public function setProps(array $props)
     {
         $this->props = (array) $props;
+        return $this;
+    }
+
+    /**
+     * @param string $name
+     * @param $value
+     * @return $this
+     */
+    public function setProp(string $name, $value)
+    {
+        $this->props[$name] = $value;
         return $this;
     }
 

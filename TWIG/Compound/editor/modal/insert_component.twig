@@ -6,19 +6,41 @@
         <div class="Compound">
 
             {# Modal content #}
-            <div class="CModal">
+            <div class="CModal ignore">
 
                 <form action="" method="post">
 
-                    <h4>Component ({{ event.components|length }})</h4>
-
-                    {% for component in event.components %}
-                        <div class="left">
-                            <label for="{{ component.getId }}">
-                                <input type="radio" value="{{ component.getId }}" name="component">  {{ component.getMeta('editor').getData('title')|default(component.getId) }}
-                            </label>
+                    <div class="wp-mrl-tabs">
+                        <div class="components-header">
+                            <div class="grid-container">
+                               <div class="col-12 left">
+                                   <div class="margin-buttom-2 margin-top-2 display-block padding-y-10 padding-x-8">
+                                       <h3 class="margin-0 font-weight-3 font-size-4 display-contents color-white">Components</h3>
+                                       <p class="color-white">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Animi assumenda praesentium repellendus soluta temporibus! Architecto distinctio doloribus esse, inventore iste iusto laudantium sapiente.</p>
+                                   </div>
+                               </div>
+                            </div>
                         </div>
-                    {% endfor %}
+
+                    </div>
+
+
+                    <div class="grid-container">
+                        <div class="padding-6 col-12">
+                            <div class="grid-container">
+
+                                {% for component in event.components %}
+
+                                    <button type="submit" class="col-4 left margin-x-2 margin-y-2 margin-buttom-2 padding-3 wp-mrl-component-box" value="{{ component.getId }}" name="component">
+                                        <h5 class="margin-0 padding-0">{{ component.getId }}</h5>
+                                        <small class="margin-0 padding-0">{{ component.getMeta('editor').getData('title')|default(component.getId) }}</small>
+                                    </button>
+
+                                {% endfor %}
+
+                            </div>
+                        </div>
+                    </div>
 
                     <div>
                         <input type="hidden" name="method" value="Compound-insertComponent">
@@ -26,7 +48,6 @@
                         <input type="hidden" name="page" value="{{ event.id }}">
                         <input type="hidden" name="field" value="{{ event.field }}">
                         <input type="hidden" name="template" value="{{ event.template }}">
-                        <button type="submit" class="button button-primary button-large">Create and continue</button>
                     </div>
 
                 </form>

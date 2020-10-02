@@ -30,9 +30,9 @@ class Lexer
      */
     private $entities = [];
     /**
-     * @var Signature
+     * @var Layout
      */
-    private $signature = [];
+    private $Layout = [];
 
     /**
      * @var string[]
@@ -62,9 +62,9 @@ class Lexer
      */
     function __construct($data) {
 
-        $this->signature = new Signature();
+        $this->signature = new Layout();
 
-        if ($data instanceof Signature) {
+        if ($data instanceof Layout) {
             $this->signature = clone $data;
         }
 
@@ -215,11 +215,11 @@ class Lexer
     }
 
     /**
-     * @return Signature
+     * @return Layout
      */
     public function parse () {
 
-        $Signature = new Signature();
+        $Layout = new Layout();
 
         # We get the code from the shortscode
         preg_match_all('#\[Compound(.*)\](\s|)(.+?)\[/Compound\]#is', $this->fragment, $fragment);
@@ -228,7 +228,7 @@ class Lexer
         # At the first stage, the token
         # is not ready for processing as an object,
         # it is just a line ready for parsing and lexical analysis.
-        $pre_lexicon = (string) str_replace(
+        $source = (string) str_replace(
             ['“', '”'],
             ['"', '"'],
             $this->__protection(
@@ -244,7 +244,7 @@ class Lexer
         );
 
         # We perform the primary lexical parsing of code on an attached object
-        $lexicon = (array) $this->__xml_to_object($pre_lexicon);
+        $lexicon = (array) $this->__xml_to_object($source);
 
         if (isset($lexicon[0])) {
 
@@ -270,9 +270,9 @@ class Lexer
                             $props = $iterator->getAttributes();
                             $next = (object) $iterator->getNext();
 
-                            $Signature->markupTemplate($id, $name);
+                            $Layout->markupTemplate($id, $name);
 
-                            $Signature->setLayoutProps((string) $id, (array) $props);
+                            $Layout->setLayoutProps((string) $id, (array) $props);
 
                             if (is_array($next) or is_object($next)) {
 
@@ -292,7 +292,7 @@ class Lexer
                                                 $field_name = $nesting->getAttribute('name');
 
                                                 if ($field_name and $package) {
-                                                    $Signature->setLayoutField($id, $field_name, $package);
+                                                    $Layout->setLayoutField($id, $field_name, $package);
                                                 }
 
                                             }
@@ -312,9 +312,9 @@ class Lexer
 
             }
 
-            $this->signature = $Signature;
+            $this->signature = $Layout;
 
-            return $Signature;
+            return $Layout;
 
         }
 
@@ -323,7 +323,7 @@ class Lexer
     }
 
     /**
-     * @return Signature
+     * @return Layout
      */
     public function getSignature()
     {
@@ -349,15 +349,15 @@ class Lexer
         // TODO IT;
 
         # Get signature
-        $signature = $this->getSignature();
+        $Layout = $this->getSignature();
 
-        if ($signature instanceof Signature) {
+        if ($Layout instanceof Layout) {
 
             $this->source_code = "";
 
             $this->__xml_add_open_tag('root', (object) array());
 
-            $Layout = $signature->getLayout();
+            $Layout = $Layout->getLayout();
             
             if (is_array($Layout) or is_object($Layout)) {
                 foreach ($Layout as $index => $template) {
