@@ -25,7 +25,7 @@ class TagsManager extends Iterator
      * @param \Mirele\Compound\Tag $Tag
      * @throws \Exception
      */
-    static public function add (Tag $Tag) {
+    public static function add (Tag $Tag) {
 
         if ($Tag instanceof Tag) {
 
@@ -48,7 +48,7 @@ class TagsManager extends Iterator
      * @param array $props
      * @return false
      */
-    static public function call (string $id, array $props) {
+    public static function call (string $id, array $props) {
         if (isset(self::$store[$id])) {
             return self::$store[$id];
         }
@@ -59,7 +59,7 @@ class TagsManager extends Iterator
      * @param string $id
      * @return false|mixed
      */
-    static public function get (string $id) {
+    public static function get (string $id) {
         if (isset(self::$store[$id])) {
             return self::$store[$id];
         }

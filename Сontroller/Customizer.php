@@ -61,7 +61,7 @@ class Customizer extends Iterator
      * @param Option $Option
      * @throws \Exception
      */
-    static public function add (Option $Option) {
+    public static function add (Option $Option) {
 
         if ($Option instanceof Option) {
 
@@ -94,7 +94,7 @@ class Customizer extends Iterator
      * @param array $props
      * @return false|object
      */
-    static public function call (string $namespace, string $name, array $props) {
+    public static function call (string $namespace, string $name, array $props) {
 
         $namespace = self::_namespace($namespace);
         $namespace = (new Stringer($namespace))::format(self::$alias);
@@ -116,7 +116,7 @@ class Customizer extends Iterator
      * @param array $props
      * @return false|string|string|string[]
      */
-    static public function get (string $namespace, string $name, array $props) {
+    public static function get (string $namespace, string $name, array $props) {
 
         $namespace = self::_namespace($namespace);
         $namespace = (new Stringer($namespace))::format(self::$alias);
@@ -142,7 +142,7 @@ class Customizer extends Iterator
      * @param string $namespace
      * @return false|object
      */
-    static public function all ($namespace='{GLOBAL}') {
+    public static function all ($namespace='{GLOBAL}') {
 
         $namespace = self::_namespace($namespace);
         $namespace = (new Stringer($namespace))::format(self::$alias);
@@ -157,7 +157,7 @@ class Customizer extends Iterator
     /**
      * @return array
      */
-    static public function namespaces () {
+    public static function namespaces () {
         return array_keys(self::$options);
     }
 

@@ -20,12 +20,13 @@ class Store extends Iterator
      */
     private static $store = [];
     private static $alias = [];
+    private static $families = [];
 
     /**
      * @param \Mirele\Compound\Component $Component
      * @throws \Exception
      */
-    static public function add (Component $Component) {
+    public static function add (Component $Component) {
 
         if ($Component instanceof Component) {
 
@@ -33,6 +34,9 @@ class Store extends Iterator
                 if ($Component->getAlias()) {
                     self::$alias[$Component->getAlias()] = $Component->getId();
                 }
+
+                $parent = $Component->getParent() ? $Component->getParent() : 'global';
+                self::$families[$parent][] = $Component->getId();
                 self::$store[$Component->getId()] = $Component;
             } else {
                 throw new \Exception((new Stringer("The component with identifier {ID} already exists"))::format([
@@ -47,11 +51,23 @@ class Store extends Iterator
     }
 
     /**
+     * @return array
+     */
+    public static function getFamilies($sort=false)
+    {
+        $sort = self::$families;
+        if ($sort) {
+            ksort($sort);
+        }
+        return $sort;
+    }
+
+    /**
      * @param string $id
      * @param array $props
      * @return false
      */
-    static public function call (string $id, array $props) {
+    public static function call (string $id, array $props) {
 
         $id = str_replace(array_keys(self::$alias), array_values(self::$alias), $id);
 
@@ -65,7 +81,7 @@ class Store extends Iterator
      * @param string $id
      * @return false|mixed
      */
-    static public function get (string $id) {
+    public static function get (string $id) {
 
         $id = str_replace(array_keys(self::$alias), array_values(self::$alias), $id);
 

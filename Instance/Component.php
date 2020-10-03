@@ -39,6 +39,7 @@ class Component
      * @var
      */
     private $alias;
+    private $parent;
 
     /**
      * is triggered when invoking inaccessible methods in an object context.
@@ -133,6 +134,23 @@ class Component
         unset($this->props[$name]);
     }
 
+    /**
+     * @return mixed
+     */
+    public function getParent()
+    {
+        return $this->parent;
+    }
+
+    /**
+     * @param string $parent
+     * @return Component
+     */
+    public function setParent(string $parent)
+    {
+        $this->parent = $parent;
+        return $this;
+    }
 
     /**
      * @param $alias

@@ -25,7 +25,7 @@ class Constructor extends Iterator
      * @param \Mirele\Compound\Tag $Tag
      * @throws \Exception
      */
-    static public function add (Construction $Construction) {
+    public static function add (Construction $Construction) {
 
         if ($Construction instanceof Construction) {
 
@@ -48,7 +48,7 @@ class Constructor extends Iterator
      * @param array $props
      * @return false
      */
-    static public function call ($id, array $props) {
+    public static function call ($id, array $props) {
         if (isset(self::$store[$id])) {
             return self::$store[$id]->call($props);
         }
@@ -59,7 +59,7 @@ class Constructor extends Iterator
      * @param string $id
      * @return false|mixed
      */
-    static public function get (string $id) {
+    public static function get (string $id) {
         if (isset(self::$store[$id])) {
             return self::$store[$id];
         }

@@ -14,12 +14,12 @@ interface Storage
      * @param $Abstract
      * @return mixed
      */
-    static public function add ($Abstract);
+    public static function add ($Abstract);
 
     /**
      * @param $Abstract
      * @param $Data
      * @return mixed
      */
-    static public function call ($Abstract, $Data);
+    public static function call ($Abstract, $Data);
 }

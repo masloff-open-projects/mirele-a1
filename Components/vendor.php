@@ -33,6 +33,8 @@ include_once 'Abstract/Radios/default.php';
 include_once 'Abstract/Labels/default.php';
 include_once 'Abstract/Unit/default.php';
 
+include_once 'Multi/template.php';
+
 include_once 'Grids/default.php';
 include_once 'Carts/default.php';
 include_once 'Sidebars/default.php';

@@ -1,27 +1,25 @@
-.grid-container
+@for $i from 0 through 12
 
-  @for $i from 0 through 12
+  // em
+  .margin-#{$i}
+    margin: #{$i/4}em !important
 
-    // em
-    .margin-#{$i}
-      margin: #{$i/4}em !important
+  .margin-left-#{$i}
+    margin-left: #{$i/4}em !important
 
-    .margin-left-#{$i}
-      margin-left: #{$i/4}em !important
+  .margin-right-#{$i}
+    margin-right: #{$i/4}em !important
 
-    .margin-right-#{$i}
-      margin-right: #{$i/4}em !important
+  .margin-buttom-#{$i}
+    margin-bottom: #{$i/4}em !important
 
-    .margin-buttom-#{$i}
-      margin-bottom: #{$i/4}em !important
+  .margin-top-#{$i}
+    margin-top: #{$i/4}em !important
 
-    .margin-top-#{$i}
-      margin-top: #{$i/4}em !important
+  .margin-x-#{$i}
+    margin-left: #{$i/4}em !important
+    margin-right: #{$i/4}em !important
 
-    .margin-x-#{$i}
-      margin-left: #{$i/4}em !important
-      margin-right: #{$i/4}em !important
-
-    .margin-y-#{$i}
-      margin-top: #{$i/4}em !important
-      margin-bottom: #{$i/4}em !important
+  .margin-y-#{$i}
+    margin-top: #{$i/4}em !important
+    margin-bottom: #{$i/4}em !important

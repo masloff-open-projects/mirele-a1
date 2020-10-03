@@ -1,59 +1,65 @@
-{# Modal window for inserting a component on a section #}
-
 {% macro render(event) %}
 
-    <div id="modal_insert_component_{{ event.name }}" style="display:none;">
-        <div class="Compound">
+    {% import 'Prototypes/modal/compound_insert.twig' as prototype %}
 
-            {# Modal content #}
-            <div class="CModal ignore">
+    {% macro data(event) %}
 
-                <form action="" method="post">
+        <div class="col-12 margin-0 padding-0 left" id="part-{{ name }}">
+            <h4 class="margin-0 padding-0 left">Cloud of tags</h4>
 
-                    <div class="wp-mrl-tabs">
-                        <div class="components-header">
-                            <div class="grid-container">
-                               <div class="col-12 left">
-                                   <div class="margin-buttom-2 margin-top-2 display-block padding-y-10 padding-x-8">
-                                       <h3 class="margin-0 font-weight-3 font-size-4 display-contents color-white">Components</h3>
-                                       <p class="color-white">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Animi assumenda praesentium repellendus soluta temporibus! Architecto distinctio doloribus esse, inventore iste iusto laudantium sapiente.</p>
-                                   </div>
-                               </div>
-                            </div>
-                        </div>
+            {% for name, components in event.families %}
+                <a href="#part-{{ name }}">{{ name }}</a>
+            {% endfor %}
 
-                    </div>
-
-
-                    <div class="grid-container">
-                        <div class="padding-6 col-12">
-                            <div class="grid-container">
-
-                                {% for component in event.components %}
-
-                                    <button type="submit" class="col-4 left margin-x-2 margin-y-2 margin-buttom-2 padding-3 wp-mrl-component-box" value="{{ component.getId }}" name="component">
-                                        <h5 class="margin-0 padding-0">{{ component.getId }}</h5>
-                                        <small class="margin-0 padding-0">{{ component.getMeta('editor').getData('title')|default(component.getId) }}</small>
-                                    </button>
-
-                                {% endfor %}
-
-                            </div>
-                        </div>
-                    </div>
-
-                    <div>
-                        <input type="hidden" name="method" value="Compound-insertComponent">
-                        <input type="hidden" name="nonce" value="{{ wp.nonce() }}">
-                        <input type="hidden" name="page" value="{{ event.id }}">
-                        <input type="hidden" name="field" value="{{ event.field }}">
-                        <input type="hidden" name="template" value="{{ event.template }}">
-                    </div>
-
-                </form>
-
-            </div>
+            <hr>
         </div>
-    </div>
+
+        {% for name, components in event.families %}
+
+            <div class="col-12 margin-0 padding-0 left" id="part-{{ name }}">
+                <h4 class="margin-0 padding-0 left">{{ name|capitalize }}</h4>
+            </div>
+
+            {% for id in components %}
+
+                <button type="submit" class="col-4 left margin-x-2 margin-y-2 margin-buttom-2 padding-3 wp-mrl-component-box" value="{{ event.components[id].getId }}" name="component">
+                    <h5 class="margin-0 padding-0">{{ event.components[id].getId }}</h5>
+                    <small class="margin-0 padding-0">{{ event.components[id].getMeta('editor').getData('title')|default(event.components[id].getId) }}</small>
+                </button>
+
+            {% endfor %}
+
+            <div class="col-12 margin-0 padding-0 left">
+                <hr>
+            </div>
+
+        {% endfor %}
+
+        <!-- Service inputs -->
+        <div class="hidden-inputs">
+            <input type="hidden" name="method" value="Compound-insertComponent">
+            <input type="hidden" name="nonce" value="{{ wp.nonce() }}">
+            <input type="hidden" name="page" value="{{ event.id }}">
+            <input type="hidden" name="field" value="{{ event.field }}">
+            <input type="hidden" name="template" value="{{ event.template }}">
+        </div>
+
+    {% endmacro %}
+
+    {{ prototype.render({
+        id: 'modal_insert_component_' ~ event.name,
+        data: _self.data(event),
+        form: {
+            action: '',
+            method: 'POST',
+            class: '',
+            id: ''
+        },
+        header: {
+            title: 'Component',
+            description: 'Use a component to display any material on the page or to interact with the site or other content. You can change each component',
+            class: 'wp-mrl-green-header'
+        }
+    }) }}
 
 {% endmacro %}

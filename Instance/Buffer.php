@@ -10,6 +10,8 @@ namespace Mirele\Framework;
  */
 class Buffer
 {
+    public $gerPage;
+    public $setNamespace;
     /**
      * @var array
      */
@@ -80,7 +82,6 @@ class Buffer
             return isset($this->buffer[$namespace]) ? join($separator, $this->buffer[$namespace]) : false;
         }
     }
-
 
     /**
      * @return array

@@ -24,7 +24,7 @@ class Grider extends Iterator
      * @param Template $Template
      * @throws \Exception
      */
-    static public function add (Template $Template) {
+    public static function add (Template $Template) {
 
         if ($Template instanceof Template) {
 
@@ -53,7 +53,7 @@ class Grider extends Iterator
      * @param bool $np
      * @return false
      */
-    static public function call (string $id, array $props, $np=true) {
+    public static function call (string $id, array $props, $np=true) {
 
         $id = str_replace(array_keys(self::$alias), array_values(self::$alias), $id);
 
@@ -67,7 +67,7 @@ class Grider extends Iterator
      * @param string $id
      * @return false|mixed
      */
-    static public function get (string $id) {
+    public static function get (string $id) {
 
         $id = str_replace(array_keys(self::$alias), array_values(self::$alias), $id);
 

@@ -27,7 +27,7 @@ class Inter
     /**
      * @return float|int
      */
-    static public function ABS () {
+    public static function ABS () {
         return abs(self::$int);
     }
 }

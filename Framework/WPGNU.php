@@ -300,7 +300,7 @@ class WPGNU
         return $class;
     }
 
-    static public function Table () {
+    public static function Table () {
         return self::_WPTable();
     }
 

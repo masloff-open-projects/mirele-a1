@@ -244,7 +244,7 @@ class MFile
      * @return string
      */
 
-    static public function getPath ()
+    public static function getPath ()
     {
         return '';
     }

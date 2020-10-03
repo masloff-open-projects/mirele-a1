@@ -105,7 +105,6 @@ if (is_object($post)) {
 
         }
 
-
         \Mirele\TWIG::Render('Main/canvas', [
             'markup' => $Buffer->toString('*', '')
         ]);

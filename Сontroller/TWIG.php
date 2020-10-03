@@ -153,7 +153,7 @@ class TWIG
     /**
      *
      */
-    static public function init () {
+    public static function init () {
 
         self::$twig = new \Twig\Environment(new \Twig\Loader\FilesystemLoader(COMPOUND_TWIG_DIR), [
             'cache' => false
@@ -256,7 +256,7 @@ class TWIG
      * @param false $noPrint
      * @return false
      */
-    static public function Render ($template="main", $params=Array(), $noPrint=false) {
+    public static function Render ($template="main", $params=Array(), $noPrint=false) {
 
         # If TWIG is not already
         if (!self::$ready) {
