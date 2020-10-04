@@ -199,7 +199,7 @@ define('MIRELE_URLS', [
 define('MIRELE_URL_DOC', 'https://irtex-mirele.github.io');
 
 # Show errors
-if (wp_doing_ajax() == false and true) {
+if (wp_doing_ajax() == true and true) {
     ini_set('error_reporting', E_ALL);
     ini_set('display_errors', 1);
     ini_set('display_startup_errors', 1);
@@ -264,6 +264,7 @@ if (wp_doing_ajax() === false) {
     include_once 'Patterns/vendor.php';
     include_once 'Prototypes/vendor.php';
     include_once 'Components/vendor.php';
+    include_once 'Templates/vendor.php';
 
     # Main core
     include_once 'Framework/WPGNU.php';
@@ -434,6 +435,7 @@ add_action(
 
     wp_register_script('compound', MIRELE_SOURCE_DIR . '/js/compound.min.js', array('babel', 'jquery', 'vue'), '', true);
     wp_register_script('compound_form_props', MIRELE_SOURCE_DIR . '/js/compound/form/props.min.js', array('babel', 'jquery', 'vue'), '', true);
+    wp_register_script('compound_form_createComponent', MIRELE_SOURCE_DIR . '/js/compound/form/createComponent.min.js', array('babel', 'jquery', 'vue'), '', true);
 
     wp_register_script('woocommerceui_product', MIRELE_SOURCE_DIR . '/js/woocommerceui_product.min.js', array('babel', 'jquery', 'vue', 'mireleapi'), '', true);
     wp_register_script('woocommerceui_products', MIRELE_SOURCE_DIR . '/js/woocommerceui_products.min.js', array('babel', 'jquery', 'vue', 'mireleapi'), '', true);
@@ -681,8 +683,9 @@ add_action(
     wp_enqueue_script('jquery-ui-draggable');
     wp_enqueue_script('jquery-ui-droppable');
     wp_enqueue_script('compound_form_props');
+    wp_enqueue_script('compound_form_createComponent');
 
-    wp_enqueue_style('fontAwesome');
+//    wp_enqueue_style('fontAwesome');
     wp_enqueue_style('wp-color-picker');
     wp_enqueue_style('admin_style');
 

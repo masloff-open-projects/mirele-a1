@@ -40,6 +40,7 @@ require_once 'AJAX/wp-admin/Compound-getProps.php';
 require_once 'AJAX/wp-admin/Compound-updateProps.php';
 require_once 'AJAX/wp-admin/Compound-removeTemplate.php';
 require_once 'AJAX/wp-admin/Compound-sort.php';
+require_once 'AJAX/wp-admin/Compound-getMarkup.php';
 
 // REST
 require_once 'REST/options/get.php';

@@ -37,9 +37,17 @@ new Interface ({
     vue: {
         delimiters: ['{', '}'],
         el: "#compound-editor-body",
-        data: {},
-        mounted: Event => {
-            jQuery("#compound-editor-body").sortable({
+        data: {
+            markup: []
+        },
+        mounted: function (Event) {
+
+            this.__updateMarkup();
+
+            // jQuery(".jquery-selectable-compound").selectable();
+
+            jQuery(".jquery-sortable-compound").sortable({
+                tolerance: "pointer",
                 placeholder: "wp-mrl-placeholder",
                 connectWith: '#compound-editor-trash-area',
                 helper: 'clone',
@@ -80,7 +88,7 @@ new Interface ({
                 activeClass: 'wp-mrl-trash-active',
                 hoverClass: 'wp-mrl-trash-hover',
                 drop: function(event, ui) {
-                    
+
                     const $template = jQuery(ui.helper.context).attr('data-id');
                     const $id = jQuery(ui.helper.context).attr('data-page-id');
 
@@ -96,10 +104,48 @@ new Interface ({
 
         },
         methods: {
-            
+
             editProps: function (event) {
                 const $form = Project.import('@form-props').vue;
-                return $form.open(event);
+                return $form.open(Object.assign({
+                    page: parseInt(jQuery('#compound-editor-body').attr('data-page-id'))
+                }, event));
+            },
+
+            insertComponent: function (event) {
+                const $form = Project.import('@form-createComponent').vue;
+                return $form.open(Object.assign({
+                    page: parseInt(jQuery('#compound-editor-body').attr('data-page-id'))
+                }, event));
+            },
+
+            __metaFieldClass: function (event) {
+                const $event = event||{};
+                const $editor = $event.editor||{};
+                return `wp-mrl-field col-${$editor.col||12}`;
+            },
+
+            __updateMarkup: function (event) {
+
+                this.markup = [];
+
+                // Create main request
+                const Request = new WPAjax('Compound-getMarkup', {
+                    page: parseInt(jQuery('#compound-editor-body').attr('data-page-id'))
+                });
+
+                Request.then(Event => {
+                    for (const [id, template] of Object.entries(Event.data.data)) {
+                        this.markup.push({
+                            name: template.props.name || 'default',
+                            id: id,
+                            fields: template.fields,
+                            props: template.props
+                        });
+                    }
+                });
+
+
             }
 
         }

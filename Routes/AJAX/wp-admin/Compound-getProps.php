@@ -20,10 +20,10 @@ Router::post('/ajax_endpoint_v1/Compound-getProps', function () {
             'template'    => (MIRELE_POST)['template'],
             'component'   => (MIRELE_POST)['component'],
             'field'       => (MIRELE_POST)['field'],
-            'id'          => (MIRELE_POST)['id'],
+            'page'        => (MIRELE_POST)['page'],
         );
 
-        $wp_page = (object) get_post($props['id']);
+        $wp_page = (object) get_post($props['page']);
 
         $Lexer = new Lexer($wp_page->post_content);
         $lex = $Lexer->parse();

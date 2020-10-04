@@ -47,13 +47,14 @@
     {% endmacro %}
 
     {{ prototype.render({
-        id: 'modal_insert_component_' ~ event.name,
+        id: 'modal_insert_component',
         data: _self.data(event),
         form: {
             action: '',
             method: 'POST',
             class: '',
-            id: ''
+            id: '',
+            attr: '@submit.prevent="submit"'
         },
         header: {
             title: 'Component',

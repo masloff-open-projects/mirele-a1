@@ -10,6 +10,7 @@
 {#     method|post: method attribute for form #}
 {#     id: id attribute for form #}
 {#     class: class attribute for form #}
+{#     attr: - #}
 {#   header: #}
 {#     title|'Insert': title of header #}
 {#     description: description of header #}
@@ -23,7 +24,7 @@
             <div class="{{ (event.__ignore_padding|default(true) == true ? 'ignore CModal' : 'CModal') ~ event.__content_class }}">
 
                 <!-- Form content -->
-                <form action="{{ event.form.action }}" method="{{ event.form.method }}" role="form" id="{{ event.form.id }}" class="{{ event.form.class }}">
+                    <form action="{{ event.form.action }}" method="{{ event.form.method }}" role="form" id="{{ event.form.id }}" class="{{ event.form.class }}" {{ event.form.attr }}>
 
                     <!-- Header -->
                     <div class="left margin-buttom-2 margin-top-0 display-block padding-y-10 padding-x-8 {{ event.header.class|default('wp-mrl-default-header') }}">
