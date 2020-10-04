@@ -42,4 +42,10 @@ Actual map of the file structure image: github.com/irtex-web/mirele-a1/blob/mast
 
 Mirele's development path is the responsibility of the road map.
 
-[Map here]
+#### Implementation of the road map 
+
+| Date of event | Event |
+|---|---|
+| 03.10.2020 | Approval of the first minimal working version of the Compound page engine |
+|  |  |
+|  |  |
