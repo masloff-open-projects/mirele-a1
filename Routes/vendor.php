@@ -42,6 +42,7 @@ require_once 'AJAX/wp-admin/Compound-removeTemplate.php';
 require_once 'AJAX/wp-admin/Compound-sort.php';
 require_once 'AJAX/wp-admin/Compound-getMarkup.php';
 require_once 'AJAX/wp-admin/Compound-insertComponent.php';
+require_once 'AJAX/wp-admin/Compound-insertTemplate.php';
 
 // REST
 require_once 'REST/options/get.php';

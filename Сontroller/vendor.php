@@ -23,7 +23,6 @@
  * @template vendor
  */
 
-include_once 'Lexer/Converter.php';
 include_once 'Logger.php';
 include_once 'TWIG.php';
 include_once 'Customizer.php';
