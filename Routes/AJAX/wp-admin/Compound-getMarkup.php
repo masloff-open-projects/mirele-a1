@@ -6,9 +6,8 @@ use Mirele\Compound\Template;
 use Mirele\Router;
 use Mirele\Compound\Lexer;
 use Mirele\Compound\Tag;
-use Mirele\Compound\Store;
-use Mirele\Compound\Component;
 use Mirele\Compound\Config;
+use Mirele\Compound\Layout;
 
 
 # ...
@@ -29,58 +28,60 @@ Router::post('/ajax_endpoint_v1/Compound-getMarkup', function () {
         $Lexer = new Lexer($wp_page->post_content);
         $lex = $Lexer->parse();
 
-        foreach ($lex->getLayout() as $ID => $Template) {
+        if ((object)$lex and $lex instanceof Layout) {
+            foreach ($lex->getLayout() as $ID => $Template) {
 
-            $template = Grider::get($Template->props->name);
+                $template = Grider::get($Template->props->name);
 
-            if ($template instanceof Template) {
+                if ($template instanceof Template) {
 
-                $fields = $template->getFields();
+                    $fields = $template->getFields();
 
-                foreach ($fields as $name => $field) {
+                    foreach ($fields as $name => $field) {
 
-                    if ($field instanceof Field) {
+                        if ($field instanceof Field) {
 
-                        $meta['editor'] = $field->getMeta('editor');
+                            $meta['editor'] = $field->getMeta('editor');
 
-                        if ($meta['editor'] instanceof Config) {
+                            if ($meta['editor'] instanceof Config) {
 
-                            $Markup[$ID]['fields'][$name]['meta']['editor'] = $meta['editor']->all();
+                                $Markup[$ID]['fields'][$name]['meta']['editor'] = $meta['editor']->all();
 
-                        }
-
-                        if (isset($Template->fields[$name])) {
-
-                            foreach ($Template->fields[$name] as $tag) {
-                                if ($tag instanceof Tag) {
-                                    $Markup[$ID]['fields'][$name]['tags'][] = (object) [
-                                        'tag' => $tag->getTagName(),
-                                        'essence' => $tag->getEssence(),
-                                        'attributes' => $tag->getAttributes()
-                                    ];
-                                }
                             }
 
+                            if (isset($Template->fields[$name])) {
+
+                                foreach ($Template->fields[$name] as $tag) {
+                                    if ($tag instanceof Tag) {
+                                        $Markup[$ID]['fields'][$name]['tags'][] = (object) [
+                                            'tag' => $tag->getTagName(),
+                                            'essence' => $tag->getEssence(),
+                                            'attributes' => $tag->getAttributes()
+                                        ];
+                                    }
+                                }
+
+                            }
+
+
+                            $Markup[$ID]['fields'][$name]['field'] = (object) [
+                                'id' => $field->getId(),
+                                'name' => $field->getName(),
+                                'props' => $field->getProps(),
+                                'page' => $props['page']
+                            ];
+
                         }
-
-
-                        $Markup[$ID]['fields'][$name]['field'] = (object) [
-                            'id' => $field->getId(),
-                            'name' => $field->getName(),
-                            'props' => $field->getProps(),
-                            'page' => $props['page']
-                        ];
 
                     }
 
+
+                    # Get props
+                    $Markup[$ID]['props'] = $Template->props;
+
                 }
 
-
-                # Get props
-                $Markup[$ID]['props'] = $Template->props;
-
             }
-
         }
 
         wp_send_json_error($Markup);

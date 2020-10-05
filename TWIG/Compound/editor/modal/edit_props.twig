@@ -5,33 +5,51 @@
     <div id="modal_edit_props" style="display:none;">
         <div class="Compound">
 
-            {# Modal content #}
-            <div class="CModal">
-                <form action="" method="post" id="modal_edit_props_form" @submit.prevent="submit">
+            {% import 'Prototypes/spinner/compound.twig' as prototype %}
 
-                    <div id="component-meta" class="left" v-if="meta">
-                        <h3 class="title" v-if="meta.title">{meta.title}</h3>
-                        <p class="paragraph" v-if="meta.description">{meta.description}</p>
-                    </div>
+            <div class="main" data-component="spinner" data-namespace="modal-props">
 
-                    <div id="component-body">
-                        <div class="field-box" v-for="field in fields">
-                            <div class="field-title-box left">
-                                <h4 class="title">{field.name}</h4>
-                                <small class="small">Lorem ipsum dolor sit.</small>
-                            </div>
+                {{ prototype.render({
+                    title: 'Preparation of components',
+                    description: "Wait a few seconds, your component parameters are almost ready for editing. Usually this process does not take longer than 5 seconds, but if it takes longer than 1 minute, you should ask your system administrator to check the functionality of the website or contact technical support."
+                }) }}
 
-                            <div>
-                                <input type="text" :value="field.value" :name="field.name" v-model="props[field.name]">
+            </div>
+
+            <div class="hidden" data-component="body" data-namespace="modal-props">
+
+                {# Modal content #}
+                <div class="CModal">
+                    <form action="" method="post" id="modal_edit_props_form" @submit.prevent="submit">
+
+                        <div id="component-meta" class="left" v-if="meta">
+                            <h3 class="title" v-if="meta.title">{meta.title}</h3>
+                            <p class="paragraph" v-if="meta.description">{meta.description}</p>
+                        </div>
+
+                        <div id="component-body">
+                            <div class="field-box" v-for="field in fields">
+                                <div class="field-title-box left">
+                                    <h4 class="title">{field.name}</h4>
+                                    <small class="small">Lorem ipsum dolor sit.</small>
+                                </div>
+
+                                <div>
+                                    <input type="text" :value="field.value" :name="field.name" v-model="props[field.name]">
+                                </div>
                             </div>
                         </div>
-                    </div>
 
-                    <button type="submit" class="button button-primary button-large" value="update" name="submit" @click="type='update'">Save and update</button>
-                    <button type="submit" class="button button-large" value="remove" name="submit" @click="type='remove'">Remove</button>
+                        <div v-if="fields.length||[] > 0">
+                            <button type="submit" class="button button-primary button-large" value="update" name="submit" @click="type='update'">Save and update</button>
+                            <button type="submit" class="button button-large" value="remove" name="submit" @click="type='remove'">Remove</button>
+                        </div>
 
-                </form>
+                    </form>
+                </div>
+
             </div>
+
         </div>
     </div>
 

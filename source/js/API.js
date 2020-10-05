@@ -9,6 +9,7 @@ class __project {
     export (name='', object) {
         if (!(name in this.$export)) {
             this.$export[name] = object;
+            return object;
         } else {
             throw `Component '${name}' has already been exported and cannot be overwritten.`;
         }
@@ -25,7 +26,6 @@ class __project {
 }
 
 const Project = new __project();
-
 
 class WPAjax {
     constructor (method='/', data={}) {

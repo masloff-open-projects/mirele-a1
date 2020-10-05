@@ -10,27 +10,33 @@ Project.export('@form-createComponent', new Interface ({
         delimiters: ['{', '}'],
         el: "#modal_insert_component",
         data: {
-
+            __editor: CompoundEditor.vue || Object,
+            form: [],
         },
         mounted: Event => {},
         methods: {
             open: function (event) {
-
                 this.event = event;
-
-                // Load modal
-                const $modal = jQuery('#modal_insert_component');
-
                 tb_show('Insert component', '/?TB_inline&inlineId=modal_insert_component&width=600&height=700');
-
             },
 
+            create: function (event) {
+
+                const Request = new WPAjax('Compound-insertComponent', Object.assign(this.event, event, {
+                    page: $page
+                }));
+
+                Request.then(Event => {
+                    this.__editor.__updateMarkup().then(Event => {
+                        tb_remove();
+                    });
+                })
+
+            },
+            
             submit: function (event) {
-                alert(4);
+                
             }
         }
-    },
-    ready: function (Event, $) {
-
     }
 }));

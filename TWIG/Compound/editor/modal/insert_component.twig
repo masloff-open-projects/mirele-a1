@@ -22,7 +22,7 @@
 
             {% for id in components %}
 
-                <button type="submit" class="col-4 left margin-x-2 margin-y-2 margin-buttom-2 padding-3 wp-mrl-component-box" value="{{ event.components[id].getId }}" name="component">
+                <button type="submit" class="col-4 left margin-x-2 margin-y-2 margin-buttom-2 padding-3 wp-mrl-component-box" @click="create({component: '{{ event.components[id].getId }}'})">
                     <h5 class="margin-0 padding-0">{{ event.components[id].getId }}</h5>
                     <small class="margin-0 padding-0">{{ event.components[id].getMeta('editor').getData('title')|default(event.components[id].getId) }}</small>
                 </button>
@@ -35,15 +35,6 @@
 
         {% endfor %}
 
-        <!-- Service inputs -->
-        <div class="hidden-inputs">
-            <input type="hidden" name="method" value="Compound-insertComponent">
-            <input type="hidden" name="nonce" value="{{ wp.nonce() }}">
-            <input type="hidden" name="page" value="{{ event.id }}">
-            <input type="hidden" name="field" value="{{ event.field }}">
-            <input type="hidden" name="template" value="{{ event.template }}">
-        </div>
-
     {% endmacro %}
 
     {{ prototype.render({
@@ -54,7 +45,7 @@
             method: 'POST',
             class: '',
             id: '',
-            attr: '@submit.prevent="submit"'
+            attr: '@submit.prevent=\'submit\''
         },
         header: {
             title: 'Component',

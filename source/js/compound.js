@@ -26,7 +26,9 @@
 
 "use strict";
 
-new Interface ({
+const $page = parseInt(jQuery('meta[name="page"]').attr('content'));
+
+const CompoundEditor = Project.export('editor', new Interface ({
     requires: {
         vue: true,
         jquery: true
@@ -42,115 +44,149 @@ new Interface ({
         },
         mounted: function (Event) {
 
-            this.__updateMarkup();
+            this.__updateMarkup().then(Data => {
 
-            // jQuery(".jquery-selectable-compound").selectable();
+                jQuery('[data-component="body"][data-namespace="editor"]').removeClass('hidden');
+                jQuery('[data-component="spinner"][data-namespace="editor"]').addClass('hidden');
 
-            jQuery(".jquery-sortable-compound").sortable({
-                tolerance: "pointer",
-                placeholder: "wp-mrl-placeholder",
-                connectWith: '#compound-editor-trash-area',
-                helper: 'clone',
-                // revert: true,
-                opacity: 0.5,
-                cursor: "move",
+                jQuery('[data-behavior="sortable"]').sortable({
 
-                update: function(event, ui) {
-                    //Run this code whenever an item is dragged and dropped out of this list
-                    var order = jQuery(this).sortable('serialize');
-                },
-                start: function(event, ui) {
-                    // jQuery("#compound-editor-trash-area").slideDown('fast');
-                },
-                stop: function(event, ui) {
+                    tolerance: "pointer",
+                    placeholder: "wp-mrl-placeholder",
+                    connectWith: jQuery('[data-behavior="droppable"][data-namespace="editor"]'),
+                    helper: 'clone',
+                    opacity: 0.5,
+                    cursor: "move",
+                    forcePlaceholderSize: true,
+                    revert: 80,
 
-                    const $page = jQuery("#compound-editor-body").attr('data-page-id');
-                    var $order = [];
-                    for (const [index, element] of Object.entries(jQuery("#compound-editor-body > div"))) {
-                        const $id = jQuery(element).attr('data-id');
-                        if ($id) {
-                            $order.push($id);
+                    update: function(event, ui) {
+
+                        var $order = [];
+
+                        for (const [index, element] of Object.entries(jQuery('[data-component="field"][data-namespace="editor"]'))) {
+                            const $id = jQuery(element).attr('data-id');
+                            if ($id) {
+                                $order.push($id);
+                            }
                         }
+
+                        const Request = new WPAjax('Compound-sort', {
+                            page: $page,
+                            order: $order
+                        });
+
+                    },
+                    start: (event, ui) => {
+
+                        jQuery('[data-role="trash"][data-namespace="editor"]').removeClass('hidden');
+                        this.__renderDroppable();
+                        this.__renderPlaceholder(ui);
+
+                    },
+                    stop: (event, ui) => {
+
+                        jQuery('[data-role="trash"][data-namespace="editor"]').addClass('hidden');
+
                     }
+                });
 
-                    const Request = new WPAjax('Compound-sort', {
-                        page: $page,
-                        order: $order
-                    });
+            }).catch(Data => {
 
-                    // jQuery("#compound-editor-trash-area").slideUp('fast');
-                }
+                jQuery('[data-component="error"][data-namespace="editor"]').removeClass('hidden');
+                jQuery('[data-component="spinner"][data-namespace="editor"]').addClass('hidden');
+
             });
-            // jQuery("#compound-editor-body").disableSelection();
 
-            jQuery("#compound-editor-trash-area").droppable({
-                accept: '#compound-editor-body > div',
-                activeClass: 'wp-mrl-trash-active',
-                hoverClass: 'wp-mrl-trash-hover',
-                drop: function(event, ui) {
-
-                    const $template = jQuery(ui.helper.context).attr('data-id');
-                    const $id = jQuery(ui.helper.context).attr('data-page-id');
-
-                    const Request = new WPAjax('Compound-removeTemplate', {
-                        id: $id,
-                        template: $template
-                    });
-
-                    ui.draggable.remove();
-
-                }
-            });
 
         },
         methods: {
 
             editProps: function (event) {
                 const $form = Project.import('@form-props').vue;
+                $form.__editor = this;
                 return $form.open(Object.assign({
-                    page: parseInt(jQuery('#compound-editor-body').attr('data-page-id'))
+                    page: $page
                 }, event));
             },
 
             insertComponent: function (event) {
                 const $form = Project.import('@form-createComponent').vue;
+                $form.__editor = this;
                 return $form.open(Object.assign({
-                    page: parseInt(jQuery('#compound-editor-body').attr('data-page-id'))
+                    page: $page,
                 }, event));
             },
 
-            __metaFieldClass: function (event) {
+            __metaFieldClass__: function (event) {
                 const $event = event||{};
                 const $editor = $event.editor||{};
                 return `wp-mrl-field col-${$editor.col||12}`;
             },
 
             __updateMarkup: function (event) {
+                return new Promise((resolve, reject) => {
 
-                this.markup = [];
+                    // Create main request
+                    const Request = new WPAjax('Compound-getMarkup', {
+                        page: $page
+                    });
 
-                // Create main request
-                const Request = new WPAjax('Compound-getMarkup', {
-                    page: parseInt(jQuery('#compound-editor-body').attr('data-page-id'))
+                    Request.then(Event => {
+
+                        var $buffer = [];
+
+                        for (const [id, template] of Object.entries(Event.data.data)) {
+                            $buffer.push({
+                                name: template.props.name || 'default',
+                                id: id,
+                                fields: template.fields,
+                                props: template.props
+                            });
+                        }
+
+                        this.markup = $buffer;
+
+                        // Resolve
+                        resolve(Event.data.data);
+
+                    }).catch(Event => {
+
+                        // Reject
+                        reject(Event);
+
+                    });
                 });
+            },
 
-                Request.then(Event => {
-                    for (const [id, template] of Object.entries(Event.data.data)) {
-                        this.markup.push({
-                            name: template.props.name || 'default',
-                            id: id,
-                            fields: template.fields,
-                            props: template.props
+            __renderDroppable: function (event) {
+                return jQuery('[data-behavior="droppable"]').droppable({
+                    accept: jQuery('[data-component="field"][data-namespace="editor"]'),
+                    activeClass: 'wp-mrl-trash-active',
+                    hoverClass: 'wp-mrl-trash-hover',
+
+                    drop: function(event, ui) {
+
+                        const $template = jQuery(ui.helper.context).attr('data-id');
+                        const $id = jQuery(ui.helper.context).attr('data-page-id');
+
+                        const Request = new WPAjax('Compound-removeTemplate', {
+                            id: $id,
+                            template: $template
                         });
+
+                        ui.draggable.remove();
+
                     }
                 });
+            },
 
-
+            __renderPlaceholder: function (event) {
+                return event.placeholder.height(event.item.height());
             }
-
         }
     },
     ready: function (Event, $) {
 
     }
-});
+}));

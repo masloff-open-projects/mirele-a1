@@ -10,6 +10,7 @@ Project.export('@form-props', new Interface ({
         delimiters: ['{', '}'],
         el: "#modal_edit_props",
         data: {
+            __editor: CompoundEditor.vue || Object,
             meta: {},
             fields: [],
             component: [],
@@ -34,14 +35,20 @@ Project.export('@form-props', new Interface ({
                 Request.then(Event => {
                     if (Event.data.success === true) {
                         if (typeof Event.data.data.props == 'object') {
+
                             for (const [name, value] of Object.entries(Event.data.data.props)) {
+
                                 this.fields.push({
                                     name: name,
                                     value: value
                                 });
 
                                 this.props[name] = value;
+
                             }
+
+                            jQuery('[data-component="spinner"][data-namespace="modal-props"]').addClass('hidden');
+                            jQuery('[data-component="body"][data-namespace="modal-props"]').removeClass('hidden');
                         }
 
                         if (typeof Event.data.data.meta == 'object') {
@@ -55,6 +62,7 @@ Project.export('@form-props', new Interface ({
             },
 
             submit: function (event) {
+
                 const Request = new WPAjax('Compound-updateProps', Object.assign(this.event, {
                     type: this.type
                 }, {
@@ -62,8 +70,11 @@ Project.export('@form-props', new Interface ({
                 }));
 
                 Request.then(Event => {
-                    tb_remove();
-                })
+                    this.__editor.__updateMarkup().then(Event => {
+                        tb_remove();
+                    });
+                });
+
             }
         }
     },

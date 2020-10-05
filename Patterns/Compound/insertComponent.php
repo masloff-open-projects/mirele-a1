@@ -4,11 +4,9 @@
 namespace Mirele\Compound\Patterns;
 
 use Mirele\Compound\Component;
-use \Mirele\Compound\Lexer;
-use \Mirele\Compound\Tag;
-use \Mirele\Compound\Grider;
-use \Mirele\Compound\Template;
-use \Mirele\Compound\Field;
+use Mirele\Compound\Lexer;
+use Mirele\Compound\Store;
+use Mirele\Compound\Tag;
 
 
 class insertComponent
@@ -105,6 +103,47 @@ class insertComponent
         $page      = $this->getPage();
         $field     = $this->getField();
         $template  = $this->getTemplate();
+
+        # Pattern
+        $wp_page = (object) get_post($page);
+        $content = $wp_page->post_content;
+        $lexer = new Lexer($content);
+
+        $lexer->parse();
+        $root = $lexer->getSignature()->getRootInstanceById((string) $template);
+
+        if ($root !== false) {
+
+            $Component = Store::get($component);
+
+            if ($Component instanceof Component) {
+
+                $tag = new Tag();
+                $tag->setTag('component');
+                $tag->setAttributes((array) $Component->getProps());
+                $tag->setAttribute('name', $Component->getAlias() ? $Component->getAlias() : $Component->getId());
+
+                $root->fields[(string) $field] = (array) [$tag];
+
+                $lexer->getSignature()->setRootInstanceById((string) $template, $root);
+
+                $code = $lexer->generateCode();
+
+                wp_update_post(array(
+                    'ID'           => (int) $wp_page->ID,
+                    'post_content' => (string) "[Compound role='editor'] \n $code \n [/Compound]",
+                ));
+
+                update_post_meta(
+                    (int) $wp_page->ID,
+                    '_wp_page_template',
+                    COMPOUND_CANVAS
+                );
+
+            }
+
+        }
+
 
     }
 

@@ -2,8 +2,12 @@
 {% import 'Compound/editor/modal/insert_component.twig' as modal_insert_component %}
 {% import 'Compound/editor/modal/edit_props.twig' as modal_edit_props %}
 {% import 'Compound/editor/modal/edit_template.twig' as modal_edit_template %}
+{% import 'Compound/editor/postbox/meta.twig' as postbox_meta %}
+{% import 'Compound/editor/postbox/meta.twig' as postbox_meta %}
+{% import 'Compound/editor/spinner/editor_preparation.twig' as editor_preparation %}
 
 <div class="wrap">
+
     {{ modal_insert_template.render({
         id: page.ID,
         templates: store.templates
@@ -33,7 +37,6 @@
         <div id="post-body" class="metabox-holder columns-2">
 
             <div id="post-body-content" style="position: relative;">
-
                 <div id="titlediv">
                     <div id="titlewrap">
                         <input type="text" name="post_title" size="30" value="{{ page.post_title|default(page.post_name) }}" id="title" spellcheck="true" autocomplete="off">
@@ -56,136 +59,99 @@
 
                 <div class="root-blocks">
 
-                    <div class="wp-mrl-box">
-                        <h2 class="wp-mrl-header">
-                            <span>Compound Page Editor</span>
-                        </h2>
+                    <meta content="{{ page.ID }}" name="page">
 
-                        <div class="wp-mrl-tools">
+                    <!-- Main (data-behavior="" data-component="editor") -->
+                    <div class="wp-mrl-box" id="compound-editor-body" data-behavior="" data-component="editor">
 
-                            <a href="#TB_inline?width=600&height=700&inlineId=modal_insert_template" title="Insert template" class="thickbox action-link">
-                                <span class="dashicons dashicons-plus wp-mrl-controll-icon"></span>
-                            </a>
+                        <div class="hidden" data-component="body" data-namespace="editor">
 
-                            <a href="#TB_inline?width=800&height=800&inlineId=modal_edit_template" title="Edit page" class="thickbox action-link">
-                                <span class="dashicons dashicons-welcome-write-blog wp-mrl-controll-icon"></span>
-                            </a>
+                            <h2 class="wp-mrl-header">
+                                <span>Compound Page Editor</span>
+                            </h2>
 
-                            <div class="action-link">
-                                <span class="dashicons dashicons-external wp-mrl-controll-icon"></span>
+                            <div class="wp-mrl-tools">
+
+                                <a href="#TB_inline?width=600&height=700&inlineId=modal_insert_template" title="Insert template" class="thickbox action-link">
+                                    <span class="dashicons dashicons-plus wp-mrl-controll-icon"></span>
+                                </a>
+
+                                <a href="#TB_inline?width=800&height=800&inlineId=modal_edit_template" title="Edit page" class="thickbox action-link">
+                                    <span class="dashicons dashicons-welcome-write-blog wp-mrl-controll-icon"></span>
+                                </a>
+
+                                <div class="action-link">
+                                    <span class="dashicons dashicons-external wp-mrl-controll-icon"></span>
+                                </div>
+
                             </div>
 
-                        </div>
+                            <div class="inner" data-behavior="sortable" data-namespace="editor">
 
-                        <div class="inner jquery-sortable-compound" id="compound-editor-body" data-page-id="{{ page.ID }}">
+                                <div class="wp-mrl-block" :data-template="template.name" :data-id="template.id" :data-page-id="template.page" v-for="template in markup" v-if="markup" data-component="field" data-namespace="editor">
+                                    <div class="grid-container jquery-selectable-compound">
 
-                            <div class="wp-mrl-block" :data-template="template.name" :data-id="template.id" :data-page-id="template.page" v-for="template in markup">
-                                <div class="grid-container jquery-selectable-compound">
+                                        <div :class="__metaFieldClass__(field.meta)" v-for="(field, name) in template.fields">
 
-                                    <div :class="__metaFieldClass(field.meta)" v-for="(field, name) in template.fields">
-
-                                        <div v-if="field.tags">
-                                            <div v-for="tag in field.tags">
-                                                <div v-if="tag.tag == 'component'" class="wp-mrl-component left" @click="editProps({field: name, component: tag.attributes.name, template: template.id})">
-                                                    <h5 class="margin-0 padding-0">{tag.attributes.name}</h5>
-                                                    <small>
-                                                        Component
-                                                    </small>
+                                            <div v-if="field.tags">
+                                                <div v-for="tag in field.tags">
+                                                    <div v-if="tag.tag == 'component'" class="wp-mrl-component left" @click="editProps({field: name, component: tag.attributes.name, template: template.id})">
+                                                        <h5 class="margin-0 padding-0">{tag.attributes.name}</h5>
+                                                        <small>
+                                                            Component
+                                                        </small>
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                        <div v-else>
-                                            <div data-field-name="">
-                                                <div class="wp-mrl-insert" @click="insertComponent({})">
-                                                    <span class="dashicons dashicons-plus"></span>
+                                            <div v-else>
+                                                <div :data-field-name="name">
+                                                    <div class="wp-mrl-insert" @click="insertComponent({field: name, template: template.id})">
+                                                        <span class="dashicons dashicons-plus"></span>
+                                                    </div>
                                                 </div>
                                             </div>
+
                                         </div>
 
                                     </div>
-
                                 </div>
+
                             </div>
+
+                            <div class="wp-mrl-trash hidden" data-behavior="droppable" data-namespace="editor" data-role="trash">
+                                <span class="dashicons dashicons-trash"></span>
+                            </div>
+
+                            <a href="#TB_inline?width=600&height=700&inlineId=modal_insert_template" title="Insert template" class="thickbox">
+                                <div class="wp-mrl-add">
+                                    <span class="dashicons dashicons-plus"></span>
+                                </div>
+                            </a>
 
                         </div>
 
-                        <div class="wp-mrl-trash" id="compound-editor-trash-area">
-                            <span class="dashicons dashicons-trash"></span>
+                        <!-- Spinner -->
+                        <div class="main" data-component="spinner" data-namespace="editor">
+                            {{ editor_preparation.render() }}
                         </div>
 
-                        <a href="#TB_inline?width=600&height=700&inlineId=modal_insert_template" title="Insert template" class="thickbox">
-                            <div class="wp-mrl-add">
-                                <span class="dashicons dashicons-plus"></span>
+                        <!-- Error -->
+                        <div class="hidden" data-component="error" data-namespace="editor">
+                            <div class="center padding-24">
+                                <span class="dashicons dashicons-warning"></span>
+                                <h3 class="">Workspace preparation error</h3>
+                                <p class="padding-x-0">An error occurred in preparing the workspace. It is possible that your connection to the site is unreliable, try reloading the page and trying again. If the problem persists, contact your system administrator or write to technical support</p>
                             </div>
-                        </a>
+                        </div>
+
 
                     </div>
 
+
                 </div>
             </div>
-            <div id="postbox-container-1" class="postbox-container">
-                <div id="side-sortables" class="meta-box-sortables ui-sortable" >
-                    <div id="submitdiv" class="postbox">
-                        <div class="postbox-header">
-                            <h2 class="hndle ui-sortable-handle">Publish</h2>
-                        </div>
-                        <div class="inside">
-                            <div class="submitbox" id="submitpost">
-                                <div id="minor-publishing">
-                                    <div style="display: none;">
-                                        <p class="submit">
-                                            <input type="submit" name="save" id="save" class="button" value="Save" />
-                                        </p>
-                                    </div>
 
-                                    <div id="misc-publishing-actions">
-                                        <div class="misc-pub-section misc-pub-post-status">
-                                            Status: <span id="post-status-display"> {{ page.post_status|capitalize }} </span>
-                                        </div>
-
-                                        <div class="misc-pub-section misc-pub-post-status">
-                                            Comment status: <span id="post-visibility-display"> {{ page.comment_status|capitalize }} </span>
-                                        </div>
-
-                                        <div class="misc-pub-section misc-pub-post-status">
-                                            Ping status: <span id="post-visibility-display"> {{ page.ping_status|capitalize }} </span>
-                                        </div>
-
-                                        <div class="misc-pub-section curtime misc-pub-curtime">
-                                            <span id="timestamp">
-                                                Published on: <b>{{ page.post_date|date("M d, Y H:i", false) }}</b>
-                                            </span>
-                                        </div>
-
-                                        <div class="misc-pub-section curtime misc-pub-curtime">
-                                            <span id="timestamp">
-                                                Last edit on: <b>{{ page.post_modified|date("M d, Y H:i", false) }}</b>
-                                            </span>
-                                        </div>
-
-                                    </div>
-                                    <div class="clear"></div>
-                                </div>
-
-                                <div id="major-publishing-actions">
-                                    <div id="delete-action">
-                                        <a class="submitdelete deletion" href="#">Move to Trash</a>
-                                    </div>
-
-                                    <div id="publishing-action">
-                                        <span class="spinner"></span>
-                                        <input name="original_publish" type="hidden" id="original_publish" value="Update" />
-                                        <input type="submit" name="save" id="publish" class="button button-primary button-large" value="Update" />
-                                    </div>
-
-                                    <div class="clear"></div>
-
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            {{ postbox_meta.render({page: page}) }}
 
         </div>
         <br class="clear" />
