@@ -1,479 +1,668 @@
-```.
-├── 404.php
-├── archive-product.php
-├── bbpress
-│   ├── forums.php.lcok
-│   ├── generic.php
-│   └── manager.php
-├── canvas.php
-├── Components
-│   ├── Abstract
-│   │   ├── Buttons
-│   │   │   └── default.php
-│   │   ├── Checkboxs
-│   │   │   └── default.php
-│   │   ├── Inputs
-│   │   │   └── default.php
-│   │   ├── Radios
-│   │   │   └── default.php
-│   │   ├── Selects
-│   │   │   └── default.php
-│   │   └── Textareas
-│   │       └── default.php
-│   ├── Carts
-│   │   └── default.php
-│   ├── Footers
-│   │   └── default.php
-│   ├── Grids
-│   │   └── default.php
-│   ├── Menus
-│   │   └── default_navbar.php
-│   ├── Navbars
-│   │   └── default.php
-│   ├── Sidebars
-│   │   └── default.php
-│   └── Woocommerce
-│       ├── Carousel
-│       │   └── default.php
-│       ├── Field
-│       │   └── default.php
-│       ├── Forms
-│       │   ├── default_billing.php
-│       │   └── default_shipping.php
-│       ├── Gallerys
-│       │   └── default.php
-│       ├── Notes
-│       │   └── default.php
-│       ├── Notices
-│       │   └── default.php
-│       ├── Placeholders
-│       │   ├── Cart
-│       │   │   └── default.php
-│       │   ├── Downloads
-│       │   │   └── default.php
-│       │   └── Orders
-│       │       └── default.php
-│       ├── Steps
-│       │   └── default.php
-│       └── Tables
-│           ├── Cart
-│           │   └── default.php
-│           ├── Downloads
-│           │   └── default.php
-│           └── Orders
-│               └── default.php
-├── composer.json
-├── composer.lock
-├── content-product_cat.php
-├── content-product.php
-├── content-single-product.php
-├── content-widget-product.php
-├── core
-│   ├── class
-│   │   ├── MApps.php
-│   │   ├── MBBPress.php
-│   │   ├── MCache.php
-│   │   ├── MDemos.php
-│   │   ├── MFile.php
-│   │   ├── MHubSpot.php
-│   │   ├── MLogger.php
-│   │   ├── MMailChimp.php
-│   │   ├── MNotification.php
-│   │   ├── MSafe.php
-│   │   ├── Router.php
-│   │   └── TWIG.php
-│   ├── Compound
-│   │   ├── Class
-│   │   │   ├── Constructor.php
-│   │   │   ├── Lexer
-│   │   │   │   └── Converter.php
-│   │   │   ├── Lexer.php
-│   │   │   └── TagsManager.php
-│   │   ├── Component.php
-│   │   ├── Config.php
-│   │   ├── Construction.php
-│   │   ├── Directive.php
-│   │   ├── Duplicator.php
-│   │   ├── Field.php
-│   │   ├── Functions
-│   │   ├── Grider.php
-│   │   ├── Signature.php
-│   │   ├── Store.php
-│   │   ├── Tag.php
-│   │   └── Template.php
-│   ├── Framework
-│   │   ├── Buffer.php
-│   │   ├── Customizer.php
-│   │   ├── Int.php
-│   │   ├── Iterator.php
-│   │   ├── Option.php
-│   │   ├── Storage.php
-│   │   ├── String.php
-│   │   ├── TWIG.php
-│   │   ├── TWIGWoocommerce.php
-│   │   └── WPGNU.php
-│   └── Tags.php
-├── footer.php
-├── functions.php
-├── header.php
-├── index.php
-├── logger.log
-├── meta.php
-├── Options
-│   ├── authorization_login
-│   │   ├── mrl_wp_description_login.php
-│   │   └── mrl_wp_title_login.php
-│   ├── authorization_recovery_password
-│   │   ├── mrl_wp_description_recovery_password.php
-│   │   └── mrl_wp_title_recovery_password.php
-│   ├── authorization_signup
-│   │   ├── mrl_wp_description_signup.php
-│   │   └── mrl_wp_title_signup.php
-│   ├── basic
-│   │   ├── mrl_wp_navbar_fixed.php
-│   │   ├── mrl_wp_sidebar_hide_mobile.php
-│   │   ├── mrl_wp_sidebar_width_1_active.php
-│   │   └── mrl_wp_sidebar_width_2_active.php
-│   ├── vendor.php
-│   ├── woocommerce_card
-│   │   ├── woocommerce_catalog_columns.php
-│   │   └── woocommerce_catalog_rows.php
-│   ├── woocommerce_cart
-│   │   └── woocommerce_table_summary.php
-│   └── woocommerce_shop
-│       └── mrl_wp_show_carousel.php
-├── package-lock.json
-├── page.php
-├── phpdox.xml
-├── postcss.config.js
-├── Prototypes
-│   ├── Constructions
-│   │   ├── Props.php
-│   │   └── Template.php
-│   ├── Tags
-│   └── vendor.php
-├── README.md
-├── Routes
-│   ├── AJAX
-│   │   ├── compoundCreatePage.php
-│   │   ├── login.php
-│   │   ├── options.php
-│   │   ├── product.php
-│   │   ├── recoveryPassword.php
-│   │   ├── saveOption.php
-│   │   ├── signup.php
-│   │   └── WCAddToCart.php
-│   ├── Complex
-│   │   └── wp-admin
-│   │       └── Compound-createPage.php
-│   ├── REST
-│   │   └── options
-│   │       └── get.php
-│   └── vendor.php
-├── screenshot.png
-├── single.php
-├── single-product.php
-├── source
-│   ├── css
-│   │   ├── admin.css
-│   │   ├── admin.css.map
-│   │   ├── admin.sass
-│   │   ├── components
-│   │   │   ├── animate.css
-│   │   │   ├── animate.css.map
-│   │   │   ├── animate.sass
-│   │   │   ├── blocks
-│   │   │   │   ├── placeholder.css
-│   │   │   │   ├── placeholder.css.map
-│   │   │   │   ├── placeholder.sass
-│   │   │   │   ├── user.css
-│   │   │   │   ├── user.css.map
-│   │   │   │   └── user.sass
-│   │   │   ├── bootstrap
-│   │   │   │   ├── container.css
-│   │   │   │   ├── container.css.map
-│   │   │   │   └── container.sass
-│   │   │   ├── breadcrumds.css
-│   │   │   ├── breadcrumds.css.map
-│   │   │   ├── breadcrumds.sass
-│   │   │   ├── button.css
-│   │   │   ├── button.css.map
-│   │   │   ├── button.sass
-│   │   │   ├── carousel.css
-│   │   │   ├── carousel.css.map
-│   │   │   ├── carousel.sass
-│   │   │   ├── cart
-│   │   │   │   ├── default.css
-│   │   │   │   ├── default.css.map
-│   │   │   │   └── default.sass
-│   │   │   ├── checkbox.css
-│   │   │   ├── checkbox.css.map
-│   │   │   ├── checkbox.sass
-│   │   │   ├── controller.css
-│   │   │   ├── controller.css.map
-│   │   │   ├── controller.sass
-│   │   │   ├── footer.css
-│   │   │   ├── footer.css.map
-│   │   │   ├── footer.sass
-│   │   │   ├── input.css
-│   │   │   ├── input.css.map
-│   │   │   ├── input.sass
-│   │   │   ├── label.css
-│   │   │   ├── label.css.map
-│   │   │   ├── label.sass
-│   │   │   ├── link.css
-│   │   │   ├── link.css.map
-│   │   │   ├── link.sass
-│   │   │   ├── navbar.css
-│   │   │   ├── navbar.css.map
-│   │   │   ├── navbar.sass
-│   │   │   ├── note.css
-│   │   │   ├── note.css.map
-│   │   │   ├── note.sass
-│   │   │   ├── product
-│   │   │   │   ├── description.css
-│   │   │   │   ├── description.css.map
-│   │   │   │   ├── description.sass
-│   │   │   │   ├── gallery.css
-│   │   │   │   ├── gallery.css.map
-│   │   │   │   ├── gallery.sass
-│   │   │   │   ├── price.css
-│   │   │   │   ├── price.css.map
-│   │   │   │   ├── price.sass
-│   │   │   │   ├── props.css
-│   │   │   │   ├── props.css.map
-│   │   │   │   └── props.sass
-│   │   │   ├── product.css
-│   │   │   ├── product.css.map
-│   │   │   ├── product.sass
-│   │   │   ├── prototype
-│   │   │   │   ├── product.css
-│   │   │   │   ├── product.css.map
-│   │   │   │   └── product.sass
-│   │   │   ├── radio.css
-│   │   │   ├── radio.css.map
-│   │   │   ├── radio.sass
-│   │   │   ├── scrollbar.css
-│   │   │   ├── scrollbar.css.map
-│   │   │   ├── scrollbar.sass
-│   │   │   ├── select.css
-│   │   │   ├── select.css.map
-│   │   │   ├── select.sass
-│   │   │   ├── step.css
-│   │   │   ├── step.css.map
-│   │   │   ├── step.sass
-│   │   │   ├── switch.css
-│   │   │   ├── switch.css.map
-│   │   │   ├── switch.sass
-│   │   │   ├── textarea.css
-│   │   │   ├── textarea.css.map
-│   │   │   └── textarea.sass
-│   │   ├── compound
-│   │   │   ├── modal.css
-│   │   │   ├── modal.css.map
-│   │   │   └── modal.sass
-│   │   ├── style.css
-│   │   ├── style.css.map
-│   │   └── style.sass
-│   ├── fonts
-│   │   ├── glyphicons-halflings-regular.eot
-│   │   ├── glyphicons-halflings-regular.svg
-│   │   ├── glyphicons-halflings-regular.ttf
-│   │   ├── glyphicons-halflings-regular.woff
-│   │   ├── star.eot
-│   │   ├── star.svg
-│   │   ├── star.ttf
-│   │   ├── star.woff
-│   │   ├── WooCommerce.eot
-│   │   ├── WooCommerce.svg
-│   │   ├── WooCommerce.ttf
-│   │   └── WooCommerce.woff
-│   ├── img
-│   │   ├── apps
-│   │   │   ├── hubspot_icon.png
-│   │   │   ├── kristen_icon.png
-│   │   │   ├── mailchimp_icon.jpg
-│   │   │   └── robottxt_icon.png
-│   │   ├── default
-│   │   │   └── dark-product.jpg
-│   │   ├── forms
-│   │   │   ├── edit-account.jpg
-│   │   │   ├── edit-address.jpg
-│   │   │   ├── forgot-gray.jpg
-│   │   │   ├── forgot.jpg
-│   │   │   ├── lerning.jpg
-│   │   │   ├── login-gray.jpg
-│   │   │   ├── login.jpg
-│   │   │   ├── register-gray.jpg
-│   │   │   ├── register.jpg
-│   │   │   └── settings.jpg
-│   │   ├── icons
-│   │   │   ├── cart.png
-│   │   │   ├── comment.png
-│   │   │   ├── compound.png
-│   │   │   ├── cookies.png
-│   │   │   ├── download.png
-│   │   │   ├── order.png
-│   │   │   └── rosemary_icon.svg
-│   │   └── loaders
-│   │       ├── standart2.gif
-│   │       ├── standart.svg
-│   │       └── white.svg
-│   └── js
-│       ├── admin.js
-│       ├── admin.min.js
-│       ├── API.js
-│       ├── API.min.js
-│       ├── babel.js
-│       ├── babel.min.js
-│       ├── woocommerceui_login.js
-│       ├── woocommerceui_login.min.js
-│       ├── woocommerceui_product.js
-│       ├── woocommerceui_product.min.js
-│       ├── woocommerceui_products.js
-│       ├── woocommerceui_products.min.js
-│       ├── woocommerceui_recovery_password.js
-│       ├── woocommerceui_recovery_password.min.js
-│       ├── woocommerceui_signup.js
-│       └── woocommerceui_signup.min.js
-├── style.css
-├── Templates
-│   ├── Grid
-│   │   └── default.php
-│   ├── Headers
-│   │   └── default.php
-│   └── vendor.php
-├── tree.md
-├── twig
-│   ├── Components
-│   │   ├── Abstract
-│   │   │   ├── default_button.twig
-│   │   │   ├── default_checkbox.twig
-│   │   │   ├── default_field.twig
-│   │   │   ├── default_input.twig
-│   │   │   ├── default_radio.twig
-│   │   │   ├── default_select.twig
-│   │   │   └── default_textarea.twig
-│   │   ├── default_cart.twig
-│   │   ├── default_footer.twig
-│   │   ├── default_grid.twig
-│   │   ├── default_navbar.twig
-│   │   ├── default_sidebar.twig
-│   │   └── Woocommerce
-│   │       ├── default_carousel.twig
-│   │       ├── default_cart_placeholder.twig
-│   │       ├── default_cart_table.twig
-│   │       ├── default_downloads_placeholder.twig
-│   │       ├── default_downloads_table.twig
-│   │       ├── default_form_billing.twig
-│   │       ├── default_form_shipping.twig
-│   │       ├── default_note.twig
-│   │       ├── default_notice.twig
-│   │       ├── default_orders_placeholder.twig
-│   │       ├── default_orders_table.twig
-│   │       ├── default_product_gallery.twig
-│   │       └── default_step.twig
-│   ├── Compound
-│   │   ├── editor.twig
-│   │   ├── layout.twig
-│   │   ├── main.twig
-│   │   ├── pages
-│   │   │   └── modal
-│   │   │       └── create_page.twig
-│   │   ├── pages.twig
-│   │   ├── start.twig
-│   │   └── template.twig
-│   ├── Layout
-│   │   ├── footer.twig
-│   │   ├── header.twig
-│   │   └── layout.twig
-│   ├── Main
-│   │   ├── 404.twig
-│   │   ├── canvas.twig
-│   │   ├── center.twig
-│   │   ├── index.twig
-│   │   ├── no-access.twig
-│   │   ├── page.twig
-│   │   └── single.twig
-│   ├── Templates
-│   │   ├── Grid
-│   │   │   └── default.twig
-│   │   └── Headers
-│   │       └── default.twig
-│   └── Woocommerce
-│       ├── account
-│       │   ├── blocks
-│       │   │   ├── downloads.twig
-│       │   │   ├── orders.twig
-│       │   │   ├── statistics.twig
-│       │   │   └── user.twig
-│       │   └── edit
-│       │       └── profile.twig
-│       ├── account.twig
-│       ├── authorization
-│       │   ├── login.twig
-│       │   ├── password_recovery.twig
-│       │   └── signup.twig
-│       ├── breadcrumb.twig
-│       ├── cart
-│       ├── cart.twig
-│       ├── category-cart.twig
-│       ├── checkout
-│       ├── checkout.twig
-│       ├── loop
-│       ├── notices
-│       ├── order.twig
-│       ├── product-cart.twig
-│       ├── products.twig
-│       └── product.twig
-├── woocommerce
-│   ├── cart
-│   │   ├── cart-empty.php
-│   │   ├── cart.php
-│   │   ├── cart-shipping.php
-│   │   ├── cart-totals.php
-│   │   ├── cross-sells.php
-│   │   ├── mini-cart.php
-│   │   ├── proceed-to-checkout-button.php
-│   │   └── shipping-calculator.php
-│   ├── checkout
-│   │   ├── cart-errors.php
-│   │   ├── form-billing.php
-│   │   ├── form-checkout.php
-│   │   ├── form-coupon.php
-│   │   ├── form-login.php
-│   │   ├── form-pay.php
-│   │   ├── form-shipping.php
-│   │   ├── payment-method.php
-│   │   ├── payment.php
-│   │   ├── review-order.php
-│   │   ├── terms.php
-│   │   └── thankyou.php
-│   ├── global
-│   │   ├── breadcrumb.php
-│   │   ├── form-login.php
-│   │   ├── quantity-input.php
-│   │   ├── sidebar.php
-│   │   ├── wrapper-end.php
-│   │   └── wrapper-start.php
-│   ├── loop
-│   │   ├── add-to-cart.php
-│   │   ├── loop-end.php
-│   │   ├── loop-start.php
-│   │   ├── no-products-found.php
-│   │   ├── orderby.php
-│   │   ├── pagination.php
-│   │   ├── price.php
-│   │   ├── rating.php
-│   │   ├── result-count.php
-│   │   └── sale-flash.php
-│   ├── notices
-│   │   ├── error.php
-│   │   ├── notice.php
-│   │   └── success.php
-│   └── single-product
-│       └── related.php
-└── _woocommerce.php
-
-103 directories, 372 files
+``` 
+.browserslistrc
+.error
+.github
+   |-- workflows
+   |   |-- php.yml
+.gitignore
+.trash
+404.php
+Adjustment.php
+Components
+   |-- Abstract
+   |   |-- Buttons
+   |   |   |-- default.php
+   |   |-- Checkboxs
+   |   |   |-- default.php
+   |   |-- Inputs
+   |   |   |-- default.php
+   |   |-- Labels
+   |   |   |-- default.php
+   |   |-- Radios
+   |   |   |-- default.php
+   |   |-- Selects
+   |   |   |-- default.php
+   |   |-- Tag
+   |   |   |-- default.php
+   |   |-- Textareas
+   |   |   |-- default.php
+   |   |-- Unit
+   |   |   |-- default.php
+   |-- Carts
+   |   |-- default.php
+   |-- Footers
+   |   |-- default.php
+   |-- Grids
+   |   |-- default.php
+   |-- Menus
+   |   |-- default.php
+   |-- Multi
+   |   |-- template.php
+   |-- Navbars
+   |   |-- default.php
+   |-- Sidebars
+   |   |-- default.php
+   |-- Woocommerce
+   |   |-- Carousel
+   |   |   |-- default.php
+   |   |-- Field
+   |   |   |-- default.php
+   |   |-- Forms
+   |   |   |-- default_billing.php
+   |   |   |-- default_shipping.php
+   |   |-- Gallerys
+   |   |   |-- default.php
+   |   |-- Notes
+   |   |   |-- default.php
+   |   |-- Notices
+   |   |   |-- default.php
+   |   |-- Placeholders
+   |   |   |-- Cart
+   |   |   |   |-- default.php
+   |   |   |-- Downloads
+   |   |   |   |-- default.php
+   |   |   |-- Orders
+   |   |   |   |-- default.php
+   |   |-- Steps
+   |   |   |-- default.php
+   |   |-- Tables
+   |   |   |-- Cart
+   |   |   |   |-- default.php
+   |   |   |-- Downloads
+   |   |   |   |-- default.php
+   |   |   |-- Orders
+   |   |   |   |-- default.php
+   |-- vendor.php
+Framework
+   |-- Converter.php
+   |-- MCache.php
+   |-- MNotification.php
+   |-- WP.php
+   |-- WPGNU.php
+Instance
+   |-- Buffer.php
+   |-- Component.php
+   |-- Config.php
+   |-- Construction.php
+   |-- Directive.php
+   |-- Field.php
+   |-- Inter.php
+   |-- Iterator.php
+   |-- Layout.php
+   |-- Lex.php
+   |-- MFile.php
+   |-- Option.php
+   |-- Stringer.php
+   |-- Tag.php
+   |-- Template.php
+   |-- vendor.php
+Interface
+   |-- Iterator_Interface.php
+   |-- Seller.php
+   |-- Storage.php
+   |-- vendor.php
+Options
+   |-- Authorization
+   |   |-- login
+   |   |   |-- mrl_wp_description_login.php
+   |   |   |-- mrl_wp_title_login.php
+   |   |-- recovery_password
+   |   |   |-- mrl_wp_description_recovery_password.php
+   |   |   |-- mrl_wp_title_recovery_password.php
+   |   |-- signup
+   |   |   |-- mrl_wp_description_signup.php
+   |   |   |-- mrl_wp_title_signup.php
+   |-- Basic
+   |   |-- mrl_wp_navbar_fixed.php
+   |   |-- mrl_wp_sidebar_hide_mobile.php
+   |   |-- mrl_wp_sidebar_width_1_active.php
+   |   |-- mrl_wp_sidebar_width_2_active.php
+   |-- Woocommerce
+   |   |-- Card
+   |   |   |-- woocommerce_catalog_columns.php
+   |   |   |-- woocommerce_catalog_rows.php
+   |   |-- Cart
+   |   |   |-- woocommerce_table_summary.php
+   |   |-- Shop
+   |   |   |-- mrl_wp_show_carousel.php
+   |-- vendor.php
+PHPUnit
+   |-- MireleUnit.php
+   |-- UnitStore.php
+   |-- cli.php
+   |-- vendor.php
+Patterns
+   |-- Compound
+   |   |-- createPage.php
+   |   |-- insertComponent.php
+   |   |-- insertTemplate.php
+   |   |-- removeTemplate.php
+   |   |-- sort.php
+   |-- vendor.php
+Prototypes
+   |-- Constructions
+   |   |-- Field.php
+   |   |-- Props.php
+   |-- Pattern.php
+   |-- vendor.php
+Public
+   |-- .ignore
+   |-- css
+   |   |-- admin.css
+   |   |-- admin.sass
+   |   |-- components
+   |   |   |-- animate.css
+   |   |   |-- animate.sass
+   |   |   |-- blocks
+   |   |   |   |-- placeholder.css
+   |   |   |   |-- placeholder.sass
+   |   |   |   |-- user.css
+   |   |   |   |-- user.sass
+   |   |   |-- bootstrap
+   |   |   |   |-- container.css
+   |   |   |   |-- container.sass
+   |   |   |-- breadcrumds.css
+   |   |   |-- breadcrumds.sass
+   |   |   |-- button.css
+   |   |   |-- button.sass
+   |   |   |-- carousel.css
+   |   |   |-- carousel.sass
+   |   |   |-- cart
+   |   |   |   |-- default.css
+   |   |   |   |-- default.sass
+   |   |   |-- checkbox.css
+   |   |   |-- checkbox.sass
+   |   |   |-- controller.css
+   |   |   |-- controller.sass
+   |   |   |-- footer.css
+   |   |   |-- footer.sass
+   |   |   |-- input.css
+   |   |   |-- input.sass
+   |   |   |-- label.css
+   |   |   |-- label.sass
+   |   |   |-- link.css
+   |   |   |-- link.sass
+   |   |   |-- navbar.css
+   |   |   |-- navbar.sass
+   |   |   |-- note.css
+   |   |   |-- note.sass
+   |   |   |-- product.css
+   |   |   |-- product.sass
+   |   |   |-- product
+   |   |   |   |-- description.css
+   |   |   |   |-- description.sass
+   |   |   |   |-- gallery.css
+   |   |   |   |-- gallery.sass
+   |   |   |   |-- price.css
+   |   |   |   |-- price.sass
+   |   |   |   |-- props.css
+   |   |   |   |-- props.sass
+   |   |   |-- prototype
+   |   |   |   |-- product.css
+   |   |   |   |-- product.sass
+   |   |   |-- radio.css
+   |   |   |-- radio.sass
+   |   |   |-- scrollbar.css
+   |   |   |-- scrollbar.sass
+   |   |   |-- select.css
+   |   |   |-- select.sass
+   |   |   |-- step.css
+   |   |   |-- step.sass
+   |   |   |-- switch.css
+   |   |   |-- switch.sass
+   |   |   |-- textarea.css
+   |   |   |-- textarea.sass
+   |   |-- compound
+   |   |   |-- editor_field.css
+   |   |   |-- editor_field.sass
+   |   |   |-- grid
+   |   |   |   |-- align.css
+   |   |   |   |-- align.sass
+   |   |   |   |-- color.css
+   |   |   |   |-- color.sass
+   |   |   |   |-- column.css
+   |   |   |   |-- column.sass
+   |   |   |   |-- display.css
+   |   |   |   |-- display.sass
+   |   |   |   |-- font.css
+   |   |   |   |-- font.sass
+   |   |   |   |-- grid.css
+   |   |   |   |-- grid.sass
+   |   |   |   |-- margin.css
+   |   |   |   |-- margin.sass
+   |   |   |   |-- padding.css
+   |   |   |   |-- padding.sass
+   |   |   |   |-- visible.css
+   |   |   |   |-- visible.sass
+   |   |   |-- modal.css
+   |   |   |-- modal.sass
+   |   |   |-- wp-native
+   |   |   |   |-- block.css
+   |   |   |   |-- block.sass
+   |   |   |   |-- box.css
+   |   |   |   |-- box.sass
+   |   |   |   |-- component.css
+   |   |   |   |-- component.sass
+   |   |   |   |-- controll-icon.css
+   |   |   |   |-- controll-icon.sass
+   |   |   |   |-- field.css
+   |   |   |   |-- field.sass
+   |   |   |   |-- fields.css
+   |   |   |   |-- fields.sass
+   |   |   |   |-- grid.css
+   |   |   |   |-- grid.sass
+   |   |   |   |-- header.css
+   |   |   |   |-- header.sass
+   |   |   |   |-- insert.css
+   |   |   |   |-- insert.sass
+   |   |   |   |-- modal
+   |   |   |   |   |-- header.css
+   |   |   |   |   |-- header.sass
+   |   |   |   |-- placeholder.css
+   |   |   |   |-- placeholder.sass
+   |   |   |   |-- table.css
+   |   |   |   |-- table.sass
+   |   |   |   |-- tag.css
+   |   |   |   |-- tag.sass
+   |   |-- style.css
+   |   |-- style.sass
+   |-- fonts
+   |   |-- WooCommerce.eot
+   |   |-- WooCommerce.svg
+   |   |-- WooCommerce.ttf
+   |   |-- WooCommerce.woff
+   |   |-- glyphicons-halflings-regular.eot
+   |   |-- glyphicons-halflings-regular.svg
+   |   |-- glyphicons-halflings-regular.ttf
+   |   |-- glyphicons-halflings-regular.woff
+   |   |-- star.eot
+   |   |-- star.svg
+   |   |-- star.ttf
+   |   |-- star.woff
+   |-- img
+   |   |-- apps
+   |   |   |-- hubspot_icon.png
+   |   |   |-- kristen_icon.png
+   |   |   |-- mailchimp_icon.jpg
+   |   |   |-- robottxt_icon.png
+   |   |-- default
+   |   |   |-- dark-product.jpg
+   |   |-- forms
+   |   |   |-- edit-account.jpg
+   |   |   |-- edit-address.jpg
+   |   |   |-- empty-props-of-component.jpg
+   |   |   |-- forgot-gray.jpg
+   |   |   |-- forgot.jpg
+   |   |   |-- lerning.jpg
+   |   |   |-- login-gray.jpg
+   |   |   |-- login.jpg
+   |   |   |-- register-gray.jpg
+   |   |   |-- register.jpg
+   |   |   |-- settings.jpg
+   |   |-- icons
+   |   |   |-- cart.png
+   |   |   |-- comment.png
+   |   |   |-- compound.png
+   |   |   |-- cookies.png
+   |   |   |-- download.png
+   |   |   |-- order.png
+   |   |   |-- rosemary_icon.svg
+   |-- js
+   |   |-- API.js
+   |   |-- API.min.js
+   |   |-- admin.js
+   |   |-- admin.min.js
+   |   |-- babel.js
+   |   |-- babel.min.js
+   |   |-- compound.js
+   |   |-- compound.min.js
+   |   |-- compound
+   |   |   |-- form
+   |   |   |   |-- insertComponent.js
+   |   |   |   |-- insertComponent.min.js
+   |   |   |   |-- insertTemplate.js
+   |   |   |   |-- props.js
+   |   |   |   |-- props.min.js
+   |   |-- woocommerceui_login.js
+   |   |-- woocommerceui_login.min.js
+   |   |-- woocommerceui_product.js
+   |   |-- woocommerceui_product.min.js
+   |   |-- woocommerceui_products.js
+   |   |-- woocommerceui_products.min.js
+   |   |-- woocommerceui_recovery_password.js
+   |   |-- woocommerceui_recovery_password.min.js
+   |   |-- woocommerceui_signup.js
+   |   |-- woocommerceui_signup.min.js
+README.md
+Routes
+   |-- AJAX
+   |   |-- WCAddToCart.php
+   |   |-- login.php
+   |   |-- namespaces.php
+   |   |-- options.php
+   |   |-- product.php
+   |   |-- recoveryPassword.php
+   |   |-- saveOption.php
+   |   |-- signup.php
+   |   |-- wp-admin
+   |   |   |-- Compound-getMarkup.php
+   |   |   |-- Compound-getProps.php
+   |   |   |-- Compound-insertComponent.php
+   |   |   |-- Compound-insertTemplate.php
+   |   |   |-- Compound-removeTemplate.php
+   |   |   |-- Compound-sort.php
+   |   |   |-- Compound-updateProps.php
+   |-- Complex
+   |   |-- public.php
+   |   |-- wp-admin
+   |   |   |-- Compound-createPage.php
+   |-- REST
+   |   |-- options
+   |   |   |-- get.php
+   |-- vendor.php
+TWIG
+   |-- Components
+   |   |-- Abstract
+   |   |   |-- default_button.twig
+   |   |   |-- default_checkbox.twig
+   |   |   |-- default_field.twig
+   |   |   |-- default_input.twig
+   |   |   |-- default_label.twig
+   |   |   |-- default_radio.twig
+   |   |   |-- default_select.twig
+   |   |   |-- default_tag.twig
+   |   |   |-- default_textarea.twig
+   |   |-- Woocommerce
+   |   |   |-- default_carousel.twig
+   |   |   |-- default_cart_placeholder.twig
+   |   |   |-- default_cart_table.twig
+   |   |   |-- default_downloads_placeholder.twig
+   |   |   |-- default_downloads_table.twig
+   |   |   |-- default_form_billing.twig
+   |   |   |-- default_form_shipping.twig
+   |   |   |-- default_note.twig
+   |   |   |-- default_notice.twig
+   |   |   |-- default_orders_placeholder.twig
+   |   |   |-- default_orders_table.twig
+   |   |   |-- default_product_gallery.twig
+   |   |   |-- default_step.twig
+   |   |-- default_cart.twig
+   |   |-- default_footer.twig
+   |   |-- default_grid.twig
+   |   |-- default_navbar.twig
+   |   |-- default_sidebar.twig
+   |-- Compound
+   |   |-- editor.twig
+   |   |-- editor
+   |   |   |-- layout.twig
+   |   |   |-- message
+   |   |   |   |-- editor_empty_props.twig
+   |   |   |   |-- editor_error_preparation.twig
+   |   |   |-- modal
+   |   |   |   |-- edit_props.twig
+   |   |   |   |-- edit_template.twig
+   |   |   |   |-- insert_component.twig
+   |   |   |   |-- insert_template.twig
+   |   |   |-- panel
+   |   |   |   |-- tools.twig
+   |   |   |-- postbox
+   |   |   |   |-- meta.twig
+   |   |   |-- spinner
+   |   |   |   |-- editor_preparation.twig
+   |   |-- layout.twig
+   |   |-- main.twig
+   |   |-- pages.twig
+   |   |-- pages
+   |   |   |-- modal
+   |   |   |   |-- create_page.twig
+   |   |-- start.twig
+   |-- Layout
+   |   |-- footer.twig
+   |   |-- header.twig
+   |   |-- layout.twig
+   |-- Main
+   |   |-- 404.twig
+   |   |-- canvas.twig
+   |   |-- center.twig
+   |   |-- index.twig
+   |   |-- no-access.twig
+   |   |-- page.twig
+   |   |-- single.twig
+   |-- Prototypes
+   |   |-- message
+   |   |   |-- compound_message.twig
+   |   |-- modal
+   |   |   |-- compound_empty.twig
+   |   |   |-- compound_insert.twig
+   |   |-- spinner
+   |   |   |-- compound.twig
+   |-- Templates
+   |   |-- Grid
+   |   |   |-- default.twig
+   |   |-- Headers
+   |   |   |-- default.twig
+   |-- Woocommerce
+   |   |-- account.twig
+   |   |-- account
+   |   |   |-- blocks
+   |   |   |   |-- downloads.twig
+   |   |   |   |-- orders.twig
+   |   |   |   |-- statistics.twig
+   |   |   |   |-- user.twig
+   |   |   |-- edit
+   |   |   |   |-- profile.twig
+   |   |-- authorization
+   |   |   |-- login.twig
+   |   |   |-- password_recovery.twig
+   |   |   |-- signup.twig
+   |   |-- breadcrumb.twig
+   |   |-- cart.twig
+   |   |-- category-cart.twig
+   |   |-- checkout.twig
+   |   |-- order.twig
+   |   |-- product-cart.twig
+   |   |-- product.twig
+   |   |-- products.twig
+Tags
+   |-- vandor.php
+Templates
+   |-- Emptys
+   |   |-- default.php
+   |-- Grid
+   |   |-- default.php
+   |-- Headers
+   |   |-- default.php
+   |-- Matrix
+   |   |-- default.php
+   |-- vendor.php
+Traits
+   |-- __getter.php
+   |-- __isset.php
+   |-- __setter.php
+   |-- __unset.php
+   |-- vendor.php
+_woocommerce.php
+archive-product.php
+authors
+buddypress
+   |-- activity
+   |   |-- activity-loop.php
+   |   |-- comment.php
+   |   |-- entry.php
+   |   |-- index.php
+   |   |-- post-form.php
+   |   |-- single
+   |   |   |-- home.php
+   |-- assets
+   |   |-- _attachments
+   |   |   |-- avatars
+   |   |   |   |-- camera.php
+   |   |   |   |-- crop.php
+   |   |   |   |-- index.php
+   |   |   |-- cover-images
+   |   |   |   |-- index.php
+   |   |   |-- uploader.php
+   |   |-- emails
+   |   |   |-- single-bp-email.php
+   |   |-- embeds
+   |   |   |-- activity.php
+   |   |   |-- footer.php
+   |   |   |-- header-activity.php
+   |   |   |-- header.php
+   |-- blogs
+   |   |-- blogs-loop.php
+   |   |-- create.php
+   |   |-- index.php
+   |-- common
+   |   |-- search
+   |   |   |-- dir-search-form.php
+   |-- groups
+   |   |-- create.php
+   |   |-- groups-loop.php
+   |   |-- index.php
+   |   |-- single
+   |   |   |-- activity.php
+   |   |   |-- admin.php
+   |   |   |-- admin
+   |   |   |   |-- delete-group.php
+   |   |   |   |-- edit-details.php
+   |   |   |   |-- group-avatar.php
+   |   |   |   |-- group-cover-image.php
+   |   |   |   |-- group-settings.php
+   |   |   |   |-- manage-members.php
+   |   |   |   |-- membership-requests.php
+   |   |   |-- cover-image-header.php
+   |   |   |-- group-header.php
+   |   |   |-- home.php
+   |   |   |-- invites-loop.php
+   |   |   |-- members.php
+   |   |   |-- plugins.php
+   |   |   |-- request-membership.php
+   |   |   |-- requests-loop.php
+   |   |   |-- send-invites.php
+   |-- members
+   |   |-- activate.php
+   |   |-- index.php
+   |   |-- members-loop.php
+   |   |-- register.php
+   |   |-- single
+   |   |   |-- activity.php
+   |   |   |-- blogs.php
+   |   |   |-- cover-image-header.php
+   |   |   |-- friends.php
+   |   |   |-- friends
+   |   |   |   |-- requests.php
+   |   |   |-- groups.php
+   |   |   |-- groups
+   |   |   |   |-- invites.php
+   |   |   |-- home.php
+   |   |   |-- member-header.php
+   |   |   |-- messages.php
+   |   |   |-- messages
+   |   |   |   |-- compose.php
+   |   |   |   |-- message.php
+   |   |   |   |-- messages-loop.php
+   |   |   |   |-- notices-loop.php
+   |   |   |   |-- single.php
+   |   |   |-- notifications.php
+   |   |   |-- notifications
+   |   |   |   |-- feedback-no-notifications.php
+   |   |   |   |-- notifications-loop.php
+   |   |   |   |-- read.php
+   |   |   |   |-- unread.php
+   |   |   |-- plugins.php
+   |   |   |-- profile.php
+   |   |   |-- profile
+   |   |   |   |-- change-avatar.php
+   |   |   |   |-- change-cover-image.php
+   |   |   |   |-- edit.php
+   |   |   |   |-- profile-loop.php
+   |   |   |   |-- profile-wp.php
+   |   |   |-- settings.php
+   |   |   |-- settings
+   |   |   |   |-- capabilities.php
+   |   |   |   |-- data.php
+   |   |   |   |-- delete-account.php
+   |   |   |   |-- general.php
+   |   |   |   |-- notifications.php
+   |   |   |   |-- profile.php
+canvas.php
+composer.json
+content-product.php
+content-product_cat.php
+content-single-product.php
+content-widget-product.php
+footer.php
+functions.php
+header.php
+index.php
+meta.php
+package-lock.json
+page.php
+postcss.config.js
+screenshot.png
+sdk.php
+single-product.php
+single.php
+style.css
+tree.md
+woocommerce
+   |-- cart
+   |   |-- cart-empty.php
+   |   |-- cart-shipping.php
+   |   |-- cart-totals.php
+   |   |-- cart.php
+   |   |-- cross-sells.php
+   |   |-- mini-cart.php
+   |   |-- proceed-to-checkout-button.php
+   |   |-- shipping-calculator.php
+   |-- checkout
+   |   |-- cart-errors.php
+   |   |-- form-billing.php
+   |   |-- form-checkout.php
+   |   |-- form-coupon.php
+   |   |-- form-login.php
+   |   |-- form-pay.php
+   |   |-- form-shipping.php
+   |   |-- payment-method.php
+   |   |-- payment.php
+   |   |-- review-order.php
+   |   |-- terms.php
+   |   |-- thankyou.php
+   |-- global
+   |   |-- breadcrumb.php
+   |   |-- form-login.php
+   |   |-- quantity-input.php
+   |   |-- sidebar.php
+   |   |-- wrapper-end.php
+   |   |-- wrapper-start.php
+   |-- loop
+   |   |-- add-to-cart.php
+   |   |-- loop-end.php
+   |   |-- loop-start.php
+   |   |-- no-products-found.php
+   |   |-- orderby.php
+   |   |-- pagination.php
+   |   |-- price.php
+   |   |-- rating.php
+   |   |-- result-count.php
+   |   |-- sale-flash.php
+   |-- notices
+   |   |-- error.php
+   |   |-- notice.php
+   |   |-- success.php
+   |-- single-product
+   |   |-- related.php
+"\320\241ontroller"
+"\320   |-- Apps.php"
+"\320   |-- Constructor.php"
+"\320   |-- Customizer.php"
+"\320   |-- Grider.php"
+"\320   |-- Lexer.php"
+"\320   |-- Logger.php"
+"\320   |-- Router.php"
+"\320   |-- Store.php"
+"\320   |-- TWIG.php"
+"\320   |-- TagsManager.php"
+"\320   |-- vendor.php"
 ```
