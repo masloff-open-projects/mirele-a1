@@ -8,13 +8,13 @@
 * @since: Mirele Canvas 1
 */
 
-use Mirele\Compound\Lexer;
-use Mirele\Compound\Grider;
-use Mirele\Compound\Template;
-use Mirele\Compound\Field;
-use Mirele\Compound\Tag;
-use Mirele\Compound\Store;
 use Mirele\Compound\Component;
+use Mirele\Compound\Field;
+use Mirele\Compound\Grider;
+use Mirele\Compound\Lexer;
+use Mirele\Compound\Store;
+use Mirele\Compound\Tag;
+use Mirele\Compound\Template;
 use Mirele\Framework\Buffer;
 
 global $post;

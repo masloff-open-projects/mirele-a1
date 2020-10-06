@@ -2,7 +2,6 @@
 
 use Mirele\Compound\Lexer;
 use Mirele\Router;
-use Mirele\Compound\Patterns;
 
 Router::post('/wp-admin/admin.php', function () {
     if (
@@ -14,10 +13,10 @@ Router::post('/wp-admin/admin.php', function () {
 
         # Create a work environment
         $component = (MIRELE_POST)['component'];
-        $page      = (MIRELE_POST)['page'];
-        $nonce     = (MIRELE_POST)['nonce'];
-        $field     = (MIRELE_POST)['field'];
-        $template  = (MIRELE_POST)['template'];
+        $page = (MIRELE_POST)['page'];
+        $nonce = (MIRELE_POST)['nonce'];
+        $field = (MIRELE_POST)['field'];
+        $template = (MIRELE_POST)['template'];
 
         # Security check and anti-spam requests
         if (wp_verify_nonce($nonce, MIRELE_NONCE)) {
@@ -25,12 +24,12 @@ Router::post('/wp-admin/admin.php', function () {
             # If user login in and have permission
             if (is_user_logged_in() and current_user_can(MIRELE_RIGHTS['page']['create'])) {
 
-                $wp_page = (object) get_post($page);
+                $wp_page = (object)get_post($page);
                 $content = $wp_page->post_content;
                 $lexer = new Lexer($content);
 
                 $lexer->parse();
-                $root = $lexer->getSignature()->getRootInstanceById((string) $template);
+                $root = $lexer->getSignature()->getRootInstanceById((string)$template);
 
                 if ($root !== false) {
 
@@ -40,22 +39,22 @@ Router::post('/wp-admin/admin.php', function () {
 
                         $tag = new \Mirele\Compound\Tag();
                         $tag->setTag('component');
-                        $tag->setAttributes((array) $Component->getProps());
+                        $tag->setAttributes((array)$Component->getProps());
                         $tag->setAttribute('name', $Component->getAlias() ? $Component->getAlias() : $Component->getId());
 
-                        $root->fields[(string) $field] = (array) [$tag];
+                        $root->fields[(string)$field] = (array)[$tag];
 
-                        $lexer->getSignature()->setRootInstanceById((string) $template, $root);
+                        $lexer->getSignature()->setRootInstanceById((string)$template, $root);
 
                         $code = $lexer->generateCode();
 
                         wp_update_post(array(
-                            'ID'           => (int) $wp_page->ID,
-                            'post_content' => (string) "[Compound role='editor'] \n $code \n [/Compound]",
+                            'ID' => (int)$wp_page->ID,
+                            'post_content' => (string)"[Compound role='editor'] \n $code \n [/Compound]",
                         ));
 
                         update_post_meta(
-                            (int) $wp_page->ID,
+                            (int)$wp_page->ID,
                             '_wp_page_template',
                             COMPOUND_CANVAS
                         );

@@ -16,8 +16,8 @@
  * @version 3.4.0
  */
 
-use \Mirele\Framework\Buffer;
-use \Mirele\Framework\Customizer;
+use Mirele\Framework\Buffer;
+use Mirele\Framework\Customizer;
 
 # Include scripts and styles
 wp_enqueue_script('woocommerceui_products');

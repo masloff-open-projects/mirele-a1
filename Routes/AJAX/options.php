@@ -1,8 +1,8 @@
 <?php
 
-use \Mirele\Router;
-use \Mirele\Framework\Buffer;
-use \Mirele\Framework\Customizer;
+use Mirele\Framework\Buffer;
+use Mirele\Framework\Customizer;
+use Mirele\Router;
 
 # Endpoint to receive registered options
 # Endpoint Version: 1.0.0

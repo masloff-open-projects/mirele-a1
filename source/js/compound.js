@@ -28,7 +28,7 @@
 
 const $page = parseInt(jQuery('meta[name="page"]').attr('content'));
 
-const CompoundEditor = Project.export('editor', new Interface ({
+const CompoundEditor = Project.export('editor', new Interface({
     requires: {
         vue: true,
         jquery: true
@@ -60,7 +60,7 @@ const CompoundEditor = Project.export('editor', new Interface ({
                     forcePlaceholderSize: true,
                     revert: 80,
 
-                    update: function(event, ui) {
+                    update: function (event, ui) {
 
                         var $order = [];
 
@@ -119,9 +119,9 @@ const CompoundEditor = Project.export('editor', new Interface ({
             },
 
             __metaFieldClass__: function (event) {
-                const $event = event||{};
-                const $editor = $event.editor||{};
-                return `wp-mrl-field col-${$editor.col||12}`;
+                const $event = event || {};
+                const $editor = $event.editor || {};
+                return `wp-mrl-field col-${$editor.col || 12}`;
             },
 
             __updateMarkup: function (event) {
@@ -165,7 +165,7 @@ const CompoundEditor = Project.export('editor', new Interface ({
                     activeClass: 'wp-mrl-trash-active',
                     hoverClass: 'wp-mrl-trash-hover',
 
-                    drop: function(event, ui) {
+                    drop: function (event, ui) {
 
                         const $template = jQuery(ui.helper.context).attr('data-id');
                         const $id = jQuery(ui.helper.context).attr('data-page-id');

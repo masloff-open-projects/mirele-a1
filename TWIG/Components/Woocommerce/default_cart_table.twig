@@ -1,13 +1,13 @@
 <table class="table table-bordered table-hover woocommerce-cart-form__contents">
     <thead>
-        <tr>
-            <th>Picture</th>
-            <th>Product name</th>
-            <th>Price</th>
-            <th>Quantity</th>
-            <th>Subtotal</th>
-            <th>Manage</th>
-        </tr>
+    <tr>
+        <th>Picture</th>
+        <th>Product name</th>
+        <th>Price</th>
+        <th>Quantity</th>
+        <th>Subtotal</th>
+        <th>Manage</th>
+    </tr>
     </thead>
     <tbody>
 
@@ -51,7 +51,8 @@
                 {% if product.is_sold_individually %}
                     {{ wp.e('You can only buy 1 unit of this product') }}
                 {% else %}
-                    <input type="number" min="0" max="{{ product.max_quantity > 0 ? product.max_quantity : '' }}" name="cart[{{ product.iterator.key }}][qty]" value="{{ product.quantity }}">
+                    <input type="number" min="0" max="{{ product.max_quantity > 0 ? product.max_quantity : '' }}"
+                           name="cart[{{ product.iterator.key }}][qty]" value="{{ product.quantity }}">
                 {% endif %}
             </td>
 
@@ -74,7 +75,7 @@
     </tbody>
 
     {% if wp.get_option('woocommerce_table_summary') == 'true' %}
-    <tfoot>
+        <tfoot>
         <tr>
             <th colspan="6">
 
@@ -87,7 +88,7 @@
 
             </th>
         </tr>
-    </tfoot>
+        </tfoot>
     {% endif %}
 
 </table>

@@ -1,7 +1,7 @@
 <?php
 
-use \Mirele\Router;
-use \Mirele\Framework\Inter;
+use Mirele\Framework\Inter;
+use Mirele\Router;
 
 # Endpoint to add goods to user cart
 # Endpoint Version: 1.0.0
@@ -9,9 +9,9 @@ use \Mirele\Framework\Inter;
 Router::post('/ajax_endpoint_v1/WCAddToCart', function () {
 
     # Parse params
-    $ID  = (int) (new Inter((MIRELE_POST)['product_id']))::ABS();
-    $QTY = (int) (new Inter((MIRELE_POST)['product_quantity']))::ABS();
-    $VariationID = (int) (new Inter((MIRELE_POST)['product_variation_id']))::ABS();
+    $ID = (int)(new Inter((MIRELE_POST)['product_id']))::ABS();
+    $QTY = (int)(new Inter((MIRELE_POST)['product_quantity']))::ABS();
+    $VariationID = (int)(new Inter((MIRELE_POST)['product_variation_id']))::ABS();
     $VariationAttr = (MIRELE_POST)['product_variation'];
 
     # Checking if it is possible to add the goods to the cart.

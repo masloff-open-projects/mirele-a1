@@ -5,7 +5,6 @@ namespace Mirele\Compound;
 
 
 use Mirele\Framework\Iterator;
-use Mirele\Compound\Construction;
 use Mirele\Framework\Stringer;
 
 

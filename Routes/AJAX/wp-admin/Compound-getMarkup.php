@@ -1,13 +1,13 @@
 <?php
 
+use Mirele\Compound\Config;
 use Mirele\Compound\Field;
 use Mirele\Compound\Grider;
-use Mirele\Compound\Template;
-use Mirele\Router;
+use Mirele\Compound\Layout;
 use Mirele\Compound\Lexer;
 use Mirele\Compound\Tag;
-use Mirele\Compound\Config;
-use Mirele\Compound\Layout;
+use Mirele\Compound\Template;
+use Mirele\Router;
 
 
 # ...
@@ -22,7 +22,7 @@ Router::post('/ajax_endpoint_v1/Compound-getMarkup', function () {
             'page' => (MIRELE_POST)['page'],
         );
 
-        $wp_page = (object) get_post($props['page']);
+        $wp_page = (object)get_post($props['page']);
 
         $Markup = array();
         $Lexer = new Lexer($wp_page->post_content);
@@ -53,7 +53,7 @@ Router::post('/ajax_endpoint_v1/Compound-getMarkup', function () {
 
                                 foreach ($Template->fields[$name] as $tag) {
                                     if ($tag instanceof Tag) {
-                                        $Markup[$ID]['fields'][$name]['tags'][] = (object) [
+                                        $Markup[$ID]['fields'][$name]['tags'][] = (object)[
                                             'tag' => $tag->getTagName(),
                                             'essence' => $tag->getEssence(),
                                             'attributes' => $tag->getAttributes()
@@ -64,7 +64,7 @@ Router::post('/ajax_endpoint_v1/Compound-getMarkup', function () {
                             }
 
 
-                            $Markup[$ID]['fields'][$name]['field'] = (object) [
+                            $Markup[$ID]['fields'][$name]['field'] = (object)[
                                 'id' => $field->getId(),
                                 'name' => $field->getName(),
                                 'props' => $field->getProps(),

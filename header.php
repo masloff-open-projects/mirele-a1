@@ -7,7 +7,7 @@
  * @version 1.0.0
  */
 
-use \Mirele\Framework\Customizer;
+use Mirele\Framework\Customizer;
 
 \Mirele\TWIG::Render('Layout/header', [
     'blog' => [

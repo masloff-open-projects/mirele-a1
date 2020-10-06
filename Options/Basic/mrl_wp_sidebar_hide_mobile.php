@@ -3,7 +3,7 @@
 use Mirele\Framework\Customizer;
 use Mirele\Framework\Option;
 
-Customizer::add( (new Option)
+Customizer::add((new Option)
     ->setType("switch")
     ->setDefault(true)
     ->setName("mrl_wp_sidebar_hide_mobile")

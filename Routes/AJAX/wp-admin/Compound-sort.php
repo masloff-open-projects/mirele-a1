@@ -1,7 +1,7 @@
 <?php
 
-use Mirele\Router;
 use Mirele\Compound\Patterns;
+use Mirele\Router;
 
 # ...
 # Endpoint Version: 1.0.0

@@ -4,8 +4,10 @@
 namespace Mirele\Compound;
 
 
+use Exception;
 use Mirele\Framework\Iterator;
-use Mirele\Compound\Component;
+use Mirele\Framework\Stringer;
+use TypeError;
 
 
 /**
@@ -23,10 +25,11 @@ class Store extends Iterator
     private static $families = [];
 
     /**
-     * @param \Mirele\Compound\Component $Component
-     * @throws \Exception
+     * @param Component $Component
+     * @throws Exception
      */
-    public static function add (Component $Component) {
+    public static function add(Component $Component)
+    {
 
         if ($Component instanceof Component) {
 
@@ -39,13 +42,13 @@ class Store extends Iterator
                 self::$families[$parent][] = $Component->getId();
                 self::$store[$Component->getId()] = $Component;
             } else {
-                throw new \Exception((new Stringer("The component with identifier {ID} already exists"))::format([
+                throw new Exception((new Stringer("The component with identifier {ID} already exists"))::format([
                     '{ID}' => $Component->getId()
                 ]));
             }
 
         } else {
-            throw new \TypeError('The passed class does not match the class of the component');
+            throw new TypeError('The passed class does not match the class of the component');
         }
 
     }
@@ -53,7 +56,7 @@ class Store extends Iterator
     /**
      * @return array
      */
-    public static function getFamilies($sort=false)
+    public static function getFamilies($sort = false)
     {
         $sort = self::$families;
         if ($sort) {
@@ -67,12 +70,13 @@ class Store extends Iterator
      * @param array $props
      * @return false
      */
-    public static function call (string $id, array $props) {
+    public static function call(string $id, array $props)
+    {
 
         $id = str_replace(array_keys(self::$alias), array_values(self::$alias), $id);
 
         if (isset(self::$store[$id])) {
-            return self::$store[$id]->render($props ? (array) $props : []);
+            return self::$store[$id]->render($props ? (array)$props : []);
         }
         return false;
     }
@@ -81,7 +85,8 @@ class Store extends Iterator
      * @param string $id
      * @return false|mixed
      */
-    public static function get (string $id) {
+    public static function get(string $id)
+    {
 
         $id = str_replace(array_keys(self::$alias), array_values(self::$alias), $id);
 

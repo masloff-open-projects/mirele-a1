@@ -1,6 +1,6 @@
 <?php
 
-use \Mirele\Router;
+use Mirele\Router;
 
 # Endpoint for account registration
 # Endpoint Version: 1.0.0
@@ -14,15 +14,15 @@ Router::post('/ajax_endpoint_v1/signup', function () {
     } else {
 
         $props = array(
-            'user_email'    => (MIRELE_POST)['email'],
-            'user_login'    => (MIRELE_POST)['login'],
+            'user_email' => (MIRELE_POST)['email'],
+            'user_login' => (MIRELE_POST)['login'],
             'user_password' => (MIRELE_POST)['password'],
-            'remember'      => false
+            'remember' => false
         );
 
         $user = wc_create_new_customer($props['user_email'], $props['user_login'], $props['user_password']);
 
-        if ( is_wp_error( $user ) ) {
+        if (is_wp_error($user)) {
             wp_send_json_error(array(
                 'status' => 'error',
                 'message' => $user->get_error_message()
@@ -31,7 +31,7 @@ Router::post('/ajax_endpoint_v1/signup', function () {
 
             $user = wp_signon($props);
 
-            if ( is_wp_error( $user ) ) {
+            if (is_wp_error($user)) {
                 wp_send_json_error(array(
                     'status' => 'error',
                     'message' => $user->get_error_message()

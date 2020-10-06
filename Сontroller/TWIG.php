@@ -3,12 +3,12 @@
 namespace Mirele;
 
 use Mirele\Compound\Component;
-use \Mirele\Utils\Converter;
-use \Mirele\Compound\Field;
-use \Mirele\Compound\Template;
-use \Mirele\Framework\Stringer;
-use \Twig\Extension\AbstractExtension;
-use \Twig\TwigFunction;
+use Mirele\Compound\Field;
+use Mirele\Compound\Template;
+use Mirele\Framework\Stringer;
+use Mirele\Utils\Converter;
+use Twig\Extension\AbstractExtension;
+use Twig\TwigFunction;
 
 /**
  * Class TWIG

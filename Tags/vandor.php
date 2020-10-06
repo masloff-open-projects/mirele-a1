@@ -1,8 +1,7 @@
 <?php
 
-use \Mirele\Compound\Tag;
-use \Mirele\Compound\TagsManager;
-use \Mirele\Compound\Component;
+use Mirele\Compound\Tag;
+use Mirele\Compound\TagsManager;
 
 $Tag_ = new Tag();
 $Tag_->setTag('template');

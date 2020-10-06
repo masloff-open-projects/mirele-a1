@@ -3,7 +3,7 @@
 use Mirele\Framework\Customizer;
 use Mirele\Framework\Option;
 
-Customizer::add( (new Option)
+Customizer::add((new Option)
     ->setType("text")
     ->setDefault("Welcome to our website! We are very happy that you have an account on our portal")
     ->setName("mrl_wp_description_login")

@@ -2,14 +2,14 @@
 
 {# First type of attribute #}
     {% for arg, value in attr %}
-        {% if value != false  %}
-            {{ arg|replace({input_class: 'class'}) }}="{{ value }}"
-        {% endif %}
+        {% if value != false %}
+{{ arg|replace({input_class: 'class'}) }}="{{ value }}"
+{% endif %}
     {% endfor %}
 
     {# The second attribute type #}
     {% for arg, value in attributes %}
-        {% if value != false  %}
+        {% if value != false %}
             {{ arg|replace({input_class: 'class'}) }}="{{ value }}"
         {% endif %}
     {% endfor %}

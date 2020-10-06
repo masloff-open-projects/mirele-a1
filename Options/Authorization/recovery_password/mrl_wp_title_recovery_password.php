@@ -3,7 +3,7 @@
 use Mirele\Framework\Customizer;
 use Mirele\Framework\Option;
 
-Customizer::add( (new Option)
+Customizer::add((new Option)
     ->setType("text")
     ->setDefault("Step by step we will restore your password")
     ->setName("mrl_wp_title_recovery_password")

@@ -3,8 +3,8 @@
 namespace Mirele\Compound\Children;
 
 
-use Mirele\Compound\Constructor;
 use Mirele\Compound\Construction;
+use Mirele\Compound\Constructor;
 use Mirele\Compound\Directive;
 use Mirele\Compound\Tag;
 use Mirele\Compound\TagsManager;

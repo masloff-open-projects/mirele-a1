@@ -16,7 +16,7 @@
 
 "use strict";
 
-new Interface ({
+new Interface({
     requires: {
         vue: true,
         jquery: true
@@ -36,7 +36,8 @@ new Interface ({
                 text: false
             }
         },
-        mounted: Event => {},
+        mounted: Event => {
+        },
         methods: {
 
             // Event when sending the form
@@ -63,7 +64,7 @@ new Interface ({
                 });
             },
 
-            toast: function (type, value, delay=1500) {
+            toast: function (type, value, delay = 1500) {
                 this.message.type = type;
                 this.message.text = value;
 

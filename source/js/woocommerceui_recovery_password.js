@@ -16,7 +16,7 @@
 
 "use strict";
 
-new Interface ({
+new Interface({
     requires: {
         vue: true,
         jquery: true
@@ -52,10 +52,10 @@ new Interface ({
                     let keypair = JSON.parse(atob(key || '') || '{}');
 
                     if (keypair || false) {
-                        this.key   = keypair.key   || '';
+                        this.key = keypair.key || '';
                         this.login = keypair.login || '';
                         this.email = keypair.email || '';
-                        this.step  = 2             ||  1;
+                        this.step = 2 || 1;
                     }
 
                 })).then(Event => {
@@ -97,7 +97,7 @@ new Interface ({
                 });
             },
 
-            toast: function (type, value, delay=1500) {
+            toast: function (type, value, delay = 1500) {
                 this.message.type = type;
                 this.message.text = value;
 

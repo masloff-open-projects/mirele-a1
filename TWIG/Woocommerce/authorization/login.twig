@@ -10,10 +10,12 @@
             <form role="form" id="loginForm" @submit.prevent="submit">
                 <div class="mb-4">
                     <div class="form-group mb-3">
-                        <input type="text" class="form-control" id="login" name="login" placeholder="Your Login" v-model="login"/>
+                        <input type="text" class="form-control" id="login" name="login" placeholder="Your Login"
+                               v-model="login"/>
                     </div>
                     <div class="form-group mb-4">
-                        <input type="password" class="form-control" id="password" name="password" placeholder="Your Password" v-model="password"/>
+                        <input type="password" class="form-control" id="password" name="password"
+                               placeholder="Your Password" v-model="password"/>
                     </div>
                     <div v-if="message.text != false" v-html="message.text">
                     </div>
@@ -33,7 +35,8 @@
             </form>
         </div>
         <div class="col-md-6">
-            <img alt="Bootstrap Image Preview" src="{{ source }}/img/forms/login-gray.jpg" width="100%" height="auto" loading="lazy"/>
+            <img alt="Bootstrap Image Preview" src="{{ source }}/img/forms/login-gray.jpg" width="100%" height="auto"
+                 loading="lazy"/>
         </div>
     </div>
 </div>

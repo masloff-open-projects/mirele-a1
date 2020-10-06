@@ -1,4 +1,4 @@
-Project.export('@form-props', new Interface ({
+Project.export('@form-props', new Interface({
     requires: {
         vue: true,
         jquery: true
@@ -17,7 +17,8 @@ Project.export('@form-props', new Interface ({
             props: [],
             type: 'update'
         },
-        mounted: Event => {},
+        mounted: Event => {
+        },
         methods: {
             open: function (event) {
 

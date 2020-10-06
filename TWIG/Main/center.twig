@@ -1,10 +1,10 @@
 <div class="wrap">
     <h1>Mirele Center</h1>
 
-    <hr class="wp-header-end" />
+    <hr class="wp-header-end"/>
 
     <div id="welcome-panel" class="welcome-panel">
-        <input type="hidden" id="welcomepanelnonce" name="welcomepanelnonce" value="76f2143a12" />
+        <input type="hidden" id="welcomepanelnonce" name="welcomepanelnonce" value="76f2143a12"/>
         <div class="welcome-panel-content">
             <h2>Welcome to Mirele!</h2>
             <p class="about-description">Сustomize the template as you wish</p>
@@ -22,15 +22,15 @@
                         <li><a href="#" class="welcome-icon welcome-view-site">View your site</a></li>
                     </ul>
                 </div>
-{#                <div class="welcome-panel-column welcome-panel-last">#}
-{#                    <h3>More Actions</h3>#}
-{#                    <ul>#}
-{#                        <li><a href="http://192.168.1.130/wp-admin/widgets.php" class="welcome-icon welcome-widgets">Manage widgets</a></li>#}
-{#                        <li><a href="http://192.168.1.130/wp-admin/nav-menus.php" class="welcome-icon welcome-menus">Manage menus</a></li>#}
-{#                        <li><a href="http://192.168.1.130/wp-admin/options-discussion.php" class="welcome-icon welcome-comments">Turn comments on or off</a></li>#}
-{#                        <li><a href="https://wordpress.org/support/article/first-steps-with-wordpress/" class="welcome-icon welcome-learn-more">Learn more about getting started</a></li>#}
-{#                    </ul>#}
-{#                </div>#}
+                {# <div class="welcome-panel-column welcome-panel-last"> #}
+                {# <h3>More Actions</h3> #}
+                {# <ul> #}
+                {# <li><a href="http://192.168.1.130/wp-admin/widgets.php" class="welcome-icon welcome-widgets">Manage widgets</a></li> #}
+                {# <li><a href="http://192.168.1.130/wp-admin/nav-menus.php" class="welcome-icon welcome-menus">Manage menus</a></li> #}
+                {# <li><a href="http://192.168.1.130/wp-admin/options-discussion.php" class="welcome-icon welcome-comments">Turn comments on or off</a></li> #}
+                {# <li><a href="https://wordpress.org/support/article/first-steps-with-wordpress/" class="welcome-icon welcome-learn-more">Learn more about getting started</a></li> #}
+                {# </ul> #}
+                {# </div> #}
             </div>
         </div>
     </div>
@@ -41,7 +41,8 @@
     <div id="poststuff">
         <div id="post-body" class="metabox-holder columns-2">
             <div id="post-body-content" style="position: relative;">
-                <table class="wp-mrl-table" width="100%" height="50%" border="0" cellspacing="0" cellpadding="0" id="mireleThemeSettings">
+                <table class="wp-mrl-table" width="100%" height="50%" border="0" cellspacing="0" cellpadding="0"
+                       id="mireleThemeSettings">
                     <thead>
                     <tr>
                         <td colspan="3">
@@ -56,33 +57,40 @@
                     <tr>
                         <td valign="top" class="tabs">
                             <ul width="240px">
-                                <li v-for="tab in tabs"><a href="javascript:void(0);" v-on:click="selectTab(tab.refers || tab.namespace || '*', tab.id || tab.name)">{tab.name}</a></li>
+                                <li v-for="tab in tabs"><a href="javascript:void(0);"
+                                                           v-on:click="selectTab(tab.refers || tab.namespace || '*', tab.id || tab.name)">{tab.name}</a>
+                                </li>
                             </ul>
                         </td>
 
                         <td valign="top" class="content">
                             <div v-if="active == false" class="wp-welcome-page">
                                 <h1>Customize your distribution to suit yourself</h1>
-                                <p>You can hide, change, speed up, animate design elements of your distribution. Switch between the tabs on the left to get to the desired settings menu.</p>
+                                <p>You can hide, change, speed up, animate design elements of your distribution. Switch
+                                    between the tabs on the left to get to the desired settings menu.</p>
                                 <small>Change, optimize, create with <b>Mirele</b></small>
                             </div>
 
                             <div v-else-if="typeof settings === typeof []">
-                                <table width="100%" border="0" cellspacing="0" cellpadding="0" v-for="(option, index) in settings" :key="index" v-bind:data-index="index">
+                                <table width="100%" border="0" cellspacing="0" cellpadding="0"
+                                       v-for="(option, index) in settings" :key="index" v-bind:data-index="index">
                                     <tbody>
                                     <tr>
                                         <td valign="top" class="body">
                                             {# Option body #}
                                             <h4>{ option.title || option.name || "Title not defined" }</h4>
-                                            <small v-if="option.description">{ option.description || "Title not defined" }</small>
+                                            <small v-if="option.description">{ option.description || "Title not defined"
+                                                }</small>
 
                                             {# Alert #}
                                             <div v-if="option.warning">
                                                 <table width="100%" border="0" cellspacing="0" cellpadding="0">
                                                     <tbody>
                                                     <td valign="top">
-                                                        <i v-if="option.warning.type == 'warning'" class="fas fa-exclamation-triangle"></i>
-                                                        <i v-if="option.warning.type == 'info'" class="fas fa-info-circle"></i>
+                                                        <i v-if="option.warning.type == 'warning'"
+                                                           class="fas fa-exclamation-triangle"></i>
+                                                        <i v-if="option.warning.type == 'info'"
+                                                           class="fas fa-info-circle"></i>
                                                     </td>
                                                     <td valign="top">
                                                         <h4>{option.warning.title}</h4>
@@ -139,7 +147,7 @@
                                             </label>
 
                                             {# Default value #}
-                                            <input type="hidden" value="option.default" />
+                                            <input type="hidden" value="option.default"/>
                                         </td>
                                     </tr>
                                     </tbody>
@@ -164,7 +172,8 @@
                             <div class="submitbox" id="submitpost">
                                 <div id="minor-publishing">
                                     <div style="display: none;">
-                                        <p class="submit"><input type="submit" name="save" id="save" class="button" value="Save" /></p>
+                                        <p class="submit"><input type="submit" name="save" id="save" class="button"
+                                                                 value="Save"/></p>
                                     </div>
 
                                     <div id="misc-publishing-actions">
@@ -182,6 +191,6 @@
             </div>
 
         </div>
-        <br class="clear" />
+        <br class="clear"/>
     </div>
 </div>

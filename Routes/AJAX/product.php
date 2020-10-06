@@ -1,6 +1,6 @@
 <?php
 
-use \Mirele\Router;
+use Mirele\Router;
 
 # Endpoint for specific product information
 # Endpoint Version: 1.0.0

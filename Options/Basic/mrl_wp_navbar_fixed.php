@@ -4,7 +4,7 @@ use Mirele\Framework\Customizer;
 use Mirele\Framework\Option;
 
 # Fix the navbar at the top of the page when scrolling
-Customizer::add( (new Option)
+Customizer::add((new Option)
     ->setType("switch")
     ->setDefault(false)
     ->setName("mrl_wp_navbar_fixed")

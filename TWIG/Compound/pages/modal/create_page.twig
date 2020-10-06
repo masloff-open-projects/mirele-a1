@@ -1,4 +1,4 @@
-{# Modal window for page creation in Compound page editor  #}
+{# Modal window for page creation in Compound page editor #}
 
 {% macro render(event) %}
 
@@ -10,7 +10,7 @@
 
                 <form action="" method="post">
 
-                    <img src='{{source|default(event.source)}}/img/icons/compound.png' width="200px">
+                    <img src='{{ source|default(event.source) }}/img/icons/compound.png' width="200px">
 
                     <h4>Choose a page template & enter page title</h4>
                     <p>Choose one of the available page templates</p>

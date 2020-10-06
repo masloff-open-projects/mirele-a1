@@ -1,3 +1,16 @@
-.left{text-align:left}.right{text-align:right}.center{text-align:center}.justify{text-align:justify}
+.left {
+    text-align: left
+}
 
-/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbImFsaWduLnNhc3MiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBQUEsTUFDRSxlQUFnQixDQUVsQixPQUNFLGdCQUFpQixDQUVuQixRQUNFLGlCQUFrQixDQUVwQixTQUNFLGtCQUFtQiIsImZpbGUiOiJhbGlnbi5jc3MifQ== */
+.right {
+    text-align: right
+}
+
+.center {
+    text-align: center
+}
+
+.justify {
+    text-align: justify
+}
+/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbImFsaWduLnNhc3MiLCJhbGlnbi5jc3MiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBQUE7SUNDSTtBQUNKOztBQUVBO0lBQ0k7QUFDSjs7QUFFQTtJQUNJO0FBQ0o7O0FBRUE7SUFDSTtBQUNKIiwiZmlsZSI6ImFsaWduLmNzcyJ9 */

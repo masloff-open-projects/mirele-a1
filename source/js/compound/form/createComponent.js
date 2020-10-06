@@ -1,4 +1,4 @@
-Project.export('@form-createComponent', new Interface ({
+Project.export('@form-createComponent', new Interface({
     requires: {
         vue: true,
         jquery: true
@@ -13,7 +13,8 @@ Project.export('@form-createComponent', new Interface ({
             __editor: CompoundEditor.vue || Object,
             form: [],
         },
-        mounted: Event => {},
+        mounted: Event => {
+        },
         methods: {
             open: function (event) {
                 this.event = event;
@@ -33,9 +34,9 @@ Project.export('@form-createComponent', new Interface ({
                 })
 
             },
-            
+
             submit: function (event) {
-                
+
             }
         }
     }

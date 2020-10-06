@@ -3,7 +3,7 @@
 use Mirele\Framework\Customizer;
 use Mirele\Framework\Option;
 
-Customizer::add( (new Option)
+Customizer::add((new Option)
     ->setType("integer")
     ->setDefault(3)
     ->setName("mrl_wp_sidebar_width_1_active")

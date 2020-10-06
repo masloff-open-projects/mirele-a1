@@ -6,7 +6,7 @@
 
     {{ wp.do_action( 'woocommerce_before_main_content' ) }}
 
-    <div class="container-fluid woocommerce-product_{{product.get_id}}" id="productObject">
+    <div class="container-fluid woocommerce-product_{{ product.get_id }}" id="productObject">
 
         {# Main block #}
         <div class="row mb-5" itemtype="http://schema.org/Product" itemscope>
@@ -22,41 +22,41 @@
             <div class="col-md-6">
 
                 {# SEO #}
-                <meta itemprop="sku" content="{{ product.get_sku }}" />
-                <meta itemprop="mpn" content="925872" />
-                <meta itemprop="name" content="{{ product.name }}" />
-                <meta itemprop="description" content="{{ product.description }}" />
+                <meta itemprop="sku" content="{{ product.get_sku }}"/>
+                <meta itemprop="mpn" content="925872"/>
+                <meta itemprop="name" content="{{ product.name }}"/>
+                <meta itemprop="description" content="{{ product.description }}"/>
 
-                <link itemprop="image" href="{{ product.get_image_src }}" />
+                <link itemprop="image" href="{{ product.get_image_src }}"/>
 
                 {% for image in product.get_gallery_image_urls_thumbnails %}
-                    <link itemprop="image" href="https://example.com/photos/16x9/photo.jpg" />
+                    <link itemprop="image" href="https://example.com/photos/16x9/photo.jpg"/>
                 {% endfor %}
 
                 <div itemprop="aggregateRating" itemtype="http://schema.org/AggregateRating" itemscope>
-                    <meta itemprop="reviewCount" content="89" />
-                    <meta itemprop="ratingValue" content="4.4" />
+                    <meta itemprop="reviewCount" content="89"/>
+                    <meta itemprop="ratingValue" content="4.4"/>
                 </div>
 
                 <div itemprop="brand" itemtype="http://schema.org/Brand" itemscope>
-                    <meta itemprop="name" content="ACME" />
+                    <meta itemprop="name" content="ACME"/>
                 </div>
 
                 <div itemprop="review" itemtype="http://schema.org/Review" itemscope>
                     <div itemprop="author" itemtype="http://schema.org/Person" itemscope>
-                        <meta itemprop="name" content="Fred Benson" />
+                        <meta itemprop="name" content="Fred Benson"/>
                     </div>
                     <div itemprop="reviewRating" itemtype="http://schema.org/Rating" itemscope>
-                        <meta itemprop="ratingValue" content="4" />
-                        <meta itemprop="bestRating" content="5" />
+                        <meta itemprop="ratingValue" content="4"/>
+                        <meta itemprop="bestRating" content="5"/>
                     </div>
                 </div>
 
                 <div itemprop="offers" itemtype="http://schema.org/AggregateOffer" itemscope>
-                    <meta itemprop="lowPrice" content="119.99" />
-                    <meta itemprop="highPrice" content="199.99" />
-                    <meta itemprop="offerCount" content="6" />
-                    <meta itemprop="priceCurrency" content="USD" />
+                    <meta itemprop="lowPrice" content="119.99"/>
+                    <meta itemprop="highPrice" content="199.99"/>
+                    <meta itemprop="offerCount" content="6"/>
+                    <meta itemprop="priceCurrency" content="USD"/>
                 </div>
 
                 {# Title #}
@@ -102,8 +102,10 @@
 
                                                 <div class="woocommerce-props-single-prop woocommerce-attribute_{{ id }} mb-2 font-weight-normal">{{ taxonomy.name|upper }}</div>
 
-                                                <select name="attribute_{{ id }}" id="attribute_{{ id }}" style="width:80%" v-model="variation['attribute_{{ id }}']">
-                                                    <option value="{{ taxonomy.name }}" :selected="true" disabled>{{ taxonomy.name|upper }}</option>
+                                                <select name="attribute_{{ id }}" id="attribute_{{ id }}"
+                                                        style="width:80%" v-model="variation['attribute_{{ id }}']">
+                                                    <option value="{{ taxonomy.name }}" :selected="true"
+                                                            disabled>{{ taxonomy.name|upper }}</option>
 
                                                     {% for i in wp.get_the_terms(product.get_id, i.get_data.name) %}
                                                         <option value="{{ i.slug }}">{{ i.name }}</option>
@@ -114,9 +116,11 @@
 
                                                 <div class="woocommerce-props-single-prop woocommerce-attribute_{{ id }} mb-2 font-weight-normal">{{ i.get_data.name|upper }}</div>
 
-                                                <select name="attribute_{{ id }}" id="attribute_{{ id }}" style="width:80%" v-model="variation['attribute_{{ id }}']">
+                                                <select name="attribute_{{ id }}" id="attribute_{{ id }}"
+                                                        style="width:80%" v-model="variation['attribute_{{ id }}']">
 
-                                                    <option value="{{ i.get_data.name }}" selected disabled>{{ i.get_data.name|upper }}</option>
+                                                    <option value="{{ i.get_data.name }}" selected
+                                                            disabled>{{ i.get_data.name|upper }}</option>
 
                                                     {% for i in i.get_data.options %}
                                                         <option value="{{ i }}">{{ i }}</option>

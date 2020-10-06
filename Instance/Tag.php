@@ -29,46 +29,6 @@ class Tag
     private $attributes;
 
     /**
-     * @param string $tag
-     * @return $this
-     */
-    public function setTag(string $tag)
-    {
-        $this->tag = $tag;
-        return $this;
-    }
-
-    /**
-     * @param $essence
-     * @return $this
-     */
-    public function setEssence($essence)
-    {
-        $this->essence = $essence;
-        return $this;
-    }
-
-    /**
-     * @param $reference
-     * @return $this
-     */
-    public function setReference($reference)
-    {
-        $this->reference = $reference;
-        return $this;
-    }
-
-    /**
-     * @param $attributes
-     * @return $this
-     */
-    public function setAttributes(array $attributes)
-    {
-        $this->attributes = $attributes;
-        return $this;
-    }
-
-    /**
      * @param string $name
      * @param $value
      * @return $this
@@ -85,6 +45,16 @@ class Tag
     public function getAttributes()
     {
         return $this->attributes;
+    }
+
+    /**
+     * @param $attributes
+     * @return $this
+     */
+    public function setAttributes(array $attributes)
+    {
+        $this->attributes = $attributes;
+        return $this;
     }
 
     /**
@@ -109,12 +79,32 @@ class Tag
     }
 
     /**
-     * @deprecated
+     * @param $reference
+     * @return $this
+     */
+    public function setReference($reference)
+    {
+        $this->reference = $reference;
+        return $this;
+    }
+
+    /**
      * @return mixed
+     * @deprecated
      */
     public function getTag()
     {
         return $this->tag;
+    }
+
+    /**
+     * @param string $tag
+     * @return $this
+     */
+    public function setTag(string $tag)
+    {
+        $this->tag = $tag;
+        return $this;
     }
 
     /**
@@ -131,6 +121,16 @@ class Tag
     public function getEssence()
     {
         return $this->essence;
+    }
+
+    /**
+     * @param $essence
+     * @return $this
+     */
+    public function setEssence($essence)
+    {
+        $this->essence = $essence;
+        return $this;
     }
 
 }

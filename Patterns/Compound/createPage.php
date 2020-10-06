@@ -3,11 +3,11 @@
 
 namespace Mirele\Compound\Patterns;
 
-use \Mirele\Compound\Lexer;
-use \Mirele\Compound\Tag;
-use \Mirele\Compound\Grider;
-use \Mirele\Compound\Template;
-use \Mirele\Compound\Field;
+use Mirele\Compound\Field;
+use Mirele\Compound\Grider;
+use Mirele\Compound\Lexer;
+use Mirele\Compound\Tag;
+use Mirele\Compound\Template;
 
 
 /**

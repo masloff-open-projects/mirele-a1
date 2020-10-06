@@ -1,8 +1,7 @@
 <?php
 
-use Mirele\Compound\Lexer;
-use Mirele\Router;
 use Mirele\Compound\Patterns;
+use Mirele\Router;
 
 Router::post('/ajax_endpoint_v1/Compound-insertComponent', function () {
 
@@ -11,10 +10,10 @@ Router::post('/ajax_endpoint_v1/Compound-insertComponent', function () {
 
         # Create a work environment
         $component = (MIRELE_POST)['component'];
-        $page      = (MIRELE_POST)['page'];
-        $nonce     = (MIRELE_POST)['nonce'];
-        $field     = (MIRELE_POST)['field'];
-        $template  = (MIRELE_POST)['template'];
+        $page = (MIRELE_POST)['page'];
+        $nonce = (MIRELE_POST)['nonce'];
+        $field = (MIRELE_POST)['field'];
+        $template = (MIRELE_POST)['template'];
 
         $pattern = new Patterns\insertComponent();
         $pattern->setPage($page);

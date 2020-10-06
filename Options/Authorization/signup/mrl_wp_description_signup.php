@@ -3,7 +3,7 @@
 use Mirele\Framework\Customizer;
 use Mirele\Framework\Option;
 
-Customizer::add( (new Option)
+Customizer::add((new Option)
     ->setType("text")
     ->setDefault("By creating an account on our site, you can manage your orders, participate in promotions, buy products in two clicks, and much more")
     ->setName("mrl_wp_description_signup")

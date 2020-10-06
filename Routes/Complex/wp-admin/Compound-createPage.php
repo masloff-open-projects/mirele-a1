@@ -1,8 +1,7 @@
 <?php
 
-use \Mirele\Router;
-
 use Mirele\Compound\Patterns;
+use Mirele\Router;
 
 Router::post('/wp-admin/admin.php', function () {
     if (
@@ -13,9 +12,9 @@ Router::post('/wp-admin/admin.php', function () {
     ) {
 
         # Create a work environment
-        $name     = (MIRELE_POST)['name'];
+        $name = (MIRELE_POST)['name'];
         $template = (MIRELE_POST)['template'];
-        $nonce    = (MIRELE_POST)['nonce'];
+        $nonce = (MIRELE_POST)['nonce'];
 
         # Security check and anti-spam requests
         if (wp_verify_nonce($nonce, MIRELE_NONCE)) {

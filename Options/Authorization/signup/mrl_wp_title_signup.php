@@ -3,7 +3,7 @@
 use Mirele\Framework\Customizer;
 use Mirele\Framework\Option;
 
-Customizer::add( (new Option)
+Customizer::add((new Option)
     ->setType("text")
     ->setDefault("Welcome to {WEBSITE_NAME}")
     ->setName("mrl_wp_title_signup")

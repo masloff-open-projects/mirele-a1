@@ -3,10 +3,9 @@
 namespace Mirele\Templates;
 
 use Mirele\Compound\Config;
-use Mirele\Compound\Grider;
-use Mirele\Compound\Store;
-use Mirele\Compound\Template;
 use Mirele\Compound\Field;
+use Mirele\Compound\Grider;
+use Mirele\Compound\Template;
 
 $Template = new Template();
 $Template->setId('default_matrix');

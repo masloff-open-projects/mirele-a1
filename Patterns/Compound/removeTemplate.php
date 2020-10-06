@@ -4,7 +4,7 @@
 namespace Mirele\Compound\Patterns;
 
 
-use \Mirele\Compound\Lexer;
+use Mirele\Compound\Lexer;
 
 
 class removeTemplate

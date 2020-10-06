@@ -41,17 +41,6 @@ class Field
 
     /**
      * @param string $meta
-     * @param mixed $value
-     * @return $this
-     */
-    public function setMeta(string $meta, $value)
-    {
-        $this->meta[$meta] = $value;
-        return $this;
-    }
-
-    /**
-     * @param string $meta
      * @return false|mixed
      */
     public function getMeta(string $meta)
@@ -64,40 +53,13 @@ class Field
     }
 
     /**
-     * @param array $props
+     * @param string $meta
+     * @param mixed $value
      * @return $this
      */
-    public function setComponentProps(array $props)
+    public function setMeta(string $meta, $value)
     {
-        $this->componentProps = $props;
-        return $this;
-    }
-
-    /**
-     * @param mixed $name
-     */
-    public function setName($name)
-    {
-        $this->name = $name;
-        return $this;
-    }
-
-    /**
-     * @param mixed $id
-     */
-    public function setId($id)
-    {
-        $this->id = $id;
-        return $this;
-    }
-
-    /**
-     * @param $key
-     * @param $data
-     */
-    public function setData($key, $data)
-    {
-        $this->data[$key] = $data;
+        $this->meta[$meta] = $value;
         return $this;
     }
 
@@ -111,12 +73,55 @@ class Field
     }
 
     /**
+     * @param $key
+     * @param $data
+     */
+    public function setData($key, $data)
+    {
+        $this->data[$key] = $data;
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    /**
+     * @param mixed $name
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getProps()
+    {
+        return $this->props;
+    }
+
+    /**
      * @param array $props
      */
     public function setProps(array $props)
     {
         $this->props = $props;
         return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getComponent()
+    {
+        return $this->component;
     }
 
     /**
@@ -131,33 +136,19 @@ class Field
     /**
      * @return mixed
      */
-    public function getName()
-    {
-        return $this->name;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getProps()
-    {
-        return $this->props;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getComponent()
-    {
-        return $this->component;
-    }
-
-    /**
-     * @return mixed
-     */
     public function getComponentProps()
     {
         return $this->componentProps;
+    }
+
+    /**
+     * @param array $props
+     * @return $this
+     */
+    public function setComponentProps(array $props)
+    {
+        $this->componentProps = $props;
+        return $this;
     }
 
     /**
@@ -166,5 +157,14 @@ class Field
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * @param mixed $id
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
+        return $this;
     }
 }

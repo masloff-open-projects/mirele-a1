@@ -6,11 +6,13 @@
         {% for template in event.templates %}
             {% if template.getId %}
 
-                <button type="submit" class="col-6 left margin-x-2 margin-y-2 margin-buttom-2 padding-3 wp-mrl-component-box" value="{{ template.getId }}" name="template">
-                    {#                                            <img src="http://placehold.it/200x200" width="100%" alt="">#}
+                <button type="submit"
+                        class="col-6 left margin-x-2 margin-y-2 margin-buttom-2 padding-3 wp-mrl-component-box"
+                        value="{{ template.getId }}" name="template">
+                    {# <img src="http://placehold.it/200x200" width="100%" alt=""> #}
 
                     <h5 class="margin-0 padding-0">{{ template.getId }}</h5>
-                    {#                                            <small class="margin-0 padding-0">{{ component.getMeta('editor').getData('title')|default(component.getId) }}</small>#}
+                    {# <small class="margin-0 padding-0">{{ component.getMeta('editor').getData('title')|default(component.getId) }}</small> #}
                 </button>
 
             {% endif %}

@@ -19,6 +19,6 @@ defined( 'ABSPATH' ) || exit;
 
 do_action('woocommerce_cart_mirele_empty');
 
-use \Mirele\Compound\Store;
+    use Mirele\Compound\Store;
 
-Store::call('default_cart_placeholder', []);
+    Store::call('default_cart_placeholder', []);

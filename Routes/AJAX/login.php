@@ -1,6 +1,6 @@
 <?php
 
-use \Mirele\Router;
+use Mirele\Router;
 
 # Endpoint for user authorization in the system
 # Endpoint Version: 1.0.0
@@ -14,14 +14,14 @@ Router::post('/ajax_endpoint_v1/login', function () {
     } else {
 
         $props = array(
-            'user_login'    => (MIRELE_POST)['login'],
+            'user_login' => (MIRELE_POST)['login'],
             'user_password' => (MIRELE_POST)['password'],
-            'remember'      => (MIRELE_POST)['remember'] == 'true' ? true : false
+            'remember' => (MIRELE_POST)['remember'] == 'true' ? true : false
         );
 
         $user = wp_signon($props);
 
-        if ( is_wp_error( $user ) ) {
+        if (is_wp_error($user)) {
             wp_send_json_error(array(
                 'status' => 'error',
                 'message' => $user->get_error_message()

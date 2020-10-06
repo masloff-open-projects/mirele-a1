@@ -4,7 +4,6 @@ namespace Mirele\Components;
 
 use Mirele\Compound\Component;
 use Mirele\Compound\Store;
-use Mirele\TWIG;
 
 $Component = new Component ();
 $Component->setId('default_menu_navbar');

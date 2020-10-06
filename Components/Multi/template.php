@@ -4,7 +4,6 @@ namespace Mirele\Components;
 
 use Mirele\Compound\Component;
 use Mirele\Compound\Store;
-use Mirele\TWIG;
 
 $pages = get_pages( array(
     'meta_key' => '_wp_page_template',

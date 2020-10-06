@@ -1,11 +1,11 @@
 <?php
 
-use Mirele\Router;
-use Mirele\Compound\Lexer;
-use Mirele\Compound\Tag;
-use Mirele\Compound\Store;
 use Mirele\Compound\Component;
 use Mirele\Compound\Config;
+use Mirele\Compound\Lexer;
+use Mirele\Compound\Store;
+use Mirele\Compound\Tag;
+use Mirele\Router;
 
 
 # ...
@@ -17,18 +17,18 @@ Router::post('/ajax_endpoint_v1/Compound-getProps', function () {
     if (is_user_logged_in() and current_user_can(MIRELE_RIGHTS['page']['edit'])) {
 
         $props = array(
-            'template'    => (MIRELE_POST)['template'],
-            'component'   => (MIRELE_POST)['component'],
-            'field'       => (MIRELE_POST)['field'],
-            'page'        => (MIRELE_POST)['page'],
+            'template' => (MIRELE_POST)['template'],
+            'component' => (MIRELE_POST)['component'],
+            'field' => (MIRELE_POST)['field'],
+            'page' => (MIRELE_POST)['page'],
         );
 
-        $wp_page = (object) get_post($props['page']);
+        $wp_page = (object)get_post($props['page']);
 
         $Lexer = new Lexer($wp_page->post_content);
         $lex = $Lexer->parse();
 
-        $root = (object) $lex->getRootInstanceById($props['template']);
+        $root = (object)$lex->getRootInstanceById($props['template']);
 
         if (isset($root->fields) and is_array($root->fields)) {
             if (isset($root->fields[$props['field']])) {
@@ -38,8 +38,8 @@ Router::post('/ajax_endpoint_v1/Compound-getProps', function () {
                         if (!empty($name)) {
                             $component = Store::get($name);
                             if ($component instanceof Component) {
-                                $propsOfComponent = (array) $component->getProps();
-                                $propsOfTag = (array) $tag->getAttributes();
+                                $propsOfComponent = (array)$component->getProps();
+                                $propsOfTag = (array)$tag->getAttributes();
                                 $propsOfMeta = array();
                                 $meta = $component->getMeta('editor');
                                 if ($meta instanceof Config) {

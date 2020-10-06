@@ -16,12 +16,13 @@
 
 "use strict";
 
-new Interface ({
+new Interface({
     requires: {
         vue: true,
         jquery: true
     },
-    ready: function () {},
+    ready: function () {
+    },
     instances: {
         vue: {
             carousel: {

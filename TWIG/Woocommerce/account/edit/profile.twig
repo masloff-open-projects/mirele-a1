@@ -12,27 +12,36 @@
             <form method="post" {{ wp.do_action( 'woocommerce_edit_account_form_tag' ) }}>
 
                 <div class="form-group">
-                    <input type="text"  required="required" placeholder="{{ wp.e('First name', 'Woocommerce') }}" name="account_first_name" id="account_first_name" autocomplete="given-name" value="{{ user.first_name }}" >
+                    <input type="text" required="required" placeholder="{{ wp.e('First name', 'Woocommerce') }}"
+                           name="account_first_name" id="account_first_name" autocomplete="given-name"
+                           value="{{ user.first_name }}">
                     <small class="form-text text-muted">We'll never share your email with anyone else.</small>
                 </div>
 
                 <div class="form-group">
-                    <input type="text"  required="required" placeholder="{{ wp.e('Last name', 'Woocommerce') }}" class="woo-account-edit-input"  name="account_last_name" id="account_last_name" autocomplete="family-name" value="{{ user.last_name }}" >
+                    <input type="text" required="required" placeholder="{{ wp.e('Last name', 'Woocommerce') }}"
+                           class="woo-account-edit-input" name="account_last_name" id="account_last_name"
+                           autocomplete="family-name" value="{{ user.last_name }}">
                     <small class="form-text text-muted">We'll never share your email with anyone else.</small>
                 </div>
 
                 <div class="form-group">
-                    <input type="text"  required="required" placeholder="{{ wp.e('Display name', 'Woocommerce') }}" class="woo-account-edit-input"  name="account_display_name" id="account_display_name" value="{{ user.display_name }}" data-toggle="tooltip" data-placement="left" title="<?php esc_html_e( 'This will be how your name will be displayed in the account section and in reviews', 'Woocommerce' ); ?>">
+                    <input type="text" required="required" placeholder="{{ wp.e('Display name', 'Woocommerce') }}"
+                           class="woo-account-edit-input" name="account_display_name" id="account_display_name"
+                           value="{{ user.display_name }}" data-toggle="tooltip" data-placement="left"
+                           title="<?php esc_html_e( 'This will be how your name will be displayed in the account section and in reviews', 'Woocommerce' ); ?>">
                     <small class="form-text text-muted">We'll never share your email with anyone else.</small>
                 </div>
 
                 <div class="form-group">
-                    <input type="email" required="required" placeholder="{{ wp.e('Email address', 'Woocommerce') }}" class="woo-account-edit-input"  name="account_email" id="account_email" autocomplete="email" value="{{ user.user_email }}" >
+                    <input type="email" required="required" placeholder="{{ wp.e('Email address', 'Woocommerce') }}"
+                           class="woo-account-edit-input" name="account_email" id="account_email" autocomplete="email"
+                           value="{{ user.user_email }}">
                     <small class="form-text text-muted">We'll never share your email with anyone else.</small>
                 </div>
 
                 {{ wp.xss(wp.wp_nonce_field( 'save_account_details', 'save-account-details-nonce' ))|raw }}
-                <input type="hidden" name="action" value="save_account_details" />
+                <input type="hidden" name="action" value="save_account_details"/>
 
                 <button type="submit">Save</button>
             </form>

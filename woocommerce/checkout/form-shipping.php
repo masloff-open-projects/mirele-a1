@@ -19,7 +19,6 @@
 defined( 'ABSPATH' ) || exit;
 
 use Mirele\Compound\Store;
-use Mirele\Framework\Buffer;
 
 Store::call('default_form_shipping', [
     'checkout' => $checkout,

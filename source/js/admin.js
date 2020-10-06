@@ -86,13 +86,15 @@ jQuery(document).ready(init => {
             // Try get all options
             new WPAjax('options', {
                 namespace: 'all'
-            }).then(event => { this.options = (typeof event.data === typeof [] ? event.data : false) });
+            }).then(event => {
+                this.options = (typeof event.data === typeof [] ? event.data : false)
+            });
 
         },
         methods: {
 
             // Select active tab
-            selectTab: function (namespace='*', name='default') {
+            selectTab: function (namespace = '*', name = 'default') {
                 this.active = name || '*' || 'basic';
 
                 // If options is not exist then get options for current tab

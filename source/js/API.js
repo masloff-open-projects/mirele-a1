@@ -5,8 +5,8 @@ class __project {
     constructor() {
         this.$export = {};
     }
-    
-    export (name='', object) {
+
+    export(name = '', object) {
         if (!(name in this.$export)) {
             this.$export[name] = object;
             return object;
@@ -15,7 +15,7 @@ class __project {
         }
     }
 
-    import (name='') {
+    import(name = '') {
         if (name in this.$export) {
             return this.$export[name];
         } else {
@@ -28,7 +28,7 @@ class __project {
 const Project = new __project();
 
 class WPAjax {
-    constructor (method='/', data={}) {
+    constructor(method = '/', data = {}) {
 
         // Create request body
         const body = Object.assign({
@@ -55,7 +55,7 @@ class WPAjax {
 
 class Interface {
 
-    constructor(data={}) {
+    constructor(data = {}) {
 
         // Checking to see if there
         // are requests to check existing instances

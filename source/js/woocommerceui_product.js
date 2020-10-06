@@ -16,7 +16,7 @@
 
 "use strict";
 
-new Interface ({
+new Interface({
     requires: {
         vue: true,
         jquery: true
@@ -75,7 +75,7 @@ new Interface ({
                         deep: true,
 
                         // Product version update
-                        handler: function(attributes) {
+                        handler: function (attributes) {
 
                             var сoincidence = false;
                             for (const [id, variant] of Object.entries(Product.get_available_variations || [])) {
@@ -84,7 +84,9 @@ new Interface ({
                                     сoincidence = !value || attributes[attribute] == value;
 
                                     // Product parameters did not match on 1 property
-                                    if (сoincidence == false) { break; }
+                                    if (сoincidence == false) {
+                                        break;
+                                    }
                                 }
 
                                 // The product parameters coincided with one of the product variations

@@ -4,13 +4,6 @@
 namespace Mirele\Compound;
 
 
-use Mirele\Framework\Buffer;
-use Mirele\Framework\Stringer;
-use Mirele\Compound\Lex;
-use Mirele\Compound\Children;
-use voku\helper\AntiXSS;
-
-
 /**
  * Class Lexer
  * @package Mirele\Compound

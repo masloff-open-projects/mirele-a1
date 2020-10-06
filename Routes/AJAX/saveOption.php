@@ -1,6 +1,6 @@
 <?php
 
-use \Mirele\Router;
+use Mirele\Router;
 
 # Endpoint to save or update options
 # Endpoint Version: 1.0.0

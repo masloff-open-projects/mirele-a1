@@ -35,14 +35,19 @@
                                 </div>
 
                                 <div>
-                                    <input type="text" :value="field.value" :name="field.name" v-model="props[field.name]">
+                                    <input type="text" :value="field.value" :name="field.name"
+                                           v-model="props[field.name]">
                                 </div>
                             </div>
                         </div>
 
                         <div v-if="fields.length||[] > 0">
-                            <button type="submit" class="button button-primary button-large" value="update" name="submit" @click="type='update'">Save and update</button>
-                            <button type="submit" class="button button-large" value="remove" name="submit" @click="type='remove'">Remove</button>
+                            <button type="submit" class="button button-primary button-large" value="update"
+                                    name="submit" @click="type='update'">Save and update
+                            </button>
+                            <button type="submit" class="button button-large" value="remove" name="submit"
+                                    @click="type='remove'">Remove
+                            </button>
                         </div>
 
                     </form>

@@ -1,22 +1,22 @@
 {# event: #}
-{#   id: ID for modal window #}
-{#   class: class of modal #}
-{#   style: style of modal #}
-{#   __ignore_padding|true: (true/false) Ignore indents inside the container #}
-{#   __content_class: Class for the internal unit #}
-{#   __ignore_default_content_class|false: (true/false) Ignore the classes set for the default content of the modal window #}
-{#   form: #}
-{#     action: action attribute for form #}
-{#     method|post: method attribute for form #}
-{#     id|'modalframe': id attribute for form #}
-{#     class: class attribute for form #}
-{#     role|'form': role attribute for form #}
-{#     attr: - #}
-{#   header: #}
-{#     title|'Insert': title of header #}
-{#     description: description of header #}
-{#     class|'wp-mrl-default-header': class of header. Defines the colour range of the block #}
-{#     class|'default-header': class of header. Defines the colour range of the block #}
+{# id: ID for modal window #}
+{# class: class of modal #}
+{# style: style of modal #}
+{# __ignore_padding|true: (true/false) Ignore indents inside the container #}
+{# __content_class: Class for the internal unit #}
+{# __ignore_default_content_class|false: (true/false) Ignore the classes set for the default content of the modal window #}
+{# form: #}
+{# action: action attribute for form #}
+{# method|post: method attribute for form #}
+{# id|'modalframe': id attribute for form #}
+{# class: class attribute for form #}
+{# role|'form': role attribute for form #}
+{# attr: - #}
+{# header: #}
+{# title|'Insert': title of header #}
+{# description: description of header #}
+{# class|'wp-mrl-default-header': class of header. Defines the colour range of the block #}
+{# class|'default-header': class of header. Defines the colour range of the block #}
 
 {% macro render(event) %}
 
@@ -25,7 +25,9 @@
             <div class="{{ (event.__ignore_padding|default(true) == true ? 'ignore CModal' : 'CModal') ~ event.__content_class }}">
 
                 <!-- Form content -->
-                    <form action="{{ event.form.action }}" method="{{ event.form.method|default('post') }}" role="{{ event.form.role|default('form') }}" id="{{ event.form.id|default('modalframe') }}" class="{{ event.form.class|default('') }}" {{ event.form.attr|raw }}>
+                <form action="{{ event.form.action }}" method="{{ event.form.method|default('post') }}"
+                      role="{{ event.form.role|default('form') }}" id="{{ event.form.id|default('modalframe') }}"
+                      class="{{ event.form.class|default('') }}" {{ event.form.attr|raw }}>
 
                     <!-- Header -->
                     <div class="left margin-buttom-2 margin-top-0 display-block padding-y-10 padding-x-8 {{ event.header.class|default('wp-mrl-default-header') }}">
