@@ -59,9 +59,7 @@ class Lexer
 
         if ($data instanceof Layout) {
             $this->signature = clone $data;
-        }
-
-        if (is_string($data)) {
+        } elseif (is_string($data)) {
             $this->fragment = (string) $data;
         }
     }
@@ -205,6 +203,15 @@ class Lexer
         $delimiter = $this->glossary['delimiter'];
         $attrs_inline = $this->__xml_array2attr((array) $attrs);
         $this->source_code .= "$indent<$tag $attrs_inline/>$delimiter";
+    }
+
+    /**
+     * @param string $fragment
+     */
+    public function loadCodeFromString (string $fragment)
+    {
+        $this->fragment = $fragment;
+        return $this;
     }
 
     /**

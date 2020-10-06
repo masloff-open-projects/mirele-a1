@@ -14,17 +14,19 @@ Router::post('/ajax_endpoint_v1/Compound-removeTemplate', function () {
         # Implementation of an event pattern created as
         # an abstract object in the "Mirele\Compound\Patterns" namespace
         $pattern = new Patterns\removeTemplate();
-        $pattern->setTemplate((MIRELE_POST)['template']);
-        $pattern->setId((MIRELE_POST)['id']);
-        $execute = $pattern->execute();
+        $pattern->template = (MIRELE_POST)['template'];
+        $pattern->page = (MIRELE_POST)['page'];
 
-        # Return the results of the pattern
-        if ($execute) {
-            wp_send_json_success([]);
-            return true;
+        $biffer = $pattern();
+
+        if ($biffer) {
+            return wp_send_json_success([
+                'result' => $biffer
+            ]);
         } else {
-            wp_send_json_error([]);
-            return false;
+            return wp_send_json_error([
+                'result' => $biffer
+            ]);
         }
 
     }

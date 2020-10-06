@@ -24,7 +24,7 @@ define('MIRELE_PUT', $_SERVER['REQUEST_METHOD'] == 'PUT' ? $_PUT : []);
 define('MIRELE_DELETE', $_SERVER['REQUEST_METHOD'] == 'DELETE' ? $_DELETE : []);
 
 /**
- *
+ * @deprecated
  */
 define('MIRELE_REQUIRED', [
     'PHP' => '7.0.0'
@@ -49,6 +49,7 @@ define('BBPRESS_SUPPORT', function_exists('is_bbpress'));
  * The constant of BuddyPress plugin template support at the moment
  */
 define('BUDDYPRESS_SUPPORT', function_exists('is_buddypress'));
+
 
 # Meta Constants
 
@@ -116,13 +117,13 @@ define('COMPOUND_TWIG_DIR', get_template_directory() . '/TWIG');
  * Constant with by public data folder
  * @deprecated
  */
-define('MIRELE_SOURCE_DIR', get_template_directory_uri() . '/source');
+define('MIRELE_SOURCE_DIR', get_template_directory_uri() . '/Public');
 
 /**
  * Constant with by public data folder
  * @deprecated
  */
-define('MIRELE_SOURCE_PATH', get_template_directory() . '/source');
+define('MIRELE_SOURCE_PATH', get_template_directory() . '/Public');
 
 /**
  * Constant with by log file

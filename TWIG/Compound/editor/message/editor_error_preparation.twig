@@ -1,0 +1,23 @@
+{# ... #}
+
+{% macro render(event) %}
+
+    {% import 'Prototypes/message/compound_message.twig' as prototype %}
+
+    {{ prototype.render({
+        icon: 'dashicons-warning',
+        title: 'Workspace preparation error',
+        description: 'An error occurred in preparing the workspace. It is possible that
+                                    your connection to the site is unreliable, try reloading the page and trying again.
+                                    If the problem persists, contact your system administrator or write to technical
+                                    support',
+        class: 'hidden',
+        attr: {
+            'data-component': 'error',
+            'data-namespace': 'editor'
+        }
+
+    }) }}
+
+
+{% endmacro %}

@@ -34,6 +34,9 @@ use Mirele\TWIG;
 # Checking the compatibility and legality of the file call
 defined('ABSPATH') or die('Not defined ABSPATH');
 
+# Main Constants
+include_once 'Adjustment.php';
+
 # Compatibility check
 if (version_compare(PHP_VERSION, MIRELE_REQUIRED['PHP']) <= 0) {
 
@@ -66,8 +69,9 @@ if (version_compare(PHP_VERSION, MIRELE_REQUIRED['PHP']) <= 0) {
     return;
 }
 
-# Main Constants
-include_once 'Adjustment.php';
+ini_set('error_reporting', E_ALL);
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
 
 # Show errors
 if (wp_doing_ajax() == true and true) {
@@ -93,9 +97,11 @@ if (wp_doing_ajax() === false) {
     # of the interest.
 
     # Connection of all prototypes and instances
+    include_once 'Traits/vendor.php';
     include_once 'Interface/vendor.php';
     include_once 'Instance/vendor.php';
     include_once 'Сontroller/vendor.php';
+    include_once 'Prototypes/vendor.php';
     include_once 'Patterns/vendor.php';
 
     # Main Core
@@ -118,7 +124,6 @@ if (wp_doing_ajax() === false) {
     include_once 'Components/vendor.php';
     include_once 'Routes/vendor.php';
     include_once 'Templates/vendor.php';
-    include_once 'Prototypes/vendor.php';
     include_once 'Options/vendor.php';
     include_once 'Tags/vandor.php';
 
@@ -129,9 +134,11 @@ if (wp_doing_ajax() === false) {
     # of the interest.
 
     # Connection of all prototypes and instances
+    include_once 'Traits/vendor.php';
     include_once 'Interface/vendor.php';
     include_once 'Instance/vendor.php';
     include_once 'Сontroller/vendor.php';
+    include_once 'Prototypes/vendor.php';
     include_once 'Patterns/vendor.php';
     include_once 'Prototypes/vendor.php';
     include_once 'Components/vendor.php';
@@ -248,14 +255,7 @@ add_action(
         Store::call($attr['name'], array_merge((array)$attr, ['attr' => (array)$attr], (array)['context_content' => $content]));
     });
 
-    # Registration of some components in VM grid of the Compound
-    add_shortcode('Compound', function ($attr, $content) {
-
-        # Create a code vocabulary parsing object
-        $Lexer = new Lexer("[Compound role=\"\"] $content [/Compound]");
-
-
-    });
+    add_shortcode('Compound', function ($attr, $content) {});
 
     # Disable unnecessary scripts
     wp_dequeue_style('woocommerce_frontend_styles');
@@ -306,7 +306,8 @@ add_action(
 
     wp_register_script('compound', MIRELE_SOURCE_DIR . '/js/compound.min.js', array('babel', 'jquery', 'vue'), '', true);
     wp_register_script('compound_form_props', MIRELE_SOURCE_DIR . '/js/compound/form/props.min.js', array('babel', 'jquery', 'vue'), '', true);
-    wp_register_script('compound_form_createComponent', MIRELE_SOURCE_DIR . '/js/compound/form/createComponent.min.js', array('babel', 'jquery', 'vue'), '', true);
+    wp_register_script('compound_form_insertComponent', MIRELE_SOURCE_DIR . '/js/compound/form/insertComponent.min.js', array('babel', 'jquery', 'vue'), '', true);
+    wp_register_script('compound_form_insertTemplate', MIRELE_SOURCE_DIR . '/js/compound/form/insertTemplate.min.js', array('babel', 'jquery', 'vue'), '', true);
 
     wp_register_script('woocommerceui_product', MIRELE_SOURCE_DIR . '/js/woocommerceui_product.min.js', array('babel', 'jquery', 'vue', 'mireleapi'), '', true);
     wp_register_script('woocommerceui_products', MIRELE_SOURCE_DIR . '/js/woocommerceui_products.min.js', array('babel', 'jquery', 'vue', 'mireleapi'), '', true);
@@ -554,7 +555,8 @@ add_action(
     wp_enqueue_script('jquery-ui-draggable');
     wp_enqueue_script('jquery-ui-droppable');
     wp_enqueue_script('compound_form_props');
-    wp_enqueue_script('compound_form_createComponent');
+    wp_enqueue_script('compound_form_insertComponent');
+    wp_enqueue_script('compound_form_insertTemplate');
 
 //    wp_enqueue_style('fontAwesome');
     wp_enqueue_style('wp-color-picker');
@@ -687,19 +689,19 @@ add_action(
 
                 }
 
-            }
+                # Render Page Editor
+                TWIG::Render('Compound/editor', [
+                    'page' => $page,
+                    'markup' => $Markup,
+                    'layout' => $lex->getLayout(),
+                    'store' => [
+                        'templates' => Grider::all(),
+                        'components' => Store::all(),
+                        'getFamilies' => Store::getFamilies(true)
+                    ]
+                ]);
 
-            # Render Page Editor
-            TWIG::Render('Compound/editor', [
-                'page' => $page,
-                'markup' => $Markup,
-                'layout' => $lex->getLayout(),
-                'store' => [
-                    'templates' => Grider::all(),
-                    'components' => Store::all(),
-                    'getFamilies' => Store::getFamilies(true)
-                ]
-            ]);
+            }
 
         } else {
 

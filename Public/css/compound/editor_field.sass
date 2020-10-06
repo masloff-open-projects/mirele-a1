@@ -1,0 +1,50 @@
+.__compound_field_grid
+  display: flex
+  flex-direction: row
+  flex-flow: row
+  margin-bottom: 12px
+
+  .__compound_field_control
+    display: flex
+    flex-direction: row
+    flex-flow: column
+    margin: 0 0 0 12px
+
+    .__compound_field_control_action_move
+      background: #0073AA
+      color: white
+      cursor: move
+      transition: 0.3s ease-in-out
+
+      &:hover
+        background: #0073aa
+
+      & > span
+        color: white
+
+    .__compound_field_control_action_remove
+      background: #E34231
+      color: white
+      cursor: pointer
+      transition: 0.3s ease-in-out
+
+      &:hover
+        background: #b13426
+
+      & > span
+        color: white
+
+    .__compound_field_control_action
+      color: #b1b1b1
+      background: #F5F5F5
+      cursor: pointer
+      transition: 0.3s ease-in-out
+
+      &:hover
+        color: #848484
+
+
+  .__compound_field_body
+    width: 100%
+    padding: 12px 12px
+    background: #F5F5F5

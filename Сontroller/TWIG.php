@@ -8,7 +8,9 @@ use Mirele\Compound\Template;
 use Mirele\Framework\Stringer;
 use Mirele\Utils\Converter;
 use Twig\Extension\AbstractExtension;
+use Twig\TwigFilter;
 use Twig\TwigFunction;
+use voku\helper\AntiXSS;
 
 /**
  * Class TWIG
@@ -162,6 +164,14 @@ class TWIG
         self::$twig->addGlobal('converter', clone new Converter);
         self::$twig->addExtension (new class extends AbstractExtension
         {
+
+            public function getFilters()
+            {
+                return [
+                    new TwigFilter('xss',         [$this, 'XSS'])
+                ];
+            }
+
             public function getFunctions()
             {
                 return [
@@ -169,6 +179,16 @@ class TWIG
                     new TwigFunction('Field',     [$this, 'Field']),
                     new TwigFunction('Tag',       [$this, 'Tag']),
                 ];
+            }
+
+            public function XSS ($data) {
+
+                $XSS = new AntiXSS();
+                $return = $XSS->xss_clean($data);
+                unset($XSS);
+
+                return $return;
+
             }
 
             public function Tag (string $tag, ... $props) {

@@ -3,147 +3,73 @@
 
 namespace Mirele\Compound\Patterns;
 
+
 use Mirele\Compound\Component;
 use Mirele\Compound\Lexer;
 use Mirele\Compound\Store;
 use Mirele\Compound\Tag;
 
+use Mirele\Framework\Prototypes\Pattern;
 
-class insertComponent
+
+class insertComponent extends Pattern
 {
 
-    private $page = 0;
-    private $template = 0;
-    private $component = '';
-    private $field = '';
-
     /**
-     * @return string
-     */
-    public function getField()
-    {
-        return $this->field;
-    }
-
-    /**
-     * @param string $field
-     */
-    public function setField($field)
-    {
-        $this->field = $field;
-        return $this;
-    }
-
-    /**
-     * @return int
-     */
-    public function getPage()
-    {
-        return $this->page;
-    }
-
-    /**
-     * @param int $page
-     * @return insertComponent
-     */
-    public function setPage($page)
-    {
-        $this->page = $page;
-        return $this;
-    }
-
-    /**
-     * @param int $template
-     */
-    public function setTemplate($template)
-    {
-        $this->template = $template;
-        return $this;
-    }
-
-    /**
-     * @return int
-     */
-    public function getTemplate()
-    {
-        return $this->template;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getComponent()
-    {
-        return $this->component;
-    }
-
-    /**
-     * @param mixed $component
-     * @return insertComponent
-     */
-    public function setComponent($component)
-    {
-        $this->component = $component;
-        return $this;
-    }
-
-    /**
+     * The __invoke method is called when a script tries to call an object as a function.
      *
+     * @return mixed
+     * @link https://php.net/manual/en/language.oop5.magic.php#language.oop5.magic.invoke
      */
-    public function execute() {
+    public function __invoke()
+    {
 
-        $id = $this->getPage();
-        $component = $this->getComponent();
+        if (isset($this->page) and isset($this->component) and isset($this->field) and isset($this->template)) {
 
-        # Create a work sub-environment
-        $user = wp_get_current_user();
+            $this->__get_lex($this->page);
+            $root = $this->lexer->getSignature()->getRootInstanceById($this->template);
 
-        # Create a work environment
-        $component = $this->getComponent();
-        $page      = $this->getPage();
-        $field     = $this->getField();
-        $template  = $this->getTemplate();
+            if (is_object($root)) {
 
-        # Pattern
-        $wp_page = (object) get_post($page);
-        $content = $wp_page->post_content;
-        $lexer = new Lexer($content);
+                $component = Store::get($this->component);
 
-        $lexer->parse();
-        $root = $lexer->getSignature()->getRootInstanceById((string) $template);
+                if ($component instanceof Component) {
 
-        if ($root !== false) {
+                    # Generate tag
+                    $tag = new Tag();
+                    $tag->setTag('component');
+                    $tag->setAttributes((array) $component->getProps());
+                    $tag->setAttribute('name', $component->getAlias() ? $component->getAlias() : $component->getId());
 
-            $Component = Store::get($component);
+                    $root->fields[$this->field] = array($tag);
 
-            if ($Component instanceof Component) {
+                    $this->lexer->getSignature()->setRootInstanceById($this->template, $root);
 
-                $tag = new Tag();
-                $tag->setTag('component');
-                $tag->setAttributes((array) $Component->getProps());
-                $tag->setAttribute('name', $Component->getAlias() ? $Component->getAlias() : $Component->getId());
+                    $code = $this->lexer->generateCode();
 
-                $root->fields[(string) $field] = (array) [$tag];
+                    if ($this->__update_page($this->page, [
+                        "post_content" => "[Compound role='editor'] \n $code \n [/Compound]"
+                    ])) {
+                        return $this->__update_page_meta($this->page, '_wp_page_template', COMPOUND_CANVAS);
+                    } else {
+                        return false;
+                    }
 
-                $lexer->getSignature()->setRootInstanceById((string) $template, $root);
+                } else {
 
-                $code = $lexer->generateCode();
+                    return false;
 
-                wp_update_post(array(
-                    'ID'           => (int) $wp_page->ID,
-                    'post_content' => (string) "[Compound role='editor'] \n $code \n [/Compound]",
-                ));
+                }
 
-                update_post_meta(
-                    (int) $wp_page->ID,
-                    '_wp_page_template',
-                    COMPOUND_CANVAS
-                );
-
+            } else {
+                return false;
             }
 
-        }
+        } else {
 
+            return self::ERROR_INSUFFICIENT_PARAMETERS;
+
+        }
 
     }
 

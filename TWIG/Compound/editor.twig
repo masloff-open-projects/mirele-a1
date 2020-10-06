@@ -1,5 +1,109 @@
 {% extends "Compound/editor/layout.twig" %}
 
+{% block meta %}
+
+    <meta content="{{ page.ID }}" name="page" />
+
+{% endblock %}
+
+
 {% block main %}
+
+    <div class="wp-mrl-box" id="compound-editor-body" data-behavior="" data-component="editor">
+
+        <div class="hidden" data-component="body" data-namespace="editor">
+
+            <h2 class="wp-mrl-header">
+                <span>Compound Page Editor</span>
+            </h2>
+
+            <div class="wp-mrl-tools">
+
+                <a href="#TB_inline?width=600&height=700&inlineId=modal_insert_template"
+                   title="Insert template" class="thickbox action-link">
+                    <span class="dashicons dashicons-plus wp-mrl-controll-icon"></span>
+                </a>
+
+                <a href="#TB_inline?width=800&height=800&inlineId=modal_edit_template" title="Edit page"
+                   class="thickbox action-link">
+                    <span class="dashicons dashicons-welcome-write-blog wp-mrl-controll-icon"></span>
+                </a>
+
+                <div class="action-link">
+                    <span class="dashicons dashicons-external wp-mrl-controll-icon"></span>
+                </div>
+
+            </div>
+
+            <div class="inner" data-behavior="sortable" data-namespace="editor">
+
+                <div class="wp-mrl-block" :data-template="template.name" :data-id="template.id"
+                     :data-page-id="template.page" v-for="template in markup" v-if="markup"
+                     data-component="field" data-namespace="editor">
+                    <div class="grid-container jquery-selectable-compound">
+
+                        <div :class="__metaFieldClass__(field.meta)"
+                             v-for="(field, name) in template.fields">
+
+                            <div v-if="field.tags">
+                                <div v-for="tag in field.tags">
+                                    <div v-if="tag.tag == 'component'" class="wp-mrl-component left"
+                                         @click="editProps({field: name, component: tag.attributes.name, template: template.id})">
+                                        <h5 class="margin-0 padding-0">{tag.attributes.name}</h5>
+                                        <small>
+                                            Component
+                                        </small>
+                                    </div>
+                                </div>
+                            </div>
+                            <div v-else>
+                                <div :data-field-name="name">
+                                    <div class="wp-mrl-insert"
+                                         @click="insertComponent({field: name, template: template.id})">
+                                        <span class="dashicons dashicons-plus"></span>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="wp-mrl-trash hidden" data-behavior="droppable" data-namespace="editor"
+                 data-role="trash">
+                <span class="dashicons dashicons-trash"></span>
+            </div>
+
+            <a href="#TB_inline?width=600&height=700&inlineId=modal_insert_template"
+               title="Insert template" class="thickbox">
+                <div class="wp-mrl-add">
+                    <span class="dashicons dashicons-plus"></span>
+                </div>
+            </a>
+
+        </div>
+
+        <!-- Spinner -->
+        <div class="main" data-component="spinner" data-namespace="editor">
+            {{ editor_preparation.render() }}
+        </div>
+
+        <!-- Error -->
+        <div class="hidden" data-component="error" data-namespace="editor">
+            <div class="center padding-24">
+                <span class="dashicons dashicons-warning"></span>
+                <h3 class="">Workspace preparation error</h3>
+                <p class="padding-x-0">An error occurred in preparing the workspace. It is possible that
+                    your connection to the site is unreliable, try reloading the page and trying again.
+                    If the problem persists, contact your system administrator or write to technical
+                    support</p>
+            </div>
+        </div>
+
+
+    </div>
 
 {% endblock %}

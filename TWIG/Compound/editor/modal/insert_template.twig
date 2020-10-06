@@ -8,7 +8,7 @@
 
                 <button type="submit"
                         class="col-6 left margin-x-2 margin-y-2 margin-buttom-2 padding-3 wp-mrl-component-box"
-                        value="{{ template.getId }}" name="template">
+                        @click="insert({template: '{{ template.getId }}'})">
                     {# <img src="http://placehold.it/200x200" width="100%" alt=""> #}
 
                     <h5 class="margin-0 padding-0">{{ template.getId }}</h5>
@@ -17,13 +17,6 @@
 
             {% endif %}
         {% endfor %}
-
-        <!-- Service inputs -->
-        <div class="hidden-inputs">
-            <input type="hidden" name="method" value="Compound-insertTemplate">
-            <input type="hidden" name="nonce" value="{{ wp.nonce() }}">
-            <input type="hidden" name="page" value="{{ event.id }}">
-        </div>
 
     {% endmacro %}
 
@@ -34,7 +27,8 @@
             action: '',
             method: 'POST',
             class: '',
-            id: ''
+            id: '',
+            attr: '@submit.prevent=\'submit\''
         },
         header: {
             title: 'Template',

@@ -4,77 +4,38 @@
 namespace Mirele\Compound\Patterns;
 
 
-use Mirele\Compound\Lexer;
+use Mirele\Framework\Prototypes\Pattern;
 
 
-class removeTemplate
+class removeTemplate extends Pattern
 {
-
-    private $template = "";
-    private $id = "";
-
     /**
-     * @return string
+     * The __invoke method is called when a script tries to call an object as a function.
+     *
+     * @return mixed
+     * @link https://php.net/manual/en/language.oop5.magic.php#language.oop5.magic.invoke
      */
-    public function getTemplate()
+    public function __invoke()
     {
-        return $this->template;
-    }
 
-    /**
-     * @param string $template
-     * @return removeTemplate
-     */
-    public function setTemplate($template)
-    {
-        $this->template = $template;
-        return $this;
-    }
+        if (isset($this->template) and isset($this->page)) {
 
-    /**
-     * @return string
-     */
-    public function getId()
-    {
-        return $this->id;
-    }
+            $lex = $this->__get_lex((int) $this->page);
+            $lex->removeTemplate($this->template);
+            $code = $this->lexer->generateCode();
 
-    /**
-     * @param string $id
-     * @return removeTemplate
-     */
-    public function setId($id)
-    {
-        $this->id = $id;
-        return $this;
-    }
+            if ($this->__update_page($this->page, [
+                "post_content" => "[Compound role='editor'] \n $code \n [/Compound]"
+            ])) {
+                return $this->__update_page_meta($this->page, '_wp_page_template', COMPOUND_CANVAS);
+            } else {
+                return false;
+            }
 
-    public function execute () {
 
-        $tempalte = $this->getTemplate();
-        $id = $this->getId();
-
-        $wp_page = (object) get_post($id);
-
-        $Lexer = new Lexer($wp_page->post_content);
-        $lex = $Lexer->parse();
-
-        $lex->removeTemplate($tempalte);
-
-        $code = $Lexer->generateCode();
-
-        wp_update_post(array(
-            'ID' => (int) $wp_page->ID,
-            'post_content' => (string) "[Compound role='editor'] \n $code \n [/Compound]",
-        ));
-
-        update_post_meta(
-            (int) $wp_page->ID,
-            '_wp_page_template',
-            COMPOUND_CANVAS
-        );
-
-        return true;
+        } else {
+            return false;
+        }
 
     }
 

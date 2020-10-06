@@ -1,0 +1,37 @@
+{% macro render(event) %}
+
+    {% macro __action_link(event, float="left") %}
+        <a href="{{ event.href }}"
+           title="{{ event.modal.title }}"
+           class="{{ event.modal is empty ? 'action-link' : 'thickbox action-link' }}"
+                {{ converter.obj2htmlattr(event.attr|default([]))|xss|raw }}>
+
+            <span class="dashicons {{ event.icon }} wp-mrl-controll-icon"></span>
+        </a>
+    {% endmacro %}
+
+    <div class="grid-container">
+
+        <div class="col-6 left">
+
+            {% for tool in event.left|default([]) %}
+
+                {{ _self.__action_link(tool, 'left') }}
+
+            {% endfor %}
+
+        </div>
+
+        <div class="col-6 right">
+
+            {% for tool in event.right|default([]) %}
+
+                {{ _self.__action_link(tool, 'right') }}
+
+            {% endfor %}
+
+        </div>
+
+    </div>
+
+{% endmacro %}

@@ -3,12 +3,14 @@
 
 namespace Mirele\Compound\Patterns;
 
+
 use Mirele\Compound\Component;
 use Mirele\Compound\Field;
 use Mirele\Compound\Grider;
 use Mirele\Compound\Lexer;
 use Mirele\Compound\Tag;
 use Mirele\Compound\Template;
+use Mirele\Framework\Prototypes\Pattern;
 
 
 /**
@@ -16,88 +18,34 @@ use Mirele\Compound\Template;
  *
  * @package Mirele\Compound\Patterns
  */
-class insertTemplate
+class insertTemplate extends Pattern
 {
 
     /**
-     * @var string
-     */
-    private $template = "";
-    /**
-     * @var int
-     */
-    private $page = 0;
-
-    /**
-     * @return string
-     */
-    public function getTemplate()
-    {
-        return $this->template;
-    }
-
-    /**
-     * @param string $template
+     * The __invoke method is called when a script tries to call an object as a function.
      *
-     * @return insertTemplate
+     * @return mixed
+     * @link https://php.net/manual/en/language.oop5.magic.php#language.oop5.magic.invoke
      */
-    public function setTemplate($template)
+    public function __invoke()
     {
-        $this->template = $template;
-        return $this;
-    }
 
-    /**
-     * @return int
-     */
-    public function getPage()
-    {
-        return $this->page;
-    }
+        if (isset($this->template) and isset($this->page)) {
 
-    /**
-     * @param int $page
-     *
-     * @return insertTemplate
-     */
-    public function setPage($page)
-    {
-        $this->page = $page;
-        return $this;
-    }
+            $lex = $this->__get_lex((int) $this->page);
+            $id = uniqid('template_', true);
 
-    /**
-     *
-     */
-    public function execute () {
 
-        $template = $this->getTemplate();
-        $page = $this->getPage();
+            if ($lex) {
 
-        $wp_page = (object) get_post($page);
+                $template = Grider::get($this->template);
 
-        if (isset($wp_page->post_content) and $wp_page->post_content) {
+                if ($template instanceof Template) {
 
-            # Content
-            $content = $wp_page->post_content;
-            $id = md5(rand(0, PHP_INT_MAX));
+                    $this->lexer->getSignature()->markupTemplate((string) $id, (string) $this->template);
+                    $fields = $template->getFields();
 
-            # Lexer
-            $lexer = new Lexer($content);
-
-            # Proccess parsing
-            if ($lexer->parse()) {
-
-                # Get template
-                $Template = Grider::get($template);
-
-                if ($Template instanceof Template) {
-
-                    $lexer->getSignature()->markupTemplate((string) $id, (string) $template);
-
-                    $fields = $Template->getFields();
-
-                    if ($fields) {
+                    if (is_array($fields) or is_object($fields)) {
 
                         foreach ($fields as $field => $object) {
 
@@ -112,35 +60,36 @@ class insertTemplate
 
                                     $tag->setAttribute('name', $component->getAlias() ? $component->getAlias() : $component->getId());
 
-                                    $lexer->getSignature()->setLayoutField((string) $id, $object->getName(), [clone $tag]);
+                                    $this->lexer->getSignature()->setLayoutField((string) $id, $object->getName(), [clone $tag]);
 
                                 }
 
                             }
                         }
+
+                    } else {
+                        return false;
                     }
 
                 }
 
+            } else {
+                return false;
             }
 
-            if (isset($wp_page->ID) and $wp_page->ID) {
+            $code = $this->lexer->generateCode();
 
-                $code = $lexer->generateCode();
-
-                wp_update_post(array(
-                    'ID'           => (int) $wp_page->ID,
-                    'post_content' => (string) "[Compound role='editor'] \n $code \n [/Compound]",
-                ));
-
-                update_post_meta(
-                    (int) $wp_page->ID,
-                    '_wp_page_template',
-                    COMPOUND_CANVAS
-                );
-
+            if ($this->__update_page($this->page, [
+                "post_content" => "[Compound role='editor'] \n $code \n [/Compound]"
+            ])) {
+                return $this->__update_page_meta($this->page, '_wp_page_template', COMPOUND_CANVAS);
+            } else {
+                return false;
             }
 
+
+        } else {
+            return false;
         }
 
     }

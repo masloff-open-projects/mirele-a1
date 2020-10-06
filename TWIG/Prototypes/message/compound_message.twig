@@ -1,0 +1,13 @@
+{# ... #}
+
+{% macro render(event) %}
+
+    <div {{ converter.obj2htmlattr(event.attr|default([]))|xss|raw }} class="{{ event.class }}">
+        <div class="center padding-24">
+            <span class="dashicons {{ event.icon|default('dashicons-warning') }}"></span>
+            <h3 class="">{{ event.title|default('Warning') }}</h3>
+            <p class="padding-x-0">{{ event.description|default("") }}</p>
+        </div>
+    </div>
+
+{% endmacro %}

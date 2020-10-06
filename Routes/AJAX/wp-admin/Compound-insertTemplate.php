@@ -9,20 +9,21 @@ Router::post('/ajax_endpoint_v1/Compound-insertTemplate', function () {
     if (is_user_logged_in() and current_user_can(MIRELE_RIGHTS['page']['edit'])) {
 
         # Create a work environment
-        $page = (MIRELE_POST)['page'];
-        $nonce = (MIRELE_POST)['nonce'];
-        $template = (MIRELE_POST)['template'];
-
         $pattern = new Patterns\insertTemplate();
-        $pattern->setTemplate($template);
-        $pattern->setPage($page);
-        $pattern->execute();
+        $pattern->template = (MIRELE_POST)['template'];
+        $pattern->page = (MIRELE_POST)['page'];
 
-        $pattern->execute();
+        $biffer = $pattern();
 
-        wp_send_json_error([]);
-        return;
-
+        if ($biffer) {
+            return wp_send_json_success([
+                'result' => $biffer
+            ]);
+        } else {
+            return wp_send_json_error([
+                'result' => $biffer
+            ]);
+        }
     }
 
 });

@@ -47,5 +47,5 @@ Mirele's development path is the responsibility of the road map.
 | Date of event | Event |
 |---|---|
 | 03.10.2020 | Approval of the first minimal working version of the Compound page engine |
-|  |  |
+| 03.10.2020 | Scalable AXIOS bridge for Compound VUE implementation created.  |
 |  |  |
