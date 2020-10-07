@@ -9,7 +9,9 @@ use Mirele\Compound\Template;
 
 $Template = new Template();
 $Template->setId('default_matrix');
-$Template->setProps([]);
+$Template->setProps([
+    'theme' => 'darkness'
+]);
 
 foreach (range(1, 6) as $x) {
 

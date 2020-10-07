@@ -4,6 +4,8 @@
 namespace Mirele\Compound;
 
 
+use Mirele\Framework\Buffer;
+
 /**
  * Class Lexer
  * @package Mirele\Compound
@@ -236,7 +238,7 @@ class Lexer
                     stripcslashes(
                         strip_tags(
                             html_entity_decode(isset($fragment[3][0]) ? $fragment[3][0] : $this->fragment),
-                            '<root><template><field><component><props>'
+                            '<root><template><field><component><props><prop>'
                         )
                     )
                 )
@@ -264,35 +266,99 @@ class Lexer
                         # Top Level Directive - Template
                         if ($iterator->getTag() === 'template') {
 
-                            # Generate
-                            $id = $iterator->getAttribute('id') ? $iterator->getAttribute('id') : (string) md5(rand(0, PHP_INT_MAX));
+                            # Receive primary information about the template
+                            $id = !empty($iterator->getAttribute('id')) ? $iterator->getAttribute('id') : (string) uniqid('template_', true);
                             $name = $iterator->getAttribute('name');
                             $props = $iterator->getAttributes();
                             $next = (object) $iterator->getNext();
 
-                            $Layout->markupTemplate($id, $name);
+                            if (!empty($name)) {
 
-                            $Layout->setLayoutProps((string) $id, (array) $props);
+                                $Layout->markupTemplate($id, $name);
+                                $Layout->setLayoutProps((string) $id, (array) $props);
 
-                            if (is_array($next) or is_object($next)) {
+                                if (is_array($next) or is_object($next)) {
 
-                                foreach ($next as $nesting) {
+                                    foreach ($next as $nesting) {
 
-                                    if ($nesting instanceof Directive) {
+                                        if ($nesting instanceof Directive) {
 
-                                        $tag = (string) $nesting->getTag();
-                                        $next_ = (array) $nesting->getNext();
+                                            $tag = (string) $nesting->getTag();
+                                            $next_ = (array) $nesting->getNext();
 
-                                        if (isset($next_) and !empty($next_)) {
+                                            if (isset($next_) and !empty($next_)) {
 
-                                            # The system has a tag alias structure, call the handler
-                                            if (Constructor::get($tag)) {
+                                                switch ($tag) {
 
-                                                $package = Constructor::call($tag, $next_);
-                                                $field_name = $nesting->getAttribute('name');
+                                                    # Process all tags with fields and their contents
+                                                    case 'field':
 
-                                                if ($field_name and $package) {
-                                                    $Layout->setLayoutField($id, $field_name, $package);
+                                                        if (isset($next_) and (is_object($next_) or is_array($next_))) {
+
+                                                            $Buffer = new Buffer();
+
+                                                            foreach ($next_ as $index => $directive) {
+
+                                                                if ($directive instanceof Directive) {
+
+                                                                    $Tag = TagsManager::get($directive->getTag());
+
+                                                                    if ($Tag instanceof Tag) {
+
+                                                                        $Tag->setAttributes(array_merge(
+                                                                            [
+                                                                                "id" => $index
+                                                                            ],
+                                                                            (array) $directive->getAttributes()
+                                                                        ));
+
+                                                                        $Buffer->append(clone $Tag);
+
+                                                                    }
+
+
+                                                                }
+
+                                                            }
+
+                                                            $package = $Buffer->getBuffer();
+                                                            $field_name = $nesting->getAttribute('name');
+
+                                                            if ($field_name and $package) {
+                                                                $Layout->setLayoutField($id, $field_name, $package);
+                                                            }
+
+                                                        }
+
+                                                        break;
+
+                                                    # Process all tags with props and their contents
+                                                    case 'props':
+
+                                                        if (isset($next_) and (is_object($next_) or is_array($next_))) {
+
+
+                                                            foreach ($next_ as $index => $directive) {
+
+                                                                if ($directive instanceof Directive) {
+
+                                                                    if ($directive->getTag() == 'prop') {
+
+                                                                        $name = $directive->getAttribute('name');
+                                                                        $value = $directive->getAttribute('value');
+
+                                                                        if ($name and $value) {
+                                                                            $props->{$name} = $value;
+                                                                        }
+
+                                                                    }
+
+                                                                }
+
+                                                            }
+
+                                                        }
+
                                                 }
 
                                             }
@@ -364,16 +430,22 @@ class Lexer
                     /**
                      * @deprecated
                      */
-                    $this->__xml_add_open_tag('template', (object) $template->props);
+                    $template->props = (object) $template->props;
+                    $this->__xml_add_open_tag('template', (object) [
+                        'name' => $template->props->name,
+                        'id' => $template->props->id,
+                    ]);
 
                         /// Props
                         $this->__xml_add_open_tag((string) 'props', (object) []);
 
                         foreach ($template->props as $key => $value) {
-                            $this->__xml_add_single_tag('prop', (object) array(
-                                'name' => (string) $key,
-                                'value' => (string) $value,
-                            ));
+                            if (!in_array($key, ['id', 'name'])) {
+                                $this->__xml_add_single_tag('prop', (object) array(
+                                    'name' => (string) $key,
+                                    'value' => (string) $value,
+                                ));
+                            }
                         }
 
                         $this->__xml_add_close_tag((string) 'props', (object) array());

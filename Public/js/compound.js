@@ -26,8 +26,6 @@
 
 "use strict";
 
-const $page = parseInt(jQuery('meta[name="page"]').attr('content'));
-
 const CompoundEditor = Project.export('editor', new Interface({
     requires: {
         vue: true,
@@ -48,12 +46,53 @@ const CompoundEditor = Project.export('editor', new Interface({
 
                 jQuery('[data-component="body"][data-namespace="editor"]').removeClass('hidden');
                 jQuery('[data-component="spinner"][data-namespace="editor"]').addClass('hidden');
-                
-                jQuery('[data-behavior="sortable"]').sortable({
 
+                // Hotkey registration
+                const self = this;
+                document.addEventListener('keydown', function (event) {
+                    const key = event.key;
+                    if (key === "Delete") {
+                        const $templates = jQuery('[data-component="field-body"][data-selected]').map((i, el) => {
+                            return jQuery(el).attr('data-id');
+                        });
+
+                        if ($templates.length > 0) {
+                            self.removeTemplate({
+                                template: $templates
+                            }).then(Event => {
+                                self.reloadPage();
+                                $('[data-component="field-body"][data-selected]').selectable( "refresh" );
+                            }).catch(Event => {
+
+                            });
+                        }
+                    }
+                });
+
+                jQuery('[data-behavior="editor-template"][data-namespace="editor"][data-component="editor-body"]').selectable({
+                    filter: '[data-component="field-body"]',
+                    cancel: '[data-component="template-control"],[data-component="field-component"]',
+                    selected: function( event, ui ) {
+                        jQuery(ui.selected).attr('data-selected', true)
+                    },
+                    selecting: function( event, ui ) {
+                        jQuery(ui.selected).attr('data-selected', true)
+                    },
+                    unselected: function( event, ui ) {
+                        jQuery(ui.unselected).removeAttr('data-selected')
+                    },
+                    unselecting: function( event, ui ) {
+                        jQuery(ui.unselected).removeAttr('data-selected')
+                    },
+                });
+
+                jQuery('[data-behavior="editor-template"]').sortable({
+
+                    axis: "y",
+                    containment: "document",
                     disabled: true,
                     tolerance: "pointer",
-                    placeholder: "wp-mrl-placeholder",
+                    placeholder: "__compound_box_placeholder",
                     connectWith: jQuery('[data-behavior="droppable"][data-namespace="editor"]'),
                     helper: 'clone',
                     opacity: 0.5,
@@ -73,7 +112,7 @@ const CompoundEditor = Project.export('editor', new Interface({
                         }
 
                         const Request = new WPAjax('Compound-sort', {
-                            page: $page,
+                            page: Compound.page_on_edit || 0,
                             order: $order
                         });
 
@@ -88,7 +127,7 @@ const CompoundEditor = Project.export('editor', new Interface({
                     },
                     stop: (event, ui) => {
 
-                        jQuery('[data-behavior="sortable"]').sortable("option", "disabled", true);
+                        jQuery('[data-behavior="editor-template"][data-namespace="editor"][data-component="editor-body"]').sortable("option", "disabled", true);
                         jQuery('[data-role="trash"][data-namespace="editor"]').addClass('hidden');
 
                     }
@@ -109,7 +148,7 @@ const CompoundEditor = Project.export('editor', new Interface({
                 const $form = Project.import('@form-props').vue;
                 $form.__editor = this;
                 return $form.open(Object.assign({
-                    page: $page
+                    page: Compound.page_on_edit || 0
                 }, event));
             },
 
@@ -117,7 +156,7 @@ const CompoundEditor = Project.export('editor', new Interface({
                 const $form = Project.import('@form-createComponent').vue;
                 $form.__editor = this;
                 return $form.open(Object.assign({
-                    page: $page,
+                    page: Compound.page_on_edit || 0,
                 }, event));
             },
 
@@ -125,24 +164,45 @@ const CompoundEditor = Project.export('editor', new Interface({
                 const $form = Project.import('@form-insertTemplate').vue;
                 $form.__editor = this;
                 return $form.open(Object.assign({
-                    page: $page,
+                    page: Compound.page_on_edit || 0,
                 }, event));
             },
 
-            removeTemplate: function (page, template) {
+            removeTemplate: function (event) {
                 return new WPAjax('Compound-removeTemplate', {
-                    page: page,
-                    template: template
+                    page: Compound.page_on_edit || 0,
+                    template: event.template
                 });
             },
 
-            __move_enabled: function (event) {
-                jQuery('[data-behavior="sortable"]').sortable("option", "disabled", false);
+            reloadPage: function () {
+
+                jQuery('[data-namespace="editor"][data-component="editor-body"]').animate({
+                    opacity: 0.3
+                });
+
+                this.__updateMarkup().then(Event => {
+
+                    jQuery('[data-namespace="editor"][data-component="editor-body"]').animate({
+                        opacity: 1
+                    });
+
+                }).catch(Event => {
+
+                    jQuery('[data-namespace="editor"][data-component="editor-body"]').animate({
+                        opacity: 1
+                    });
+
+                });
             },
 
-            __menu_action_remove_template: function (event) {
+            __moveEnabled: function (event) {
+                jQuery('[data-behavior="editor-template"][data-namespace="editor"][data-component="editor-body"]').sortable("option", "disabled", false);
+            },
+
+            __menuActionRemoveTemplate: function (event) {
                 const Request = new WPAjax('Compound-removeTemplate', {
-                    page: $page,
+                    page: Compound.page_on_edit || 0,
                     template: event.template
                 });
 
@@ -153,21 +213,32 @@ const CompoundEditor = Project.export('editor', new Interface({
                 });
             },
 
+            __menuActionEditTemplate: function (event) {
+                // const Request = new WPAjax('Compound-removeTemplate', {
+                //     page: Compound.page_on_edit || 0,
+                //     template: event.template
+                // });
+                //
+                // Request.then(Event => {
+                //     this.__updateMarkup();
+                // }).catch(Event => {
+                //
+                // });
+            },
+
             __metaFieldClass__: function (event) {
                 const $event = event || {};
                 const $editor = $event.editor || {};
-                return `wp-mrl-field col-${$editor.col || 12}`;
+                return `__compound_field col-${$editor.col || 12}`;
             },
 
             __updateMarkup: function (event) {
                 return new Promise((resolve, reject) => {
 
                     // Create main request
-                    const Request = new WPAjax('Compound-getMarkup', {
-                        page: $page
-                    });
-
-                    Request.then(Event => {
+                    (new WPAjax('Compound-getMarkup', {
+                        page: Compound.page_on_edit || 0
+                    })).then(Event => {
 
                         var $buffer = [];
 
@@ -202,7 +273,7 @@ const CompoundEditor = Project.export('editor', new Interface({
 
                     drop: (event, ui) => {
                         const $template = jQuery(ui.helper.context).attr('data-id');
-                        this.removeTemplate($page, $template);
+                        this.removeTemplate({template: $template});
                         ui.draggable.remove();
                     }
                 });
@@ -210,6 +281,13 @@ const CompoundEditor = Project.export('editor', new Interface({
 
             __renderPlaceholder: function (event) {
                 return event.placeholder.height(event.item.height());
+            }
+        },
+        filters: {
+            capitalize: function (value) {
+                if (!value) return ''
+                value = value.toString()
+                return value.charAt(0).toUpperCase() + value.slice(1)
             }
         }
     },

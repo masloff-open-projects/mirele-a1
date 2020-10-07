@@ -23,7 +23,7 @@ Project.export('@form-insertTemplate', new Interface({
             insert: function (event) {
 
                 const Request = new WPAjax('Compound-insertTemplate', Object.assign(this.event, event, {
-                    page: $page
+                    page: Compound.page_on_edit || 0
                 }));
 
                 Request.then(Event => {

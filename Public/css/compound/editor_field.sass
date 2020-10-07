@@ -3,6 +3,7 @@
   flex-direction: row
   flex-flow: row
   margin-bottom: 12px
+  border: 1px solid white
 
   .__compound_field_control
     display: flex
@@ -18,6 +19,18 @@
 
       &:hover
         background: #0073aa
+
+      & > span
+        color: white
+
+    .__compound_field_control_action_edit
+      background: #E3B692
+      color: white
+      cursor: pointer
+      transition: 0.3s ease-in-out
+
+      &:hover
+        background: #cb9871
 
       & > span
         color: white
@@ -43,8 +56,14 @@
       &:hover
         color: #848484
 
+.ui-selecting
+  border: 1px solid #0c9ce2 !important
 
-  .__compound_field_body
-    width: 100%
-    padding: 12px 12px
-    background: #F5F5F5
+.ui-selected
+  border: 1px solid #0073AA !important
+
+.ui-selectable-helper
+  position: absolute
+  z-index: 100
+  border: 1px solid #029ee7
+  background: #0073aa3b

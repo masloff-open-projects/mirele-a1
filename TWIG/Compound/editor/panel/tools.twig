@@ -6,7 +6,7 @@
            class="{{ event.modal is empty ? 'action-link' : 'thickbox action-link' }}"
                 {{ converter.obj2htmlattr(event.attr|default([]))|xss|raw }}>
 
-            <span class="dashicons {{ event.icon }} wp-mrl-controll-icon"></span>
+            <span class="dashicons {{ event.icon }}"></span>
         </a>
     {% endmacro %}
 

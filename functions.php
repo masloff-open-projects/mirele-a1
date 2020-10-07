@@ -250,6 +250,8 @@ add_action(
  *
  */ 'init', function () {
 
+    global $post;
+
     # Registration of some components of the Compound
     add_shortcode('Component', function ($attr, $content) {
         Store::call($attr['name'], array_merge((array)$attr, ['attr' => (array)$attr], (array)['context_content' => $content]));
@@ -290,34 +292,31 @@ add_action(
     wp_dequeue_script('fancybox');
     wp_dequeue_script('jqueryui');
 
-    # Turn off unnecessary scripts through filters.
-    add_filter('woocommerce_enqueue_styles', '__return_empty_array');
-
     # We will register all necessary scripts in the future.
     wp_register_script('fontAwesome', 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/js/all.min.js', array('jquery'), '', true);
     wp_register_script('vue', 'https://cdn.jsdelivr.net/npm/vue', array('jquery'), '', true);
     wp_register_script('popper', 'https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js', array('jquery'), '', true);
     wp_register_script('axios', 'https://unpkg.com/axios/dist/axios.min.js', array('jquery'), '', true);
     wp_register_script('bootstrap4', 'https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js', array('jquery'), '', true);
-    wp_register_script('babel', 'https://unpkg.com/@babel/standalone/babel.min.js', array('jquery'), '', true);
-    wp_register_script('mirele_admin', MIRELE_SOURCE_DIR . '/js/admin.min.js', array('jquery', 'vue'), '', true);
-    wp_register_script('mireleapi', MIRELE_SOURCE_DIR . '/js/API.min.js', array('babel', 'jquery', 'vue'), '', true);
-    wp_register_script('babelui', MIRELE_SOURCE_DIR . '/js/babel.js', array('babel', 'jquery'), '', true);
+    wp_register_script('mirele_admin', '/public/js/admin.min.js', array('jquery', 'vue'), '', true);
+    wp_register_script('mireleapi', '/public/js/API.min.js', array('jquery', 'vue'), '', true);
 
-    wp_register_script('compound', MIRELE_SOURCE_DIR . '/js/compound.min.js', array('babel', 'jquery', 'vue'), '', true);
-    wp_register_script('compound_form_props', MIRELE_SOURCE_DIR . '/js/compound/form/props.min.js', array('babel', 'jquery', 'vue'), '', true);
-    wp_register_script('compound_form_insertComponent', MIRELE_SOURCE_DIR . '/js/compound/form/insertComponent.min.js', array('babel', 'jquery', 'vue'), '', true);
-    wp_register_script('compound_form_insertTemplate', MIRELE_SOURCE_DIR . '/js/compound/form/insertTemplate.min.js', array('babel', 'jquery', 'vue'), '', true);
+    wp_register_script('compound', '/public/js/compound.min.js', array('jquery', 'vue'), '', true);
+    wp_register_script('compound_form_props', '/public/js/compound/form/props.min.js', array('jquery', 'vue'), '', true);
+    wp_register_script('compound_form_insertComponent', '/public/js/compound/form/insertComponent.min.js', array('jquery', 'vue'), '', true);
+    wp_register_script('compound_form_insertTemplate', '/public/js/compound/form/insertTemplate.min.js', array('jquery', 'vue'), '', true);
 
-    wp_register_script('woocommerceui_product', MIRELE_SOURCE_DIR . '/js/woocommerceui_product.min.js', array('babel', 'jquery', 'vue', 'mireleapi'), '', true);
-    wp_register_script('woocommerceui_products', MIRELE_SOURCE_DIR . '/js/woocommerceui_products.min.js', array('babel', 'jquery', 'vue', 'mireleapi'), '', true);
-    wp_register_script('woocommerceui_login', MIRELE_SOURCE_DIR . '/js/woocommerceui_login.min.js', array('babel', 'jquery', 'vue', 'mireleapi'), '', true);
-    wp_register_script('woocommerceui_signup', MIRELE_SOURCE_DIR . '/js/woocommerceui_signup.min.js', array('babel', 'jquery', 'vue', 'mireleapi'), '', true);
-    wp_register_script('woocommerceui_recovery_password', MIRELE_SOURCE_DIR . '/js/woocommerceui_recovery_password.min.js', array('babel', 'jquery', 'vue', 'mireleapi'), '', true);
+    wp_register_script('woocommerceui_product', '/public/js/woocommerceui_product.min.js', array('jquery', 'vue', 'mireleapi'), '', true);
+    wp_register_script('woocommerceui_products', '/public/js/woocommerceui_products.min.js', array('jquery', 'vue', 'mireleapi'), '', true);
+    wp_register_script('woocommerceui_login', '/public/js/woocommerceui_login.min.js', array('jquery', 'vue', 'mireleapi'), '', true);
+    wp_register_script('woocommerceui_signup', '/public/js/woocommerceui_signup.min.js', array('jquery', 'vue', 'mireleapi'), '', true);
+    wp_register_script('woocommerceui_recovery_password', '/public/js/woocommerceui_recovery_password.min.js', array('jquery', 'vue', 'mireleapi'), '', true);
 
     # We will register all styles necessary in the future.
     wp_register_style('fontAwesome', 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css');
     wp_register_style('bootsrtap4', 'https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css', false);
+
+    // TODO: Redirect to public
     wp_register_style('main_style', MIRELE_SOURCE_DIR . '/css/style.css', false);
     wp_register_style('admin_style', MIRELE_SOURCE_DIR . '/css/admin.css', false);
 
@@ -336,6 +335,15 @@ add_action(
                     'nonce' => wp_create_nonce('main')
                 ]
             ]
+        ]
+    );
+
+    # The script works in the visibility area of the Compound editor
+    wp_localize_script(
+        'compound', 'Compound',
+        [
+            'page_on_edit' => (MIRELE_GET)['page_id'],
+            'page' => !empty($post->ID) ? $post->ID : 0
         ]
     );
 
@@ -549,16 +557,15 @@ add_action(
     wp_enqueue_script('vue');
     wp_enqueue_script('mirele_admin');
     wp_enqueue_script('compound');
-    wp_enqueue_script('fontAwesome');
     wp_enqueue_script('jquery');
     wp_enqueue_script('jquery-ui-core');
     wp_enqueue_script('jquery-ui-draggable');
     wp_enqueue_script('jquery-ui-droppable');
+    wp_enqueue_script('jquery-ui-selectable');
     wp_enqueue_script('compound_form_props');
     wp_enqueue_script('compound_form_insertComponent');
     wp_enqueue_script('compound_form_insertTemplate');
 
-//    wp_enqueue_style('fontAwesome');
     wp_enqueue_style('wp-color-picker');
     wp_enqueue_style('admin_style');
 

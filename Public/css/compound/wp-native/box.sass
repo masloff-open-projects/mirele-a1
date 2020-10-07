@@ -1,4 +1,4 @@
-.wp-mrl-box
+.__compound_box
   background: #FFFFFF
   border: 1px solid #ccd0d4
   position: relative
@@ -6,7 +6,56 @@
   -moz-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.04)
   box-shadow: 0 1px 1px rgba(0, 0, 0, 0.04)
 
-  .inner
+  .__compound_box_header
+    font-size: 14px
+    padding: 8px 12px
+    margin: 0
+    line-height: 1.4
+    border-bottom: 1px solid #ddd
+
+  .__compound_box_tools
+    background: #0073AA
+    color: white
+    position: relative
+
+    .action-link
+      transition: 0.3s ease-in-out
+      display: inline-block
+      padding: 12px 12px
+      color: white
+      text-decoration: none
+
+      a
+        color: white
+        text-decoration: none
+
+      &:hover
+        background: #004a6d
+
+  .__compound_box_action_unset
+    border: 1px dashed rgba(125, 125, 125, .4)
+    margin: 14px
+    font-size: 14px
+    text-align: center
+    padding: 80px 20px
+    cursor: pointer
+    color: #EE4D4D
+
+  .__compound_box_action_add
+    border: 1px dashed rgba(125, 125, 125, .4)
+    margin: 14px
+    font-size: 14px
+    text-align: center
+    padding: 20px
+    cursor: pointer
+
+  .__compound_box_placeholder
+    border: 1px dashed rgba(125, 125, 125, .4)
+    height: 60px
+    margin: 24px 0
+    display: block
+
+  .__compound_box_inner
     padding: 18px
 
     h2
@@ -21,13 +70,99 @@
     ul > li > a
       text-decoration: none
 
-  .footer
+  .__compound_field_grid
+    .__compound_component_insert
+      padding: 16px 0
+      cursor: pointer
+      text-align: center
+      transition: 0.1s ease-in-out
+
+      & > .dashicons
+        color: gray
+
+      &:hover
+        background: #0073aa
+        color: white
+        transition: 0.1s ease-in-out
+
+        & > .dashicons
+          color: white
+          transition: 0.1s ease-in-out
+
+    .__compound_component_tag
+      cursor: pointer
+      padding: 16px
+      transition: 0.1s ease-in-out
+      background: #f9f9f9
+
+      &:hover
+        background: #0073aa
+        color: white
+        transition: .1s ease-in-out
+
+  .__compound_field
+    background: #ffffff
+    padding: 10px
+    margin: 4px
+    width: auto
+    width: -webkit-fill-available
+    min-width: 40px
+
+  .__compound_field_body
+    width: 100%
+    padding: 6px
+    background: #F5F5F5
+
+  .__compound_field_grid
+    .__compound_component_insert
+      padding: 16px 0
+      cursor: pointer
+      text-align: center
+      transition: 0.1s ease-in-out
+
+      & > .dashicons
+        color: gray
+        transition: 0.3s ease-in-out
+
+        &:hover
+          transition: 0.3s ease-in-out
+          color: #f1f1f1
+          cursor: pointer
+
+      &:hover
+        background: #0073aa
+        color: white
+        transition: 0.1s ease-in-out
+
+        & > .dashicons
+          color: white
+          transition: 0.1s ease-in-out
+
+    .__compound_component_tag
+      cursor: pointer
+      padding: 16px
+      transition: 0.1s ease-in-out
+      background: #f9f9f9
+
+      &:hover
+        background: #0073aa
+        color: white
+        transition: .1s ease-in-out
+
+  .__compound_box_footer
     padding: 12px
     font-size: 13px
     line-height: 1.5
     border-top: 1px solid #ddd
     background: #f5f5f5
 
-  .footer > p
-    margin: 0
+    & > p
+      margin: 0
+
+  .__compound_templates_animation-enter-active, .__compound_templates_animation-leave-active
+    transition: all 1s
+
+  .__compound_templates_animation-enter
+    opacity: 1
+    transform: translateY(30px)
 

@@ -24,7 +24,7 @@ Project.export('@form-createComponent', new Interface({
             create: function (event) {
 
                 const Request = new WPAjax('Compound-insertComponent', Object.assign(this.event, event, {
-                    page: $page
+                    page: Compound.page_on_edit || 0
                 }));
 
                 Request.then(Event => {

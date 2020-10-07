@@ -1,109 +1,197 @@
-{% extends "Compound/editor/layout.twig" %}
+{# Import of all necessary dependencies to generate the template #}
+{% import 'Compound/editor/modal/insert_template.twig' as modal_insert_template %}
+{% import 'Compound/editor/modal/insert_component.twig' as modal_insert_component %}
+{% import 'Compound/editor/modal/edit_props.twig' as modal_edit_props %}
+{% import 'Compound/editor/modal/edit_template.twig' as modal_edit_template %}
+{% import 'Compound/editor/postbox/meta.twig' as postbox_meta %}
+{% import 'Compound/editor/panel/tools.twig' as panel_tools %}
+{% import 'Compound/editor/spinner/editor_preparation.twig' as editor_preparation %}
+{% import 'Compound/editor/message/editor_error_preparation.twig' as editor_error_preparation %}
 
-{% block meta %}
+{# Generation of universal package data for valid rendering #}
+{% set data_package = {
+    page: page,
+    templates: store.templates,
+    components: store.components,
+    families: store.getFamilies,
+} %}
 
-    <meta content="{{ page.ID }}" name="page" />
+{# We generate the instances of all modal windows with which user interaction will take place. #}
+{# Without calling the Render macro, #}
+{# the modal windows will not be drawn on the page and will not receive any interaction. #}
+{{ modal_insert_template.render(data_package) }}
+{{ modal_insert_component.render(data_package) }}
+{{ modal_edit_props.render(data_package) }}
+{{ modal_edit_template.render(data_package) }}
 
-{% endblock %}
+<div class="wrap">
 
+    <h1>Compound Block</h1>
 
-{% block main %}
+    <hr class="wp-header-end"/>
 
-    <div class="wp-mrl-box" id="compound-editor-body" data-behavior="" data-component="editor">
+    <div id="poststuff">
+        <div id="post-body" class="metabox-holder columns-2">
 
-        <div class="hidden" data-component="body" data-namespace="editor">
+            <div id="post-body-content" style="position: relative;">
 
-            <h2 class="wp-mrl-header">
-                <span>Compound Page Editor</span>
-            </h2>
+                <div class="root-blocks">
 
-            <div class="wp-mrl-tools">
+                    {# Editor Box (VUE Context) #}
+                    <div class="__compound_box" id="compound-editor-body" data-behavior="" data-component="editor" data-namespace="editor">
 
-                <a href="#TB_inline?width=600&height=700&inlineId=modal_insert_template"
-                   title="Insert template" class="thickbox action-link">
-                    <span class="dashicons dashicons-plus wp-mrl-controll-icon"></span>
-                </a>
+                        {# Body #}
+                        <div class="hidden" data-component="body" data-namespace="editor">
 
-                <a href="#TB_inline?width=800&height=800&inlineId=modal_edit_template" title="Edit page"
-                   class="thickbox action-link">
-                    <span class="dashicons dashicons-welcome-write-blog wp-mrl-controll-icon"></span>
-                </a>
+                            <h2 class="__compound_box_header">
+                                <span>Compound Page Editor</span>
+                            </h2>
 
-                <div class="action-link">
-                    <span class="dashicons dashicons-external wp-mrl-controll-icon"></span>
-                </div>
+                            <div class="__compound_box_tools">
 
-            </div>
+                                {{ panel_tools.render({
 
-            <div class="inner" data-behavior="sortable" data-namespace="editor">
+                                    left: [
 
-                <div class="wp-mrl-block" :data-template="template.name" :data-id="template.id"
-                     :data-page-id="template.page" v-for="template in markup" v-if="markup"
-                     data-component="field" data-namespace="editor">
-                    <div class="grid-container jquery-selectable-compound">
+                                        {
+                                            href: "#TB_inline?width=600&height=700&inlineId=modal_insert_template",
+                                            icon: "dashicons-plus",
+                                            attr: {
+                                                title: "Insert template"
+                                            }
+                                        },
 
-                        <div :class="__metaFieldClass__(field.meta)"
-                             v-for="(field, name) in template.fields">
+                                        {
+                                            href: "#TB_inline?width=800&height=800&inlineId=modal_edit_template",
+                                            icon: "dashicons-welcome-write-blog",
+                                            attr: {
+                                                title: "Edit page"
+                                            }
+                                        },
 
-                            <div v-if="field.tags">
-                                <div v-for="tag in field.tags">
-                                    <div v-if="tag.tag == 'component'" class="wp-mrl-component left"
-                                         @click="editProps({field: name, component: tag.attributes.name, template: template.id})">
-                                        <h5 class="margin-0 padding-0">{tag.attributes.name}</h5>
-                                        <small>
-                                            Component
-                                        </small>
-                                    </div>
-                                </div>
+                                        {
+                                            href: page.guid,
+                                            icon: "dashicons-external",
+                                            attr: {
+                                                target: '_blank',
+                                                rel: 'noopener noreferrer'
+                                            }
+                                        }
+
+                                    ],
+
+                                    right: [
+
+                                        {
+                                            href: "javascript:void(0);",
+                                            icon: "dashicons-update",
+                                            attr: {
+                                                title: 'Reboot page',
+                                                '@click': 'reloadPage()'
+                                            }
+                                        }
+
+                                    ]
+
+                                }) }}
+
                             </div>
-                            <div v-else>
-                                <div :data-field-name="name">
-                                    <div class="wp-mrl-insert"
-                                         @click="insertComponent({field: name, template: template.id})">
-                                        <span class="dashicons dashicons-plus"></span>
+
+                            <div class="__compound_box_inner" data-behavior="editor-template" data-namespace="editor" data-component="editor-body">
+
+                                <div class="__compound_field_grid" :data-template="template.name" :data-id="template.id"
+                                     :data-page-id="template.page" v-for="template in markup" v-if="markup"
+                                     data-component="field" data-namespace="editor">
+
+                                    <div class="grid-container __compound_field_body" data-component="field-body" data-namespace="editor" :data-template="template.name" :data-id="template.id">
+
+                                        <div :class="__metaFieldClass__(field.meta)"
+                                             v-for="(field, name) in template.fields"
+                                             data-component="field-component" data-namespace="editor">
+
+                                            <div v-if="field.tags">
+                                                <div v-for="tag in field.tags">
+                                                    <div v-if="tag.tag == 'component'" class="__compound_component_tag left"
+                                                         @click="editProps({field: name, component: tag.attributes.name, template: template.id})">
+                                                        <h5 class="margin-0 padding-0">{tag.attributes.name}</h5>
+                                                        <div v-for="value, attribute in tag.attributes" v-if="attribute != 'id' && attribute != 'name'">
+                                                            <small>
+                                                                <b>{attribute|capitalize}</b>: {value}
+                                                            </small>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div v-else :data-field-name="name"
+                                                 class="__compound_component_insert center"
+                                                 @click="insertComponent({field: name, template: template.id})">
+                                                <span class="dashicons dashicons-plus"></span>
+                                            </div>
+
+                                        </div>
+
                                     </div>
+
+                                    <div class="__compound_field_control center" data-component="template-control" data-namespace="editor">
+
+                                        <div class="__compound_field_control_action padding-2" data-action="" data-namespace="editor" title="Click to make a copy">
+                                            <span class="dashicons dashicons-admin-page"></span>
+                                        </div>
+
+                                        <div class="__compound_field_control_action_edit padding-2" data-action="edit" data-namespace="editor" title="Press and hold to move block" @click="__menuActionEditTemplate({template: template.id})">
+                                            <span class="dashicons dashicons-admin-settings"></span>
+                                        </div>
+
+                                        <div class="__compound_field_control_action_remove padding-2" data-action="remove" data-namespace="editor" title="Press and hold to move block" @click="__menuActionRemoveTemplate({template: template.id})">
+                                            <span class="dashicons dashicons-trash"></span>
+                                        </div>
+
+                                        <div class="__compound_field_control_action_move padding-2" data-action="move" data-namespace="editor" title="Press and hold to move block" @mousedown="__moveEnabled()">
+                                            <span class="dashicons dashicons-move"></span>
+                                        </div>
+
+
+                                    </div>
+
                                 </div>
+
+                            </div>
+
+                            <div class="__compound_box_action_unset hidden" data-behavior="droppable" data-namespace="editor"
+                                 data-role="trash">
+                                <span class="dashicons dashicons-trash"></span>
+                            </div>
+
+                            <div class="__compound_box_action_add" @click="insertTemplate({})">
+                                <span class="dashicons dashicons-plus"></span>
+                            </div>
+
+                            <div class="__compound_box_footer">
+                                Made with Compound, Mirele and ❤
                             </div>
 
                         </div>
 
+                        {# Spinner #}
+                        <div class="main" data-component="spinner" data-namespace="editor">
+                            {{ editor_preparation.render() }}
+                        </div>
+
+                        {# Error #}
+                        <div class="hidden" data-component="error" data-namespace="editor">
+                            {{ editor_error_preparation.render({}) }}
+                        </div>
+
                     </div>
+
                 </div>
-
             </div>
 
-            <div class="wp-mrl-trash hidden" data-behavior="droppable" data-namespace="editor"
-                 data-role="trash">
-                <span class="dashicons dashicons-trash"></span>
-            </div>
-
-            <a href="#TB_inline?width=600&height=700&inlineId=modal_insert_template"
-               title="Insert template" class="thickbox">
-                <div class="wp-mrl-add">
-                    <span class="dashicons dashicons-plus"></span>
-                </div>
-            </a>
+            {{ postbox_meta.render({page: page}) }}
 
         </div>
-
-        <!-- Spinner -->
-        <div class="main" data-component="spinner" data-namespace="editor">
-            {{ editor_preparation.render() }}
-        </div>
-
-        <!-- Error -->
-        <div class="hidden" data-component="error" data-namespace="editor">
-            <div class="center padding-24">
-                <span class="dashicons dashicons-warning"></span>
-                <h3 class="">Workspace preparation error</h3>
-                <p class="padding-x-0">An error occurred in preparing the workspace. It is possible that
-                    your connection to the site is unreliable, try reloading the page and trying again.
-                    If the problem persists, contact your system administrator or write to technical
-                    support</p>
-            </div>
-        </div>
-
-
+        <br class="clear"/>
     </div>
 
-{% endblock %}
+</div>

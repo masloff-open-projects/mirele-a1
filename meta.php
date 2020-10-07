@@ -1,4 +1,11 @@
 <?php
+add_action('init', function () {
+
+    # Turn off unnecessary scripts through filters.
+    add_filter('woocommerce_enqueue_styles', '__return_empty_array');
+
+});
+
 add_action('widgets_init', function () {
 
     # Let's register the Navbars

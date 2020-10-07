@@ -28,7 +28,7 @@ if (is_object($post)) {
     $lex = $Lexer->parse();
 
     # We check the essence of the lecturer
-    if ((object) $lex) {
+    if ($lex) {
 
         # Variable $lex has full markup of
         # all data that the user has marked
@@ -45,63 +45,67 @@ if (is_object($post)) {
 
         $Layout = $lex->getLayout();
 
-        foreach ($Layout as $ID => $Template) {
+        if ($Layout) {
 
-            $fields = [];
-            $components = [];
+            foreach ($Layout as $ID => $Template) {
 
-            # We will get all the registered fields
-            # in the template, already from them we
-            # will get the markup from the token data.
+                $fields = [];
+                $components = [];
 
-            if (isset($Template->props->name)) {
+                # We will get all the registered fields
+                # in the template, already from them we
+                # will get the markup from the token data.
 
-                $template = clone Grider::get($Template->props->name);
+                if (isset($Template->props->name)) {
 
-                if ($template instanceof Template) {
+                    $template = clone Grider::get($Template->props->name);
 
-                    foreach ($template->getFields() as $index => $field) {
-                        if ($field instanceof Field) {
-                            $fields[$field->getName()] = $field;
+                    if ($template instanceof Template) {
+
+                        foreach ($template->getFields() as $index => $field) {
+                            if ($field instanceof Field) {
+                                $fields[$field->getName()] = $field;
+                            }
                         }
+
                     }
 
-                }
+                    if (isset($Template->fields)) {
+                        foreach ($Template->fields as $field_name => $tags) {
+                            foreach ($tags as $index => $tag) {
+                                if ($tag instanceof Tag) {
+                                    if ($tag->getTagName() === 'component') {
 
-                if (isset($Template->fields)) {
-                    foreach ($Template->fields as $field_name => $tags) {
-                        foreach ($tags as $index => $tag) {
-                            if ($tag instanceof Tag) {
-                                if ($tag->getTagName() === 'component') {
+                                        $component = Store::get($tag->getAttributes()['name']);
 
-                                    $component = Store::get($tag->getAttributes()['name']);
+                                        if ($component instanceof Component) {
 
-                                    if ($component instanceof Component) {
+                                            $component = clone $component;
+                                            $component->setProps($tag->getAttributes());
 
-                                        $component = clone $component;
-                                        $component->setProps($tag->getAttributes());
+                                            $components[$field_name][] = $component;
 
-                                        $components[$field_name][] = $component;
+                                        }
 
                                     }
-
                                 }
                             }
                         }
                     }
+
+                    $Buffer->append(Grider::call($Template->props->name, array_merge(
+                        (array) [],
+                        (array) [
+                            'call' => [
+                                'components' => $components
+                            ],
+                        ]
+                    ), true));
+
                 }
 
-                $Buffer->append(Grider::call($Template->props->name, array_merge(
-                    (array) [],
-                    (array) [
-                        'call' => [
-                            'components' => $components
-                        ],
-                    ]
-                ), true));
 
             }
-
 
         }
 
