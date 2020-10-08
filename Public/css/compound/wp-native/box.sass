@@ -18,12 +18,18 @@
     color: white
     position: relative
 
-    .action-link
+    .__compound_action_link
       transition: 0.3s ease-in-out
       display: inline-block
       padding: 12px 12px
       color: white
       text-decoration: none
+
+      &:disabled,
+      &[disabled]
+        color: #e0e0e0
+        background: #0d648e
+        cursor: not-allowed
 
       a
         color: white
@@ -40,6 +46,12 @@
     padding: 80px 20px
     cursor: pointer
     color: #EE4D4D
+
+  .__compound_box_action_unset_hover
+    background: #EE4D4D
+    color: white
+    border: 1px dashed rgba(125, 125, 125, .4)
+    cursor: not-allowed
 
   .__compound_box_action_add
     border: 1px dashed rgba(125, 125, 125, .4)
@@ -112,6 +124,7 @@
     width: 100%
     padding: 6px
     background: #F5F5F5
+    border: 1px solid white
 
   .__compound_field_grid
     .__compound_component_insert
@@ -148,6 +161,9 @@
         background: #0073aa
         color: white
         transition: .1s ease-in-out
+
+  .__compound_notify
+    background: #9ACB6A
 
   .__compound_box_footer
     padding: 12px

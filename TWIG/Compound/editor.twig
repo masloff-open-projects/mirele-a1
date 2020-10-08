@@ -4,7 +4,6 @@
 {% import 'Compound/editor/modal/edit_props.twig' as modal_edit_props %}
 {% import 'Compound/editor/modal/edit_template.twig' as modal_edit_template %}
 {% import 'Compound/editor/postbox/meta.twig' as postbox_meta %}
-{% import 'Compound/editor/panel/tools.twig' as panel_tools %}
 {% import 'Compound/editor/spinner/editor_preparation.twig' as editor_preparation %}
 {% import 'Compound/editor/message/editor_error_preparation.twig' as editor_error_preparation %}
 
@@ -38,10 +37,18 @@
                 <div class="root-blocks">
 
                     {# Editor Box (VUE Context) #}
-                    <div class="__compound_box" id="compound-editor-body" data-behavior="" data-component="editor" data-namespace="editor">
+                    <div class="__compound_box" id="compound-editor"
+                         data-behavior="editor"
+                         data-component="editor"
+                         data-namespace="editor"
+                         data-role="editor">
 
                         {# Body #}
-                        <div class="hidden" data-component="body" data-namespace="editor">
+                        <div class="hidden"
+                             data-behavior="body"
+                             data-namespace="editor"
+                             data-component="body"
+                             data-role="body">
 
                             <h2 class="__compound_box_header">
                                 <span>Compound Page Editor</span>
@@ -49,61 +56,69 @@
 
                             <div class="__compound_box_tools">
 
-                                {{ panel_tools.render({
+                                <div class="grid-container">
 
-                                    left: [
+                                    <div class="col-6 left">
 
-                                        {
-                                            href: "#TB_inline?width=600&height=700&inlineId=modal_insert_template",
-                                            icon: "dashicons-plus",
-                                            attr: {
-                                                title: "Insert template"
-                                            }
-                                        },
+                                        <a :href="tool.href||'javascript:void(0);'"
+                                           :title="tool.title"
+                                           class="__compound_action_link"
+                                           :target="tool.href?'_blank':''"
+                                           :rel="tool.href?'noopener noreferrer':''"
+                                           :disabled="!(tool.enabled||false)"
+                                           v-on:click="tool.click"
+                                           v-for="tool in tools.left">
 
-                                        {
-                                            href: "#TB_inline?width=800&height=800&inlineId=modal_edit_template",
-                                            icon: "dashicons-welcome-write-blog",
-                                            attr: {
-                                                title: "Edit page"
-                                            }
-                                        },
+                                            <span :class="tool.icon"></span>
+                                        </a>
 
-                                        {
-                                            href: page.guid,
-                                            icon: "dashicons-external",
-                                            attr: {
-                                                target: '_blank',
-                                                rel: 'noopener noreferrer'
-                                            }
-                                        }
+                                    </div>
 
-                                    ],
+                                    <div class="col-6 right">
 
-                                    right: [
+                                        <a :href="tool.href||'javascript:void(0);'"
+                                           :title="tool.title"
+                                           class="__compound_action_link"
+                                           :target="tool.href?'_blank':''"
+                                           :rel="tool.href?'noopener noreferrer':''"
+                                           :disabled="!(tool.enabled||false)"
+                                           v-on:click="tool.click"
+                                           v-for="tool in tools.right">
 
-                                        {
-                                            href: "javascript:void(0);",
-                                            icon: "dashicons-update",
-                                            attr: {
-                                                title: 'Reboot page',
-                                                '@click': 'reloadPage()'
-                                            }
-                                        }
+                                            <span :class="tool.icon"></span>
+                                        </a>
 
-                                    ]
+                                    </div>
 
-                                }) }}
+                                </div>
 
                             </div>
 
-                            <div class="__compound_box_inner" data-behavior="editor-template" data-namespace="editor" data-component="editor-body">
+                            <div class="__compound_notify padding-3 font-size-1 color-white hidden"
+                                 data-behavior="notify"
+                                 data-component="notify"
+                                 data-namespace="editor"
+                                 data-role="notify">
+
+                                <b>Success</b> Lorem ipsum dolor sit.
+
+                            </div>
+
+                            <div class="__compound_box_inner"
+                                 data-behavior="layout"
+                                 data-namespace="editor"
+                                 data-component="layout"
+                                 data-role="layout">
 
                                 <div class="__compound_field_grid" :data-template="template.name" :data-id="template.id"
                                      :data-page-id="template.page" v-for="template in markup" v-if="markup"
                                      data-component="field" data-namespace="editor">
 
-                                    <div class="grid-container __compound_field_body" data-component="field-body" data-namespace="editor" :data-template="template.name" :data-id="template.id">
+                                    <div class="grid-container __compound_field_body"
+                                         data-component="field-body"
+                                         data-namespace="editor"
+                                         :data-template="template.name"
+                                         :data-id="template.id">
 
                                         <div :class="__metaFieldClass__(field.meta)"
                                              v-for="(field, name) in template.fields"
@@ -135,19 +150,34 @@
 
                                     <div class="__compound_field_control center" data-component="template-control" data-namespace="editor">
 
-                                        <div class="__compound_field_control_action padding-2" data-action="" data-namespace="editor" title="Click to make a copy">
+                                        <div class="__compound_field_control_action padding-2"
+                                             data-action=""
+                                             data-namespace="editor"
+                                             title="Click to make a copy">
                                             <span class="dashicons dashicons-admin-page"></span>
                                         </div>
 
-                                        <div class="__compound_field_control_action_edit padding-2" data-action="edit" data-namespace="editor" title="Press and hold to move block" @click="__menuActionEditTemplate({template: template.id})">
+                                        <div class="__compound_field_control_action_edit padding-2"
+                                             data-action="edit"
+                                             data-namespace="editor"
+                                             title="Press and hold to move block"
+                                             @click="__menuActionEditTemplate({template: template.id})">
                                             <span class="dashicons dashicons-admin-settings"></span>
                                         </div>
 
-                                        <div class="__compound_field_control_action_remove padding-2" data-action="remove" data-namespace="editor" title="Press and hold to move block" @click="__menuActionRemoveTemplate({template: template.id})">
+                                        <div class="__compound_field_control_action_remove padding-2"
+                                             data-action="remove"
+                                             data-namespace="editor"
+                                             title="Press and hold to move block"
+                                             @click="transport().removeTemplate({template: template.id})">
                                             <span class="dashicons dashicons-trash"></span>
                                         </div>
 
-                                        <div class="__compound_field_control_action_move padding-2" data-action="move" data-namespace="editor" title="Press and hold to move block" @mousedown="__moveEnabled()">
+                                        <div class="__compound_field_control_action_move padding-2"
+                                             data-action="move"
+                                             data-namespace="editor"
+                                             title="Press and hold to move block"
+                                             @mousedown="CompoundEditor.vue.ui.layout.setSortable(true)">
                                             <span class="dashicons dashicons-move"></span>
                                         </div>
 
@@ -158,7 +188,10 @@
 
                             </div>
 
-                            <div class="__compound_box_action_unset hidden" data-behavior="droppable" data-namespace="editor"
+                            <div class="__compound_box_action_unset hidden"
+                                 data-component="trash"
+                                 data-namespace="editor"
+                                 data-behavior="trash"
                                  data-role="trash">
                                 <span class="dashicons dashicons-trash"></span>
                             </div>
@@ -174,12 +207,20 @@
                         </div>
 
                         {# Spinner #}
-                        <div class="main" data-component="spinner" data-namespace="editor">
+                        <div class="main"
+                             data-component="spinner"
+                             data-namespace="editor"
+                             data-behavior="loader"
+                             data-role="loader">
                             {{ editor_preparation.render() }}
                         </div>
 
                         {# Error #}
-                        <div class="hidden" data-component="error" data-namespace="editor">
+                        <div class="hidden"
+                             data-component="error"
+                             data-namespace="editor"
+                             data-behavior="error"
+                             data-role="error">
                             {{ editor_error_preparation.render({}) }}
                         </div>
 

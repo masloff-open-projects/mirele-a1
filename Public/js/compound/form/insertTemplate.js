@@ -27,7 +27,7 @@ Project.export('@form-insertTemplate', new Interface({
                 }));
 
                 Request.then(Event => {
-                    this.__editor.__updateMarkup().then(Event => {
+                    this.__editor.updateMarkup().then(Event => {
                         tb_remove();
                     });
                 });

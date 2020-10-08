@@ -339,13 +339,18 @@ add_action(
     );
 
     # The script works in the visibility area of the Compound editor
-    wp_localize_script(
-        'compound', 'Compound',
-        [
-            'page_on_edit' => (MIRELE_GET)['page_id'],
-            'page' => !empty($post->ID) ? $post->ID : 0
-        ]
-    );
+    $wp_page = get_post((MIRELE_GET)['page_id']);
+    if ($wp_page) {
+        wp_localize_script(
+            'compound', 'Compound',
+            [
+                'page_on_edit' => (MIRELE_GET)['page_id'],
+                'page' => !empty($post->ID) ? $post->ID : 0,
+                'page_on_edit_url' => !empty($wp_page->guid) ? $wp_page->guid : 0
+            ]
+        );
+    }
+
 
     # If support for WooCommerce is provided,
     # we reassign the routing of code shorts.

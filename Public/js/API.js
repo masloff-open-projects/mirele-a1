@@ -4,6 +4,7 @@ class __project {
 
     constructor() {
         this.$export = {};
+        this.$declare = {};
     }
 
     export(name = '', object) {
@@ -20,6 +21,15 @@ class __project {
             return this.$export[name];
         } else {
             throw `Component '${name}' is not registered in the system and cannot be imported.`;
+        }
+    }
+
+    declare(name = '', object) {
+        if (!(name in this.$declare)) {
+            this.$declare[name] = object;
+            return object;
+        } else {
+            throw `Object '${name}' has already been declared and cannot be overwritten.`;
         }
     }
 

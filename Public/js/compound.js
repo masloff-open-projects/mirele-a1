@@ -32,117 +32,282 @@ const CompoundEditor = Project.export('editor', new Interface({
         jquery: true
     },
     elements: {
-        vue: ['#compound-editor-body']
+        vue: ['#compound-editor']
     },
     vue: {
         delimiters: ['{', '}'],
-        el: "#compound-editor-body",
+        el: "#compound-editor",
         data: {
-            markup: []
+            markup: [],
+            selected: [],
+            tools: {
+                left: [
+                    {
+                        title: '...',
+                        icon: 'dashicons dashicons-plus',
+                        href: false,
+                        enabled: true,
+                        click: function () {}
+                    },
+                    {
+                        title: '...',
+                        icon: 'dashicons dashicons-plus',
+                        href: false,
+                        enabled: false,
+                        click: function () {}
+                    },
+                    {
+                        title: '...',
+                        icon: 'dashicons dashicons-external',
+                        href: Compound.page_on_edit_url||false,
+                        enabled: true,
+                        click: function () {}
+                    },
+                ],
+                right: [
+                    {
+                        title: 'Remove selected templates',
+                        icon: 'dashicons dashicons-trash',
+                        href: false,
+                        enabled: false,
+                        click: function () {
+                            return CompoundEditor.vue.transport().removeSelectedTemplates();
+                        }
+                    },
+
+                    {
+                        title: 'Remove selected templates',
+                        icon: 'dashicons dashicons-update',
+                        href: false,
+                        enabled: true,
+                        click: function () {
+                            return CompoundEditor.vue.transport().removeSelectedTemplates();
+                        }
+                    }
+                ]
+            },
+            ui: {
+                notify: {
+                    element: '[data-component="notify"][data-namespace="editor"][data-behavior="notify"][data-role="notify"]',
+                    show: function (self, event) {
+                        jQuery(this.element).removeClass('hidden');
+                    },
+                    hide: function (self, event) {
+                        jQuery(this.element).addClass('hidden');
+                    },
+                    notify: function (self, event) {
+                        this.show();
+
+                        if (typeof (event||{}).html !== 'undefined') {
+                            jQuery(this.element).html((event||{}).html||'Not defined');
+                        } else {
+                            jQuery(this.element).text((event||{}).text||'Not defined');
+                        }
+
+                        setTimeout(Event => {
+                            this.hide();
+                        }, (event||{}).timeout||2500);
+                    }
+                },
+                loader: {
+                    element: '[data-component="spinner"][data-namespace="editor"][data-behavior="loader"][data-role="loader"]',
+                    show: function (self, event) {
+                        jQuery(this.element).removeClass('hidden');
+                    },
+                    hide: function (self, event) {
+                        jQuery(this.element).addClass('hidden');
+                    }
+                },
+                error: {
+                    element: '[data-component="error"][data-namespace="editor"][data-behavior="error"][data-role="error"]',
+                    show: function (self, event) {
+                        jQuery(this.element).removeClass('hidden');
+                    },
+                    hide: function (self, event) {
+                        jQuery(this.element).addClass('hidden');
+                    }
+                },
+                layout: {
+                    element: '[data-behavior="layout"][data-namespace="editor"][data-component="layout"][data-role="layout"]',
+                    show: function (self, event) {
+                        jQuery(this.element).removeClass('hidden');
+                    },
+                    hide: function (self, event) {
+                        jQuery(this.element).addClass('hidden');
+                    },
+                    setSortable: function (boolean=true) {
+                        if (boolean == true) {
+                            jQuery(this.element).sortable("option", "disabled", !true);
+                        } else if (boolean == false) {
+                            jQuery(this.element).sortable("option", "disabled", !false);
+                        }
+                    },
+                    blur: function (self, event) {
+                        jQuery(this.element).blur();
+                        jQuery(this.element).animate({
+                            opacity: 0.3
+                        });
+                    },
+                    focus: function (self, event) {
+                        jQuery(this.element).focus();
+                        jQuery(this.element).animate({
+                            opacity: 1
+                        });
+                    },
+                    getSelected: function (self, event) {
+
+                        const $element = '[data-component="field-body"][data-selected]';
+                        
+                        return jQuery($element).map((i, element) => {
+                            return jQuery(element).attr('data-id') || 0;
+                        }) || [];
+
+                    },
+                    mount: function (self, event) {
+
+                        const context = this;
+
+                        jQuery(this.element).selectable({
+                            filter: '[data-component="field-body"]',
+                            cancel: '[data-component="template-control"],[data-component="field-component"]',
+                            selected: function( event, ui ) {
+                                jQuery(ui.selected).attr('data-selected', true);
+                                self.selected = context.getSelected();
+                            },
+                            selecting: function( event, ui ) {
+                                jQuery(ui.selected).attr('data-selected', true);
+                                self.selected = context.getSelected();
+                            },
+                            unselected: function( event, ui ) {
+                                jQuery(ui.unselected).removeAttr('data-selected');
+                                self.selected = context.getSelected();
+                            },
+                            unselecting: function( event, ui ) {
+                                jQuery(ui.unselected).removeAttr('data-selected');
+                                self.selected = context.getSelected();
+                            },
+                        });
+
+                        jQuery(this.element).sortable({
+                            
+                            axis: "xy",
+                            containment: "document",
+                            disabled: true,
+                            // tolerance: "pointer",
+                            placeholder: "__compound_box_placeholder",
+                            connectWith: jQuery('[data-behavior="droppable"][data-namespace="editor"]'),
+                            helper: 'clone',
+                            opacity: 0.5,
+                            cursor: "move",
+                            forcePlaceholderSize: true,
+                            revert: 80,
+                            delay: 0,
+
+                            update: function (event, ui) {
+                                CompoundEditor.vue.updateOrder();
+                            },
+                            start: (event, ui) => {
+                                ui.placeholder.height(ui.item.height());
+                                self.ui.trash.show();
+                                self.ui.trash.mount();
+                            },
+                            stop: (event, ui) => {
+                                self.ui.layout.setSortable(false);
+                                self.ui.trash.hide();
+                            }
+                        });
+                        
+                    },
+                    reset: function (self, event) {
+                        CompoundEditor.vue.selected = [];
+                        jQuery(this.element).selectable("refresh");
+                    }
+                },
+                body: {
+                    element: '[data-behavior="body"][data-namespace="editor"][data-component="body"][data-role="body"]',
+                    show: function (self, event) {
+                        jQuery(this.element).removeClass('hidden');
+                    },
+                    hide: function (self, event) {
+                        jQuery(this.element).addClass('hidden');
+                    }
+                },
+                trash: {
+                    element: '[data-behavior="trash"][data-role="trash"][data-component="trash"][data-namespace="editor"]',
+                    show: function (self, event) {
+                        jQuery(this.element).removeClass('hidden');
+                    },
+                    hide: function (self, event) {
+                        jQuery(this.element).addClass('hidden');
+                    },
+                    mount: function (self, event) {
+                        return jQuery(this.element).droppable({
+                            accept: jQuery('[data-component="field"][data-namespace="editor"]'),
+                            activeClass: 'wp-mrl-trash-active',
+                            hoverClass: '__compound_box_action_unset_hover',
+
+                            drop: (event, ui) => {
+                                const $template = jQuery(ui.helper.context).attr('data-id') || false;
+                                ui.draggable.remove();
+                                CompoundEditor.vue.removeTemplate({template: $template}).then(Event => {
+                                    // FIXME
+                                });
+                            }
+                        });
+                    }
+                }
+            }
         },
         mounted: function (Event) {
 
-            this.__updateMarkup().then(Data => {
+            this.updateMarkup().then(Data => {
 
-                jQuery('[data-component="body"][data-namespace="editor"]').removeClass('hidden');
-                jQuery('[data-component="spinner"][data-namespace="editor"]').addClass('hidden');
-
-                // Hotkey registration
-                const self = this;
-                document.addEventListener('keydown', function (event) {
-                    const key = event.key;
-                    if (key === "Delete") {
-                        const $templates = jQuery('[data-component="field-body"][data-selected]').map((i, el) => {
-                            return jQuery(el).attr('data-id');
-                        });
-
-                        if ($templates.length > 0) {
-                            self.removeTemplate({
-                                template: $templates
-                            }).then(Event => {
-                                self.reloadPage();
-                                $('[data-component="field-body"][data-selected]').selectable( "refresh" );
-                            }).catch(Event => {
-
-                            });
-                        }
-                    }
-                });
-
-                jQuery('[data-behavior="editor-template"][data-namespace="editor"][data-component="editor-body"]').selectable({
-                    filter: '[data-component="field-body"]',
-                    cancel: '[data-component="template-control"],[data-component="field-component"]',
-                    selected: function( event, ui ) {
-                        jQuery(ui.selected).attr('data-selected', true)
-                    },
-                    selecting: function( event, ui ) {
-                        jQuery(ui.selected).attr('data-selected', true)
-                    },
-                    unselected: function( event, ui ) {
-                        jQuery(ui.unselected).removeAttr('data-selected')
-                    },
-                    unselecting: function( event, ui ) {
-                        jQuery(ui.unselected).removeAttr('data-selected')
-                    },
-                });
-
-                jQuery('[data-behavior="editor-template"]').sortable({
-
-                    axis: "y",
-                    containment: "document",
-                    disabled: true,
-                    tolerance: "pointer",
-                    placeholder: "__compound_box_placeholder",
-                    connectWith: jQuery('[data-behavior="droppable"][data-namespace="editor"]'),
-                    helper: 'clone',
-                    opacity: 0.5,
-                    cursor: "move",
-                    forcePlaceholderSize: true,
-                    revert: 80,
-
-                    update: function (event, ui) {
-
-                        var $order = [];
-
-                        for (const [index, element] of Object.entries(jQuery('[data-component="field"][data-namespace="editor"]'))) {
-                            const $id = jQuery(element).attr('data-id');
-                            if ($id) {
-                                $order.push($id);
-                            }
-                        }
-
-                        const Request = new WPAjax('Compound-sort', {
-                            page: Compound.page_on_edit || 0,
-                            order: $order
-                        });
-
-                    },
-                    start: (event, ui) => {
-
-                        jQuery('[data-role="trash"][data-namespace="editor"]').removeClass('hidden');
-
-                        this.__renderDroppable();
-                        this.__renderPlaceholder(ui);
-
-                    },
-                    stop: (event, ui) => {
-
-                        jQuery('[data-behavior="editor-template"][data-namespace="editor"][data-component="editor-body"]').sortable("option", "disabled", true);
-                        jQuery('[data-role="trash"][data-namespace="editor"]').addClass('hidden');
-
-                    }
-                });
-
+                this.ui.loader.hide(this);
+                this.ui.body.show(this);
+                this.ui.layout.mount(this);
+                
             }).catch(Data => {
 
-                jQuery('[data-component="error"][data-namespace="editor"]').removeClass('hidden');
-                jQuery('[data-component="spinner"][data-namespace="editor"]').addClass('hidden');
+                this.ui.loader.hide(this);
+                this.ui.error.show(this);
 
             });
 
-
         },
         methods: {
+
+            updateMarkup: function (event) {
+                return new Promise((resolve, reject) => {
+
+                    // Create main request
+                    (new WPAjax('Compound-getMarkup', {
+                        page: Compound.page_on_edit || 0
+                    })).then(Event => {
+
+                        var $buffer = [];
+
+                        for (const [id, template] of Object.entries(Event.data.data)) {
+                            $buffer.push({
+                                name: template.props.name || 'default',
+                                id: id,
+                                fields: template.fields,
+                                props: template.props
+                            });
+                        }
+
+                        this.markup = $buffer;
+
+                        // Resolve
+                        resolve(Event.data.data);
+
+                    }).catch(Event => {
+
+                        // Reject
+                        reject(Event);
+
+                    });
+                });
+            },
 
             editProps: function (event) {
                 const $form = Project.import('@form-props').vue;
@@ -176,54 +341,61 @@ const CompoundEditor = Project.export('editor', new Interface({
             },
 
             reloadPage: function () {
-
-                jQuery('[data-namespace="editor"][data-component="editor-body"]').animate({
-                    opacity: 0.3
-                });
-
-                this.__updateMarkup().then(Event => {
-
-                    jQuery('[data-namespace="editor"][data-component="editor-body"]').animate({
-                        opacity: 1
+                this.ui.layout.blur()
+                this.updateMarkup().then(Event => {
+                    this.ui.layout.focus();
+                    CompoundEditor.vue.ui.notify.notify(false, {
+                        html: '<span class="dashicons dashicons-saved"></span> Changes have been successfully saved'
                     });
-
                 }).catch(Event => {
-
-                    jQuery('[data-namespace="editor"][data-component="editor-body"]').animate({
-                        opacity: 1
-                    });
-
+                    this.ui.layout.focus();
                 });
             },
 
-            __moveEnabled: function (event) {
-                jQuery('[data-behavior="editor-template"][data-namespace="editor"][data-component="editor-body"]').sortable("option", "disabled", false);
-            },
+            updateOrder: function () {
+                var $order = [];
 
-            __menuActionRemoveTemplate: function (event) {
-                const Request = new WPAjax('Compound-removeTemplate', {
+                for (const [index, element] of Object.entries(jQuery('[data-component="field"][data-namespace="editor"]'))) {
+                    const $id = jQuery(element).attr('data-id');
+                    if ($id) {
+                        $order.push($id);
+                    }
+                }
+
+                const Request = new WPAjax('Compound-sort', {
                     page: Compound.page_on_edit || 0,
-                    template: event.template
-                });
-
-                Request.then(Event => {
-                    this.__updateMarkup();
-                }).catch(Event => {
-
+                    order: $order
                 });
             },
+
+            transport: function () {
+                const self = CompoundEditor.vue;
+                return {
+                    removeSelectedTemplates: function () {
+                        self.removeTemplate({template: self.selected}).then(Event => {
+                            self.ui.layout.reset();
+                            self.reloadPage();
+                        });
+                    },
+                    removeTemplate: function (event) {
+                        const Request = new WPAjax('Compound-removeTemplate', {
+                            page: Compound.page_on_edit || 0,
+                            template: event.template
+                        });
+
+                        Request.then(Event => {
+                            self.reloadPage();
+                        }).catch(Event => {
+                            // FIXME
+                        });
+                    },
+
+                };
+            },
+
 
             __menuActionEditTemplate: function (event) {
-                // const Request = new WPAjax('Compound-removeTemplate', {
-                //     page: Compound.page_on_edit || 0,
-                //     template: event.template
-                // });
-                //
-                // Request.then(Event => {
-                //     this.__updateMarkup();
-                // }).catch(Event => {
-                //
-                // });
+
             },
 
             __metaFieldClass__: function (event) {
@@ -232,56 +404,6 @@ const CompoundEditor = Project.export('editor', new Interface({
                 return `__compound_field col-${$editor.col || 12}`;
             },
 
-            __updateMarkup: function (event) {
-                return new Promise((resolve, reject) => {
-
-                    // Create main request
-                    (new WPAjax('Compound-getMarkup', {
-                        page: Compound.page_on_edit || 0
-                    })).then(Event => {
-
-                        var $buffer = [];
-
-                        for (const [id, template] of Object.entries(Event.data.data)) {
-                            $buffer.push({
-                                name: template.props.name || 'default',
-                                id: id,
-                                fields: template.fields,
-                                props: template.props
-                            });
-                        }
-
-                        this.markup = $buffer;
-
-                        // Resolve
-                        resolve(Event.data.data);
-
-                    }).catch(Event => {
-
-                        // Reject
-                        reject(Event);
-
-                    });
-                });
-            },
-
-            __renderDroppable: function (event) {
-                return jQuery('[data-behavior="droppable"]').droppable({
-                    accept: jQuery('[data-component="field"][data-namespace="editor"]'),
-                    activeClass: 'wp-mrl-trash-active',
-                    hoverClass: 'wp-mrl-trash-hover',
-
-                    drop: (event, ui) => {
-                        const $template = jQuery(ui.helper.context).attr('data-id');
-                        this.removeTemplate({template: $template});
-                        ui.draggable.remove();
-                    }
-                });
-            },
-
-            __renderPlaceholder: function (event) {
-                return event.placeholder.height(event.item.height());
-            }
         },
         filters: {
             capitalize: function (value) {
@@ -289,9 +411,29 @@ const CompoundEditor = Project.export('editor', new Interface({
                 value = value.toString()
                 return value.charAt(0).toUpperCase() + value.slice(1)
             }
+        },
+        watch: {
+            selected: function (event) {
+                if (event.length > 0) {
+                    this.tools.right[0].enabled = true;
+                } else {
+                    this.tools.right[0].enabled = false;
+                }
+            }
         }
     },
     ready: function (Event, $) {
+
+        // Hotkey registration
+        document.addEventListener('keydown', Event => {
+
+            const key = Event.key || '';
+            const self = CompoundEditor.vue || {};
+
+            if (key === "Delete") {
+                self.transport().removeSelectedTemplates();
+            }
+        });
 
     }
 }));

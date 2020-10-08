@@ -32,6 +32,10 @@ foreach (range(1, 6) as $x) {
 
 $Template->setMeta('name', 'Matrix');
 
-$Template->setTwig('Templates/Grid/default');
+$Template->setHandler(function (Template &$template) {
+    $template->setProp('data', 1);
+});
+
+$Template->setTwig('Templates/Matrix/default');
 
 Grider::add(clone $Template);

@@ -1,0 +1,18 @@
+<div class="container">
+    {{ props|json_encode }}
+    {% for class, components in template.fields %}
+
+        <div class="row">
+
+            <div class="col-{{ (12 / template.fields|length)|number_format }}">
+                {{ Field(class, {
+                    template: this,
+                    components: call.components,
+                    attr: {}
+                }) }}
+            </div>
+
+        </div>
+
+    {% endfor %}
+</div>
