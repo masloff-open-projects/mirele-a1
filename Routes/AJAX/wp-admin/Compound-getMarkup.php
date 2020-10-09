@@ -31,7 +31,7 @@ Router::post('/ajax_endpoint_v1/Compound-getMarkup', function () {
         if ((object)$lex and $lex instanceof Layout) {
             foreach ($lex->getLayout() as $ID => $Template) {
 
-                $template = Grider::get($Template->props->name);
+                $template = Grider::findById($Template->props->name);
 
                 if ($template instanceof Template) {
 

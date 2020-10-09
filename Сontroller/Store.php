@@ -99,9 +99,25 @@ class Store extends Iterator
     /**
      * @return array
      */
-    public static function all()
+    public static function all($sort=true)
     {
-        return self::$store;
+        $buffer = [];
+
+        foreach (self::$store as $id => $component) {
+            if ($component instanceof Component) {
+                if ($component->isIndex()) {
+                    $buffer[$id] = $component;
+                }
+            }
+        }
+
+        # Sort
+        if ($sort === true or $sort === 'native') {
+            ksort($buffer);
+        }
+
+        return $buffer;
+
     }
 
 }

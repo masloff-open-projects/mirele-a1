@@ -154,7 +154,6 @@ if (wp_doing_ajax() === false) {
 
 }
 
-
 # Setup an error handler
 set_error_handler(
 
@@ -661,6 +660,7 @@ add_action(
                     foreach ($Layout as $ID => $Template) {
 
                         $fields = [];
+                        $_fields = [];
 
                         # We will get all the registered fields
                         # in the template, already from them we
@@ -668,7 +668,7 @@ add_action(
 
                         if (isset($Template->props->name)) {
 
-                            $template = Grider::get($Template->props->name);
+                            $template = Grider::findById($Template->props->name);
 
                             if ($template instanceof Template) {
 
@@ -677,6 +677,8 @@ add_action(
                                         $fields[$field->getName()] = $field;
                                     }
                                 }
+
+                                $_fields = $template->getFields();
 
                             }
 
@@ -693,7 +695,7 @@ add_action(
                             'lex' => $Template,
                             'fields' => $fields,
                             'template' => [
-                                'fields' => $template->getFields()
+                                'fields' => $_fields
                             ]
                         ];
 
@@ -709,7 +711,10 @@ add_action(
                     'store' => [
                         'templates' => Grider::all(),
                         'components' => Store::all(),
-                        'getFamilies' => Store::getFamilies(true)
+                        'getFamilies' => Store::getFamilies(true),
+                        'templatesTypes' => Grider::getTypes(),
+                        'templatesFamilies' => Grider::getFamilies(),
+                        'templatesFolders' => Grider::getFolders(),
                     ]
                 ]);
 

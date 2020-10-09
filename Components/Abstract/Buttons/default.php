@@ -14,6 +14,7 @@ $Component->setProps([
     'value' => 'Hello world',
     'href' => false
 ]);
+
 $Component->setMeta('editor',
     (new Config())
         ->setData('title', 'Button')

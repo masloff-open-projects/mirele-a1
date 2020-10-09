@@ -40,8 +40,7 @@ class Iterator implements Iterator_Interface
      */
     public function rewind()
     {
-        $this->position = $this->reverse ?
-            count($this->collection->getItems()) - 1 : 0;
+        $this->position = $this->reverse ? count($this->collection->getItems()) - 1 : 0;
     }
 
     /**

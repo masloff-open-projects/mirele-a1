@@ -115,7 +115,7 @@ class createPage
         $lexer = new Lexer("");
 
         # Get template
-        $Template = Grider::get($template);
+        $Template = Grider::findById($template);
 
         if ($Template instanceof Template) {
 

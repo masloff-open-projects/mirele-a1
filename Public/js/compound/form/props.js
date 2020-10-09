@@ -49,7 +49,7 @@ Project.export('@form-props', new Interface({
                             this.meta = Event.data.data.meta;
                         }
                         
-                        tb_show('Edit props of component', '/?TB_inline&inlineId=modal_edit_props&width=600&height=700');
+                        tb_show('Edit props of component', `/?TB_inline&inlineId=modal_edit_props&width=${CONFIG.modal.width||600}&height=${CONFIG.modal.height||700}`);
                         
                     }
 

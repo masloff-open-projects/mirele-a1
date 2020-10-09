@@ -32,4 +32,4 @@ $Template->setMeta('name', 'Grid');
 
 $Template->setTwig('Templates/Grid/default');
 
-Grider::add(clone $Template);
+Grider::save(clone $Template);

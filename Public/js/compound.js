@@ -26,6 +26,13 @@
 
 "use strict";
 
+const CONFIG = {
+    modal: {
+        width: 800,
+        height: 600
+    }
+};
+
 const CompoundEditor = Project.export('editor', new Interface({
     requires: {
         vue: true,
@@ -372,22 +379,26 @@ const CompoundEditor = Project.export('editor', new Interface({
                 const self = CompoundEditor.vue;
                 return {
                     removeSelectedTemplates: function () {
-                        self.removeTemplate({template: self.selected}).then(Event => {
-                            self.ui.layout.reset();
-                            self.reloadPage();
-                        });
+                        if (self.selected.length > 0) {
+                            self.removeTemplate({template: self.selected}).then(Event => {
+                                self.ui.layout.reset();
+                                self.reloadPage();
+                            });
+                        }
                     },
                     removeTemplate: function (event) {
-                        const Request = new WPAjax('Compound-removeTemplate', {
-                            page: Compound.page_on_edit || 0,
-                            template: event.template
-                        });
+                        if (event.template) {
+                            const Request = new WPAjax('Compound-removeTemplate', {
+                                page: Compound.page_on_edit || 0,
+                                template: event.template
+                            });
 
-                        Request.then(Event => {
-                            self.reloadPage();
-                        }).catch(Event => {
-                            // FIXME
-                        });
+                            Request.then(Event => {
+                                self.reloadPage();
+                            }).catch(Event => {
+                                // FIXME
+                            });
+                        }
                     },
 
                 };

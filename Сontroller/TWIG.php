@@ -168,7 +168,8 @@ class TWIG
             public function getFilters()
             {
                 return [
-                    new TwigFilter('xss',         [$this, 'XSS'])
+                    new TwigFilter('xss',         [$this, 'XSS']),
+                    new TwigFilter('var_dump',    [$this, 'var_dump']),
                 ];
             }
 
@@ -179,6 +180,10 @@ class TWIG
                     new TwigFunction('Field',     [$this, 'Field']),
                     new TwigFunction('Tag',       [$this, 'Tag']),
                 ];
+            }
+
+            public function var_dump ($data) {
+                var_dump($data);
             }
 
             public function XSS ($data) {

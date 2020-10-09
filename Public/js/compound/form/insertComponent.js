@@ -18,7 +18,7 @@ Project.export('@form-createComponent', new Interface({
         methods: {
             open: function (event) {
                 this.event = event;
-                tb_show('Insert component', '/?TB_inline&inlineId=modal_insert_component&width=600&height=700');
+                tb_show('Insert component', `/?TB_inline&inlineId=modal_insert_component&width=${CONFIG.modal.width||600}&height=${CONFIG.modal.height||700}`);
             },
 
             create: function (event) {

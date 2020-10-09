@@ -11,6 +11,7 @@ namespace Mirele\Compound;
 class Component
 {
 
+    private $index = true;
     /**
      * @var
      */
@@ -132,6 +133,24 @@ class Component
     public function __unset($name)
     {
         unset($this->props[$name]);
+    }
+
+    /**
+     * @return bool
+     */
+    public function isIndex()
+    {
+        return $this->index;
+    }
+
+    /**
+     * @param boolean $index
+     * @return Component
+     */
+    public function setIndex(bool $index)
+    {
+        $this->index = $index;
+        return $this;
     }
 
     /**

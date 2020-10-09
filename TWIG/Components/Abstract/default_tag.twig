@@ -1,1 +1,1 @@
-{{ Tag(props.tag|default('span'), props)|raw }}
+{{ Tag(props.tag|default('span'), props)|xss|raw }}

@@ -4,6 +4,7 @@
 namespace Mirele\Compound;
 
 
+use Mirele\Framework\Customizer;
 use Mirele\TWIG;
 
 
@@ -59,6 +60,8 @@ class Template
      * @var
      */
     private $alias;
+    private $parent;
+    private $folder;
 
     /**
      * is utilized for reading data from inaccessible members.
@@ -145,10 +148,47 @@ class Template
             'alias' => $this->alias,
             'name' => $this->name,
             'id' => $this->id,
+            'folder' => $this->folder,
             'props' => $this->props,
             'type' => $this->type,
             'meta' => $this->meta,
         );
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getFolder()
+    {
+        return $this->folder;
+    }
+
+    /**
+     * @param mixed $folder
+     * @return Template
+     */
+    public function setFolder($folder)
+    {
+        $this->folder = $folder;
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getParent()
+    {
+        return $this->parent;
+    }
+
+    /**
+     * @param mixed $parent
+     * @return Template
+     */
+    public function setParent($parent)
+    {
+        $this->parent = $parent;
+        return $this;
     }
 
 
@@ -210,10 +250,22 @@ class Template
     /**
      * Template constructor.
      */
-    function __construct() {
+    function __construct($object='') {
         $this->setHandler(function ($event) {
             return $event;
         });
+
+        if (is_array($object) or is_object($object)) {
+
+            $object = (object) $object;
+
+           foreach ($object as $name => $value) {
+               $this->{$name} = $value;
+           }
+
+            Grider::save($this);
+
+        }
     }
 
     /**
@@ -457,24 +509,24 @@ class Template
 
         # Standart
         $components = [
-            'input' => Store::get('@input'),
-            'button' => Store::get('@button'),
-            'label' => Store::get('@label'),
+//            'input' => Store::get('@input'),
+//            'button' => Store::get('@button'),
+//            'label' => Store::get('@label'),
         ];
 
         # Render
-        return TWIG::Render($this->twig, array_merge((array) $this->props, (array) $props, (array) $components, (array) $this->components, [
+        return TWIG::Render($this->getTwig(), array_merge((array) $this->getProps(), (array) $props, (array) $components, (array) $this->getComponents(), [
             'components' => (object) array_merge(
-                (array) $this->components,
+                (array) $this->getComponents(),
                 (array) [
                     'error' => Store::get('default_error')
                 ]
             ),
             'props' => (object) array_merge(
-                (array) $this->props,
+                (array) $this->getProps(),
                 (array) $props
             ),
-            'componentProps' => (object) $this->componentsProps,
+            'componentProps' => (object) $this->getComponentsProps(),
         ], [
             'template' => [
                 'id' => $this->getId(),

@@ -25,6 +25,7 @@
 
 include_once 'Buffer.php';
 
+include_once 'Cache.php';
 include_once 'Template.php';
 include_once 'Field.php';
 include_once 'Tag.php';

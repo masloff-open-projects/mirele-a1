@@ -17,7 +17,7 @@ Project.export('@form-insertTemplate', new Interface({
         methods: {
             open: function (event) {
                 this.event = event;
-                tb_show('Insert template', '/?TB_inline&inlineId=modal_insert_template&width=600&height=700');
+                tb_show('Insert template', `/?TB_inline&inlineId=modal_insert_template&width=${CONFIG.modal.width||600}&height=${CONFIG.modal.height||700}`);
             },
 
             insert: function (event) {

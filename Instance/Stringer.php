@@ -20,7 +20,7 @@ final class Stringer
      * Stringer constructor.
      * @param string $string
      */
-    public function __construct(string $string)
+    public function __construct($string)
     {
         self::$string = $string;
     }

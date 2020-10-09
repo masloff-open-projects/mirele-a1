@@ -1,0 +1,51 @@
+/*
+Error: Undefined variable: "$multiplicator".
+        on line 1 of width.sass
+
+1: @for $i from 0 through 12 * $multiplicator
+2: 
+3:   // em
+4:   .padding-#{$i}
+5:     padding: #{$i/4}em !important
+6: 
+
+Backtrace:
+width.sass:1
+/usr/lib/ruby/vendor_ruby/sass/script/tree/variable.rb:49:in `_perform'
+/usr/lib/ruby/vendor_ruby/sass/script/tree/node.rb:50:in `perform'
+/usr/lib/ruby/vendor_ruby/sass/script/tree/operation.rb:76:in `_perform'
+/usr/lib/ruby/vendor_ruby/sass/script/tree/node.rb:50:in `perform'
+/usr/lib/ruby/vendor_ruby/sass/tree/visitors/perform.rb:257:in `visit_for'
+/usr/lib/ruby/vendor_ruby/sass/tree/visitors/base.rb:36:in `visit'
+/usr/lib/ruby/vendor_ruby/sass/tree/visitors/perform.rb:158:in `block in visit'
+/usr/lib/ruby/vendor_ruby/sass/stack.rb:79:in `block in with_base'
+/usr/lib/ruby/vendor_ruby/sass/stack.rb:135:in `with_frame'
+/usr/lib/ruby/vendor_ruby/sass/stack.rb:79:in `with_base'
+/usr/lib/ruby/vendor_ruby/sass/tree/visitors/perform.rb:158:in `visit'
+/usr/lib/ruby/vendor_ruby/sass/tree/visitors/base.rb:52:in `block in visit_children'
+/usr/lib/ruby/vendor_ruby/sass/tree/visitors/base.rb:52:in `map'
+/usr/lib/ruby/vendor_ruby/sass/tree/visitors/base.rb:52:in `visit_children'
+/usr/lib/ruby/vendor_ruby/sass/tree/visitors/perform.rb:167:in `block in visit_children'
+/usr/lib/ruby/vendor_ruby/sass/tree/visitors/perform.rb:179:in `with_environment'
+/usr/lib/ruby/vendor_ruby/sass/tree/visitors/perform.rb:166:in `visit_children'
+/usr/lib/ruby/vendor_ruby/sass/tree/visitors/base.rb:36:in `block in visit'
+/usr/lib/ruby/vendor_ruby/sass/tree/visitors/perform.rb:186:in `visit_root'
+/usr/lib/ruby/vendor_ruby/sass/tree/visitors/base.rb:36:in `visit'
+/usr/lib/ruby/vendor_ruby/sass/tree/visitors/perform.rb:157:in `visit'
+/usr/lib/ruby/vendor_ruby/sass/tree/visitors/perform.rb:10:in `visit'
+/usr/lib/ruby/vendor_ruby/sass/tree/root_node.rb:36:in `css_tree'
+/usr/lib/ruby/vendor_ruby/sass/tree/root_node.rb:29:in `render_with_sourcemap'
+/usr/lib/ruby/vendor_ruby/sass/engine.rb:389:in `_render_with_sourcemap'
+/usr/lib/ruby/vendor_ruby/sass/engine.rb:307:in `render_with_sourcemap'
+/usr/lib/ruby/vendor_ruby/sass/exec/sass_scss.rb:383:in `run'
+/usr/lib/ruby/vendor_ruby/sass/exec/sass_scss.rb:63:in `process_result'
+/usr/lib/ruby/vendor_ruby/sass/exec/base.rb:50:in `parse'
+/usr/lib/ruby/vendor_ruby/sass/exec/base.rb:18:in `parse!'
+/usr/bin/sass:8:in `<main>'
+*/
+body:before {
+  white-space: pre;
+  font-family: monospace;
+  content: "Error: Undefined variable: \"$multiplicator\".\A         on line 1 of width.sass\A \A 1: @for $i from 0 through 12 * $multiplicator\A 2: \A 3:   // em\A 4:   .padding-#{$i}\A 5:     padding: #{$i/4}em !important\A 6: "; }
+
+/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIndpZHRoLmNzcyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFBQTs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Q0E0Q0M7QUFDRDtFQUNFLGdCQUFnQjtFQUNoQixzQkFBc0I7RUFDdEIsb09BQW9PLEVBQUUiLCJmaWxlIjoid2lkdGguY3NzIiwic291cmNlc0NvbnRlbnQiOlsiLypcbkVycm9yOiBVbmRlZmluZWQgdmFyaWFibGU6IFwiJG11bHRpcGxpY2F0b3JcIi5cbiAgICAgICAgb24gbGluZSAxIG9mIHdpZHRoLnNhc3NcblxuMTogQGZvciAkaSBmcm9tIDAgdGhyb3VnaCAxMiAqICRtdWx0aXBsaWNhdG9yXG4yOiBcbjM6ICAgLy8gZW1cbjQ6ICAgLnBhZGRpbmctI3skaX1cbjU6ICAgICBwYWRkaW5nOiAjeyRpLzR9ZW0gIWltcG9ydGFudFxuNjogXG5cbkJhY2t0cmFjZTpcbndpZHRoLnNhc3M6MVxuL3Vzci9saWIvcnVieS92ZW5kb3JfcnVieS9zYXNzL3NjcmlwdC90cmVlL3ZhcmlhYmxlLnJiOjQ5OmluIGBfcGVyZm9ybSdcbi91c3IvbGliL3J1YnkvdmVuZG9yX3J1Ynkvc2Fzcy9zY3JpcHQvdHJlZS9ub2RlLnJiOjUwOmluIGBwZXJmb3JtJ1xuL3Vzci9saWIvcnVieS92ZW5kb3JfcnVieS9zYXNzL3NjcmlwdC90cmVlL29wZXJhdGlvbi5yYjo3NjppbiBgX3BlcmZvcm0nXG4vdXNyL2xpYi9ydWJ5L3ZlbmRvcl9ydWJ5L3Nhc3Mvc2NyaXB0L3RyZWUvbm9kZS5yYjo1MDppbiBgcGVyZm9ybSdcbi91c3IvbGliL3J1YnkvdmVuZG9yX3J1Ynkvc2Fzcy90cmVlL3Zpc2l0b3JzL3BlcmZvcm0ucmI6MjU3OmluIGB2aXNpdF9mb3InXG4vdXNyL2xpYi9ydWJ5L3ZlbmRvcl9ydWJ5L3Nhc3MvdHJlZS92aXNpdG9ycy9iYXNlLnJiOjM2OmluIGB2aXNpdCdcbi91c3IvbGliL3J1YnkvdmVuZG9yX3J1Ynkvc2Fzcy90cmVlL3Zpc2l0b3JzL3BlcmZvcm0ucmI6MTU4OmluIGBibG9jayBpbiB2aXNpdCdcbi91c3IvbGliL3J1YnkvdmVuZG9yX3J1Ynkvc2Fzcy9zdGFjay5yYjo3OTppbiBgYmxvY2sgaW4gd2l0aF9iYXNlJ1xuL3Vzci9saWIvcnVieS92ZW5kb3JfcnVieS9zYXNzL3N0YWNrLnJiOjEzNTppbiBgd2l0aF9mcmFtZSdcbi91c3IvbGliL3J1YnkvdmVuZG9yX3J1Ynkvc2Fzcy9zdGFjay5yYjo3OTppbiBgd2l0aF9iYXNlJ1xuL3Vzci9saWIvcnVieS92ZW5kb3JfcnVieS9zYXNzL3RyZWUvdmlzaXRvcnMvcGVyZm9ybS5yYjoxNTg6aW4gYHZpc2l0J1xuL3Vzci9saWIvcnVieS92ZW5kb3JfcnVieS9zYXNzL3RyZWUvdmlzaXRvcnMvYmFzZS5yYjo1MjppbiBgYmxvY2sgaW4gdmlzaXRfY2hpbGRyZW4nXG4vdXNyL2xpYi9ydWJ5L3ZlbmRvcl9ydWJ5L3Nhc3MvdHJlZS92aXNpdG9ycy9iYXNlLnJiOjUyOmluIGBtYXAnXG4vdXNyL2xpYi9ydWJ5L3ZlbmRvcl9ydWJ5L3Nhc3MvdHJlZS92aXNpdG9ycy9iYXNlLnJiOjUyOmluIGB2aXNpdF9jaGlsZHJlbidcbi91c3IvbGliL3J1YnkvdmVuZG9yX3J1Ynkvc2Fzcy90cmVlL3Zpc2l0b3JzL3BlcmZvcm0ucmI6MTY3OmluIGBibG9jayBpbiB2aXNpdF9jaGlsZHJlbidcbi91c3IvbGliL3J1YnkvdmVuZG9yX3J1Ynkvc2Fzcy90cmVlL3Zpc2l0b3JzL3BlcmZvcm0ucmI6MTc5OmluIGB3aXRoX2Vudmlyb25tZW50J1xuL3Vzci9saWIvcnVieS92ZW5kb3JfcnVieS9zYXNzL3RyZWUvdmlzaXRvcnMvcGVyZm9ybS5yYjoxNjY6aW4gYHZpc2l0X2NoaWxkcmVuJ1xuL3Vzci9saWIvcnVieS92ZW5kb3JfcnVieS9zYXNzL3RyZWUvdmlzaXRvcnMvYmFzZS5yYjozNjppbiBgYmxvY2sgaW4gdmlzaXQnXG4vdXNyL2xpYi9ydWJ5L3ZlbmRvcl9ydWJ5L3Nhc3MvdHJlZS92aXNpdG9ycy9wZXJmb3JtLnJiOjE4NjppbiBgdmlzaXRfcm9vdCdcbi91c3IvbGliL3J1YnkvdmVuZG9yX3J1Ynkvc2Fzcy90cmVlL3Zpc2l0b3JzL2Jhc2UucmI6MzY6aW4gYHZpc2l0J1xuL3Vzci9saWIvcnVieS92ZW5kb3JfcnVieS9zYXNzL3RyZWUvdmlzaXRvcnMvcGVyZm9ybS5yYjoxNTc6aW4gYHZpc2l0J1xuL3Vzci9saWIvcnVieS92ZW5kb3JfcnVieS9zYXNzL3RyZWUvdmlzaXRvcnMvcGVyZm9ybS5yYjoxMDppbiBgdmlzaXQnXG4vdXNyL2xpYi9ydWJ5L3ZlbmRvcl9ydWJ5L3Nhc3MvdHJlZS9yb290X25vZGUucmI6MzY6aW4gYGNzc190cmVlJ1xuL3Vzci9saWIvcnVieS92ZW5kb3JfcnVieS9zYXNzL3RyZWUvcm9vdF9ub2RlLnJiOjI5OmluIGByZW5kZXJfd2l0aF9zb3VyY2VtYXAnXG4vdXNyL2xpYi9ydWJ5L3ZlbmRvcl9ydWJ5L3Nhc3MvZW5naW5lLnJiOjM4OTppbiBgX3JlbmRlcl93aXRoX3NvdXJjZW1hcCdcbi91c3IvbGliL3J1YnkvdmVuZG9yX3J1Ynkvc2Fzcy9lbmdpbmUucmI6MzA3OmluIGByZW5kZXJfd2l0aF9zb3VyY2VtYXAnXG4vdXNyL2xpYi9ydWJ5L3ZlbmRvcl9ydWJ5L3Nhc3MvZXhlYy9zYXNzX3Njc3MucmI6MzgzOmluIGBydW4nXG4vdXNyL2xpYi9ydWJ5L3ZlbmRvcl9ydWJ5L3Nhc3MvZXhlYy9zYXNzX3Njc3MucmI6NjM6aW4gYHByb2Nlc3NfcmVzdWx0J1xuL3Vzci9saWIvcnVieS92ZW5kb3JfcnVieS9zYXNzL2V4ZWMvYmFzZS5yYjo1MDppbiBgcGFyc2UnXG4vdXNyL2xpYi9ydWJ5L3ZlbmRvcl9ydWJ5L3Nhc3MvZXhlYy9iYXNlLnJiOjE4OmluIGBwYXJzZSEnXG4vdXNyL2Jpbi9zYXNzOjg6aW4gYDxtYWluPidcbiovXG5ib2R5OmJlZm9yZSB7XG4gIHdoaXRlLXNwYWNlOiBwcmU7XG4gIGZvbnQtZmFtaWx5OiBtb25vc3BhY2U7XG4gIGNvbnRlbnQ6IFwiRXJyb3I6IFVuZGVmaW5lZCB2YXJpYWJsZTogXFxcIiRtdWx0aXBsaWNhdG9yXFxcIi5cXEEgICAgICAgICBvbiBsaW5lIDEgb2Ygd2lkdGguc2Fzc1xcQSBcXEEgMTogQGZvciAkaSBmcm9tIDAgdGhyb3VnaCAxMiAqICRtdWx0aXBsaWNhdG9yXFxBIDI6IFxcQSAzOiAgIC8vIGVtXFxBIDQ6ICAgLnBhZGRpbmctI3skaX1cXEEgNTogICAgIHBhZGRpbmc6ICN7JGkvNH1lbSAhaW1wb3J0YW50XFxBIDY6IFwiOyB9XG4iXX0= */

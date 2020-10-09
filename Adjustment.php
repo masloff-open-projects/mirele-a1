@@ -4,6 +4,11 @@ parse_str(file_get_contents("php://input"), $_PUT);
 parse_str(file_get_contents("php://input"), $_DELETE);
 
 /**
+ * Current session code
+ */
+define('MIRELE_SESSION_CODE', $_SESSION['MIRELE_SESSION_CODE']);
+
+/**
  * Unchangeable GET parameters
  */
 define('MIRELE_GET', $_GET);

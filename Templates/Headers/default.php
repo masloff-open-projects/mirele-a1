@@ -13,6 +13,7 @@ $Template->setId('default_header');
 $Template->setProps([
     'color' => 'red'
 ]);
+$Template->setFolder('Header');
 
 
 // Fields
@@ -30,4 +31,4 @@ $Template->setMeta('editor',
 
 $Template->setTwig('Templates/Headers/default');
 
-Grider::add($Template);
+Grider::save($Template);

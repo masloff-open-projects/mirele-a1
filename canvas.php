@@ -58,9 +58,11 @@ if (is_object($post)) {
 
                 if (isset($Template->props->name)) {
 
-                    $template = clone Grider::get($Template->props->name);
+                    $template = Grider::findById($Template->props->name);
 
                     if ($template instanceof Template) {
+
+                        $template = clone $template;
 
                         foreach ($template->getFields() as $index => $field) {
                             if ($field instanceof Field) {

@@ -13,6 +13,9 @@
     templates: store.templates,
     components: store.components,
     families: store.getFamilies,
+    templatesTypes: store.templatesTypes,
+    templatesFamilies: store.templatesFamilies,
+    templatesFolders: store.templatesFolders,
 } %}
 
 {# We generate the instances of all modal windows with which user interaction will take place. #}
@@ -126,7 +129,8 @@
 
                                             <div v-if="field.tags">
                                                 <div v-for="tag in field.tags">
-                                                    <div v-if="tag.tag == 'component'" class="__compound_component_tag left"
+                                                    <div v-if="tag.tag == 'component' && 'name' in tag.attributes && tag.attributes.name"
+                                                         class="__compound_component_tag left"
                                                          @click="editProps({field: name, component: tag.attributes.name, template: template.id})">
                                                         <h5 class="margin-0 padding-0">{tag.attributes.name}</h5>
                                                         <div v-for="value, attribute in tag.attributes" v-if="attribute != 'id' && attribute != 'name'">
@@ -135,6 +139,16 @@
                                                             </small>
                                                         </div>
                                                     </div>
+                                                    <div v-else class="center padding-y-6">
+                                                        <span class="dashicons dashicons-warning"></span>
+                                                        <h4 class="margin-0 padding-x-0 padding-y-0 padding-top-2">Error</h4>
+                                                        <p class="color-gray margin-0 padding-0">This component is critically damaged</p>
+                                                    </div>
+                                                </div>
+                                                <div v-else class="center padding-y-6">
+                                                    <span class="dashicons dashicons-warning"></span>
+                                                    <h4 class="margin-0 padding-x-0 padding-y-0 padding-top-2">Error</h4>
+                                                    <p class="color-gray margin-0 padding-0">This field has been critically damaged</p>
                                                 </div>
                                             </div>
 

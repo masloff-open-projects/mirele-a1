@@ -38,7 +38,7 @@ class insertTemplate extends Pattern
 
             if ($lex) {
 
-                $template = Grider::get($this->template);
+                $template = Grider::findById($this->template);
 
                 if ($template instanceof Template) {
 

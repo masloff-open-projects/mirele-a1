@@ -22,12 +22,12 @@
 
             {% for id in components %}
 
-                <button type="submit"
-                        class="col-4 left margin-x-2 margin-y-2 margin-buttom-2 padding-3 wp-mrl-component-box"
+                <div type="submit"
+                        class="col-4 left margin-x-2 margin-y-2 margin-buttom-2 padding-3 __compound_element"
                         @click="create({component: '{{ event.components[id].getId }}'})">
                     <h5 class="margin-0 padding-0">{{ event.components[id].getId }}</h5>
                     <small class="margin-0 padding-0">{{ event.components[id].getMeta('editor').getData('title')|default(event.components[id].getId) }}</small>
-                </button>
+                </div>
 
             {% endfor %}
 

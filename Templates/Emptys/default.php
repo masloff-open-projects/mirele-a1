@@ -23,4 +23,4 @@ $Template->setMeta('name', 'Empty');
 
 $Template->setTwig('Templates/Grid/default');
 
-Grider::add(clone $Template);
+Grider::save(clone $Template);

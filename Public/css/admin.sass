@@ -9,12 +9,17 @@
   p
     width: 70%
 
-.wp-mrl-component-box
+.__compound_element
   border: 1px solid #ddd
   border-radius: 8px
   overflow: hidden
   background: white
   cursor: pointer
+  transition: 0.3s ease-in-out
+
+  &:active,
+  &:focus
+    box-shadow: 0 0 19px -6px #c5c5c5
 
 
 .wp-mrl-tabs
@@ -60,7 +65,7 @@
 @import components/switch
 @import compound/modal
 @import compound/wp-native/modal/header
-@import compound/wp-native/box
+@import compound/box
 @import compound/wp-native/table
 @import compound/wp-native/tag
 @import compound/wp-native/grid
