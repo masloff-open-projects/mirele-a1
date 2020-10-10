@@ -299,11 +299,13 @@ add_action(
     wp_register_script('bootstrap4', 'https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js', array('jquery'), '', true);
     wp_register_script('mirele_admin', '/public/js/admin.min.js', array('jquery', 'vue'), '', true);
     wp_register_script('mireleapi', '/public/js/API.min.js', array('jquery', 'vue'), '', true);
+    wp_register_script('AIK', '/public/js/AIK.js', array('jquery', 'vue'), '', true);
 
     wp_register_script('compound', '/public/js/compound.min.js', array('jquery', 'vue'), '', true);
     wp_register_script('compound_form_props', '/public/js/compound/form/props.min.js', array('jquery', 'vue'), '', true);
     wp_register_script('compound_form_insertComponent', '/public/js/compound/form/insertComponent.min.js', array('jquery', 'vue'), '', true);
     wp_register_script('compound_form_insertTemplate', '/public/js/compound/form/insertTemplate.min.js', array('jquery', 'vue'), '', true);
+    wp_register_script('compound_form_propsTemplate', '/public/js/compound/form/propsTemplate.min.js', array('jquery', 'vue'), '', true);
 
     wp_register_script('woocommerceui_product', '/public/js/woocommerceui_product.min.js', array('jquery', 'vue', 'mireleapi'), '', true);
     wp_register_script('woocommerceui_products', '/public/js/woocommerceui_products.min.js', array('jquery', 'vue', 'mireleapi'), '', true);
@@ -311,7 +313,7 @@ add_action(
     wp_register_script('woocommerceui_signup', '/public/js/woocommerceui_signup.min.js', array('jquery', 'vue', 'mireleapi'), '', true);
     wp_register_script('woocommerceui_recovery_password', '/public/js/woocommerceui_recovery_password.min.js', array('jquery', 'vue', 'mireleapi'), '', true);
 
-    # We will register all styles necessary in the future.
+    # We will register all styles necessary in the future. (long)
     wp_register_style('fontAwesome', 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css');
     wp_register_style('bootsrtap4', 'https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css', false);
 
@@ -558,6 +560,7 @@ add_action(
 
     wp_enqueue_script('axios');
     wp_enqueue_script('mireleapi');
+    wp_enqueue_script('AIK');
     wp_enqueue_script('vue');
     wp_enqueue_script('mirele_admin');
     wp_enqueue_script('compound');
@@ -566,9 +569,11 @@ add_action(
     wp_enqueue_script('jquery-ui-draggable');
     wp_enqueue_script('jquery-ui-droppable');
     wp_enqueue_script('jquery-ui-selectable');
+
     wp_enqueue_script('compound_form_props');
     wp_enqueue_script('compound_form_insertComponent');
     wp_enqueue_script('compound_form_insertTemplate');
+    wp_enqueue_script('compound_form_propsTemplate');
 
     wp_enqueue_style('wp-color-picker');
     wp_enqueue_style('admin_style');

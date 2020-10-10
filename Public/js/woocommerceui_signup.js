@@ -47,7 +47,7 @@ new Interface({
                 // Overriding behavior
                 e.preventDefault();
 
-                new WPAjax('signup', {
+                (new AIK).postman('signup', {
                     login: this.login,
                     email: this.email,
                     password: this.password

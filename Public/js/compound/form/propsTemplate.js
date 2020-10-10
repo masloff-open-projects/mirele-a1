@@ -1,19 +1,18 @@
-Project.export('@form-props', new Interface({
+Project.export('@form-propsTemplate', new Interface({
     requires: {
         vue: true,
         jquery: true
     },
     elements: {
-        vue: ['#modal_edit_props']
+        vue: ['#modal_edit_props_template']
     },
     vue: {
         delimiters: ['{', '}'],
-        el: "#modal_edit_props",
+        el: "#modal_edit_props_template",
         data: {
             __editor: CompoundEditor.vue || Object,
             meta: {},
             fields: [],
-            component: [],
             props: [],
             type: 'update'
         },
@@ -27,30 +26,20 @@ Project.export('@form-props', new Interface({
                 this.event = event;
 
                 // Create request
-                ((new AIK).postman('Compound-getProps', event)).then(Event => {
-                    
+                ((new AIK).postman('Compound-getTemplateProps', event)).then(Event => {
+
                     if (Event.data.success === true) {
                         if (typeof Event.data.data.props == 'object' && Object.keys(Event.data.data.props).length > 0) {
-
                             for (const [name, value] of Object.entries(Event.data.data.props)) {
-
                                 this.fields.push({
                                     name: name,
                                     value: value
                                 });
-
                                 this.props[name] = value;
-
                             }
+                        }
 
-                        }
-                        
-                        if (typeof Event.data.data.meta == 'object') {
-                            this.meta = Event.data.data.meta;
-                        }
-                        
-                        tb_show('Edit props of component', `/?TB_inline&inlineId=modal_edit_props&width=${CONFIG.modal.width||600}&height=${CONFIG.modal.height||700}`);
-                        
+                        tb_show('Edit props of component', `/?TB_inline&inlineId=modal_edit_props_template&width=${CONFIG.modal.width||600}&height=${CONFIG.modal.height||700}`);
                     }
 
                 });
@@ -59,9 +48,7 @@ Project.export('@form-props', new Interface({
 
             submit: function (event) {
 
-                const Request = (new AIK).postman('Compound-updateProps', Object.assign(this.event, {
-                    type: this.type
-                }, {
+                const Request = (new AIK).postman('Compound-updateTemplateProps', Object.assign(this.event, {
                     props: this.props || []
                 }));
 

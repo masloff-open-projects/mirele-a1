@@ -11,7 +11,9 @@ $matrix = [4, 4];
 
 $Template = new Template();
 $Template->setId("default_matrix_{$matrix[0]}_{$matrix[1]}");
-$Template->setProps([]);
+$Template->setProps([
+    'theme' => 'dark'
+]);
 $Template->setFolder('Matrix');
 $Template->setParent('matrix');
 $Template->setAlias("@matrix_" . implode('-', $matrix));

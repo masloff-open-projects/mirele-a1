@@ -23,7 +23,7 @@ Project.export('@form-createComponent', new Interface({
 
             create: function (event) {
 
-                const Request = new WPAjax('Compound-insertComponent', Object.assign(this.event, event, {
+                const Request = (new AIK).postman('Compound-insertComponent', Object.assign(this.event, event, {
                     page: Compound.page_on_edit || 0
                 }));
 

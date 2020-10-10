@@ -1,26 +1,54 @@
+{# Modal window for inserting a component on a section #}
+
 {% macro render(event) %}
 
-    <div id="modal_edit_template" style="display:none;">
-        <div class="Compound">
+    {% import 'Prototypes/modal/compound_empty.twig' as prototype %}
 
-            {# Modal content #}
-            <div class="CModal">
-                <form action="" method="post" id="modal_edit_template_form" @submit.prevent="submit" class="left">
+    {% macro data(event) %}
 
-                    <div class="field-box">
-                        <div class="field-title-box">
-                            <h4 class="title">Page identification</h4>
-                            <small class="small">Identifier of the current page. It cannot be changed.</small>
+        <div class="padding-8">
+
+            <form action="" method="post" id="modal_edit_props_template_form" @submit.prevent="submit">
+
+                <div id="component-meta" class="left" v-if="meta">
+                    <h3 class="title" v-if="meta.title">{meta.title}</h3>
+                    <p class="paragraph" v-if="meta.description">{meta.description}</p>
+                </div>
+
+                <div id="component-body">
+                    <div class="field-box"
+                         v-for="field in fields"
+                         v-if="!(field.name in {id: true, name: true})">
+                        <div class="field-title-box left">
+                            <h4 class="title">{field.name}</h4>
+                            <small class="small">Lorem ipsum dolor sit.</small>
                         </div>
 
                         <div>
-                            <input type="text" value="{{ event.page.ID }}" class="" readonly>
+                            <input type="text"
+                                   v-model="props[field.name]"
+                                   :value="field.value"
+                                   :name="field.name">
                         </div>
                     </div>
+                </div>
 
-                </form>
-            </div>
+                <div v-if="fields.length||[] > 0">
+                    <button type="submit" class="button button-primary button-large" value="update"
+                            name="submit" @click="type='update'">Save and update
+                    </button>
+                </div>
+
+            </form>
+
+
         </div>
-    </div>
+
+    {% endmacro %}
+
+    {{ prototype.render({
+        id: 'modal_edit_props_template',
+        data: _self.data(event),
+    }) }}
 
 {% endmacro %}

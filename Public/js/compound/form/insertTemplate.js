@@ -22,7 +22,7 @@ Project.export('@form-insertTemplate', new Interface({
 
             insert: function (event) {
 
-                const Request = new WPAjax('Compound-insertTemplate', Object.assign(this.event, event, {
+                const Request = (new AIK).postman('Compound-insertTemplate', Object.assign(this.event, event, {
                     page: Compound.page_on_edit || 0
                 }));
 

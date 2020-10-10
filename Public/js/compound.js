@@ -88,7 +88,7 @@ const CompoundEditor = Project.export('editor', new Interface({
                         href: false,
                         enabled: true,
                         click: function () {
-                            return CompoundEditor.vue.transport().removeSelectedTemplates();
+                            return CompoundEditor.vue.reloadPage();
                         }
                     }
                 ]
@@ -287,7 +287,7 @@ const CompoundEditor = Project.export('editor', new Interface({
                 return new Promise((resolve, reject) => {
 
                     // Create main request
-                    (new WPAjax('Compound-getMarkup', {
+                    ((new AIK).postman('Compound-getMarkup', {
                         page: Compound.page_on_edit || 0
                     })).then(Event => {
 
@@ -332,6 +332,14 @@ const CompoundEditor = Project.export('editor', new Interface({
                 }, event));
             },
 
+            editTemplate: function (event) {
+                const $form = Project.import('@form-propsTemplate').vue;
+                $form.__editor = this;
+                return $form.open(Object.assign({
+                    page: Compound.page_on_edit || 0
+                }, event));
+            },
+
             insertTemplate: function (event) {
                 const $form = Project.import('@form-insertTemplate').vue;
                 $form.__editor = this;
@@ -341,7 +349,7 @@ const CompoundEditor = Project.export('editor', new Interface({
             },
 
             removeTemplate: function (event) {
-                return new WPAjax('Compound-removeTemplate', {
+                return (new AIK).postman('Compound-removeTemplate', {
                     page: Compound.page_on_edit || 0,
                     template: event.template
                 });
@@ -369,7 +377,7 @@ const CompoundEditor = Project.export('editor', new Interface({
                     }
                 }
 
-                const Request = new WPAjax('Compound-sort', {
+                const Request = (new AIK).postman('Compound-sort', {
                     page: Compound.page_on_edit || 0,
                     order: $order
                 });
@@ -388,7 +396,7 @@ const CompoundEditor = Project.export('editor', new Interface({
                     },
                     removeTemplate: function (event) {
                         if (event.template) {
-                            const Request = new WPAjax('Compound-removeTemplate', {
+                            const Request = (new AIK).postman('Compound-removeTemplate', {
                                 page: Compound.page_on_edit || 0,
                                 template: event.template
                             });
@@ -400,7 +408,6 @@ const CompoundEditor = Project.export('editor', new Interface({
                             });
                         }
                     },
-
                 };
             },
 

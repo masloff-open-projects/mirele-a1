@@ -54,7 +54,7 @@ new Interface({
 
                         this.enabled = false;
 
-                        new WPAjax('WCAddToCart', {
+                        (new AIK).postman('WCAddToCart', {
                             product_id: WOOCOMMERCE.product.get_id,
                             product_quantity: 1,
                             product_variation_id: this.variation_id || 0,

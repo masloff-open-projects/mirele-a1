@@ -28,6 +28,7 @@ class removeTemplate extends Pattern
             } else {
                 $lex->removeTemplate($this->template);
             }
+
             $code = $this->lexer->generateCode();
 
             if ($this->__update_page($this->page, [

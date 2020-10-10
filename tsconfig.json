@@ -1,0 +1,8 @@
+{
+  "scripts": {
+    "clean": "rimraf dist",
+    "start": "npm-run-all clean --parallel watch:build watch:server --print-label",
+    "watch:build": "tsc --watch",
+    "watch:server": "nodemon './dist/index.js' --watch './dist'"
+  }
+}

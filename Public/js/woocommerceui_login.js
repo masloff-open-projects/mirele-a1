@@ -47,7 +47,7 @@ new Interface({
                 e.preventDefault();
 
 
-                new WPAjax('login', {
+                (new AIK).postman('login', {
                     login: this.login,
                     password: this.password,
                     remember: this.remember

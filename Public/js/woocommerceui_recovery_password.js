@@ -75,7 +75,7 @@ new Interface({
                 // Overriding behavior
                 e.preventDefault();
 
-                new WPAjax('recoveryPassword', {
+                (new AIK).postman('recoveryPassword', {
                     login: this.login,
                     email: this.email,
                     key: this.key ? this.key : false,

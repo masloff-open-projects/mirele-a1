@@ -317,6 +317,28 @@ class Layout
         return $this;
     }
 
+    public function updateLayoutProps (string $id, array $props)
+    {
+        if (isset($this->layout[$id])) {
+            $templateProps = (array) $this->layout[$id]->props;
+            foreach ($props as $key => $value) {
+                $templateProps[$key] = $value;
+            }
+            return  $this->setLayoutProps($id, $templateProps);
+        }
+
+        return $this;
+    }
+
+    public function getLayoutProps (string $id)
+    {
+        if (isset($this->layout[$id]) and isset($this->layout[$id]->props)) {
+            return $this->layout[$id]->props;
+        }
+
+        return $this;
+    }
+
     /**
      * @param string $id
      * @param array $fields
