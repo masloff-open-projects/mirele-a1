@@ -1,67 +1,24 @@
-{% extends "Compound/layout.twig" %}
-
 {% if pages|length > 0 %}
     {% import 'Compound/pages.twig' as export %}
 {% else %}
     {% import 'Compound/start.twig' as export %}
 {% endif %}
 
-{% block header %}
+{% import 'Compound/pages/modal/create_page.twig' as modal %}
+{{ modal.render() }}
 
-    {{ export.import({}) is defined ? export.import({
-        source: source,
-        templates: templates
-    }) }}
-    {{ export.header() is defined ? export.header() }}
+<div class="wrap">
 
-{% endblock %}
+    <h1 class="wp-heading-inline">Pages</h1>
 
-{% block main %}
+    <a title="Create a new page" href="#TB_inline?width=600&height=180&inlineId=modal_create_page"
+       class="page-title-action thickbox">Add new</a>
 
-    {{ export.main({}) is defined ? export.main({
-        pages: pages,
-        source: source,
-        templates: templates
-    }) }}
+    <hr class="wp-header-end">
 
-{% endblock %}
+    <hr class="wp-header-end"/>
 
-{% block box %}
+    {{ wp.pages_table() }}
 
-    {{ export.box({}) is defined ? export.box({
-        pages: pages,
-        source: source,
-        templates: templates
-    }) }}
 
-    <h2 class="wp-mrl-header">
-        <span>Compound editor</span>
-    </h2>
-
-    <div class="inner">
-
-        <h2>Create new Compound page!</h2>
-        <p>Create Compound Page, Convert Them to WordPress pages and use them as regular page of your site.</p>
-        <p>Maybe it sounded scary, but working with Compound's pages is very easy.</p>
-
-        <h3>Actions</h3>
-        <ul>
-            <li>
-                <a href="javascript:;" data-action="create_page">
-                    <i class="dashicons dashicons-admin-customizer"></i> Create new page
-                </a>
-            </li>
-        </ul>
-
-        <h3>Resources</h3>
-        <ul>
-            <li>
-                <a href="https://irtex-web.github.io" target="_blank">
-                    <i aria-hidden="true" class="dashicons dashicons-external"></i> Documentation
-                </a>
-            </li>
-        </ul>
-
-    </div>
-
-{% endblock %}
+</div>

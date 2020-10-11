@@ -26,7 +26,7 @@ class Buffer
      */
     public function setNamespace(string $namespace)
     {
-        $this->namespace = (string) $namespace;
+        $this->namespace = (string)$namespace;
     }
 
     /**
@@ -42,15 +42,15 @@ class Buffer
      * @param $key
      * @return int
      */
-    public function append($data, $key=false)
+    public function append($data, $key = false)
     {
         if (!isset($this->buffer[$this->getNamespace()])) {
             $this->buffer[$this->getNamespace()] = array();
         }
 
         if ($key) {
-            return array_push($this->buffer[$this->getNamespace()], (object) [
-                'key'  => $key,
+            return array_push($this->buffer[$this->getNamespace()], (object)[
+                'key' => $key,
                 'data' => $data
             ]);
         } else {
@@ -61,7 +61,7 @@ class Buffer
     /**
      * @return array
      */
-    public function getBuffer($namespace='*')
+    public function getBuffer($namespace = '*')
     {
         if ($namespace === 'all') {
             return $this->buffer;
@@ -74,7 +74,7 @@ class Buffer
     /**
      * @return array
      */
-    public function toString($namespace='*', $separator="\n")
+    public function toString($namespace = '*', $separator = "\n")
     {
         if ($namespace === 'all') {
             return join($separator, $this->buffer);
@@ -86,7 +86,8 @@ class Buffer
     /**
      * @return array
      */
-    public function clearBuffer () {
+    public function clearBuffer()
+    {
         return $this->buffer = array();
     }
 

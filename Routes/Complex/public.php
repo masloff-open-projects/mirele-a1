@@ -27,7 +27,7 @@ Router::get('/public/(:all)', function ($path) {
         }
 
         foreach ($ignore as $source) {
-            if ( ($dir . '/' . $source) ==  $file) {
+            if (($dir . '/' . $source) == $file) {
 
                 http_response_code(404);
                 exit;
@@ -56,7 +56,6 @@ Router::get('/public/(:all)', function ($path) {
         exit;
 
     }
-
 
 
 });

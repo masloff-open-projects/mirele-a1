@@ -48,7 +48,7 @@ class Option
      */
     public function setWarning(array $warning)
     {
-        $this->warning = (object) $warning;
+        $this->warning = (object)$warning;
         return $this;
     }
 
@@ -188,7 +188,7 @@ class Option
      */
     public function build()
     {
-        return (object) [
+        return (object)[
             'namespace' => $this->namespace,
             'title' => $this->title,
             'name' => $this->name,
@@ -196,8 +196,8 @@ class Option
             'type' => $this->type,
             'default' => $this->default,
             'description' => $this->description,
-            'props' => (object) $this->props,
-            'value' => get_option ($this->name, $this->default)
+            'props' => (object)$this->props,
+            'value' => get_option($this->name, $this->default)
         ];
     }
 

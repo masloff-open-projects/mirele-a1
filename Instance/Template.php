@@ -4,7 +4,6 @@
 namespace Mirele\Compound;
 
 
-use Mirele\Framework\Customizer;
 use Mirele\TWIG;
 
 
@@ -85,7 +84,7 @@ class Template
      */
     public function __set($name, $value)
     {
-        $this->setProp((string) $name, $value);
+        $this->setProp((string)$name, $value);
     }
 
     /**
@@ -120,7 +119,7 @@ class Template
      */
     public function __toString()
     {
-        return (string) json_encode($this->props);
+        return (string)json_encode($this->props);
     }
 
     /**
@@ -250,18 +249,19 @@ class Template
     /**
      * Template constructor.
      */
-    function __construct($object='') {
+    function __construct($object = '')
+    {
         $this->setHandler(function ($event) {
             return $event;
         });
 
         if (is_array($object) or is_object($object)) {
 
-            $object = (object) $object;
+            $object = (object)$object;
 
-           foreach ($object as $name => $value) {
-               $this->{$name} = $value;
-           }
+            foreach ($object as $name => $value) {
+                $this->{$name} = $value;
+            }
 
             Grider::save($this);
 
@@ -318,7 +318,7 @@ class Template
      */
     public function setId(string $id)
     {
-        $this->id = (string) $id;
+        $this->id = (string)$id;
         return $this;
     }
 
@@ -393,7 +393,7 @@ class Template
      */
     public function setProps(array $props)
     {
-        $this->props = (array) $props;
+        $this->props = (array)$props;
         return $this;
     }
 
@@ -500,7 +500,8 @@ class Template
      * @param bool $np
      * @return false
      */
-    public function render (array $props, $np=true) {
+    public function render(array $props, $np = true)
+    {
 
         # Check if a handler is available and call it if it is.
         if (is_callable($this->getHandler())) {
@@ -515,18 +516,18 @@ class Template
         ];
 
         # Render
-        return TWIG::Render($this->getTwig(), array_merge((array) $this->getProps(), (array) $props, (array) $components, (array) $this->getComponents(), [
-            'components' => (object) array_merge(
-                (array) $this->getComponents(),
-                (array) [
+        return TWIG::Render($this->getTwig(), array_merge((array)$this->getProps(), (array)$props, (array)$components, (array)$this->getComponents(), [
+            'components' => (object)array_merge(
+                (array)$this->getComponents(),
+                (array)[
                     'error' => Store::get('default_error')
                 ]
             ),
-            'props' => (object) array_merge(
-                (array) $this->getProps(),
-                (array) $props
+            'props' => (object)array_merge(
+                (array)$this->getProps(),
+                (array)$props
             ),
-            'componentProps' => (object) $this->getComponentsProps(),
+            'componentProps' => (object)$this->getComponentsProps(),
         ], [
             'template' => [
                 'id' => $this->getId(),
@@ -540,7 +541,8 @@ class Template
     /**
      * @return $this
      */
-    public function build () {
+    public function build()
+    {
         return $this;
     }
 

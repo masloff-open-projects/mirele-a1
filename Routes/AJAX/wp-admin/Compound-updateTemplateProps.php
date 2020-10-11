@@ -1,9 +1,7 @@
 <?php
 
-use Mirele\Compound\Lexer;
-use Mirele\Compound\Tag;
-use Mirele\Router;
 use Mirele\Compound\Patterns;
+use Mirele\Router;
 
 # ...
 # Endpoint Version: 1.0.0

@@ -13,7 +13,6 @@ Router::post('/wp-admin/admin.php', function () {
 
         # Create a work environment
         $name = (MIRELE_POST)['name'];
-        $template = (MIRELE_POST)['template'];
         $nonce = (MIRELE_POST)['nonce'];
 
         # Security check and anti-spam requests
@@ -23,9 +22,8 @@ Router::post('/wp-admin/admin.php', function () {
             if (is_user_logged_in() and current_user_can(MIRELE_RIGHTS['page']['create'])) {
 
                 $pattern = new Patterns\createPage();
-                $pattern->setName($name);
-                $pattern->setTemplate($template);
-                $pattern->execute();
+                $pattern->name = $name;
+                $pattern();
 
             }
 

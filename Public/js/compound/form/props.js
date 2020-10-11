@@ -28,7 +28,7 @@ Project.export('@form-props', new Interface({
 
                 // Create request
                 ((new AIK).postman('Compound-getProps', event)).then(Event => {
-                    
+
                     if (Event.data.success === true) {
                         if (typeof Event.data.data.props == 'object' && Object.keys(Event.data.data.props).length > 0) {
 
@@ -44,13 +44,13 @@ Project.export('@form-props', new Interface({
                             }
 
                         }
-                        
+
                         if (typeof Event.data.data.meta == 'object') {
                             this.meta = Event.data.data.meta;
                         }
-                        
-                        tb_show('Edit props of component', `/?TB_inline&inlineId=modal_edit_props&width=${CONFIG.modal.width||600}&height=${CONFIG.modal.height||700}`);
-                        
+
+                        tb_show('Edit props of component', `/?TB_inline&inlineId=modal_edit_props&width=${CONFIG.modal.width || 600}&height=${CONFIG.modal.height || 700}`);
+
                     }
 
                 });

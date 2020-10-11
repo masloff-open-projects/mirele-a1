@@ -54,21 +54,24 @@ const CompoundEditor = Project.export('editor', new Interface({
                         icon: 'dashicons dashicons-plus',
                         href: false,
                         enabled: true,
-                        click: function () {}
+                        click: function () {
+                        }
                     },
                     {
                         title: '...',
                         icon: 'dashicons dashicons-plus',
                         href: false,
                         enabled: false,
-                        click: function () {}
+                        click: function () {
+                        }
                     },
                     {
                         title: '...',
                         icon: 'dashicons dashicons-external',
-                        href: Compound.page_on_edit_url||false,
+                        href: Compound.page_on_edit_url || false,
                         enabled: true,
-                        click: function () {}
+                        click: function () {
+                        }
                     },
                 ],
                 right: [
@@ -105,15 +108,15 @@ const CompoundEditor = Project.export('editor', new Interface({
                     notify: function (self, event) {
                         this.show();
 
-                        if (typeof (event||{}).html !== 'undefined') {
-                            jQuery(this.element).html((event||{}).html||'Not defined');
+                        if (typeof (event || {}).html !== 'undefined') {
+                            jQuery(this.element).html((event || {}).html || 'Not defined');
                         } else {
-                            jQuery(this.element).text((event||{}).text||'Not defined');
+                            jQuery(this.element).text((event || {}).text || 'Not defined');
                         }
 
                         setTimeout(Event => {
                             this.hide();
-                        }, (event||{}).timeout||2500);
+                        }, (event || {}).timeout || 2500);
                     }
                 },
                 loader: {
@@ -142,7 +145,7 @@ const CompoundEditor = Project.export('editor', new Interface({
                     hide: function (self, event) {
                         jQuery(this.element).addClass('hidden');
                     },
-                    setSortable: function (boolean=true) {
+                    setSortable: function (boolean = true) {
                         if (boolean == true) {
                             jQuery(this.element).sortable("option", "disabled", !true);
                         } else if (boolean == false) {
@@ -164,7 +167,7 @@ const CompoundEditor = Project.export('editor', new Interface({
                     getSelected: function (self, event) {
 
                         const $element = '[data-component="field-body"][data-selected]';
-                        
+
                         return jQuery($element).map((i, element) => {
                             return jQuery(element).attr('data-id') || 0;
                         }) || [];
@@ -177,26 +180,26 @@ const CompoundEditor = Project.export('editor', new Interface({
                         jQuery(this.element).selectable({
                             filter: '[data-component="field-body"]',
                             cancel: '[data-component="template-control"],[data-component="field-component"]',
-                            selected: function( event, ui ) {
+                            selected: function (event, ui) {
                                 jQuery(ui.selected).attr('data-selected', true);
                                 self.selected = context.getSelected();
                             },
-                            selecting: function( event, ui ) {
+                            selecting: function (event, ui) {
                                 jQuery(ui.selected).attr('data-selected', true);
                                 self.selected = context.getSelected();
                             },
-                            unselected: function( event, ui ) {
+                            unselected: function (event, ui) {
                                 jQuery(ui.unselected).removeAttr('data-selected');
                                 self.selected = context.getSelected();
                             },
-                            unselecting: function( event, ui ) {
+                            unselecting: function (event, ui) {
                                 jQuery(ui.unselected).removeAttr('data-selected');
                                 self.selected = context.getSelected();
                             },
                         });
 
                         jQuery(this.element).sortable({
-                            
+
                             axis: "xy",
                             containment: "document",
                             disabled: true,
@@ -223,7 +226,7 @@ const CompoundEditor = Project.export('editor', new Interface({
                                 self.ui.trash.hide();
                             }
                         });
-                        
+
                     },
                     reset: function (self, event) {
                         CompoundEditor.vue.selected = [];
@@ -272,7 +275,7 @@ const CompoundEditor = Project.export('editor', new Interface({
                 this.ui.loader.hide(this);
                 this.ui.body.show(this);
                 this.ui.layout.mount(this);
-                
+
             }).catch(Data => {
 
                 this.ui.loader.hide(this);

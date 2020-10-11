@@ -95,7 +95,7 @@ class Component
      */
     public function __get($name)
     {
-        return $this->getProp((string) $name);
+        return $this->getProp((string)$name);
     }
 
     /**
@@ -108,7 +108,7 @@ class Component
      */
     public function __set($name, $value)
     {
-        $this->setProp((string) $name, (string) $value);
+        $this->setProp((string)$name, (string)$value);
     }
 
     /**
@@ -188,6 +188,7 @@ class Component
     {
         return $this->alias;
     }
+
     /**
      * @param string $meta
      * @param mixed $value
@@ -218,7 +219,7 @@ class Component
 
     public function setId(string $id)
     {
-        $this->id = (string) $id;
+        $this->id = (string)$id;
         return $this;
     }
 
@@ -239,7 +240,7 @@ class Component
 
     public function setProps(array $props)
     {
-        $this->props = (array) $props;
+        $this->props = (array)$props;
         return $this;
     }
 
@@ -322,14 +323,16 @@ class Component
      * @param array $props
      * @return mixed
      */
-    public function render (array $props) {
+    public function render(array $props)
+    {
         return ($this->function)(array_merge($this->props, $props));
     }
 
     /**
      * @return $this
      */
-    public function build () {
+    public function build()
+    {
         return $this;
     }
 

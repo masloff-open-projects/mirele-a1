@@ -161,7 +161,7 @@ class Layout
      */
     public function __debugInfo()
     {
-        return (array) $this->layout;
+        return (array)$this->layout;
     }
 
     /**
@@ -201,14 +201,14 @@ class Layout
      *
      * @return $this
      */
-    public function markupTemplate (string $id, string $template)
+    public function markupTemplate(string $id, string $template)
     {
-        $this->layout[$id] = (object) [
-            'props' => (array) [
+        $this->layout[$id] = (object)[
+            'props' => (array)[
                 'name' => $template,
                 'id' => $id
             ],
-            'fields' => (array) []
+            'fields' => (array)[]
         ];
         $this->id = $id;
         return $this;
@@ -217,19 +217,20 @@ class Layout
     /**
      * @return array
      */
-    public function getLayout ()
+    public function getLayout()
     {
-        return (array) $this->layout;
+        return (array)$this->layout;
     }
 
     /**
      * @param string $id
      * @return false|object
      */
-    public function getRootInstanceById(string $id) {
+    public function getRootInstanceById(string $id)
+    {
 
         if (isset($this->layout[$id])) {
-            return (object) $this->layout[$id];
+            return (object)$this->layout[$id];
         }
 
         return false;
@@ -241,7 +242,8 @@ class Layout
      * @param object $props
      * @return $this
      */
-    public function setRootInstanceById(string $id, object $props) {
+    public function setRootInstanceById(string $id, object $props)
+    {
         $this->layout[$id] = $props;
         return $this;
     }
@@ -250,14 +252,15 @@ class Layout
      * @param array $prototypes
      * @return $this
      */
-    public function prototypeIDsBasedSorting (array $prototypes) {
+    public function prototypeIDsBasedSorting(array $prototypes)
+    {
         $sort = [];
         foreach ($prototypes as $id) {
             if (isset($this->layout[$id])) {
                 $sort[$id] = $this->layout[$id];
             }
         }
-        $this->layout = (array) $sort;
+        $this->layout = (array)$sort;
         return $this;
     }
 
@@ -265,7 +268,8 @@ class Layout
      * @param string $id
      * @return $this
      */
-    public function removeTemplate(string $id) {
+    public function removeTemplate(string $id)
+    {
         unset($this->layout[$id]);
         return $this;
     }
@@ -275,7 +279,8 @@ class Layout
      * @param string $name
      * @return bool
      */
-    public function removeField(string $template, string $name) {
+    public function removeField(string $template, string $name)
+    {
         if (isset($this->layout[$template]->fields)) {
             unset($this->layout[$template]->fields[$name]);
             return true;
@@ -287,14 +292,15 @@ class Layout
      * @param integer $integer
      * @return false|mixed
      */
-    public function getRootInstanceByIndex(integer $integer) {
+    public function getRootInstanceByIndex(integer $integer)
+    {
 
         $keys = array_keys($this->layout);
 
         if (isset($keys[$integer])) {
             $key = $keys[$integer];
             if (isset($this->layout[$key]->fields)) {
-                return (object) $this->layout[$key];
+                return (object)$this->layout[$key];
             }
         }
 
@@ -308,29 +314,29 @@ class Layout
      *
      * @return $this
      */
-    public function setLayoutProps (string $id, array $props)
+    public function setLayoutProps(string $id, array $props)
     {
         if (isset($this->layout[$id])) {
-            $this->layout[$id]->props = (object) $props;
+            $this->layout[$id]->props = (object)$props;
         }
 
         return $this;
     }
 
-    public function updateLayoutProps (string $id, array $props)
+    public function updateLayoutProps(string $id, array $props)
     {
         if (isset($this->layout[$id])) {
-            $templateProps = (array) $this->layout[$id]->props;
+            $templateProps = (array)$this->layout[$id]->props;
             foreach ($props as $key => $value) {
                 $templateProps[$key] = $value;
             }
-            return  $this->setLayoutProps($id, $templateProps);
+            return $this->setLayoutProps($id, $templateProps);
         }
 
         return $this;
     }
 
-    public function getLayoutProps (string $id)
+    public function getLayoutProps(string $id)
     {
         if (isset($this->layout[$id]) and isset($this->layout[$id]->props)) {
             return $this->layout[$id]->props;
@@ -344,10 +350,10 @@ class Layout
      * @param array $fields
      * @return $this
      */
-    public function setLayoutFields (string $id, array $fields)
+    public function setLayoutFields(string $id, array $fields)
     {
         if (isset($this->layout[$id])) {
-            $this->layout[$id]->fields = (object) $fields;
+            $this->layout[$id]->fields = (object)$fields;
         }
 
         return $this;
@@ -359,7 +365,7 @@ class Layout
      * @param $value
      * @return $this
      */
-    public function setLayoutField (string $id, string $name, $value)
+    public function setLayoutField(string $id, string $name, $value)
     {
         if (isset($this->layout[$id])) {
             $this->layout[$id]->fields[$name] = $value;

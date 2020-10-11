@@ -29,7 +29,8 @@ final class Stringer
      * @param array $array
      * @return string|string|string[]
      */
-    public static function format (array $array) {
+    public static function format(array $array)
+    {
         return str_replace(array_keys($array), array_values($array), self::$string);
     }
 
@@ -39,7 +40,7 @@ final class Stringer
      */
     public static function get($string)
     {
-        return (self::$string).$string;
+        return (self::$string) . $string;
     }
 
 }

@@ -6,7 +6,6 @@ namespace Mirele\Framework;
 
 use voku\helper\AntiXSS;
 
-
 class WP
 {
 
@@ -134,6 +133,16 @@ class WP
 
     }
 
+    function pages_table () {
+
+        $testListTable = new TT_Example_List_Table();
+        //Fetch, prepare, sort, and filter our data...
+        $testListTable->prepare_items();
+        $testListTable->search_box('Search', 'title');
+        $testListTable->display();
+
+    }
+
     #
     function rosemary_pages_table (array $markup) {
 
@@ -153,10 +162,10 @@ class WP
 
         $table->setColumns(array(
             'cb'            =>  '<input type="checkbox" />',
-            'id'            => 'ID',
             'name'          => 'Name',
             'status'        => 'Page status',
             'modified'      => 'Page modified',
+            'id'            => 'ID'
         ));
 
         $table->setBulk(array(

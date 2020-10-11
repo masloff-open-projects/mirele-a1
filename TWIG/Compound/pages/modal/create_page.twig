@@ -1,47 +1,37 @@
-{# Modal window for page creation in Compound page editor #}
+{# Modal window for inserting a component on a section #}
 
 {% macro render(event) %}
 
-    <div id="modal_create_page" style="display:none;">
-        <div class="Compound">
+    {% import 'Prototypes/modal/compound_empty.twig' as prototype %}
 
-            {# Modal content #}
-            <div class="CModal">
+    {% macro data(event) %}
 
-                <form action="" method="post">
+        <div class="padding-8">
 
-                    <img src='{{ source|default(event.source) }}/img/icons/compound.png' width="200px">
+            <form action="" method="post" id="">
 
-                    <h4>Choose a page template & enter page title</h4>
-                    <p>Choose one of the available page templates</p>
-
-                    <div>
-                        <small>Select template</small>
-                        <select name="template" id="select-template">
-
-                            {% for template in event.templates %}
-                                {% if template.getId %}
-                                    <option value="{{ template.getId }}">{{ template.getMeta('name')|default(template.getId) }}</option>
-                                {% endif %}
-                            {% endfor %}
-                        </select>
+                <div class="left">
+                    <div class="margin-buttom-4">
+                        <label for="name" class="margin-buttom-2 display-block">Name</label>
+                        <input type="text" name="name" placeholder="Name of page">
                     </div>
 
-                    <div>
-                        <small>Enter title</small>
-                        <input name="name" id="input-name" type="text" placeholder="Title of page">
-                    </div>
-
-                    <div>
+                    <div class="margin-buttom-4">
                         <input type="hidden" name="method" value="Compound-createPage">
                         <input type="hidden" name="nonce" value="{{ wp.nonce() }}">
-                        <button type="submit" class="button button-primary button-large">Create and continue</button>
+                        <input type="submit" name="save" id="save-post" class="button button-primary" value="Continue">
                     </div>
+                </div>
 
-                </form>
+            </form>
 
-            </div>
         </div>
-    </div>
+
+    {% endmacro %}
+
+    {{ prototype.render({
+        id: 'modal_create_page',
+        data: _self.data(event),
+    }) }}
 
 {% endmacro %}

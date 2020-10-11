@@ -1,68 +1,64 @@
 {% macro render(event) %}
 
-    <div id="postbox-container-1" class="postbox-container">
-        <div id="side-sortables" class="meta-box-sortables ui-sortable">
-            <div id="submitdiv" class="postbox">
-                <div class="postbox-header">
-                    <h2 class="hndle ui-sortable-handle">Publish</h2>
-                </div>
-                <div class="inside">
-                    <div class="submitbox" id="submitpost">
-                        <div id="minor-publishing">
-                            <div style="display: none;">
-                                <p class="submit">
-                                    <input type="submit" name="save" id="save" class="button" value="Save"/>
-                                </p>
-                            </div>
+    <div id="submitdiv" class="postbox">
+        <div class="postbox-header">
+            <h2 class="hndle ui-sortable-handle">Publish</h2>
+        </div>
+        <div class="inside">
+            <div class="submitbox" id="submitpost">
+                <div id="minor-publishing">
+                    <div style="display: none;">
+                        <p class="submit">
+                            <input type="submit" name="save" id="save" class="button" value="Save"/>
+                        </p>
+                    </div>
 
-                            <div id="misc-publishing-actions">
-                                <div class="misc-pub-section misc-pub-post-status">
-                                    Status: <span
-                                            id="post-status-display"> {{ event.page.post_status|capitalize }} </span>
-                                </div>
+                    <div id="misc-publishing-actions">
+                        <div class="misc-pub-section misc-pub-post-status">
+                            Status: <span
+                                    id="post-status-display"> {{ event.page.post_status|capitalize }} </span>
+                        </div>
 
-                                <div class="misc-pub-section misc-pub-post-status">
-                                    Comment status: <span
-                                            id="post-visibility-display"> {{ event.page.comment_status|capitalize }} </span>
-                                </div>
+                        <div class="misc-pub-section misc-pub-post-status">
+                            Comment status: <span
+                                    id="post-visibility-display"> {{ event.page.comment_status|capitalize }} </span>
+                        </div>
 
-                                <div class="misc-pub-section misc-pub-post-status">
-                                    Ping status: <span
-                                            id="post-visibility-display"> {{ event.page.ping_status|capitalize }} </span>
-                                </div>
+                        <div class="misc-pub-section misc-pub-post-status">
+                            Ping status: <span
+                                    id="post-visibility-display"> {{ event.page.ping_status|capitalize }} </span>
+                        </div>
 
-                                <div class="misc-pub-section curtime misc-pub-curtime">
+                        <div class="misc-pub-section curtime misc-pub-curtime">
                                             <span id="timestamp">
                                                 Published on: <b>{{ event.page.post_date|date("M d, Y H:i", false) }}</b>
                                             </span>
-                                </div>
+                        </div>
 
-                                <div class="misc-pub-section curtime misc-pub-curtime">
+                        <div class="misc-pub-section curtime misc-pub-curtime">
                                             <span id="timestamp">
                                                 Last edit on: <b>{{ event.page.post_modified|date("M d, Y H:i", false) }}</b>
                                             </span>
-                                </div>
-
-                            </div>
-                            <div class="clear"></div>
                         </div>
 
-                        <div id="major-publishing-actions">
-                            <div id="delete-action">
-                                <a class="submitdelete deletion" href="#">Move to Trash</a>
-                            </div>
-
-                            <div id="publishing-action">
-                                <span class="spinner"></span>
-                                <input name="original_publish" type="hidden" id="original_publish" value="Update"/>
-                                <input type="submit" name="save" id="publish" class="button button-primary button-large"
-                                       value="Update"/>
-                            </div>
-
-                            <div class="clear"></div>
-
-                        </div>
                     </div>
+                    <div class="clear"></div>
+                </div>
+
+                <div id="major-publishing-actions">
+                    <div id="delete-action">
+                        <a class="submitdelete deletion" href="#">Move to Trash</a>
+                    </div>
+
+                    <div id="publishing-action">
+                        <span class="spinner"></span>
+                        <input name="original_publish" type="hidden" id="original_publish" value="Update"/>
+                        <input type="submit" name="save" id="publish" class="button button-primary button-large"
+                               value="Update"/>
+                    </div>
+
+                    <div class="clear"></div>
+
                 </div>
             </div>
         </div>

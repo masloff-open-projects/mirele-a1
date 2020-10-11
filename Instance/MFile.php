@@ -24,7 +24,8 @@ class MFile
      * @return bool
      */
 
-    static function write ($file='', $content='', $ifPermissionsDenied=false) {
+    static function write($file = '', $content = '', $ifPermissionsDenied = false)
+    {
 
         $file = self::getPath() . $file;
 
@@ -40,7 +41,7 @@ class MFile
 
                     return true;
                 } else {
-                  return false;
+                    return false;
                 }
 
             } else {
@@ -85,7 +86,8 @@ class MFile
      * @return bool
      */
 
-    static function append ($file='', $content='', $ifPermissionsDenied=false) {
+    static function append($file = '', $content = '', $ifPermissionsDenied = false)
+    {
 
         $file = self::getPath() . $file;
 
@@ -143,7 +145,8 @@ class MFile
      * @return bool|false|string
      */
 
-    static function read ($file='') {
+    static function read($file = '')
+    {
 
         $file = self::getPath() . $file;
 
@@ -170,7 +173,8 @@ class MFile
      * @return bool
      */
 
-    static function delete ($file='') {
+    static function delete($file = '')
+    {
 
         $file = self::getPath() . $file;
 
@@ -191,7 +195,8 @@ class MFile
      * @return bool
      */
 
-    static function exist ($file='') {
+    static function exist($file = '')
+    {
 
         return file_exists(self::getPath() . $file);
 
@@ -205,7 +210,8 @@ class MFile
      * @return bool|false|int
      */
 
-    static function size ($file='') {
+    static function size($file = '')
+    {
 
         $file = self::getPath() . $file;
 
@@ -225,7 +231,8 @@ class MFile
      * @return bool|false|int
      */
 
-    static function recent_modify ($file='') {
+    static function recent_modify($file = '')
+    {
 
         $file = self::getPath() . $file;
 
@@ -244,7 +251,7 @@ class MFile
      * @return string
      */
 
-    public static function getPath ()
+    public static function getPath()
     {
         return '';
     }

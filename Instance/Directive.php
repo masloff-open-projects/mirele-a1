@@ -8,7 +8,8 @@ namespace Mirele\Compound;
  * Class Directive
  * @package Mirele\Compound
  */
-class Directive {
+class Directive
+{
 
     /**
      * @var
@@ -59,7 +60,7 @@ class Directive {
     public function getAttribute(string $name)
     {
 
-        $attr = (array) $this->attributes;
+        $attr = (array)$this->attributes;
 
         if (isset($attr[$name])) {
             return $attr[$name];

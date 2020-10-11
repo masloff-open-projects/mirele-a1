@@ -50,13 +50,13 @@
 
                             {% if template.getMeta('editor').features is not empty and template.getMeta('editor').features is iterable %}
 
-                               <div class="margin-y-2 margin-x-0 padding-0">
-                                   {% for prop in template.getMeta('editor').features %}
-                                       <div>
-                                           <small><b>{{ prop.name }}</b>: {{ prop.value }}</small>
-                                       </div>
-                                   {% endfor %}
-                               </div>
+                                <div class="margin-y-2 margin-x-0 padding-0">
+                                    {% for prop in template.getMeta('editor').features %}
+                                        <div>
+                                            <small><b>{{ prop.name }}</b>: {{ prop.value }}</small>
+                                        </div>
+                                    {% endfor %}
+                                </div>
 
                             {% endif %}
 

@@ -8,6 +8,7 @@ interface __return {
 class AIK {
     private axios = null;
     private project = null;
+
     constructor() {
         if (typeof window['axios'] == 'function') {
             this.axios = window['axios'];
@@ -16,8 +17,8 @@ class AIK {
             this.project = window['MIRELE'];
         }
     }
-    public postman (method: string, data: object, axios={method: 'POST'})
-    {
+
+    public postman(method: string, data: object, axios = {method: 'POST'}) {
         if (typeof method != "undefined" && typeof data != "undefined") {
             if (typeof method == 'string') {
                 if (typeof data == 'object') {

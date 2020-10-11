@@ -39,7 +39,7 @@ Project.export('@form-propsTemplate', new Interface({
                             }
                         }
 
-                        tb_show('Edit props of component', `/?TB_inline&inlineId=modal_edit_props_template&width=${CONFIG.modal.width||600}&height=${CONFIG.modal.height||700}`);
+                        tb_show('Edit props of component', `/?TB_inline&inlineId=modal_edit_props_template&width=${CONFIG.modal.width || 600}&height=${CONFIG.modal.height || 700}`);
                     }
 
                 });

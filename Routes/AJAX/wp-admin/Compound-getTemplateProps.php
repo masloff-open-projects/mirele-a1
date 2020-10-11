@@ -1,10 +1,5 @@
 <?php
 
-use Mirele\Compound\Component;
-use Mirele\Compound\Config;
-use Mirele\Compound\Lexer;
-use Mirele\Compound\Store;
-use Mirele\Compound\Tag;
 use Mirele\Compound\Patterns;
 use Mirele\Router;
 

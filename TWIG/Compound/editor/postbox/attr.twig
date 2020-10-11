@@ -1,0 +1,26 @@
+{% macro render(event) %}
+
+    <div id="pageparentdiv" class="postbox">
+        <div class="postbox-header">
+            <h2 class="hndle ui-sortable-handle">Page Attributes</h2>
+        </div>
+        <div class="inside">
+            <p class="post-attributes-label-wrapper parent-id-label-wrapper">
+                <label class="post-attributes-label" for="parent_id">
+                    Template type
+                </label>
+            </p>
+            <select name="template_type" id="template_type">
+                <option value="regular-page">Regular page</option>
+                <option value="сomponent">Component</option>
+            </select>
+            {# <p class="post-attributes-label-wrapper menu-order-label-wrapper"> #}
+            {# <label class="post-attributes-label" for="menu_order">Order</label> #}
+            {# </p> #}
+            {# <input name="menu_order" type="text" size="4" id="menu_order" value="0"> #}
+            {# <p class="post-attributes-help-text">Need help? Use the Help tab above the screen title.</p> #}
+        </div>
+
+    </div>
+
+{% endmacro %}

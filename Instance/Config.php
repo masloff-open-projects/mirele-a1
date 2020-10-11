@@ -19,7 +19,8 @@ class Config
     /**
      * Config constructor.
      */
-    function __construct() {
+    function __construct()
+    {
         $this->data = [];
     }
 
@@ -69,7 +70,7 @@ class Config
      */
     public function __set($name, $value)
     {
-        $this->setData((string) $name, $value);
+        $this->setData((string)$name, $value);
     }
 
 
@@ -104,7 +105,8 @@ class Config
     /**
      * @return array
      */
-    public function all() {
+    public function all()
+    {
         return $this->data;
     }
 

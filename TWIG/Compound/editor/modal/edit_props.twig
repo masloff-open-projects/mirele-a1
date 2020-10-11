@@ -10,7 +10,8 @@
 
         <div class="padding-8">
 
-            <form action="" method="post" id="modal_edit_props_form" @submit.prevent="submit" v-if="Object.keys(fields).length > 0">
+            <form action="" method="post" id="modal_edit_props_form" @submit.prevent="submit"
+                  v-if="Object.keys(fields).length > 0">
 
                 <div id="component-meta" class="left" v-if="meta">
                     <h3 class="title" v-if="meta.title">{meta.title}</h3>

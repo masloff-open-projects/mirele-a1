@@ -204,9 +204,7 @@ add_action(
 });
 
 # AJAX Redirect
-add_action(/**
- *
- */ 'wp_ajax_nopriv_mirele_endpoint_v1', function () {
+add_action('wp_ajax_nopriv_mirele_endpoint_v1', function () {
 
     if (isset((MIRELE_POST)['action']) and isset((MIRELE_POST)['method'])) {
 
@@ -596,6 +594,7 @@ add_action(
     wp_enqueue_script('babelui');
     wp_enqueue_script('bootstrap4');
     wp_enqueue_script('mireleapi');
+    wp_enqueue_script('AIK');
     wp_enqueue_script('fontAwesome');
 
     wp_enqueue_style('fontAwesome');
@@ -605,19 +604,16 @@ add_action(
 });
 
 # Admin front end
-add_action(
-/**
- *
- */ 'admin_menu', function () {
+add_action('admin_menu', function () {
 
     add_thickbox();
 
     add_menu_page(
         'MIRELE', 'Mirele Center', MIRELE_RIGHTS['page']['edit'], 'mirele_center', function () {
         if (current_user_can(MIRELE_RIGHTS['page']['edit'])) {
-            \Mirele\TWIG::Render('Main/center');
+            TWIG::Render('Main/center');
         } else {
-            \Mirele\TWIG::Render('Main/no-access');
+            TWIG::Render('Main/no-access');
         }
     }, '', 1);
 
@@ -645,20 +641,7 @@ add_action(
                 $lex = $Lexer->parse();
 
                 # We check the essence of the lecturer
-                if ((object)$lex) {
-
-                    # Variable $lex has full markup of
-                    # all data that the user has marked
-                    # up in the code, BUT
-                    # it has no possible fields that were missed by the user.
-                    #
-                    # Signature lex:
-                    # (id of template) dc2cebec9a14a69c103f5e0d3076269c:
-                    #   (object) props:
-                    #       name => value
-                    #   (array) fields:
-                    #       (index of template):
-                    #           (template)
+                if (is_object($lex)) {
 
                     $Layout = $lex->getLayout();
 
@@ -666,10 +649,6 @@ add_action(
 
                         $fields = [];
                         $_fields = [];
-
-                        # We will get all the registered fields
-                        # in the template, already from them we
-                        # will get the markup from the token data.
 
                         if (isset($Template->props->name)) {
 
@@ -706,22 +685,22 @@ add_action(
 
                     }
 
-                }
+                    # Render Page Editor
+                    TWIG::Render('Compound/editor', [
+                        'page' => $page,
+                        'markup' => $Markup,
+                        'layout' => $lex->getLayout(),
+                        'store' => [
+                            'templates' => Grider::all(),
+                            'components' => Store::all(),
+                            'getFamilies' => Store::getFamilies(true),
+                            'templatesTypes' => Grider::getTypes(),
+                            'templatesFamilies' => Grider::getFamilies(),
+                            'templatesFolders' => Grider::getFolders(),
+                        ]
+                    ]);
 
-                # Render Page Editor
-                TWIG::Render('Compound/editor', [
-                    'page' => $page,
-                    'markup' => $Markup,
-                    'layout' => $lex->getLayout(),
-                    'store' => [
-                        'templates' => Grider::all(),
-                        'components' => Store::all(),
-                        'getFamilies' => Store::getFamilies(true),
-                        'templatesTypes' => Grider::getTypes(),
-                        'templatesFamilies' => Grider::getFamilies(),
-                        'templatesFolders' => Grider::getFolders(),
-                    ]
-                ]);
+                }
 
             }
 
@@ -743,14 +722,18 @@ add_action(
     add_submenu_page(
         'сompound_render_editor', 'MIRELE', 'Demos', MIRELE_RIGHTS['page']['edit'], 'сompound_render_demos', function () {
 
-    }, '', 2);
+            TWIG::Render('Compound/demos', [
+
+            ]);
+
+    }, 2);
 
     add_action(
         'admin_bar_menu', function ($wp_admin_bar) {
         $wp_admin_bar->add_node(
             array(
                 'id' => 'rpage',
-                'title' => 'Rosemary Page',
+                'title' => 'Compound Page',
                 'href' => MIRELE_URL . '?page=rosemary_render_editor',
                 'parent' => 'new-content'
             ));
