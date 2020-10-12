@@ -12,53 +12,42 @@
                             <input type="submit" name="save" id="save" class="button" value="Save"/>
                         </p>
                     </div>
-
                     <div id="misc-publishing-actions">
                         <div class="misc-pub-section misc-pub-post-status">
                             Status: <span
                                     id="post-status-display"> {{ event.page.post_status|capitalize }} </span>
                         </div>
-
                         <div class="misc-pub-section misc-pub-post-status">
                             Comment status: <span
                                     id="post-visibility-display"> {{ event.page.comment_status|capitalize }} </span>
                         </div>
-
                         <div class="misc-pub-section misc-pub-post-status">
                             Ping status: <span
                                     id="post-visibility-display"> {{ event.page.ping_status|capitalize }} </span>
                         </div>
-
                         <div class="misc-pub-section curtime misc-pub-curtime">
-                                            <span id="timestamp">
-                                                Published on: <b>{{ event.page.post_date|date("M d, Y H:i", false) }}</b>
-                                            </span>
+                  <span id="timestamp">
+                  Published on: <b>{{ event.page.post_date|date("M d, Y H:i", false) }}</b>
+                  </span>
                         </div>
-
                         <div class="misc-pub-section curtime misc-pub-curtime">
-                                            <span id="timestamp">
-                                                Last edit on: <b>{{ event.page.post_modified|date("M d, Y H:i", false) }}</b>
-                                            </span>
+                  <span id="timestamp">
+                  Last edit on: <b>{{ event.page.post_modified|date("M d, Y H:i", false) }}</b>
+                  </span>
                         </div>
-
                     </div>
                     <div class="clear"></div>
                 </div>
-
                 <div id="major-publishing-actions">
                     <div id="delete-action">
                         <a class="submitdelete deletion" href="#">Move to Trash</a>
                     </div>
-
                     <div id="publishing-action">
-                        <span class="spinner"></span>
-                        <input name="original_publish" type="hidden" id="original_publish" value="Update"/>
+                        <span :class="!__is_updated() ? 'spinner is-active' : 'spinner'"></span>
                         <input type="submit" name="save" id="publish" class="button button-primary button-large"
-                               value="Update"/>
+                               value="Update" :disabled="!__is_updated()"/>
                     </div>
-
                     <div class="clear"></div>
-
                 </div>
             </div>
         </div>

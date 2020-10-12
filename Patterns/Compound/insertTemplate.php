@@ -7,6 +7,7 @@ namespace Mirele\Compound\Patterns;
 use Mirele\Compound\Component;
 use Mirele\Compound\Field;
 use Mirele\Compound\Grider;
+use Mirele\Compound\Layout;
 use Mirele\Compound\Lexer;
 use Mirele\Compound\Tag;
 use Mirele\Compound\Template;
@@ -33,8 +34,6 @@ class insertTemplate extends Pattern
         if (isset($this->template) and isset($this->page)) {
 
             $lex = $this->__get_lex((int) $this->page);
-            $id = uniqid('template_', true);
-
 
             if ($lex) {
 
@@ -42,7 +41,7 @@ class insertTemplate extends Pattern
 
                 if ($template instanceof Template) {
 
-                    $this->lexer->getSignature()->markupTemplate((string) $id, (string) $this->template);
+                    $this->lexer->getSignature()->markupTemplate(null, (string) $this->template);
                     $fields = $template->getFields();
 
                     if (is_array($fields) or is_object($fields)) {
@@ -77,15 +76,7 @@ class insertTemplate extends Pattern
                 return false;
             }
 
-            $code = $this->lexer->generateCode();
-
-            if ($this->__update_page($this->page, [
-                "post_content" => "[Compound role='editor'] \n $code \n [/Compound]"
-            ])) {
-                return $this->__update_page_meta($this->page, '_wp_page_template', COMPOUND_CANVAS);
-            } else {
-                return false;
-            }
+            $this->__UPDATE($this->page, []);
 
 
         } else {

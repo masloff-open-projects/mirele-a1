@@ -51,6 +51,7 @@ class Router
      * @var
      */
     public static $root;
+    public static $middleware = array();
 
     /**
      * Loners should not be cloned.
@@ -133,8 +134,16 @@ class Router
         }
         $method = $_SERVER['REQUEST_METHOD'];
 
-        $searches = array_keys(static ::$patterns);
-        $replaces = array_values(static ::$patterns);
+        $searches = array_keys(static::$patterns);
+        $replaces = array_values(static::$patterns);
+
+        foreach (self::getMiddlewares() as $middleware)
+        {
+            if (is_callable($middleware))
+            {
+                call_user_func($middleware);
+            }
+        }
 
         $found_route = false;
 
@@ -382,5 +391,16 @@ class Router
     {
         return self::$root;
     }
+
+    public static function getMiddlewares()
+    {
+        return self::$middleware;
+    }
+
+    public static function addMiddleware(callable $middleware)
+    {
+        self::$middleware[] = $middleware;
+    }
+
 }
 

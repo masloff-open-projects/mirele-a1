@@ -48,9 +48,15 @@ class Pattern
      * param [ mixed $args [, $... ]]
      * @link https://php.net/manual/en/language.oop5.decon.php
      */
-    public function __construct() {
+    public function __construct($data=array()) {
 
         $this->lexer = $Lexer = new Lexer('');
+
+        if (!empty($data) and is_array($data)) {
+            foreach ($data as $key => $value) {
+                $this->{$key} = $value;
+            }
+        }
 
     }
 
@@ -122,6 +128,50 @@ class Pattern
             $name,
             $value
         );
+    }
+
+    protected function __UDAPTE_META (int $id, array $props)
+    {
+
+        $props = array_merge(
+            [
+                '_wp_page_template' => COMPOUND_CANVAS
+            ],
+            (array) $props
+        );
+
+        foreach ($props as $key => $value) {
+            $this->__update_page_meta($id, (string) $key, (string) $value);
+        }
+
+        return true;
+
+    }
+
+    protected function __UPDATE (int $id, array $props, $meta=[])
+    {
+
+        $code = $this->lexer->generateCode();
+
+        if ($code) {
+
+            if ($this->__update_page($id, array_merge(
+                (array) $props,
+                [
+                    "post_content" => "[Compound role='editor'] \n $code \n [/Compound]"
+                ]
+            ))) {
+
+                return $this->__UDAPTE_META($this->page, (array) $meta);
+
+            } else {
+                return false;
+            }
+
+        } else {
+            return false;
+        }
+
     }
 
 }

@@ -207,6 +207,17 @@ class Lexer
         $this->source_code .= "$indent<$tag $attrs_inline/>$delimiter";
     }
 
+    private function __generation_id ()
+    {
+        return sprintf( '%04x%04x-%04x-%04x-%04x-%04x%04x%04x',
+            mt_rand( 0, 0xffff ), mt_rand( 0, 0xffff ),
+            mt_rand( 0, 0xffff ),
+            mt_rand( 0, 0x0fff ) | 0x4000,
+            mt_rand( 0, 0x3fff ) | 0x8000,
+            mt_rand( 0, 0xffff ), mt_rand( 0, 0xffff ), mt_rand( 0, 0xffff )
+        );
+    }
+
     /**
      * @param string $fragment
      */
@@ -267,7 +278,7 @@ class Lexer
                         if ($iterator->getTag() === 'template') {
 
                             # Receive primary information about the template
-                            $id = !empty($iterator->getAttribute('id')) ? $iterator->getAttribute('id') : (string) uniqid('template_', true);
+                            $id = !empty($iterator->getAttribute('id')) ? $iterator->getAttribute('id') : (string) $this->__generation_id();
                             $name = $iterator->getAttribute('name');
                             $props = $iterator->getAttributes();
                             $next = (object) $iterator->getNext();
@@ -427,13 +438,11 @@ class Lexer
             
             if (is_array($Layout) or is_object($Layout)) {
                 foreach ($Layout as $index => $template) {
-                    /**
-                     * @deprecated
-                     */
                     $template->props = (object) $template->props;
                     $this->__xml_add_open_tag('template', (object) [
                         'name' => $template->props->name,
                         'id' => $template->props->id,
+                        'instance' => $template->props->instance,
                     ]);
 
                         /// Props

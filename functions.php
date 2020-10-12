@@ -620,6 +620,10 @@ add_action('admin_menu', function () {
     add_menu_page(
         'MIRELE', 'Mirele Apps', MIRELE_RIGHTS['page']['edit'], 'mirele_apps', function () {
 
+            TWIG::Render('Apps/main', [
+
+            ]);
+
     }, 'dashicons-screenoptions', 2);
 
     add_menu_page(

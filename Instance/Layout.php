@@ -201,8 +201,13 @@ class Layout
      *
      * @return $this
      */
-    public function markupTemplate(string $id, string $template)
+    public function markupTemplate($id, string $template)
     {
+
+        if (!(isset($id) and !empty($id) and $id)) {
+            $id = $this->__generation_id();
+        }
+
         $this->layout[$id] = (object)[
             'props' => (array)[
                 'name' => $template,
@@ -245,6 +250,12 @@ class Layout
     public function setRootInstanceById(string $id, object $props)
     {
         $this->layout[$id] = $props;
+        return $this;
+    }
+
+    public function appendRootInstance(object $props)
+    {
+        $this->layout[] = $props;
         return $this;
     }
 
@@ -383,6 +394,17 @@ class Layout
     {
         $this->last = $last;
         return $this;
+    }
+
+    private function __generation_id ()
+    {
+        return sprintf( '%04x%04x-%04x-%04x-%04x-%04x%04x%04x',
+            mt_rand( 0, 0xffff ), mt_rand( 0, 0xffff ),
+            mt_rand( 0, 0xffff ),
+            mt_rand( 0, 0x0fff ) | 0x4000,
+            mt_rand( 0, 0x3fff ) | 0x8000,
+            mt_rand( 0, 0xffff ), mt_rand( 0, 0xffff ), mt_rand( 0, 0xffff )
+        );
     }
 
 }

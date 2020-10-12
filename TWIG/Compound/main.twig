@@ -1,9 +1,3 @@
-{% if pages|length > 0 %}
-    {% import 'Compound/pages.twig' as export %}
-{% else %}
-    {% import 'Compound/start.twig' as export %}
-{% endif %}
-
 {% import 'Compound/pages/modal/create_page.twig' as modal %}
 {{ modal.render() }}
 

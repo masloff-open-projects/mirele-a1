@@ -1,0 +1,18 @@
+{% import 'Prototypes/card/app.twig' as prototype %}
+
+<div class="wrap">
+    <h1>Apps</h1>
+    <hr class="wp-header-end">
+    <div id="poststuff">
+        <form id="plugin-filter" method="post">
+            <div class="wp-list-table widefat plugin-install">
+                <div id="the-list">
+                    {{ prototype.render() }}
+                    {{ prototype.render() }}
+                    {{ prototype.render() }}
+                    {{ prototype.render() }}
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

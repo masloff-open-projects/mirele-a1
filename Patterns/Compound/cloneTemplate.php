@@ -4,11 +4,13 @@
 namespace Mirele\Compound\Patterns;
 
 
+use Mirele\Compound\Lexer;
 use Mirele\Framework\Prototypes\Pattern;
 
 
-class removeTemplate extends Pattern
+class cloneTemplate extends Pattern
 {
+
     /**
      * The __invoke method is called when a script tries to call an object as a function.
      *
@@ -21,15 +23,16 @@ class removeTemplate extends Pattern
         if (isset($this->template) and isset($this->page)) {
 
             $lex = $this->__get_lex((int) $this->page);
-            if (is_array($this->template) or is_object($this->template)) {
-                foreach ($this->template as $id) {
-                    $lex->removeTemplate($id);
-                }
-            } else {
-                $lex->removeTemplate($this->template);
-            }
 
-            $this->__UPDATE($this->page, []);
+            if ($lex) {
+
+
+                $parent = $lex->getSignature()->getRootInstanceById($this->template);
+                $parent->props->id = $this->page . '-clone';
+                $lex->appendRootInstance($parent);
+
+                return $this->__UPDATE($this->page, []);
+            }
 
         } else {
             return false;

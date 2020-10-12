@@ -380,7 +380,7 @@ const CompoundEditor = Project.export('editor', new Interface({
                     }
                 }
 
-                const Request = (new AIK).postman('Compound-sort', {
+                const Request = (new AIK).postman('Compound-sortOrder', {
                     page: Compound.page_on_edit || 0,
                     order: $order
                 });
@@ -400,6 +400,20 @@ const CompoundEditor = Project.export('editor', new Interface({
                     removeTemplate: function (event) {
                         if (event.template) {
                             const Request = (new AIK).postman('Compound-removeTemplate', {
+                                page: Compound.page_on_edit || 0,
+                                template: event.template
+                            });
+
+                            Request.then(Event => {
+                                self.reloadPage();
+                            }).catch(Event => {
+                                // FIXME
+                            });
+                        }
+                    },
+                    cloneTemplate: function (event) {
+                        if (event.template) {
+                            const Request = (new AIK).postman('Compound-cloneTemplate', {
                                 page: Compound.page_on_edit || 0,
                                 template: event.template
                             });
@@ -455,6 +469,74 @@ const CompoundEditor = Project.export('editor', new Interface({
                 self.transport().removeSelectedTemplates();
             }
         });
+        
+        // Meta info
+        const CompoundMeta = Project.export('page-meta', new Interface({
+            requires: {
+                vue: true,
+                jquery: true
+            },
+            elements: {
+                vue: ['#compound-meta']
+            },
+            vue: {
+                delimiters: ['{', '}'],
+                el: "#compound-meta",
+                data: {
+                    updated: true,
+                    meta: []
+                },
+                mounted: function (Event) {
+
+                    const self = this;
+
+                    (new AIK).postman('Compound-getPage', {
+                        page: Compound.page_on_edit || 0
+                    }).then(Event => {
+                        self.meta = Event.data.data;
+                    });
+
+                },
+                methods: {
+
+                    submit: function () {
+
+                        this.__show_loader();
+
+                        var $props = {};
+
+                        jQuery(jQuery('#compound-meta').serializeArray()).each(function(index, obj){
+                            $props[obj.name] = obj.value;
+                        });
+
+                        (new AIK).postman('Compound-updatePage', {
+                            props: $props,
+                            page: Compound.page_on_edit || 0
+                        }).then(Event => {
+                            console.log(Event.data.data);
+                            this.__hide_loader();
+                        })
+
+
+                    },
+                    
+                    __is_updated: function () {
+                        return this.updated;
+                    },
+
+                    __show_loader: function () {
+                        return this.updated = false;
+                    },
+
+                    __hide_loader: function () {
+                        return this.updated = true;
+                    }
+
+                },
+                filters: {},
+                watch: {}
+            }
+        }));
 
     }
 }));

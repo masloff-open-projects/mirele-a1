@@ -38,12 +38,15 @@ require_once 'AJAX/WCAddToCart.php';
 require_once 'AJAX/wp-admin/Compound-getProps.php';
 require_once 'AJAX/wp-admin/Compound-updateProps.php';
 require_once 'AJAX/wp-admin/Compound-removeTemplate.php';
-require_once 'AJAX/wp-admin/Compound-sort.php';
+require_once 'AJAX/wp-admin/Compound-sortOrder.php';
 require_once 'AJAX/wp-admin/Compound-getMarkup.php';
 require_once 'AJAX/wp-admin/Compound-insertComponent.php';
 require_once 'AJAX/wp-admin/Compound-insertTemplate.php';
 require_once 'AJAX/wp-admin/Compound-getTemplateProps.php';
 require_once 'AJAX/wp-admin/Compound-updateTemplateProps.php';
+require_once 'AJAX/wp-admin/Compound-updatePage.php';
+require_once 'AJAX/wp-admin/Compound-getPage.php';
+require_once 'AJAX/wp-admin/Compound-cloneTemplate.php';
 
 // REST
 require_once 'REST/options/get.php';

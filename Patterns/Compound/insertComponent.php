@@ -45,15 +45,7 @@ class insertComponent extends Pattern
 
                     $this->lexer->getSignature()->setRootInstanceById($this->template, $root);
 
-                    $code = $this->lexer->generateCode();
-
-                    if ($this->__update_page($this->page, [
-                        "post_content" => "[Compound role='editor'] \n $code \n [/Compound]"
-                    ])) {
-                        return $this->__update_page_meta($this->page, '_wp_page_template', COMPOUND_CANVAS);
-                    } else {
-                        return false;
-                    }
+                    $this->__UPDATE($this->page, []);
 
                 } else {
 
