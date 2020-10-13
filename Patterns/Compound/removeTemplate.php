@@ -20,16 +20,18 @@ class removeTemplate extends Pattern
 
         if (isset($this->template) and isset($this->page)) {
 
-            $lex = $this->__get_lex((int) $this->page);
+            $lex = $this->__get_lex((int)$this->page);
             if (is_array($this->template) or is_object($this->template)) {
                 foreach ($this->template as $id) {
-                    $lex->removeTemplate($id);
+                    if (is_string($id) or is_int($id)) {
+                        $lex->removeTemplate($id);
+                    }
                 }
             } else {
                 $lex->removeTemplate($this->template);
             }
 
-            $this->__UPDATE($this->page, []);
+            return $this->__UPDATE($this->page, []);
 
         } else {
             return false;

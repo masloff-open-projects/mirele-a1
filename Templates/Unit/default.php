@@ -3,8 +3,6 @@
 namespace Mirele\Templates;
 
 use Mirele\Compound\Config;
-use Mirele\Compound\Field;
-use Mirele\Compound\Grider;
 use Mirele\Compound\Template;
 
 new Template([

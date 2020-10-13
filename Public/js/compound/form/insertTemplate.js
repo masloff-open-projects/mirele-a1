@@ -1,4 +1,4 @@
-Project.export('@form-insertTemplate', new Interface({
+app.references.form.insert.template = new app.interface({
     requires: {
         vue: true,
         jquery: true
@@ -23,7 +23,7 @@ Project.export('@form-insertTemplate', new Interface({
 
             insert: function (event) {
 
-                const Request = (new AIK).postman('Compound-insertTemplate', Object.assign(this.event, event, {
+                const Request = app.request('Compound/insertTemplate', Object.assign(this.event, event, {
                     page: Compound.page_on_edit || 0
                 }));
 
@@ -42,4 +42,4 @@ Project.export('@form-insertTemplate', new Interface({
             }
         }
     }
-}));
+});

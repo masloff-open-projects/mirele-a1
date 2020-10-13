@@ -16,7 +16,7 @@
 
 "use strict";
 
-new Interface({
+new app.interface({
     requires: {
         vue: true,
         jquery: true
@@ -45,9 +45,8 @@ new Interface({
 
                 // Overriding behavior
                 e.preventDefault();
-
-
-                (new AIK).postman('login', {
+                
+                app.request('login', {
                     login: this.login,
                     password: this.password,
                     remember: this.remember
@@ -56,7 +55,7 @@ new Interface({
                         if (Event.data.success) {
                             location.reload();
                         } else {
-                            this.toast('error', Event.data.data.message)
+                            this.toast('error', Event.data.message)
                         }
                     }
                 }).catch(Event => {

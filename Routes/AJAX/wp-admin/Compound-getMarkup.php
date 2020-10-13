@@ -1,92 +1,112 @@
 <?php
 
+
+namespace Mirele\WPAJAX;
+
+
 use Mirele\Compound\Config;
 use Mirele\Compound\Field;
 use Mirele\Compound\Grider;
 use Mirele\Compound\Layout;
 use Mirele\Compound\Lexer;
+use Mirele\Compound\Response;
 use Mirele\Compound\Tag;
 use Mirele\Compound\Template;
-use Mirele\Router;
+use Mirele\Framework\Prototypes\Request;
 
 
 # ...
 # Endpoint Version: 1.0.0
 # Distributors: AJAX
-Router::post('/ajax_endpoint_v1/Compound-getMarkup', function () {
+class WPAJAX_Compound__getMarkup extends Request {
 
-    # If user login in and have permission
-    if (is_user_logged_in() and current_user_can(MIRELE_RIGHTS['page']['edit'])) {
+    /**
+     * The __invoke method is called when a script tries to call an object as a function.
+     *
+     * @return mixed
+     * @link https://php.net/manual/en/language.oop5.magic.php#language.oop5.magic.invoke
+     */
+    public function __invoke($req)
+    {
 
-        $props = array(
-            'page' => (MIRELE_POST)['page'],
-        );
+        if (is_user_logged_in() and current_user_can(MIRELE_RIGHTS['page']['edit'])) {
 
-        $wp_page = (object)get_post($props['page']);
+            $props = array(
+                'page' => (MIRELE_POST)['page'],
+            );
 
-        $Markup = array();
-        $Lexer = new Lexer($wp_page->post_content);
-        $lex = $Lexer->parse();
+            $wp_page = (object)get_post($props['page']);
 
-        if ((object)$lex and $lex instanceof Layout) {
-            foreach ($lex->getLayout() as $ID => $Template) {
+            $Markup = array();
+            $Lexer = new Lexer($wp_page->post_content);
+            $lex = $Lexer->parse();
 
-                $template = Grider::findById($Template->props->name);
+            if ((object)$lex and $lex instanceof Layout) {
+                foreach ($lex->getLayout() as $ID => $Template) {
 
-                if ($template instanceof Template) {
+                    $template = Grider::findById($Template->props->name);
 
-                    $fields = $template->getFields();
+                    if ($template instanceof Template) {
 
-                    foreach ($fields as $name => $field) {
+                        $fields = $template->getFields();
 
-                        if ($field instanceof Field) {
+                        foreach ($fields as $name => $field) {
 
-                            $meta['editor'] = $field->getMeta('editor');
+                            if ($field instanceof Field) {
 
-                            if ($meta['editor'] instanceof Config) {
+                                $meta['editor'] = $field->getMeta('editor');
 
-                                $Markup[$ID]['fields'][$name]['meta']['editor'] = $meta['editor']->all();
+                                if ($meta['editor'] instanceof Config) {
 
-                            }
+                                    $Markup[$ID]['fields'][$name]['meta']['editor'] = $meta['editor']->all();
 
-                            if (isset($Template->fields[$name])) {
-
-                                foreach ($Template->fields[$name] as $tag) {
-                                    if ($tag instanceof Tag) {
-                                        $Markup[$ID]['fields'][$name]['tags'][] = (object)[
-                                            'tag' => $tag->getTagName(),
-                                            'essence' => $tag->getEssence(),
-                                            'attributes' => $tag->getAttributes()
-                                        ];
-                                    }
                                 }
 
+                                if (isset($Template->fields[$name])) {
+
+                                    foreach ($Template->fields[$name] as $tag) {
+                                        if ($tag instanceof Tag) {
+                                            $Markup[$ID]['fields'][$name]['tags'][] = (object)[
+                                                'tag' => $tag->getTagName(),
+                                                'essence' => $tag->getEssence(),
+                                                'attributes' => $tag->getAttributes()
+                                            ];
+                                        }
+                                    }
+
+                                }
+
+
+                                $Markup[$ID]['fields'][$name]['field'] = (object)[
+                                    'id' => $field->getId(),
+                                    'name' => $field->getName(),
+                                    'props' => $field->getProps(),
+                                    'page' => $props['page']
+                                ];
+
                             }
-
-
-                            $Markup[$ID]['fields'][$name]['field'] = (object)[
-                                'id' => $field->getId(),
-                                'name' => $field->getName(),
-                                'props' => $field->getProps(),
-                                'page' => $props['page']
-                            ];
 
                         }
 
+
+                        # Get props
+                        $Markup[$ID]['props'] = $Template->props;
+
                     }
 
-
-                    # Get props
-                    $Markup[$ID]['props'] = $Template->props;
-
                 }
-
             }
-        }
 
-        wp_send_json_error($Markup);
-        return;
+            return new Response($Markup, 200);
+
+        } else {
+
+            return new Response([
+                'message' => 'Access to this endpoint is not available to you'
+            ], 403);
+
+        }
 
     }
 
-});
+}

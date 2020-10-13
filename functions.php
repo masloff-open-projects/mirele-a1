@@ -291,14 +291,16 @@ add_action(
 
     # We will register all necessary scripts in the future.
     wp_register_script('fontAwesome', 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/js/all.min.js', array('jquery'), '', true);
+    wp_register_script('qs', 'https://cdnjs.cloudflare.com/ajax/libs/qs/6.9.4/qs.min.js', array('vue'), '', true);
     wp_register_script('vue', 'https://cdn.jsdelivr.net/npm/vue', array('jquery'), '', true);
     wp_register_script('popper', 'https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js', array('jquery'), '', true);
     wp_register_script('axios', 'https://unpkg.com/axios/dist/axios.min.js', array('jquery'), '', true);
     wp_register_script('bootstrap4', 'https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js', array('jquery'), '', true);
     wp_register_script('mirele_admin', '/public/js/admin.min.js', array('jquery', 'vue'), '', true);
     wp_register_script('mireleapi', '/public/js/API.min.js', array('jquery', 'vue'), '', true);
-    wp_register_script('AIK', '/public/js/AIK.js', array('jquery', 'vue'), '', true);
+    wp_register_script('org.app', '/public/js/org.app.min.js', array('jquery', 'vue'), '', true);
 
+    wp_register_script('app.request', '/public/js/app.request.min.js', array('jquery', 'vue'), '', true);
     wp_register_script('compound', '/public/js/compound.min.js', array('jquery', 'vue'), '', true);
     wp_register_script('compound_form_props', '/public/js/compound/form/props.min.js', array('jquery', 'vue'), '', true);
     wp_register_script('compound_form_insertComponent', '/public/js/compound/form/insertComponent.min.js', array('jquery', 'vue'), '', true);
@@ -557,8 +559,9 @@ add_action(
  */ 'admin_enqueue_scripts', function () {
 
     wp_enqueue_script('axios');
+    wp_enqueue_script('qs');
     wp_enqueue_script('mireleapi');
-    wp_enqueue_script('AIK');
+    wp_enqueue_script('org.app');
     wp_enqueue_script('vue');
     wp_enqueue_script('mirele_admin');
     wp_enqueue_script('compound');
@@ -573,7 +576,7 @@ add_action(
     wp_enqueue_script('compound_form_insertTemplate');
     wp_enqueue_script('compound_form_propsTemplate');
 
-    wp_enqueue_style('wp-color-picker');
+//    wp_enqueue_style('wp-color-picker');
     wp_enqueue_style('admin_style');
 
     wp_enqueue_media();
@@ -587,14 +590,14 @@ add_action(
  */ 'wp_enqueue_scripts', function () {
 
     # Scripts and styles for all pages
-    wp_enqueue_script('vue');
     wp_enqueue_script('axios');
-    wp_enqueue_script('babel');
+    wp_enqueue_script('qs');
     wp_enqueue_script('popper');
-    wp_enqueue_script('babelui');
+    wp_enqueue_script('vue');
     wp_enqueue_script('bootstrap4');
     wp_enqueue_script('mireleapi');
-    wp_enqueue_script('AIK');
+    wp_enqueue_script('org.app');
+    wp_enqueue_script('app.request');
     wp_enqueue_script('fontAwesome');
 
     wp_enqueue_style('fontAwesome');

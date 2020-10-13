@@ -16,7 +16,7 @@
 
 "use strict";
 
-new Interface({
+new app.interface({
     requires: {
         vue: true,
         jquery: true

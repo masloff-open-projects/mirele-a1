@@ -18,8 +18,7 @@ class updatePage extends Pattern
      */
     public function __invoke()
     {
-        if (isset($this->props) and is_array($this->props) and isset($this->page))
-        {
+        if (isset($this->props) and is_array($this->props) and isset($this->page)) {
             return $this->__UDAPTE_META($this->page, $this->props);
         } else {
             return false;

@@ -33,7 +33,7 @@ const CONFIG = {
     }
 };
 
-const CompoundEditor = Project.export('editor', new Interface({
+const CompoundEditor = Project.export('editor', new app.interface({
     requires: {
         vue: true,
         jquery: true
@@ -98,6 +98,7 @@ const CompoundEditor = Project.export('editor', new Interface({
             },
             ui: {
                 notify: {
+                    type: 'success',
                     element: '[data-component="notify"][data-namespace="editor"][data-behavior="notify"][data-role="notify"]',
                     show: function (self, event) {
                         jQuery(this.element).removeClass('hidden');
@@ -106,6 +107,7 @@ const CompoundEditor = Project.export('editor', new Interface({
                         jQuery(this.element).addClass('hidden');
                     },
                     notify: function (self, event) {
+                        this.type = (event || {}).type || 'success';
                         this.show();
 
                         if (typeof (event || {}).html !== 'undefined') {
@@ -290,13 +292,13 @@ const CompoundEditor = Project.export('editor', new Interface({
                 return new Promise((resolve, reject) => {
 
                     // Create main request
-                    ((new AIK).postman('Compound-getMarkup', {
+                    app.request('Compound/getMarkup', {
                         page: Compound.page_on_edit || 0
-                    })).then(Event => {
+                    }).then(Event => {
 
                         var $buffer = [];
 
-                        for (const [id, template] of Object.entries(Event.data.data)) {
+                        for (const [id, template] of Object.entries(Event.data)) {
                             $buffer.push({
                                 name: template.props.name || 'default',
                                 id: id,
@@ -308,7 +310,7 @@ const CompoundEditor = Project.export('editor', new Interface({
                         this.markup = $buffer;
 
                         // Resolve
-                        resolve(Event.data.data);
+                        resolve(Event.data);
 
                     }).catch(Event => {
 
@@ -320,7 +322,7 @@ const CompoundEditor = Project.export('editor', new Interface({
             },
 
             editProps: function (event) {
-                const $form = Project.import('@form-props').vue;
+                const $form = app.references.form.get.component.props.vue
                 $form.__editor = this;
                 return $form.open(Object.assign({
                     page: Compound.page_on_edit || 0
@@ -328,7 +330,7 @@ const CompoundEditor = Project.export('editor', new Interface({
             },
 
             insertComponent: function (event) {
-                const $form = Project.import('@form-createComponent').vue;
+                const $form = app.references.form.insert.component.vue;
                 $form.__editor = this;
                 return $form.open(Object.assign({
                     page: Compound.page_on_edit || 0,
@@ -336,7 +338,7 @@ const CompoundEditor = Project.export('editor', new Interface({
             },
 
             editTemplate: function (event) {
-                const $form = Project.import('@form-propsTemplate').vue;
+                const $form = app.references.form.get.template.props.vue;
                 $form.__editor = this;
                 return $form.open(Object.assign({
                     page: Compound.page_on_edit || 0
@@ -344,7 +346,7 @@ const CompoundEditor = Project.export('editor', new Interface({
             },
 
             insertTemplate: function (event) {
-                const $form = Project.import('@form-insertTemplate').vue;
+                const $form = app.references.form.insert.template.vue;
                 $form.__editor = this;
                 return $form.open(Object.assign({
                     page: Compound.page_on_edit || 0,
@@ -352,7 +354,7 @@ const CompoundEditor = Project.export('editor', new Interface({
             },
 
             removeTemplate: function (event) {
-                return (new AIK).postman('Compound-removeTemplate', {
+                return app.request('Compound/removeTemplate', {
                     page: Compound.page_on_edit || 0,
                     template: event.template
                 });
@@ -380,7 +382,7 @@ const CompoundEditor = Project.export('editor', new Interface({
                     }
                 }
 
-                const Request = (new AIK).postman('Compound-sortOrder', {
+                const Request = app.request('Compound/sortOrder', {
                     page: Compound.page_on_edit || 0,
                     order: $order
                 });
@@ -399,7 +401,7 @@ const CompoundEditor = Project.export('editor', new Interface({
                     },
                     removeTemplate: function (event) {
                         if (event.template) {
-                            const Request = (new AIK).postman('Compound-removeTemplate', {
+                            const Request = app.request('Compound/removeTemplate', {
                                 page: Compound.page_on_edit || 0,
                                 template: event.template
                             });
@@ -413,7 +415,7 @@ const CompoundEditor = Project.export('editor', new Interface({
                     },
                     cloneTemplate: function (event) {
                         if (event.template) {
-                            const Request = (new AIK).postman('Compound-cloneTemplate', {
+                            const Request = app.request('Compound/cloneTemplate', {
                                 page: Compound.page_on_edit || 0,
                                 template: event.template
                             });
@@ -469,9 +471,9 @@ const CompoundEditor = Project.export('editor', new Interface({
                 self.transport().removeSelectedTemplates();
             }
         });
-        
+
         // Meta info
-        const CompoundMeta = Project.export('page-meta', new Interface({
+        const CompoundMeta = Project.export('page-meta', new app.interface({
             requires: {
                 vue: true,
                 jquery: true
@@ -490,10 +492,10 @@ const CompoundEditor = Project.export('editor', new Interface({
 
                     const self = this;
 
-                    (new AIK).postman('Compound-getPage', {
+                    app.request('Compound/getPage', {
                         page: Compound.page_on_edit || 0
                     }).then(Event => {
-                        self.meta = Event.data.data;
+                        self.meta = Event.data;
                     });
 
                 },
@@ -505,21 +507,21 @@ const CompoundEditor = Project.export('editor', new Interface({
 
                         var $props = {};
 
-                        jQuery(jQuery('#compound-meta').serializeArray()).each(function(index, obj){
+                        jQuery(jQuery('#compound-meta').serializeArray()).each(function (index, obj) {
                             $props[obj.name] = obj.value;
                         });
 
-                        (new AIK).postman('Compound-updatePage', {
+                        app.request('Compound/updatePage', {
                             props: $props,
                             page: Compound.page_on_edit || 0
                         }).then(Event => {
-                            console.log(Event.data.data);
+                            console.log(Event.data);
                             this.__hide_loader();
                         })
 
 
                     },
-                    
+
                     __is_updated: function () {
                         return this.updated;
                     },

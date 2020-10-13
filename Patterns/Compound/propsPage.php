@@ -3,12 +3,6 @@
 
 namespace Mirele\Compound\Patterns;
 
-use Mirele\Compound\Component;
-use Mirele\Compound\Field;
-use Mirele\Compound\Grider;
-use Mirele\Compound\Lexer;
-use Mirele\Compound\Tag;
-use Mirele\Compound\Template;
 use Mirele\Framework\Prototypes\Pattern;
 
 class propsPage extends Pattern

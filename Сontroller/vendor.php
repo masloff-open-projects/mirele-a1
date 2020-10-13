@@ -34,3 +34,4 @@ include_once 'Store.php';
 include_once 'Router.php';
 include_once 'Apps.php';
 include_once 'TagsManager.php';
+include_once 'AJAX.php';

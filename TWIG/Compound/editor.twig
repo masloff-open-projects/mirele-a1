@@ -98,13 +98,13 @@
 
                             </div>
 
-                            <div class="__compound_notify padding-3 font-size-1 color-white hidden"
+                            <div :class="[`__compound_notify_${ui.notify.type}`, 'padding-3', 'font-size-1', 'color-white', 'hidden']"
                                  data-behavior="notify"
                                  data-component="notify"
                                  data-namespace="editor"
                                  data-role="notify">
 
-                                <b>Success</b> Lorem ipsum dolor sit.
+                                <b>Success</b>
 
                             </div>
 

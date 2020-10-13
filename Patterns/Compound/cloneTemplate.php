@@ -4,7 +4,6 @@
 namespace Mirele\Compound\Patterns;
 
 
-use Mirele\Compound\Lexer;
 use Mirele\Framework\Prototypes\Pattern;
 
 
@@ -22,7 +21,7 @@ class cloneTemplate extends Pattern
 
         if (isset($this->template) and isset($this->page)) {
 
-            $lex = $this->__get_lex((int) $this->page);
+            $lex = $this->__get_lex((int)$this->page);
 
             if ($lex) {
 

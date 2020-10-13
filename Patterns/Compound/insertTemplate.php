@@ -7,8 +7,6 @@ namespace Mirele\Compound\Patterns;
 use Mirele\Compound\Component;
 use Mirele\Compound\Field;
 use Mirele\Compound\Grider;
-use Mirele\Compound\Layout;
-use Mirele\Compound\Lexer;
 use Mirele\Compound\Tag;
 use Mirele\Compound\Template;
 use Mirele\Framework\Prototypes\Pattern;
@@ -33,7 +31,7 @@ class insertTemplate extends Pattern
 
         if (isset($this->template) and isset($this->page)) {
 
-            $lex = $this->__get_lex((int) $this->page);
+            $lex = $this->__get_lex((int)$this->page);
 
             if ($lex) {
 
@@ -41,7 +39,7 @@ class insertTemplate extends Pattern
 
                 if ($template instanceof Template) {
 
-                    $this->lexer->getSignature()->markupTemplate(null, (string) $this->template);
+                    $this->lexer->getSignature()->markupTemplate(null, (string)$this->template);
                     $fields = $template->getFields();
 
                     if (is_array($fields) or is_object($fields)) {
@@ -55,11 +53,11 @@ class insertTemplate extends Pattern
 
                                     $tag = new Tag();
                                     $tag->setTag('component');
-                                    $tag->setAttributes((array) $object->getComponentProps());
+                                    $tag->setAttributes((array)$object->getComponentProps());
 
                                     $tag->setAttribute('name', $component->getAlias() ? $component->getAlias() : $component->getId());
 
-                                    $this->lexer->getSignature()->setLayoutField((string) $id, $object->getName(), [clone $tag]);
+                                    $this->lexer->getSignature()->setLayoutField((string)$id, $object->getName(), [clone $tag]);
 
                                 }
 
@@ -76,7 +74,7 @@ class insertTemplate extends Pattern
                 return false;
             }
 
-            $this->__UPDATE($this->page, []);
+            return $this->__UPDATE($this->page, []);
 
 
         } else {

@@ -3,15 +3,16 @@
 
 namespace Mirele\Framework;
 
-if(!class_exists('WP_List_Table')){
-    require_once( ABSPATH . 'wp-admin/includes/class-wp-list-table.php' );
+if (!class_exists('WP_List_Table')) {
+    require_once(ABSPATH . 'wp-admin/includes/class-wp-list-table.php');
 }
 
 /**
  * Class TT_Example_List_Table
  * @package Mirele\Framework
  */
-class TT_Example_List_Table extends \WP_List_Table {
+class TT_Example_List_Table extends \WP_List_Table
+{
 
     /**
      * Displays the search box.
@@ -29,15 +30,16 @@ class TT_Example_List_Table extends \WP_List_Table {
     /**
      * TT_Example_List_Table constructor.
      */
-    function __construct(){
+    function __construct()
+    {
         global $status, $page;
 
         //Set parent defaults
-        parent::__construct( array(
-            'singular'  => 'page',     //singular name of the listed records
-            'plural'    => 'pages',    //plural name of the listed records
-            'ajax'      => false       //does this table support ajax?
-        ) );
+        parent::__construct(array(
+            'singular' => 'page',     //singular name of the listed records
+            'plural' => 'pages',    //plural name of the listed records
+            'ajax' => false       //does this table support ajax?
+        ));
 
     }
 
@@ -46,15 +48,16 @@ class TT_Example_List_Table extends \WP_List_Table {
      * @param string $column_name
      * @return mixed|string|void
      */
-    function column_default($item, $column_name){
-        switch($column_name){
+    function column_default($item, $column_name)
+    {
+        switch ($column_name) {
             case 'status':
                 return $item->post_status;
             case 'rating':
             case 'date':
-                $_format = ! empty( $format ) ? $format : get_option( 'date_format' );
-                $the_date = get_post_time( $_format, false, $item, true );
-                return apply_filters( 'get_the_date', $the_date, '', $item );
+                $_format = !empty($format) ? $format : get_option('date_format');
+                $the_date = get_post_time($_format, false, $item, true);
+                return apply_filters('get_the_date', $the_date, '', $item);
             case 'comments':
                 if ($item->comment_count > 0) {
                     return $item->comment_count;
@@ -77,12 +80,13 @@ class TT_Example_List_Table extends \WP_List_Table {
      * @param $item
      * @return string
      */
-    function column_title($item){
+    function column_title($item)
+    {
 
         //Build row actions
         $actions = array(
-            'edit'      => sprintf('<a href="?page=%s&action=%s&page_id=%s">Edit</a>',$_REQUEST['page'],'edit',$item->ID),
-            'delete'    => sprintf('<a href="?page=%s&action=%s&page_id=%s">Delete</a>',$_REQUEST['page'],'delete',$item->ID),
+            'edit' => sprintf('<a href="?page=%s&action=%s&page_id=%s">Edit</a>', $_REQUEST['page'], 'edit', $item->ID),
+            'delete' => sprintf('<a href="?page=%s&action=%s&page_id=%s">Delete</a>', $_REQUEST['page'], 'delete', $item->ID),
         );
 
         //Return the title contents
@@ -97,7 +101,8 @@ class TT_Example_List_Table extends \WP_List_Table {
      * @param object $item
      * @return string|void
      */
-    function column_cb($item){
+    function column_cb($item)
+    {
         return sprintf(
             '<input type="checkbox" name="%1$s[]" value="%2$s" />',
             /*$1%s*/ $this->_args['singular'],  //Let's simply repurpose the table's singular label ("page")
@@ -108,14 +113,15 @@ class TT_Example_List_Table extends \WP_List_Table {
     /**
      * @return array|string[]
      */
-    function get_columns(){
+    function get_columns()
+    {
         $columns = array(
-            'cb'          => '<input type="checkbox" />',
-            'title'       => 'Title',
-            'status'      => 'Status',
-            'author'      => 'Author',
-            'comments'    => '<span class="dashicons dashicons-admin-comments"></span>',
-            'date'        => 'Date',
+            'cb' => '<input type="checkbox" />',
+            'title' => 'Title',
+            'status' => 'Status',
+            'author' => 'Author',
+            'comments' => '<span class="dashicons dashicons-admin-comments"></span>',
+            'date' => 'Date',
         );
         return $columns;
     }
@@ -124,12 +130,13 @@ class TT_Example_List_Table extends \WP_List_Table {
     /**
      * @return array|array[]
      */
-    function get_sortable_columns() {
+    function get_sortable_columns()
+    {
         $sortable_columns = array(
-            'title'     => array('title', false),
-            'status'    => array('status', false),
-            'author'    => array('author', false),
-            'date'      => array('date', false)
+            'title' => array('title', false),
+            'status' => array('status', false),
+            'author' => array('author', false),
+            'date' => array('date', false)
         );
         return $sortable_columns;
     }
@@ -137,9 +144,10 @@ class TT_Example_List_Table extends \WP_List_Table {
     /**
      * @return array|string[]
      */
-    function get_bulk_actions() {
+    function get_bulk_actions()
+    {
         $actions = array(
-            'delete'    => 'Delete'
+            'delete' => 'Delete'
         );
         return $actions;
     }
@@ -147,10 +155,11 @@ class TT_Example_List_Table extends \WP_List_Table {
     /**
      *
      */
-    function process_bulk_action() {
+    function process_bulk_action()
+    {
 
         //Detect when a bulk action is being triggered...
-        if( 'delete' === $this->current_action() ) {
+        if ('delete' === $this->current_action()) {
             wp_die('Items deleted (or they would be if we had items to delete)!');
         }
 
@@ -159,7 +168,8 @@ class TT_Example_List_Table extends \WP_List_Table {
     /**
      *
      */
-    function prepare_items() {
+    function prepare_items()
+    {
         global $wpdb; //This is used only if making any database queries
 
         /**
@@ -230,7 +240,7 @@ class TT_Example_List_Table extends \WP_List_Table {
          * to ensure that the data is trimmed to only the current page. We can use
          * array_slice() to
          */
-        $data = array_slice($data,(($current_page-1)*$per_page),$per_page);
+        $data = array_slice($data, (($current_page - 1) * $per_page), $per_page);
 
         /**
          * REQUIRED. Now we can add our *sorted* data to the items property, where
@@ -242,13 +252,13 @@ class TT_Example_List_Table extends \WP_List_Table {
         /**
          * REQUIRED. We also have to register our pagination options & calculations.
          */
-        $this->set_pagination_args( array(
+        $this->set_pagination_args(array(
             'total_items' => $total_items,                  //WE have to calculate the total number of items
-            'per_page'    => $per_page,                     //WE have to determine how many items to show on a page
-            'total_pages' => ceil($total_items/$per_page)   //WE have to calculate the total number of pages
-        ) );
+            'per_page' => $per_page,                     //WE have to determine how many items to show on a page
+            'total_pages' => ceil($total_items / $per_page)   //WE have to calculate the total number of pages
+        ));
     }
-    
+
 }
 
 /**
@@ -261,18 +271,19 @@ class WPGNU
     /**
      *
      */
-    function construct () {
-        if(!class_exists( 'WP_List_Table' ) ) {
-            require_once( ABSPATH . 'wp-admin/includes/class-wp-list-table.php' );
+    function construct()
+    {
+        if (!class_exists('WP_List_Table')) {
+            require_once(ABSPATH . 'wp-admin/includes/class-wp-list-table.php');
         }
     }
 
     /**
      * @return \WP_List_Table|__anonymous@8654
      */
-    static private function _WPTable () {
-        $class = new class extends \WP_List_Table
-        {
+    static private function _WPTable()
+    {
+        $class = new class extends \WP_List_Table {
 
             private $bulk = array();
             private $bulkActions = array();
@@ -283,10 +294,10 @@ class WPGNU
             private $perPage = 10;
             private $actionOnID = array();
 
-            public function __construct($props=array(
+            public function __construct($props = array(
                 'singular' => 'singular_form',
-                'plural'   => 'plural_form',
-                'ajax'     => true
+                'plural' => 'plural_form',
+                'ajax' => true
             ))
 
             {
@@ -296,12 +307,13 @@ class WPGNU
                 parent::__construct($props);
             }
 
-            function display() {
+            function display()
+            {
 
                 /**
                  * Adds a nonce field
                  */
-                wp_nonce_field( 'ajax-custom-list-nonce', '_ajax_custom_list_nonce' );
+                wp_nonce_field('ajax-custom-list-nonce', '_ajax_custom_list_nonce');
 
                 /**
                  * Adds field order and orderby
@@ -312,7 +324,8 @@ class WPGNU
                 parent::display();
             }
 
-            public function render() {
+            public function render()
+            {
                 return $this->display();
             }
 
@@ -322,7 +335,7 @@ class WPGNU
              */
             public function setSortableColumns($sortable_columns)
             {
-                $this->sortable_columns = (array) $sortable_columns;
+                $this->sortable_columns = (array)$sortable_columns;
             }
 
             /**
@@ -336,12 +349,13 @@ class WPGNU
             /**
              * @param array
              */
-            public function setActionsOnID($data=array())
+            public function setActionsOnID($data = array())
             {
                 $this->actionOnID = $data;
             }
 
-            public function column_id ($item) {
+            public function column_id($item)
+            {
 
                 foreach ($this->actionOnID as $type => $data) {
                     $actions[$type] = str_replace([
@@ -355,14 +369,14 @@ class WPGNU
                     ], $data);
                 }
 
-                return sprintf('%1$s %2$s', $item['id'], $this->row_actions($actions) );
+                return sprintf('%1$s %2$s', $item['id'], $this->row_actions($actions));
             }
 
 
             /**
              * @param array $data
              */
-            public function appendData ($data)
+            public function appendData($data)
             {
                 return array_push($this->data, $data);
             }
@@ -372,7 +386,7 @@ class WPGNU
              */
             public function setHiddenColumns($hidden_columns)
             {
-                $this->hidden_columns = (array) $hidden_columns;
+                $this->hidden_columns = (array)$hidden_columns;
             }
 
             /**
@@ -380,7 +394,7 @@ class WPGNU
              */
             public function setPerPage($perPage)
             {
-                $this->perPage = (integer) $perPage;
+                $this->perPage = (integer)$perPage;
             }
 
             /**
@@ -399,16 +413,17 @@ class WPGNU
                 $this->data = $data;
             }
 
-            public function process_bulk_action() {
+            public function process_bulk_action()
+            {
 
                 // security check!
-                if ( isset( $_POST['_wpnonce'] ) && ! empty( $_POST['_wpnonce'] ) ) {
+                if (isset($_POST['_wpnonce']) && !empty($_POST['_wpnonce'])) {
 
-                    $nonce  = filter_input( INPUT_POST, '_wpnonce', FILTER_SANITIZE_STRING );
+                    $nonce = filter_input(INPUT_POST, '_wpnonce', FILTER_SANITIZE_STRING);
                     $action = 'bulk-' . $this->_args['plural'];
 
-                    if ( ! wp_verify_nonce( $nonce, $action ) )
-                        wp_die( 'Nope! Security check failed!' );
+                    if (!wp_verify_nonce($nonce, $action))
+                        wp_die('Nope! Security check failed!');
 
                 }
 
@@ -417,7 +432,8 @@ class WPGNU
                 return;
             }
 
-            function column_cb($item){
+            function column_cb($item)
+            {
                 return sprintf(
                     '<input type="checkbox" name="%1$s[]" value="%2$s" />',
                     /*$1%s*/ $this->_args['singular'],
@@ -437,19 +453,19 @@ class WPGNU
                 $sortable = $this->get_sortable_columns();
 
                 $data = $this->table_data();
-                usort( $data, array( &$this, 'sort_data' ) );
+                usort($data, array(&$this, 'sort_data'));
 
                 $perPage = $this->perPage;
                 $currentPage = $this->get_pagenum();
                 $totalItems = count($data);
 
-                $this->set_pagination_args( array(
+                $this->set_pagination_args(array(
                     'total_items' => $totalItems,
-                    'per_page'    => $perPage,
-                    'total_pages' => ceil($totalItems/$perPage)
-                ) );
+                    'per_page' => $perPage,
+                    'total_pages' => ceil($totalItems / $perPage)
+                ));
 
-                $data = array_slice($data,(($currentPage-1)*$perPage),$perPage);
+                $data = array_slice($data, (($currentPage - 1) * $perPage), $perPage);
 
                 $this->_column_headers = array($columns, $hidden, $sortable);
                 $this->items = $data;
@@ -501,12 +517,12 @@ class WPGNU
             /**
              * Define what data to show on each column of the table
              *
-             * @param  Array $item        Data
-             * @param  String $column_name - Current column name
+             * @param Array $item Data
+             * @param String $column_name - Current column name
              *
              * @return Mixed
              */
-            protected function column_default( $item, $column_name )
+            protected function column_default($item, $column_name)
             {
                 if (isset($item[$column_name]) === true) {
                     return $item[$column_name];
@@ -520,36 +536,34 @@ class WPGNU
              *
              * @return Mixed
              */
-            protected function sort_data( $a, $b )
+            protected function sort_data($a, $b)
             {
                 // Set defaults
                 $orderby = 'post_title';
                 $order = 'asc';
 
                 // If orderby is set, use this as the sort column
-                if(!empty($_GET['orderby']))
-                {
+                if (!empty($_GET['orderby'])) {
                     $orderby = $_GET['orderby'];
                 }
 
                 // If order is set use this as the order
-                if(!empty($_GET['order']))
-                {
+                if (!empty($_GET['order'])) {
                     $order = $_GET['order'];
                 }
 
 
-                $result = strcmp( $a[$orderby], $b[$orderby] );
+                $result = strcmp($a[$orderby], $b[$orderby]);
 
-                if($order === 'asc')
-                {
+                if ($order === 'asc') {
                     return $result;
                 }
 
                 return -$result;
             }
 
-            protected function get_bulk_actions() {
+            protected function get_bulk_actions()
+            {
                 return $this->bulk;
             }
 
@@ -560,7 +574,8 @@ class WPGNU
     /**
      * @return __anonymous|\WP_List_Table|__anonymous@8717
      */
-    public static function Table () {
+    public static function Table()
+    {
         return self::_WPTable();
     }
 

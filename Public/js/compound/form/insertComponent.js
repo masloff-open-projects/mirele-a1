@@ -1,4 +1,4 @@
-Project.export('@form-createComponent', new Interface({
+app.references.form.insert.component = new app.interface({
     requires: {
         vue: true,
         jquery: true
@@ -23,7 +23,7 @@ Project.export('@form-createComponent', new Interface({
 
             create: function (event) {
 
-                const Request = (new AIK).postman('Compound-insertComponent', Object.assign(this.event, event, {
+                const Request = app.request('Compound/insertComponent', Object.assign(this.event, event, {
                     page: Compound.page_on_edit || 0
                 }));
 
@@ -42,4 +42,4 @@ Project.export('@form-createComponent', new Interface({
             }
         }
     }
-}));
+});

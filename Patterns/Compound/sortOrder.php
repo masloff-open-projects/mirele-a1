@@ -3,11 +3,6 @@
 
 namespace Mirele\Compound\Patterns;
 
-use Mirele\Compound\Field;
-use Mirele\Compound\Grider;
-use Mirele\Compound\Lexer;
-use Mirele\Compound\Tag;
-use Mirele\Compound\Template;
 use Mirele\Framework\Prototypes\Pattern;
 
 
@@ -32,7 +27,7 @@ class sortOrder extends Pattern
 
             $lex = $this->__get_lex($this->page);
             $lex->prototypeIDsBasedSorting($this->prototype);
-            $this->__UPDATE($this->page, []);
+            return $this->__UPDATE($this->page, []);
 
         }
 

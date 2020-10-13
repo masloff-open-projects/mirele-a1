@@ -20,13 +20,12 @@ class updateTemplateProps extends Pattern
     {
         if (isset($this->template) and isset($this->page) and isset($this->props)) {
 
-            $lex = $this->__get_lex((int) $this->page);
+            $lex = $this->__get_lex((int)$this->page);
 
             if ($lex) {
 
-                if ($lex->updateLayoutProps($this->template, (array) $this->props))
-                {
-                    $this->__UPDATE($this->page, []);
+                if ($lex->updateLayoutProps($this->template, (array)$this->props)) {
+                    return $this->__UPDATE($this->page, []);
                 } else {
                     return false;
                 }

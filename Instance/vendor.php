@@ -42,3 +42,4 @@ include_once 'Iterator.php';
 include_once 'Inter.php';
 include_once 'Stringer.php';
 include_once 'MFile.php';
+include_once 'Response.php';

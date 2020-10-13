@@ -1,14 +1,7 @@
 <?php
 
-use Mirele\Compound\Config;
-use Mirele\Compound\Field;
-use Mirele\Compound\Grider;
-use Mirele\Compound\Layout;
-use Mirele\Compound\Lexer;
-use Mirele\Compound\Tag;
-use Mirele\Compound\Template;
-use Mirele\Router;
 use Mirele\Compound\Patterns;
+use Mirele\Router;
 
 # ...
 # Endpoint Version: 1.0.0
@@ -19,7 +12,7 @@ Router::post('/ajax_endpoint_v1/Compound-getPage', function () {
     if (is_user_logged_in() and current_user_can(MIRELE_RIGHTS['page']['edit'])) {
 
         $pattern = (new Patterns\propsPage([
-            'page'  => (MIRELE_POST)['page']
+            'page' => (MIRELE_POST)['page']
         ]));
 
         $buffer = $pattern();

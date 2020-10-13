@@ -10,3 +10,4 @@ include_once 'Compound/sortOrder.php';
 include_once 'Compound/updatePage.php';
 include_once 'Compound/propsPage.php';
 include_once 'Compound/cloneTemplate.php';
+include_once 'Compound/updateProps.php';

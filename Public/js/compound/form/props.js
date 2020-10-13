@@ -1,4 +1,4 @@
-Project.export('@form-props', new Interface({
+app.references.form.get.component.props = new app.interface({
     requires: {
         vue: true,
         jquery: true
@@ -27,12 +27,12 @@ Project.export('@form-props', new Interface({
                 this.event = event;
 
                 // Create request
-                ((new AIK).postman('Compound-getProps', event)).then(Event => {
+                (app.request('Compound/getProps', event)).then(Event => {
 
-                    if (Event.data.success === true) {
-                        if (typeof Event.data.data.props == 'object' && Object.keys(Event.data.data.props).length > 0) {
+                    if (Event.status == 200) {
+                        if (typeof Event.data.props == 'object' && Object.keys(Event.data.props).length > 0) {
 
-                            for (const [name, value] of Object.entries(Event.data.data.props)) {
+                            for (const [name, value] of Object.entries(Event.data.props)) {
 
                                 this.fields.push({
                                     name: name,
@@ -45,11 +45,18 @@ Project.export('@form-props', new Interface({
 
                         }
 
-                        if (typeof Event.data.data.meta == 'object') {
-                            this.meta = Event.data.data.meta;
+                        if (typeof Event.data.meta == 'object') {
+                            this.meta = Event.data.meta;
                         }
 
                         tb_show('Edit props of component', `/?TB_inline&inlineId=modal_edit_props&width=${CONFIG.modal.width || 600}&height=${CONFIG.modal.height || 700}`);
+
+                    } else {
+
+                        this.__editor.vue.ui.notify.notify(this, {
+                            text: 'Request to server failed',
+                            type: 'danger'
+                        });
 
                     }
 
@@ -59,7 +66,7 @@ Project.export('@form-props', new Interface({
 
             submit: function (event) {
 
-                const Request = (new AIK).postman('Compound-updateProps', Object.assign(this.event, {
+                const Request = app.request('Compound/updateProps', Object.assign(this.event, {
                     type: this.type
                 }, {
                     props: this.props || []
@@ -78,4 +85,4 @@ Project.export('@form-props', new Interface({
     ready: function (Event, $) {
 
     }
-}));
+})

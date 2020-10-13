@@ -6,7 +6,7 @@ use Mirele\Router;
 Router::post('/wp-admin/admin.php', function () {
     if (
         isset((MIRELE_POST)['method']) and
-        (MIRELE_POST)['method'] === 'Compound-createPage' and
+        (MIRELE_POST)['method'] === 'Compound/createPage' and
         isset((MIRELE_GET)['page']) and
         (MIRELE_GET)['page'] === 'сompound_render_editor'
     ) {

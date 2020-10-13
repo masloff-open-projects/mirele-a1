@@ -16,7 +16,7 @@
 
 "use strict";
 
-new Interface({
+new app.interface({
     requires: {
         vue: true,
         jquery: true
@@ -75,21 +75,21 @@ new Interface({
                 // Overriding behavior
                 e.preventDefault();
 
-                (new AIK).postman('recoveryPassword', {
+                app.request('recoveryPassword', {
                     login: this.login,
                     email: this.email,
                     key: this.key ? this.key : false,
                     password: this.password ? this.password : false,
                 }).then(Event => {
                     if ('success' in Event.data) {
-                        if (Event.data.data.status == 'code_send') {
+                        if (Event.data.status == 'code_send') {
                             this.step = 2;
-                        } else if (Event.data.data.status == 'code_correct') {
+                        } else if (Event.data.status == 'code_correct') {
                             this.step = 3;
-                        } else if (Event.data.data.status == 'password_change') {
+                        } else if (Event.data.status == 'password_change') {
                             this.step = 4;
                         } else {
-                            this.toast('error', Event.data.data.message, 10000)
+                            this.toast('error', Event.data.message, 10000)
                         }
                     }
                 }).catch(Event => {

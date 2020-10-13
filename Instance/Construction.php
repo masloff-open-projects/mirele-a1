@@ -76,7 +76,7 @@ class Construction
      * @param array $props
      * @return false|mixed
      */
-    public function call (array $props)
+    public function call(array $props)
     {
         if (is_callable($this->getHandler())) {
             return call_user_func($this->handler, $props);
@@ -84,7 +84,6 @@ class Construction
 
         return false;
     }
-
 
 
 }

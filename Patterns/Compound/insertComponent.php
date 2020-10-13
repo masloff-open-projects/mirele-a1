@@ -5,10 +5,8 @@ namespace Mirele\Compound\Patterns;
 
 
 use Mirele\Compound\Component;
-use Mirele\Compound\Lexer;
 use Mirele\Compound\Store;
 use Mirele\Compound\Tag;
-
 use Mirele\Framework\Prototypes\Pattern;
 
 
@@ -38,14 +36,14 @@ class insertComponent extends Pattern
                     # Generate tag
                     $tag = new Tag();
                     $tag->setTag('component');
-                    $tag->setAttributes((array) $component->getProps());
+                    $tag->setAttributes((array)$component->getProps());
                     $tag->setAttribute('name', $component->getAlias() ? $component->getAlias() : $component->getId());
 
                     $root->fields[$this->field] = array($tag);
 
                     $this->lexer->getSignature()->setRootInstanceById($this->template, $root);
 
-                    $this->__UPDATE($this->page, []);
+                    return $this->__UPDATE($this->page, []);
 
                 } else {
 

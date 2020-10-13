@@ -3,11 +3,6 @@
 
 namespace Mirele\Compound\Patterns;
 
-use Mirele\Compound\Field;
-use Mirele\Compound\Grider;
-use Mirele\Compound\Lexer;
-use Mirele\Compound\Tag;
-use Mirele\Compound\Template;
 use Mirele\Framework\Prototypes\Pattern;
 
 
@@ -38,21 +33,23 @@ class createPage extends Pattern
 
             # Request validation
             $post_id = wp_insert_post(array(
-                'import_id'             => rand(1000000, 9000000),
-                'comment_status'        => 'closed',
-                'ping_status'           => 'closed',
-                'post_author'           => $author_id,
-                'post_name'             => $slug,
-                'post_title'            => $title,
-                'post_status'           => 'publish',
-                'post_type'             => 'page',
-                'post_content'          => "[Compound role='editor'] <root></root> [/Compound]",
-                'page_template'         => COMPOUND_CANVAS
+                'import_id' => rand(1000000, 9000000),
+                'comment_status' => 'closed',
+                'ping_status' => 'closed',
+                'post_author' => $author_id,
+                'post_name' => $slug,
+                'post_title' => $title,
+                'post_status' => 'publish',
+                'post_type' => 'page',
+                'post_content' => "[Compound role='editor'] <root></root> [/Compound]",
+                'page_template' => COMPOUND_CANVAS
             ));
 
-            if ($post_id && !is_wp_error($post_id)){
-                update_post_meta( $post_id, '_wp_page_template', COMPOUND_CANVAS );
+            if ($post_id && !is_wp_error($post_id)) {
+                update_post_meta($post_id, '_wp_page_template', COMPOUND_CANVAS);
             }
+
+            return true;
 
         }
 

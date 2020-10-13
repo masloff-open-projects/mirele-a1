@@ -3,11 +3,7 @@
 
 namespace Mirele\Compound\Patterns;
 
-use Mirele\Compound\Component;
-use Mirele\Compound\Field;
 use Mirele\Compound\Grider;
-use Mirele\Compound\Lexer;
-use Mirele\Compound\Tag;
 use Mirele\Compound\Template;
 use Mirele\Framework\Prototypes\Pattern;
 
@@ -26,7 +22,7 @@ class propsTemplate extends Pattern
 
         if (isset($this->template) and isset($this->page)) {
 
-            $lex = $this->__get_lex((int) $this->page);
+            $lex = $this->__get_lex((int)$this->page);
 
             if ($lex) {
 
@@ -38,8 +34,8 @@ class propsTemplate extends Pattern
 
                     if ($Template instanceof Template) {
                         return array_merge(
-                            (array) $Template->getProps(),
-                            (array) $template->props
+                            (array)$Template->getProps(),
+                            (array)$template->props
                         );
                     }
 

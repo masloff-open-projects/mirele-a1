@@ -64,7 +64,7 @@ jQuery(document).ready(init => {
         mounted: function () {
 
             // Try get all namespaces
-            (new AIK).postman('namespaces', {}).then(event => {
+            app.request('namespaces', {}).then(event => {
 
                 if (event.data) {
 
@@ -84,7 +84,7 @@ jQuery(document).ready(init => {
             });
 
             // Try get all options
-            (new AIK).postman('options', {
+            app.request('options', {
                 namespace: 'all'
             }).then(event => {
                 this.options = (typeof event.data === typeof [] ? event.data : false)
@@ -99,7 +99,7 @@ jQuery(document).ready(init => {
 
                 // If options is not exist then get options for current tab
                 if (this.options === false || typeof this.options[this.active] === 'undefined') {
-                    (new AIK).postman('options', {
+                    app.request('options', {
                         namespace: this.active
                     }).then(event => {
                         this.options = this.options === false ? {} : this.options;
@@ -149,7 +149,7 @@ jQuery(document).ready(init => {
             save: function (option, value) {
 
                 // Try save settings
-                (new AIK).postman('saveOption', {
+                app.request('saveOption', {
                     namespace: option.namespace || '*' || 'basic',
                     name: option.name || 'default',
                     value: value

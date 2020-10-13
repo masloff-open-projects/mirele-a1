@@ -16,7 +16,7 @@
 
 "use strict";
 
-new Interface({
+new app.interface({
     requires: {
         vue: true,
         jquery: true
@@ -54,7 +54,7 @@ new Interface({
 
                         this.enabled = false;
 
-                        (new AIK).postman('WCAddToCart', {
+                        app.request('WCAddToCart', {
                             product_id: WOOCOMMERCE.product.get_id,
                             product_quantity: 1,
                             product_variation_id: this.variation_id || 0,
