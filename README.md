@@ -50,4 +50,5 @@ Mirele's development path is the responsibility of the road map.
 | 03.10.2020 | Scalable AXIOS bridge for Compound VUE implementation created.  |
 | 10.10.2020 | Compound acquires marketing qualities and begins to be listed as completed at the MRI stage.  |
 | 13.10.2020 | Initial approval of the router of AJAX requests |
+| 15.10.2020 | A system of strategies has been established (authorization of requests is the main objective) |
 |  |  |
