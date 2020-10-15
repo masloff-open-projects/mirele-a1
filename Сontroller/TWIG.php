@@ -2,9 +2,13 @@
 
 namespace Mirele;
 
+use Automattic\Jetpack\Sync\Modules\Options;
 use Mirele\Compound\Component;
 use Mirele\Compound\Field;
+use Mirele\Compound\Store;
 use Mirele\Compound\Template;
+use Mirele\Framework\Customizer;
+use Mirele\Framework\Option;
 use Mirele\Framework\Stringer;
 use Mirele\Utils\Converter;
 use Twig\Extension\AbstractExtension;
@@ -18,71 +22,7 @@ use voku\helper\AntiXSS;
  */
 class TWIG
 {
-    /**
-     * @inheritDoc
-     */
-    public function __destruct()
-    {
-        // TODO: Implement __destruct() method.
-    }
 
-    /**
-     * @inheritDoc
-     */
-    public function __call($name, $arguments)
-    {
-        // TODO: Implement __call() method.
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function __unset($name)
-    {
-        // TODO: Implement __unset() method.
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function __sleep()
-    {
-        // TODO: Implement __sleep() method.
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function __toString()
-    {
-        // TODO: Implement __toString() method.
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function __serialize()
-    {
-        // TODO: Implement __serialize() method.
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function __unserialize(array $data)
-    {
-        // TODO: Implement __unserialize() method.
-    }
-
-
-    /**
-     * The single object is stored in a static class field. This field is an array, so...
-     * how we let our Lonely have subclasses * All the elements of it.
-     * the arrays will be copies of specific subclasses of Single. Don't worry,
-     * we're about to get to know how it works
-     */
-
-    private static $instances = [];
     /**
      * @var
      */
@@ -100,57 +40,6 @@ class TWIG
         "@signup" => 'Woocommerce/authorization/signup',
         "@passwordRecovery" => 'Woocommerce/authorization/password_recovery',
     ];
-
-
-    /**
-     * Loners should not be cloned.
-     */
-
-    protected function __clone() { }
-
-
-    /**
-     * Single units should not be recovered from lines.
-     *
-     * @throws Exception
-     */
-
-    public function __wakeup()
-    {
-        throw new Exception("Cannot unserialize a singleton.");
-    }
-
-
-    /**
-     * Сonstruct Single must always be hidden to prevent
-     * creating an object through the operator new.
-     */
-
-    protected function __construct() { }
-
-
-    /**
-     * It's a static method that controls access to a single instance. At .
-     * the first run, it creates an instance of a loner and puts it in *
-     * static field. On subsequent launches, it returns the object to the client,
-     * stored in a static field *
-     *
-     * This implementation allows you to extend the Singles class by saving everywhere
-     * only one copy of each subclass.
-     *
-     * @return mixed|static
-     */
-
-    public static function getInstance()
-    {
-        $cls = static::class;
-        if (!isset(self::$instances[$cls])) {
-            self::$instances[$cls] = new static();
-        }
-
-        return self::$instances[$cls];
-    }
-
 
     /**
      *
@@ -179,6 +68,7 @@ class TWIG
                     new TwigFunction('Component', [$this, 'Component']),
                     new TwigFunction('Field',     [$this, 'Field']),
                     new TwigFunction('Tag',       [$this, 'Tag']),
+                    new TwigFunction('Option',    [$this, 'Option']),
                 ];
             }
 
@@ -224,7 +114,15 @@ class TWIG
             }
 
             public function Component (string $id, array $props) {
-                \Mirele\Compound\Store::call($id, $props);
+                Store::call($id, $props);
+            }
+
+            public function Option (string $name, $namespace="*", $props=[]) {
+
+                return (object) [
+                    'perform' => Customizer::perform($namespace, $name, $props)
+                ];
+
             }
 
             public function Field (string $name, array $props) {
@@ -297,6 +195,7 @@ class TWIG
 
             $params = array_merge(
                 array (
+                    'options' => Customizer::all(),
                     'source' => MIRELE_SOURCE_DIR,
                     'url_without_params' => MIRELE_URL,
                     'GET' => MIRELE_GET,

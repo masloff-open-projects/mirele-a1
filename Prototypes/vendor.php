@@ -25,4 +25,3 @@
 
 # Constructions
 include_once 'Pattern.php';
-include_once 'Request.php';

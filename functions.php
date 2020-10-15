@@ -122,6 +122,7 @@ if (wp_doing_ajax() === false) {
 
     # Connecting Vendor files except Composer
     include_once 'Components/vendor.php';
+    include_once 'Strategys/vendor.php';
     include_once 'Routes/vendor.php';
     include_once 'Templates/vendor.php';
     include_once 'Options/vendor.php';
@@ -148,6 +149,7 @@ if (wp_doing_ajax() === false) {
     include_once 'Framework/WPGNU.php';
 
     # Connecting Vendor files except Composer
+    include_once 'Strategys/vendor.php';
     include_once 'Routes/vendor.php';
     include_once 'Options/vendor.php';
     include_once 'Tags/vandor.php';

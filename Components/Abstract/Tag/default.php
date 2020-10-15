@@ -21,7 +21,7 @@ $Component->setMeta('editor',
         ->setData('alias', '')
 );
 $Component->setAlias('@tag');
-$Component->setFunction(function ($props) {
+$Component->setHandler("output", function ($props) {
 
     $props = (object) $props;
 

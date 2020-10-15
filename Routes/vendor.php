@@ -29,15 +29,15 @@ require_once 'AJAX.php';
 require_once 'Complex/wp-admin/Compound-createPage.php';
 require_once 'Complex/public.php';
 
-require_once 'postman/info.php';
-
 // AJAX
 require_once 'AJAX/namespaces.php';
 require_once 'AJAX/login.php';
 require_once 'AJAX/signup.php';
 require_once 'AJAX/recoveryPassword.php';
 require_once 'AJAX/options.php';
+require_once 'AJAX/saveOption.php';
 require_once 'AJAX/product.php';
+require_once 'AJAX/HTTP.php';
 require_once 'AJAX/WCAddToCart.php';
 require_once 'AJAX/wp-admin/Compound-getProps.php';
 require_once 'AJAX/wp-admin/Compound-updateProps.php';

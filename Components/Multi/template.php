@@ -16,7 +16,7 @@ foreach ($pages as $page) {
     $Component->setId('default_multi_template_' . $page->ID);
     $Component->setAlias("@prototype" . $page->ID);
     $Component->setParent('Prototype');
-    $Component->setFunction(function ($props) {
+    $Component->setHandler("output", function ($props) {
 
 
 

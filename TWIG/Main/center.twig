@@ -44,121 +44,125 @@
                 <table class="wp-mrl-table" width="100%" height="50%" border="0" cellspacing="0" cellpadding="0"
                        id="mireleThemeSettings">
                     <thead>
-                    <tr>
-                        <td colspan="3">
-                        <span>
-                            Mirele Theme Settings
-                        </span>
-                        </td>
-                    </tr>
+                        <tr>
+                            <td colspan="3">
+                            <span>
+                                Mirele Theme Settings
+                            </span>
+                            </td>
+                        </tr>
                     </thead>
 
                     <tbody>
-                    <tr>
-                        <td valign="top" class="tabs">
-                            <ul width="240px">
-                                <li v-for="tab in tabs"><a href="javascript:void(0);"
-                                                           v-on:click="selectTab(tab.refers || tab.namespace || '*', tab.id || tab.name)">{tab.name}</a>
-                                </li>
-                            </ul>
-                        </td>
+                        <tr>
+                            <td valign="top" class="tabs">
+                                <ul width="240px">
+                                    <li v-for="tab in tabs">
+                                        <a href="javascript:void(0);"
+                                           v-on:click="selectTab(tab.refers || tab.namespace || '*', tab.id || tab.name)">{tab.name}</a>
+                                    </li>
+                                </ul>
+                            </td>
 
-                        <td valign="top" class="content">
-                            <div v-if="active == false" class="wp-welcome-page">
-                                <h1>Customize your distribution to suit yourself</h1>
-                                <p>You can hide, change, speed up, animate design elements of your distribution. Switch
-                                    between the tabs on the left to get to the desired settings menu.</p>
-                                <small>Change, optimize, create with <b>Mirele</b></small>
-                            </div>
+                            <td valign="top" class="content">
+                                <div v-if="active == false" class="wp-welcome-page">
+                                    <h1>Customize your distribution to suit yourself</h1>
+                                    <p>You can hide, change, speed up, animate design elements of your distribution. Switch
+                                        between the tabs on the left to get to the desired settings menu.</p>
+                                    <small>Change, optimize, create with <b>Mirele</b></small>
+                                </div>
 
-                            <div v-else-if="typeof settings === typeof []">
-                                <table width="100%" border="0" cellspacing="0" cellpadding="0"
-                                       v-for="(option, index) in settings" :key="index" v-bind:data-index="index">
-                                    <tbody>
-                                    <tr>
-                                        <td valign="top" class="body">
-                                            {# Option body #}
-                                            <h4>{ option.title || option.name || "Title not defined" }</h4>
-                                            <small v-if="option.description">{ option.description || "Title not defined"
-                                                }</small>
+                                <div v-else-if="typeof settings === typeof []">
+                                    <table width="100%" border="0" cellspacing="0" cellpadding="0"
+                                           v-for="(option, index) in settings" :key="index" v-bind:data-index="index">
+                                        <tbody>
+                                        <tr>
+                                            <td valign="top" class="body">
+                                                {# Option body #}
+                                                <h4>{ option.title || option.name || "Title not defined" }</h4>
+                                                <small v-if="option.description">{ option.description || "Title not defined"
+                                                    }</small>
 
-                                            {# Alert #}
-                                            <div v-if="option.warning">
-                                                <table width="100%" border="0" cellspacing="0" cellpadding="0">
-                                                    <tbody>
-                                                    <td valign="top">
-                                                        <i v-if="option.warning.type == 'warning'"
-                                                           class="fas fa-exclamation-triangle"></i>
-                                                        <i v-if="option.warning.type == 'info'"
-                                                           class="fas fa-info-circle"></i>
-                                                    </td>
-                                                    <td valign="top">
-                                                        <h4>{option.warning.title}</h4>
-                                                        <p>{option.warning.description}</p>
-                                                    </td>
-                                                    </tbody>
-                                                </table>
-                                            </div>
-                                        </td>
-                                        <td valign="center" align="right">
-                                            <input
-                                                    v-if="option.type === 'toggle'"
-                                                    v-model="options[active][index]['value']"
-                                                    @change="save(option, options[active][index]['value'])"
-                                                    :name="option.name"
-                                                    type="checkbox"
-                                                    value="option.value || option.default"
-                                                    true-value="true"
-                                                    false-value="false"
-                                            />
-                                            <input
-                                                    v-if="option.type === 'text'"
-                                                    v-model="options[active][index]['value']"
-                                                    @blur="saveWaitKeyUp(option, options[active][index]['value'])"
-                                                    @keyup="saveWaitKeyUp(option, options[active][index]['value'])"
-                                                    :name="option.name"
-                                                    type="text"
-                                                    :value="option.value || option.default"
-                                            />
-                                            <input
-                                                    v-if="option.type === 'integer' || option.type === 'int'"
-                                                    v-model="options[active][index]['value']"
-                                                    @blur="saveWaitKeyUp(option, options[active][index]['value'])"
-                                                    @keyup="saveWaitKeyUp(option, options[active][index]['value'])"
-                                                    :name="option.name"
-                                                    type="number"
-                                                    :value="option.value || option.default"
-                                                    :step="option.props.step || 1"
-                                                    :min="option.props.min || 1"
-                                                    :max="option.props.max"
-                                            />
-
-                                            <label v-if="option.type === 'switch'" class="toggle-switch">
+                                                {# Alert #}
+                                                <div v-if="option.warning">
+                                                    <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                                                        <tbody>
+                                                        <td valign="top">
+                                                            <i v-if="option.warning.type == 'warning'"
+                                                               class="fas fa-exclamation-triangle"></i>
+                                                            <i v-if="option.warning.type == 'info'"
+                                                               class="fas fa-info-circle"></i>
+                                                        </td>
+                                                        <td valign="top">
+                                                            <h4>{option.warning.title}</h4>
+                                                            <p>{option.warning.description}</p>
+                                                        </td>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </td>
+                                            <td valign="center" align="right">
                                                 <input
+                                                        v-if="option.type === 'toggle'"
                                                         v-model="options[active][index]['value']"
                                                         @change="save(option, options[active][index]['value'])"
                                                         :name="option.name"
                                                         type="checkbox"
                                                         value="option.value || option.default"
                                                         true-value="true"
-                                                        false-value="false"
-                                                />
-                                                <i></i>
-                                            </label>
+                                                        false-value="false"/>
+                                                <input
+                                                        v-if="option.type === 'text'"
+                                                        v-model="options[active][index]['value']"
+                                                        @blur="saveWaitKeyUp(option, options[active][index]['value'])"
+                                                        @keyup="saveWaitKeyUp(option, options[active][index]['value'])"
+                                                        :name="option.name"
+                                                        type="text"
+                                                        :value="option.value || option.default"/>
+                                                <input
+                                                        v-if="option.type === 'integer' || option.type === 'int'"
+                                                        v-model="options[active][index]['value']"
+                                                        @blur="saveWaitKeyUp(option, options[active][index]['value'])"
+                                                        @keyup="saveWaitKeyUp(option, options[active][index]['value'])"
+                                                        :name="option.name"
+                                                        type="number"
+                                                        :value="option.value || option.default"
+                                                        :step="option.props.step || 1"
+                                                        :min="option.props.min || 1"
+                                                        :max="option.props.max"/>
+                                                <select v-if="option.type === 'select'"
+                                                        v-model="options[active][index]['value']"
+                                                        @blur="saveWaitKeyUp(option, options[active][index]['value'])"
+                                                        @keyup="saveWaitKeyUp(option, options[active][index]['value'])"
+                                                        :name="option.name">
+                                                    <option v-for="iterator in option.data" v-if="typeof iterator == 'object'" :value="iterator.value" :selected="iterator.selected">{iterator.text}</option>
+                                                </select>
+                                                <label v-if="option.type === 'switch'"
+                                                       class="toggle-switch">
+                                                    <input
+                                                            v-model="options[active][index]['value']"
+                                                            @change="save(option, options[active][index]['value'])"
+                                                            :name="option.name"
+                                                            type="checkbox"
+                                                            value="option.value || option.default"
+                                                            true-value="true"
+                                                            false-value="false"/>
+                                                    <i></i>
+                                                </label>
 
-                                            {# Default value #}
-                                            <input type="hidden" value="option.default"/>
-                                        </td>
-                                    </tr>
-                                    </tbody>
-                                </table>
-                            </div>
+                                                {# Default value #}
+                                                <input type="hidden" value="option.default"/>
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
 
-                            <div v-else>
-                                <h4>Error</h4>
-                            </div>
-                        </td>
-                    </tr>
+                                <div v-else>
+                                    <h4>Error</h4>
+                                </div>
+                            </td>
+                        </tr>
                     </tbody>
                 </table>
             </div>

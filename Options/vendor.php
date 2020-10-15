@@ -26,6 +26,7 @@
 # Enable options with MIRELE (all) support
 if (MIRELE_SUPPORT === true) {
 
+    require_once 'Basic/mrl_wp_navbar_type.php';
     require_once 'Basic/mrl_wp_navbar_fixed.php';
     require_once 'Basic/mrl_wp_sidebar_width_1_active.php';
     require_once 'Basic/mrl_wp_sidebar_width_2_active.php';

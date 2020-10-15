@@ -1,0 +1,23 @@
+# Task #1
+Darkness Components:
+  Date: 22.10.20
+  TODO:
+    1: Button
+
+    2: Input
+
+# Task #2
+# Authorization strategies
+# Request authorisation strategies are required
+Strategies:
+  Date: 18.10.20
+  TODO:
+    1: In the 'Request' class you need to dynamically add
+       authorisation strategies for all types of users at
+       different stages.
+
+    2: Implement the standard AJAX request authorization strategy
+
+    3: Implement a standard strategy of authorization and deauthorisation
+       in the system on different types of distribution,
+       with different set of plug-ins.

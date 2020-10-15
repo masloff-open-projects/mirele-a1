@@ -6,7 +6,8 @@ namespace Mirele\WPAJAX;
 
 use Mirele\Compound\Patterns;
 use Mirele\Compound\Response;
-use Mirele\Framework\Prototypes\Request;
+use Mirele\Framework\IRequest;
+use Mirele\Framework\Request;
 
 
 # ...
@@ -15,14 +16,17 @@ use Mirele\Framework\Prototypes\Request;
 class WPAJAX_Compound__cloneTemplate extends Request {
 
     /**
-     * The __invoke method is called when a script tries to call an object as a function.
+     * The __invoke method is used to compile (if necessary) and process a request with the transferred parameters.
+     * The query object also supports working with the 'handler' method, but its use is not recommended.
      *
-     * @return mixed
+     * PHPDOC: The __invoke method is called when a script tries to call an object as a function.
+     *
+     * @param $request array $_REQUEST
+     * @return object|array|Response|boolean|string
      * @link https://php.net/manual/en/language.oop5.magic.php#language.oop5.magic.invoke
      */
-    public function __invoke()
+    public function __invoke(array $request)
     {
-
         # If user login in and have permission
         if (is_user_logged_in() and current_user_can(MIRELE_RIGHTS['page']['edit'])) {
 
@@ -57,4 +61,5 @@ class WPAJAX_Compound__cloneTemplate extends Request {
         }
 
     }
+
 }

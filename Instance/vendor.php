@@ -43,3 +43,5 @@ include_once 'Inter.php';
 include_once 'Stringer.php';
 include_once 'MFile.php';
 include_once 'Response.php';
+include_once 'Request.php';
+include_once 'Strategy.php';

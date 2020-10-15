@@ -42,6 +42,25 @@ class Option
      * @var bool
      */
     private $warning = false;
+    private $data = [];
+
+    /**
+     * @return array
+     */
+    public function getData()
+    {
+        return $this->data;
+    }
+
+    /**
+     * @param array $data
+     * @return Option
+     */
+    public function setData($data)
+    {
+        $this->data = $data;
+        return $this;
+    }
 
     /**
      * @param array $warning
@@ -167,7 +186,10 @@ class Option
     }
 
     /**
-     * @param string $type
+     * @param string $type toggle
+     * @param string $type text
+     * @param string $type int
+     * @param string $type switch
      */
     public function setType(string $type)
     {
@@ -194,6 +216,7 @@ class Option
             'name' => $this->name,
             'warning' => $this->warning,
             'type' => $this->type,
+            'data' => $this->data,
             'default' => $this->default,
             'description' => $this->description,
             'props' => (object)$this->props,

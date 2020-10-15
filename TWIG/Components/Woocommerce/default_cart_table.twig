@@ -43,7 +43,7 @@
 
             {# Price of product #}
             <td>
-                {{ wp.xxs(product.price)|raw }}
+                {{ (product.price)|xss|raw }}
             </td>
 
             {# Qty of product #}
@@ -58,7 +58,7 @@
 
             {# Subtotal of product #}
             <td>
-                {{ wp.xxs(product.subtotal)|raw }}
+                {{ product.subtotal|xss|raw }}
             </td>
 
             {# Action of product #}

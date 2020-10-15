@@ -140,6 +140,39 @@ class Customizer extends Iterator
 
     /**
      * @param string $namespace
+     * @param string $name
+     * @param array $props
+     * @return false|string|string|string[]
+     */
+    public static function perform (string $namespace, string $name, array $props) {
+
+        $namespace = self::_namespace($namespace);
+        $namespace = (new Stringer($namespace))::format(self::$alias);
+
+        if (isset(self::$options[$namespace][$name])) {
+
+            $instance = (object) array_merge(
+                (array) self::$options[$namespace][$name]->build(),
+                (array) $props
+            );
+            $value = $instance->value;
+            $default = $instance->default;
+
+            // FIXME
+            try {
+                return json_decode((new Stringer((new Stringer($value))::get("") ? $value : $default))::format(self::alias()));
+            } catch (\Exception $e) {
+                return ((new Stringer((new Stringer($value))::get("") ? $value : $default))::format(self::alias()));
+            }
+
+        } else {
+            return false;
+        }
+
+    }
+
+    /**
+     * @param string $namespace
      * @return false|object
      */
     public static function all ($namespace='{GLOBAL}') {

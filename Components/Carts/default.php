@@ -16,7 +16,7 @@ $Component->setProps([
         'text' => 'Learn more'
     ]
 ]);
-$Component->setFunction(function ($props) {
+$Component->setHandler("output", function ($props) {
 
     $props = (object) $props;
 

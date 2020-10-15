@@ -28,6 +28,7 @@ class Component
      * @var
      */
     private $function;
+    private $handlers;
     /**
      * @var
      */
@@ -62,7 +63,7 @@ class Component
      */
     public function __invoke($props)
     {
-        return $this->render($props);
+        return $this->output($props);
     }
 
     /**
@@ -309,13 +310,17 @@ class Component
      * @param mixed $function
      */
 
-    public function setFunction(callable $function)
+    public function setHandler($action, callable $function)
     {
-        if (is_callable($function)) {
-            $this->function = $function;
-            return $this;
+        if (!empty($action) and $action) {
+            if (is_callable($function)) {
+                $this->handlers[$action] = $function;
+                return $this;
+            } else {
+                throw new \Exception("You're not passing on a function");
+            }
         } else {
-            throw new \Exception("You're not passing on a function");
+            throw new \Exception("The name of the processor cannot be empty");
         }
     }
 
@@ -325,7 +330,21 @@ class Component
      */
     public function render(array $props)
     {
-        return ($this->function)(array_merge($this->props, $props));
+        if (isset($this->handlers['output']) and is_callable($this->handlers['output'])) {
+            return call_user_func($this->handlers['output'], array_merge($this->props, $props));
+        } else {
+            throw new \Exception("The output handler was not correctly executed.");
+        }
+    }
+
+    public function output(array $props)
+    {
+        if (isset($this->handlers['output']) and is_callable($this->handlers['output']))
+        {
+            return call_user_func($this->handlers['output'], array_merge($this->props, $props));
+        } else {
+            throw new \Exception("The output handler was not correctly executed.");
+        }
     }
 
     /**

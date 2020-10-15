@@ -149,7 +149,7 @@ jQuery(document).ready(init => {
             save: function (option, value) {
 
                 // Try save settings
-                app.request('saveOption', {
+                app.request('center/saveOption', {
                     namespace: option.namespace || '*' || 'basic',
                     name: option.name || 'default',
                     value: value

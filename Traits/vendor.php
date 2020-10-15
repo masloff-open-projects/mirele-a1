@@ -27,3 +27,4 @@ include_once '__setter.php';
 include_once '__getter.php';
 include_once '__isset.php';
 include_once '__unset.php';
+include_once '__caller.php';

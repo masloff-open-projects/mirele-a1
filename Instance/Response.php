@@ -7,6 +7,30 @@ namespace Mirele\Compound;
 class Response
 {
 
+    /**
+     * Pattern for reporting an error with code 403
+     */
+    const PATTERN_403 = [
+        'message' => 'Access to this endpoint is not available to you',
+        'code' => 403
+    ];
+
+    /**
+     * Pattern for reporting an error with code 404
+     */
+    const PATTERN_404 = [
+        'message' => 'Page or endpoint not found',
+        'code' => 404
+    ];
+
+    /**
+     * Pattern for reporting an error with code 500
+     */
+    const PATTERN_500 = [
+        'message' => 'An internal server error occurred',
+        'code' => 500
+    ];
+
     private $code;
     private $body;
 

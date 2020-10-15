@@ -11,7 +11,7 @@ $Component->setId('default_abstract_textarea');
 $Component->setProps([
 
 ]);
-$Component->setFunction(function ($props) {
+$Component->setHandler("output", function ($props) {
 
     $props = (object) $props;
 

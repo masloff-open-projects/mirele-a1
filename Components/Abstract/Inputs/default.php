@@ -20,7 +20,7 @@ $Component->setMeta('editor',
 );
 
 $Component->setAlias('@input');
-$Component->setFunction(function ($props) {
+$Component->setHandler("output", function ($props) {
 
     $props = (object) $props;
 

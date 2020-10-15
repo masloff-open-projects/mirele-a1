@@ -8,7 +8,7 @@ use Mirele\Compound\Store;
 $Component = new Component ();
 $Component->setId('default_menu_navbar');
 $Component->setProps([]);
-$Component->setFunction(function ($props) {
+$Component->setHandler("output", function ($props) {
 
     $props = (object) $props;
 

@@ -26,7 +26,7 @@
             </td>
 
             <td>
-                {{ wp.xxs(order.format_total_price)|raw }}
+                {{ order.format_total_price|xss|raw }}
             </td>
 
             <td>

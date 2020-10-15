@@ -7,13 +7,13 @@ use Mirele\Compound\Store;
 use Mirele\TWIG;
 
 $Component = new Component ();
-$Component->setId('default_cart_placeholder');
+$Component->setId('darkness_navbar');
 $Component->setProps([]);
-$Component->setHandler("output", function ($props) {
+$Component->setHandler('output', function ($props) {
 
     $props = (object) $props;
 
-    TWIG::Render('Components/Woocommerce/default_cart_placeholder', $props);
+    TWIG::Render('Components/darkness_navbar', $props);
 
 });
 

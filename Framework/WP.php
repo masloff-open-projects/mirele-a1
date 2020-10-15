@@ -9,7 +9,7 @@ use voku\helper\AntiXSS;
 class WP
 {
 
-    public function xxs($string)
+    public function xss($string)
     {
         return (new AntiXSS())->xss_clean($string);
     }

@@ -12,7 +12,7 @@ $Component->setProps([
     'text' => 'Hello world'
 ]);
 $Component->setAlias('@label');
-$Component->setFunction(function ($props) {
+$Component->setHandler("output", function ($props) {
 
     $props = (object) $props;
 

@@ -9,6 +9,11 @@
             {{ Component('default_menu_navbar', []) }}
 
             <ul class="navbar-nav ml-md-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="#">Notifications
+                        ({{ wp.wc_notices.success|length + wp.wc_notices.error|length + wp.wc_notices.notice|length }})
+                        <span class="sr-only">(current)</span></a>
+                </li>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle"
                        href="{{ permalink.account.main }}">{{ user.user_login ? user.user_login :'Login' }}</a>

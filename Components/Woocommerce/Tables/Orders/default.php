@@ -9,7 +9,7 @@ use Mirele\TWIG;
 $Component = new Component ();
 $Component->setId('default_orders_table');
 $Component->setProps([]);
-$Component->setFunction(function ($props) {
+$Component->setHandler("output", function ($props) {
 
     $props = (object) $props;
 
