@@ -3,7 +3,6 @@
 
 namespace Mirele\WPAJAX;
 
-
 use Mirele\Compound\Config;
 use Mirele\Compound\Field;
 use Mirele\Compound\Grider;
@@ -16,10 +15,13 @@ use Mirele\Framework\Request;
 use Mirele\Framework\Strategists\__strategy_admin;
 use Mirele\Framework\Strategy;
 
-
-# ...
-# Endpoint Version: 1.0.0
-# Distributors: AJAX
+/**
+ * Class WPAJAX_Compound__getMarkup
+ * @package Mirele\WPAJAX
+ * @alias Compound/getMarkup
+ * @description Endpoint serves to obtain a markup of the Compound page.
+ * @version 1.0.0
+ */
 class WPAJAX_Compound__getMarkup extends Request {
 
     /**
@@ -34,7 +36,6 @@ class WPAJAX_Compound__getMarkup extends Request {
      */
     public function __invoke(array $request)
     {
-
 
         /**
          * Create and transmit as a parameter 'strategy' the strategy object.
@@ -117,17 +118,6 @@ class WPAJAX_Compound__getMarkup extends Request {
             return new Response(Response::PATTERN_403, 403);
         })();
 
-//        if (is_user_logged_in() and current_user_can(MIRELE_RIGHTS['page']['edit'])) {
-//
-//
-//
-//        } else {
-//
-//            return new Response([
-//                'message' => 'Access to this endpoint is not available to you'
-//            ], 403);
-//
-//        }
     }
 
 }

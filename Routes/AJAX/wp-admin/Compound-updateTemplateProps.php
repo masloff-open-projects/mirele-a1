@@ -24,9 +24,17 @@ class WPAJAX_Compound__updateTemplateProps extends Request {
     public function __invoke(array $request)
     {
 
-        # If user login in and have permission
-        if (is_user_logged_in() and current_user_can(MIRELE_RIGHTS['page']['edit'])) {
+        /**
+         * Create and transmit as a parameter 'strategy' the strategy object.
+         * If successful, execute the function passed with the 'next' method,
+         * if unsuccessful, execute the function passed with the 'reject' method
+         *
+         * @param Strategy $strategy Created strategy object
+         */
+        return $this->useAuthorizationStrategy( new __strategy_admin )->next(function ($a) {
 
+            # Implementation of an event pattern created as
+            # an abstract object in the "Mirele\Compound\Patterns" namespace
             $pattern = new Patterns\updateTemplateProps();
             $pattern->page = (MIRELE_POST)['page'];
             $pattern->template = (MIRELE_POST)['template'];
@@ -49,7 +57,9 @@ class WPAJAX_Compound__updateTemplateProps extends Request {
 
             }
 
-        }
+        })->reject(function ($a) {
+            return new Response(Response::PATTERN_403, 403);
+        })();
 
     }
 

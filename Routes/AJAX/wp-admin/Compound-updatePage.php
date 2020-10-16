@@ -7,6 +7,8 @@ namespace Mirele\WPAJAX;
 use Mirele\Compound\Patterns;
 use Mirele\Compound\Response;
 use Mirele\Framework\Request;
+use Mirele\Framework\Strategists\__strategy_admin;
+use Mirele\Framework\Strategy;
 
 
 class WPAJAX_Compound__updatePage extends Request {
@@ -24,9 +26,17 @@ class WPAJAX_Compound__updatePage extends Request {
     public function __invoke(array $request)
     {
 
-        # If user login in and have permission
-        if (is_user_logged_in() and current_user_can(MIRELE_RIGHTS['page']['edit'])) {
+        /**
+         * Create and transmit as a parameter 'strategy' the strategy object.
+         * If successful, execute the function passed with the 'next' method,
+         * if unsuccessful, execute the function passed with the 'reject' method
+         *
+         * @param Strategy $strategy Created strategy object
+         */
+        return $this->useAuthorizationStrategy( new __strategy_admin )->next(function ($a) {
 
+            # Implementation of an event pattern created as
+            # an abstract object in the "Mirele\Compound\Patterns" namespace
             $pattern = (new Patterns\updatePage([
                 'page' => (MIRELE_POST)['page'],
                 'props' => (MIRELE_POST)['props']
@@ -48,8 +58,9 @@ class WPAJAX_Compound__updatePage extends Request {
 
             }
 
-
-        }
+        })->reject(function ($a) {
+            return new Response(Response::PATTERN_403, 403);
+        })();
 
     }
 

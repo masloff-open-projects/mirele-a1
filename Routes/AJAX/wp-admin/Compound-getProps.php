@@ -11,11 +11,16 @@ use Mirele\Compound\Response;
 use Mirele\Compound\Store;
 use Mirele\Compound\Tag;
 use Mirele\Framework\Request;
+use Mirele\Framework\Strategists\__strategy_admin;
 
 
-# ...
-# Endpoint Version: 1.0.0
-# Distributors: AJAX
+/**
+ * Class WPAJAX_Compound__getProps
+ * @package Mirele\WPAJAX
+ * @alias Compound/getProps
+ * @description The endpoint is used to obtain parameters about a component.
+ * @version 1.0.0
+ */
 class WPAJAX_Compound__getProps extends Request {
 
     /**
@@ -30,7 +35,8 @@ class WPAJAX_Compound__getProps extends Request {
      */
     public function __invoke(array $request)
     {
-        if (is_user_logged_in() and current_user_can(MIRELE_RIGHTS['page']['edit'])) {
+
+        return $this->useAuthorizationStrategy( new __strategy_admin )->next(function ($a) {
 
             $props = array(
                 'template' => (MIRELE_POST)['template'],
@@ -75,14 +81,10 @@ class WPAJAX_Compound__getProps extends Request {
                 }
             }
 
+        })->reject(function ($a) {
+            return new Response(Response::PATTERN_403, 403);
+        })();
 
-        } else {
-
-            return new Response([
-                'message' => 'Access to this endpoint is not available to you'
-            ], 403);
-
-        }
     }
 
 }

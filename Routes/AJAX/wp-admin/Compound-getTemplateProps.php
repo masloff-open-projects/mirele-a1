@@ -7,11 +7,15 @@ namespace Mirele\WPAJAX;
 use Mirele\Compound\Patterns;
 use Mirele\Compound\Response;
 use Mirele\Framework\Request;
+use Mirele\Framework\Strategists\__strategy_admin;
 
-
-# ...
-# Endpoint Version: 1.0.0
-# Distributors: AJAX
+/**
+ * Class WPAJAX_Compound__getTemplateProps
+ * @package Mirele\WPAJAX
+ * @alias Compound/getTemplateProps
+ * @description The endpoint serves to obtain the parameters of a particular template.
+ * @version 1.0.0
+ */
 class WPAJAX_Compound__getTemplateProps extends Request {
 
     /**
@@ -26,7 +30,8 @@ class WPAJAX_Compound__getTemplateProps extends Request {
      */
     public function __invoke(array $request)
     {
-        if (is_user_logged_in() and current_user_can(MIRELE_RIGHTS['page']['edit'])) {
+
+        return $this->useAuthorizationStrategy( new __strategy_admin )->next(function ($a) {
 
             $pattern = new Patterns\propsTemplate();
             $pattern->template = (MIRELE_POST)['template'];
@@ -36,13 +41,10 @@ class WPAJAX_Compound__getTemplateProps extends Request {
                 'props' => $pattern()
             ], 200);
 
-        } else {
+        })->reject(function ($a) {
+            return new Response(Response::PATTERN_403, 403);
+        })();
 
-            return new Response([
-                'message' => 'Access to this endpoint is not available to you'
-            ], 403);
-
-        }
     }
 
 }
