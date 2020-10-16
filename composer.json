@@ -3,6 +3,7 @@
         "twig/twig": "^2.0",
         "voku/anti-xss": "^4.1",
         "ext-json": "*",
-        "ext-xml": "*"
+        "ext-xml": "*",
+        "mustangostang/spyc": "^0.6.3"
     }
 }

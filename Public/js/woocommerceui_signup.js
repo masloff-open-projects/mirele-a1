@@ -16,7 +16,7 @@
 
 "use strict";
 
-new app.interface({
+new org.interface({
     requires: {
         vue: true,
         jquery: true
@@ -47,7 +47,7 @@ new app.interface({
                 // Overriding behavior
                 e.preventDefault();
 
-                app.request('signup', {
+                org.web.request('signup', {
                     login: this.login,
                     email: this.email,
                     password: this.password

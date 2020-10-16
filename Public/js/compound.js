@@ -33,7 +33,7 @@ const CONFIG = {
     }
 };
 
-const CompoundEditor = Project.export('editor', new app.interface({
+const CompoundEditor = org.compound.editor = new org.interface({
     requires: {
         vue: true,
         jquery: true
@@ -81,7 +81,7 @@ const CompoundEditor = Project.export('editor', new app.interface({
                         href: false,
                         enabled: false,
                         click: function () {
-                            return CompoundEditor.vue.transport().removeSelectedTemplates();
+                            return org.compound.editor.vue.transport().removeSelectedTemplates();
                         }
                     },
 
@@ -91,7 +91,7 @@ const CompoundEditor = Project.export('editor', new app.interface({
                         href: false,
                         enabled: true,
                         click: function () {
-                            return CompoundEditor.vue.reloadPage();
+                            return org.compound.editor.vue.reloadPage();
                         }
                     }
                 ]
@@ -216,7 +216,7 @@ const CompoundEditor = Project.export('editor', new app.interface({
                             delay: 0,
 
                             update: function (event, ui) {
-                                CompoundEditor.vue.updateOrder();
+                                org.compound.editor.vue.updateOrder();
                             },
                             start: (event, ui) => {
                                 ui.placeholder.height(ui.item.height());
@@ -231,7 +231,7 @@ const CompoundEditor = Project.export('editor', new app.interface({
 
                     },
                     reset: function (self, event) {
-                        CompoundEditor.vue.selected = [];
+                        org.compound.editor.vue.selected = [];
                         jQuery(this.element).selectable("refresh");
                     }
                 },
@@ -261,7 +261,7 @@ const CompoundEditor = Project.export('editor', new app.interface({
                             drop: (event, ui) => {
                                 const $template = jQuery(ui.helper.context).attr('data-id') || false;
                                 ui.draggable.remove();
-                                CompoundEditor.vue.removeTemplate({template: $template}).then(Event => {
+                                org.compound.editor.vue.removeTemplate({template: $template}).then(Event => {
                                     // FIXME
                                 });
                             }
@@ -292,7 +292,7 @@ const CompoundEditor = Project.export('editor', new app.interface({
                 return new Promise((resolve, reject) => {
 
                     // Create main request
-                    app.request('Compound/getMarkup', {
+                    org.web.request('Compound/getMarkup', {
                         page: Compound.page_on_edit || 0
                     }).then(Event => {
 
@@ -322,7 +322,7 @@ const CompoundEditor = Project.export('editor', new app.interface({
             },
 
             editProps: function (event) {
-                const $form = app.references.form.get.component.props.vue
+                const $form = org.references.form.get.component.props.vue
                 $form.__editor = this;
                 return $form.open(Object.assign({
                     page: Compound.page_on_edit || 0
@@ -330,7 +330,7 @@ const CompoundEditor = Project.export('editor', new app.interface({
             },
 
             insertComponent: function (event) {
-                const $form = app.references.form.insert.component.vue;
+                const $form = org.references.form.insert.component.vue;
                 $form.__editor = this;
                 return $form.open(Object.assign({
                     page: Compound.page_on_edit || 0,
@@ -338,7 +338,7 @@ const CompoundEditor = Project.export('editor', new app.interface({
             },
 
             editTemplate: function (event) {
-                const $form = app.references.form.get.template.props.vue;
+                const $form = org.references.form.get.template.props.vue;
                 $form.__editor = this;
                 return $form.open(Object.assign({
                     page: Compound.page_on_edit || 0
@@ -346,7 +346,7 @@ const CompoundEditor = Project.export('editor', new app.interface({
             },
 
             insertTemplate: function (event) {
-                const $form = app.references.form.insert.template.vue;
+                const $form = org.references.form.insert.template.vue;
                 $form.__editor = this;
                 return $form.open(Object.assign({
                     page: Compound.page_on_edit || 0,
@@ -354,7 +354,7 @@ const CompoundEditor = Project.export('editor', new app.interface({
             },
 
             removeTemplate: function (event) {
-                return app.request('Compound/removeTemplate', {
+                return org.web.request('Compound/removeTemplate', {
                     page: Compound.page_on_edit || 0,
                     template: event.template
                 });
@@ -364,7 +364,7 @@ const CompoundEditor = Project.export('editor', new app.interface({
                 this.ui.layout.blur()
                 this.updateMarkup().then(Event => {
                     this.ui.layout.focus();
-                    CompoundEditor.vue.ui.notify.notify(false, {
+                    org.compound.editor.vue.ui.notify.notify(false, {
                         html: '<span class="dashicons dashicons-saved"></span> Changes have been successfully saved'
                     });
                 }).catch(Event => {
@@ -382,14 +382,14 @@ const CompoundEditor = Project.export('editor', new app.interface({
                     }
                 }
 
-                const Request = app.request('Compound/sortOrder', {
+                const Request = org.web.request('Compound/sortOrder', {
                     page: Compound.page_on_edit || 0,
                     order: $order
                 });
             },
 
             transport: function () {
-                const self = CompoundEditor.vue;
+                const self = org.compound.editor.vue;
                 return {
                     removeSelectedTemplates: function () {
                         if (self.selected.length > 0) {
@@ -401,7 +401,7 @@ const CompoundEditor = Project.export('editor', new app.interface({
                     },
                     removeTemplate: function (event) {
                         if (event.template) {
-                            const Request = app.request('Compound/removeTemplate', {
+                            const Request = org.web.request('Compound/removeTemplate', {
                                 page: Compound.page_on_edit || 0,
                                 template: event.template
                             });
@@ -415,7 +415,7 @@ const CompoundEditor = Project.export('editor', new app.interface({
                     },
                     cloneTemplate: function (event) {
                         if (event.template) {
-                            const Request = app.request('Compound/cloneTemplate', {
+                            const Request = org.web.request('Compound/cloneTemplate', {
                                 page: Compound.page_on_edit || 0,
                                 template: event.template
                             });
@@ -465,7 +465,7 @@ const CompoundEditor = Project.export('editor', new app.interface({
         document.addEventListener('keydown', Event => {
 
             const key = Event.key || '';
-            const self = CompoundEditor.vue || {};
+            const self = org.compound.editor.vue || {};
 
             if (key === "Delete") {
                 self.transport().removeSelectedTemplates();
@@ -473,7 +473,7 @@ const CompoundEditor = Project.export('editor', new app.interface({
         });
 
         // Meta info
-        const CompoundMeta = Project.export('page-meta', new app.interface({
+        const CompoundMeta = org.compound.meta = new org.interface({
             requires: {
                 vue: true,
                 jquery: true
@@ -492,7 +492,7 @@ const CompoundEditor = Project.export('editor', new app.interface({
 
                     const self = this;
 
-                    app.request('Compound/getPage', {
+                    org.web.request('Compound/getPage', {
                         page: Compound.page_on_edit || 0
                     }).then(Event => {
                         self.meta = Event.data;
@@ -511,7 +511,7 @@ const CompoundEditor = Project.export('editor', new app.interface({
                             $props[obj.name] = obj.value;
                         });
 
-                        app.request('Compound/updatePage', {
+                        org.web.request('Compound/updatePage', {
                             props: $props,
                             page: Compound.page_on_edit || 0
                         }).then(Event => {
@@ -538,7 +538,7 @@ const CompoundEditor = Project.export('editor', new app.interface({
                 filters: {},
                 watch: {}
             }
-        }));
+        });
 
     }
-}));
+});

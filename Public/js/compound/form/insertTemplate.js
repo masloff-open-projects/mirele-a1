@@ -1,45 +1,47 @@
-app.references.form.insert.template = new app.interface({
-    requires: {
-        vue: true,
-        jquery: true
-    },
-    elements: {
-        vue: ['#modal_insert_template']
-    },
-    vue: {
-        delimiters: ['{', '}'],
-        el: "#modal_insert_template",
-        data: {
-            __editor: CompoundEditor.vue || Object,
-            form: [],
+if (typeof window.Compound != "undefined") {
+    org.references.form.insert.template = new org.interface({
+        requires: {
+            vue: true,
+            jquery: true
         },
-        mounted: Event => {
+        elements: {
+            vue: ['#modal_insert_template']
         },
-        methods: {
-            open: function (event) {
-                this.event = event;
-                tb_show('Insert template', `/?TB_inline&inlineId=modal_insert_template&width=${CONFIG.modal.width || 600}&height=${CONFIG.modal.height || 700}`);
+        vue: {
+            delimiters: ['{', '}'],
+            el: "#modal_insert_template",
+            data: {
+                __editor: org.compound.editor.vue || Object,
+                form: [],
             },
+            mounted: Event => {
+            },
+            methods: {
+                open: function (event) {
+                    this.event = event;
+                    tb_show('Insert template', `/?TB_inline&inlineId=modal_insert_template&width=${CONFIG.modal.width || 600}&height=${CONFIG.modal.height || 700}`);
+                },
 
-            insert: function (event) {
+                insert: function (event) {
 
-                const Request = app.request('Compound/insertTemplate', Object.assign(this.event, event, {
-                    page: Compound.page_on_edit || 0
-                }));
+                    const Request = org.web.request('Compound/insertTemplate', Object.assign(this.event, event, {
+                        page: Compound.page_on_edit || 0
+                    }));
 
-                Request.then(Event => {
-                    this.__editor.updateMarkup().then(Event => {
-                        tb_remove();
+                    Request.then(Event => {
+                        this.__editor.updateMarkup().then(Event => {
+                            tb_remove();
+                        });
                     });
-                });
 
-                return false;
+                    return false;
 
-            },
+                },
 
-            submit: function (event) {
+                submit: function (event) {
 
+                }
             }
         }
-    }
-});
+    });
+}

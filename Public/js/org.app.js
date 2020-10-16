@@ -3,37 +3,37 @@
  *
  * @type {org}
  */
-const org = class {
-    constructor() {
-        this.data = {};
-        this.references = {};
-        this.references.form = {};
-        this.references.form.insert = {};
-        this.references.form.get = {};
-        this.references.form.get.component = {};
-        this.references.form.get.template = {};
-        this.references.form.update = {};
-        this.references.form.update.component = {};
-        this.references.form.update.template = {};
-        this.references.form.unset = {};
-        this.references.form.unset.component = {};
-        this.references.form.unset.template = {};
-        this.references.form.set = {};
-        this.references.form.set.component = {};
-        this.references.form.set.template = {};
-        this.references.form.upgrade = {};
-        this.references.form.upgrade.component= {};
-        this.references.form.upgrade.template= {};
-        this.references.form.sort = {};
-        this.references.form.sort.component = {};
-        this.references.form.sort.template = {};
-        this.references.form.init = {};
-        this.references.form.init.component = {};
-        this.references.form.init.template = {};
-        this.objects = {};
-        this.server = MIRELE || {};
-    }
-};
+const org = class {};
+
+org.web = class {};
+org.compound = class {};
+org.data = {};
+org.references = {};
+org.references.form = {};
+org.references.form.insert = {};
+org.references.form.get = {};
+org.references.form.get.component = {};
+org.references.form.get.template = {};
+org.references.form.update = {};
+org.references.form.update.component = {};
+org.references.form.update.template = {};
+org.references.form.unset = {};
+org.references.form.unset.component = {};
+org.references.form.unset.template = {};
+org.references.form.set = {};
+org.references.form.set.component = {};
+org.references.form.set.template = {};
+org.references.form.upgrade = {};
+org.references.form.upgrade.component= {};
+org.references.form.upgrade.template= {};
+org.references.form.sort = {};
+org.references.form.sort.component = {};
+org.references.form.sort.template = {};
+org.references.form.init = {};
+org.references.form.init.component = {};
+org.references.form.init.template = {};
+org.objects = {};
+org.server = MIRELE || {};
 
 /**
  * Utility to send data to the server via AXIOS
@@ -43,7 +43,7 @@ const org = class {
  * @param HTTP
  * @returns {*}
  */
-org.prototype.request = function (method, props, HTTP={}) {
+org.web.request = function (method, props, HTTP={}) {
     return axios({
         method: HTTP.method || 'post',
         url: MIRELE.urls.ajax,
@@ -59,10 +59,8 @@ org.prototype.request = function (method, props, HTTP={}) {
 
 /**
  * Utility for creating an interface
- *
- * @type {org.interface}
  */
-org.prototype.interface = class {
+org.interface = class {
 
     constructor(data = {}) {
         if ('requires' in data) {

@@ -16,7 +16,7 @@
 
 "use strict";
 
-new app.interface({
+new org.interface({
     requires: {
         vue: true,
         jquery: true
@@ -54,7 +54,7 @@ new app.interface({
 
                         this.enabled = false;
 
-                        app.request('WCAddToCart', {
+                        org.web.request('WCAddToCart', {
                             product_id: WOOCOMMERCE.product.get_id,
                             product_quantity: 1,
                             product_variation_id: this.variation_id || 0,

@@ -1,0 +1,40 @@
+javascript:
+
+  admin:
+    jquery: self
+
+    jquery-ui-core:
+      after: [jquery]
+
+    jquery-ui-draggable:
+      after: [jquery]
+
+    jquery-ui-droppable:
+      after: [jquery]
+
+    jquery-ui-selectable:
+      after: [jquery]
+
+    AXIOS: https://unpkg.com/axios/dist/axios.min.js
+    FontAwesome: https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/js/all.min.js
+    QS: https://cdnjs.cloudflare.com/ajax/libs/qs/6.9.4/qs.min.js
+    VUE: https://cdn.jsdelivr.net/npm/vue
+    Popper: https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js
+    Bootstrap: https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js
+    Center: /public/js/center.min.js
+    __MIRELE__: /public/js/org.app.min.js
+
+    __compound__: /public/js/compound.min.js
+
+    Compound-props-component: /public/js/compound/form/props.min.js
+    Compound-props-template: /public/js/compound/form/propsTemplate.min.js
+    Compound-insert-component: /public/js/compound/form/insertComponent.min.js
+    Compound-insert-template: /public/js/compound/form/insertTemplate.min.js
+
+    Woocommerce-Product: /public/js/woocommerceui_product.min.js
+    Woocommerce-Products: /public/js/woocommerceui_products.min.js
+    Woocommerce-Login: /public/js/woocommerceui_login.min.js
+    Woocommerce-Signup: /public/js/woocommerceui_signup.min.js
+    Woocommerce-RecoveryPassword: /public/js/woocommerceui_recovery_password.min.js
+
+

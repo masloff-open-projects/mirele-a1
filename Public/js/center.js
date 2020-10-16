@@ -64,7 +64,7 @@ jQuery(document).ready(init => {
         mounted: function () {
 
             // Try get all namespaces
-            app.request('namespaces', {}).then(event => {
+            org.web.request('namespaces', {}).then(event => {
 
                 if (event.data) {
 
@@ -84,7 +84,7 @@ jQuery(document).ready(init => {
             });
 
             // Try get all options
-            app.request('options', {
+            org.web.request('options', {
                 namespace: 'all'
             }).then(event => {
                 this.options = (typeof event.data === typeof [] ? event.data : false)
@@ -99,7 +99,7 @@ jQuery(document).ready(init => {
 
                 // If options is not exist then get options for current tab
                 if (this.options === false || typeof this.options[this.active] === 'undefined') {
-                    app.request('options', {
+                    org.web.request('options', {
                         namespace: this.active
                     }).then(event => {
                         this.options = this.options === false ? {} : this.options;
@@ -149,7 +149,7 @@ jQuery(document).ready(init => {
             save: function (option, value) {
 
                 // Try save settings
-                app.request('center/saveOption', {
+                org.web.request('center/saveOption', {
                     namespace: option.namespace || '*' || 'basic',
                     name: option.name || 'default',
                     value: value

@@ -16,7 +16,7 @@
 
 "use strict";
 
-new app.interface({
+new org.interface({
     requires: {
         vue: true,
         jquery: true
@@ -75,7 +75,7 @@ new app.interface({
                 // Overriding behavior
                 e.preventDefault();
 
-                app.request('recoveryPassword', {
+                org.web.request('recoveryPassword', {
                     login: this.login,
                     email: this.email,
                     key: this.key ? this.key : false,
