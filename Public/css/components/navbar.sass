@@ -1,13 +1,13 @@
 // <nav>
 .navbar-light
-  background: white
-  border-bottom: 1px solid rgba(128, 128, 128, 0.3)
-  color: $UIColor
-  padding: 0px
+  background: #202020
+  border-bottom: 1px solid #F4F4F4
+  color: #F0F0F0
+  padding: 0
 
   div
     .navbar-brand
-      color: $UIColor
+      color: #F0F0F0
       font-weight: bold
       font-size: $UIFontSize
 
@@ -16,26 +16,29 @@
 
     .navbar-nav
       .nav-link
-        color: $UIColor
+        color: #F0F0F0
+
+        &:hover
+          color: #F0F0F0
 
         &.disabled
-          color: $UIColor
+          color: #F0F0F0
 
       .show > .nav-link,
       .active > .nav-link,
       .nav-link.show,
       .nav-link.active
-        color: $UIColor
+        color: #F0F0F0
 
     .navbar-toggler
-      color: $UIColor
+      color: #F0F0F0
       border-color: white
 
     .navbar-text
-      color: white
+      color: #F0F0F0
 
       a
-        color: white
+        color: #F0F0F0
 
 // Small devices (landscape phones, 576px and down)
 @media (max-width: 576px)
@@ -69,10 +72,10 @@
   .nav-item
     padding: 0
 
-// Extra large devices (large desktops, 1200px and up)
+// Extra large devices (large desktops, 1200 and up)
 @media (min-width: 1200px)
   .navbar-light
-    padding: 0px
+    padding: 0
 
   .nav-item
     padding: 0

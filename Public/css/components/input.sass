@@ -1,23 +1,33 @@
 // <input>
+/* THE COMPONENT IS INDEPENDENT AND DOES NOT INHERIT ENVIRONMENTAL VARIABLES | From 20.10.20 */
+
 input:not([type="checkbox"]),
 input:not([type="radio"]),
 input:not([type="submit"])
+
+  background: #FFFFFF
+  border: 1px solid #e1e1e1
+  color: #4B4B4B
+  border-radius: 4px
+  min-width: 24px
+  padding: 6px 16px
+  transition: 400ms ease-in-out
+
+  line-height: 137.5%
+  letter-spacing: 0.3px
+
+  font-family: $UIFont
+  font-size: $UIFontSize
+  font-weight: normal
+  outline: none
+  box-shadow: none !important
+
+  // For iOS. Removes shadows
   -webkit-appearance: none
   -moz-appearance: none
   appearance: none
   background-clip: padding-box
   background-image: linear-gradient(transparent, transparent)
-
-  background: $UIBackground
-  border: $UIBorder $mainBorderColor
-  color: $UIColor
-  padding: $UIPadding
-  font: $UIFont
-  font-size: $UIFontSize
-  font-weight: normal
-  outline: none
-  border-radius: 0
-  box-shadow: none !important
 
   &:-webkit-autofill,
   &:-webkit-autofill:hover,

@@ -1,6 +1,6 @@
 {% macro render(event) %}
 
-    {% import 'Prototypes/modal/compound_insert.twig' as prototype %}
+    {% import 'TWIG/Prototypes/modal/compound_insert.twig' as prototype %}
 
 
     {% macro data(event) %}
@@ -29,15 +29,16 @@
         </div>
         {% for template in event.templates %}
             {% if template.getId %}
+
                 <div class="col-6 __compound_element margin-x-2 margin-y-2 margin-buttom-2"
                      @click="insert({template: '{{ template.getId }}'})">
-                    <div class="padding-1">
+                    <div class="padding-0">
 
                         {% if template.getMeta('editor').picture is not empty %}
                             <img src="{{ template.getMeta('editor').picture }}" alt="" width="100%">
                         {% endif %}
 
-                        <div class="left padding-3">
+                        <div class="left padding-x-4 padding-y-3">
 
                             <h4 class="margin-0 padding-0">{{ template.getMeta('editor').name|default(template.getMeta('name'))|default(template.getId) }}</h4>
 

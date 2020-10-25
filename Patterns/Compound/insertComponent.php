@@ -27,6 +27,7 @@ class insertComponent extends Pattern
             $this->__get_lex($this->page);
             $root = $this->lexer->getSignature()->getRootInstanceById($this->template);
 
+
             if (is_object($root)) {
 
                 $component = Store::get($this->component);

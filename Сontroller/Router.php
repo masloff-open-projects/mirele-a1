@@ -4,6 +4,10 @@
 namespace Mirele;
 
 
+use Dallgoot\Yaml;
+use Spyc;
+
+
 /**
  * @method static Router get(string $route, Callable $callback)
  * @method static Router post(string $route, Callable $callback)
@@ -19,6 +23,8 @@ class Router
      * @var bool
      */
     public static $halts = false;
+    public static $static_dir = false;
+    public static $static_uri = false;
     /**
      * @var array
      */
@@ -113,6 +119,68 @@ class Router
         self::$halts = $flag;
     }
 
+    public static function static_files ($uri='/public/(:all)', $path='') {
+
+        self::$static_dir = $path;
+        self::$static_uri = $uri;
+
+        if (is_dir(self::$static_dir)) {
+
+            # Setup router
+            self::get($uri, function ($filename) {
+                if (self::$static_dir) {
+
+                    $file = realpath(self::$static_dir . '/' . $filename);
+
+                    if ($file and (is_file($file) or is_dir($file))) {
+
+                        $ignoreFile = realpath(self::$static_dir . '/.ignore');
+                        $ignoreFiles = [];
+
+                        if (file_exists($ignoreFile)) {
+                            $ignoreFiles = file($ignoreFile);
+                        }
+
+                        if ($ignoreFiles != []) {
+                            foreach ($ignoreFiles as $source) {
+                                if (strpos($filename, $source) === 0) {
+                                    http_response_code(404);
+                                    exit;
+                                }
+                            }
+                        }
+
+                        if (is_file($file)) {
+
+                            header('Content-Type: ' . mime_content_type($file));
+                            http_response_code(200);
+
+                            print file_get_contents($file);
+                            exit;
+
+                        } else if (is_dir($file)) {
+                            exit;
+                        }
+
+                        exit;
+
+                    } else {
+                        http_response_code(404);
+                        exit;
+                    }
+
+                } else {
+                    http_response_code(404);
+                    exit;
+                }
+            });
+
+        } else {
+            return false;
+        }
+
+    }
+
     /**
      * @param false $uri
      */
@@ -137,11 +205,13 @@ class Router
         $searches = array_keys(static::$patterns);
         $replaces = array_values(static::$patterns);
 
-        foreach (self::getMiddlewares() as $middleware)
-        {
-            if (is_callable($middleware))
+        if (is_array(self::getMiddlewares()) or is_object(self::getMiddlewares())) {
+            foreach (self::getMiddlewares() as $middleware)
             {
-                call_user_func($middleware);
+                if (is_callable($middleware))
+                {
+                    call_user_func($middleware, $uri, $method);
+                }
             }
         }
 
@@ -262,6 +332,86 @@ class Router
             }
             call_user_func(self::$error_callback);
         }
+    }
+
+
+    public static function readConfigFile($src=false)
+    {
+
+        if ($src and file_exists($src)) {
+            return json_decode(file_get_contents($src));
+        } else {
+            if (class_exists('Spyc') and file_exists(TEMPLATE_PATH . '/Router.yaml')) {
+                return Spyc::YAMLLoad(TEMPLATE_PATH . '/Router.yaml');
+            } else if (file_exists(TEMPLATE_PATH . '/Router.json')) {
+                return json_decode(file_get_contents(TEMPLATE_PATH . '/Router.json'));
+            } else {
+                return false;
+            }
+        }
+
+    }
+
+    public static function plugDependencies ($name, callable $callback)
+    {
+
+        $history = [];
+        $routes = self::readConfigFile();
+
+        if (is_array($routes)) {
+            foreach ($routes as $id => $route) {
+                if (is_array($route)) {
+                    foreach ($route as $type => $elements) {
+                        foreach ($elements as $alias => $src) {
+
+                            $glossary = array(
+                                '$root' => TEMPLATE_URI,
+                                '~' => $type,
+                                '-> ' => "$id-",
+                                '->' => $id,
+                            );
+
+                            $src = str_replace(array_keys($glossary), array_values($glossary), $src);
+                            $alias = str_replace(array_keys($glossary), array_values($glossary), $alias);
+
+                            if ($id == $name or (is_array($name) and in_array($id, $name))) {
+
+                                if (is_array($src)) {
+
+                                    foreach ($src as $child_alias => $child) {
+                                        $glossary['=> '] = "$alias-";
+                                        $glossary['=>'] = "$alias";
+
+                                        $child_alias = str_replace(array_keys($glossary), array_values($glossary), $child_alias);
+
+                                        call_user_func($callback, $id, $type, $child_alias, $child, $history);
+
+                                        if (!isset($history[$type])) {
+                                            $history[$type] = [];
+                                        }
+
+                                        array_push($history[$type], $child_alias);
+                                    }
+
+                                } else {
+
+                                    call_user_func($callback, $id, $type, $alias, $src, $history);
+
+                                    if (!isset($history[$type])) {
+                                        $history[$type] = [];
+                                    }
+
+                                    array_push($history[$type], $alias);
+
+                                }
+                            }
+
+                        }
+                    }
+                }
+            }
+        }
+
     }
 
     /**
@@ -401,6 +551,7 @@ class Router
     {
         self::$middleware[] = $middleware;
     }
+
 
 }
 

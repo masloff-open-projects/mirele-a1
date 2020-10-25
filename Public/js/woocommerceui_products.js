@@ -31,7 +31,7 @@ new org.interface({
                 data: {
                     carousel: [
                         {
-                            img: 'https://www.reserved.com/media/SHARED/stronywizerunkowe/reserved/home/content/img/sliders/mobile/baner-mobile-back-to-business-on-500x800px-190820_IMG.jpg',
+                            img: 'https://www.reserved.com/media/SHARED/stronywizerunkowe/reserved/home/content/img/sliders/mobile/baner-mobile-back-to-business-on-500x800-190820_IMG.jpg',
                             title: 'Back in business',
                             description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consequatur dignissimos dolore est et impedit iure magni natus, non quia tempore vitae voluptas? A delectus exercitationem illo itaque nemo quo sequi!'
                         },
@@ -42,7 +42,7 @@ new org.interface({
 
                         },
                         {
-                            img: 'https://www.reserved.com/media/SHARED/stronywizerunkowe/reserved/home/content/img/sliders/mobile/baner-mobile-lookbook-ladies-500x800px-260820.jpg',
+                            img: 'https://www.reserved.com/media/SHARED/stronywizerunkowe/reserved/home/content/img/sliders/mobile/baner-mobile-lookbook-ladies-500x800-260820.jpg',
                             title: 'lorem',
                             description: 'lorem'
                         },

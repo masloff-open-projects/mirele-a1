@@ -109,6 +109,8 @@ define('MIRELE_NONCE', 'mrl-wp-nonce');
 # File path constants
 
 define('MIRELE_ROOT_DIR', get_template_directory());
+define('TEMPLATE_PATH', get_template_directory());
+define('TEMPLATE_URI', get_template_directory_uri());
 
 /**
  * Constant with by folder to templates

@@ -1,2 +1,4 @@
 # Specify the files that should not be indexed
 .ignore
+common.txt
+css/compound

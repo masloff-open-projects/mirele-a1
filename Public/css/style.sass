@@ -23,10 +23,10 @@
  * @main style.sass
  */
 
-@import url("https://use.typekit.net/gsl1isv.css")
+@import url("https://use.typekit.net/fml3enj.css")
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&display=swap')
 
-$mainFont: noto-sans, 'Noto Sans', 'Roboto Regular', -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu, Fira Sans, Droid Sans, Helvetica Neue, sans-serif
+$mainFont: source-sans-pro, sans-serif, Source Sans Pro, -apple-system
 $mainHoverBorderColor: #80b1e0
 $mainBorderColor: rgba(70, 77, 106, .1)
 $mainTransition: 1s
@@ -50,7 +50,7 @@ $UIPaddingY: 6px
 $UIFont: $mainFont
 $UIFontSize: 13px
 $UITransition: all 0.1s 0s ease-in-out
-$UISoftShadow: 0px 2px 78px 8px rgba(217, 217, 217, 0.44)
+$UISoftShadow: 0 2px 78px 8px rgba(217, 217, 217, 0.44)
 
 // Html
 html,
@@ -62,7 +62,9 @@ body
   scrollbar-track-color: #00000005
 
 // Imports
+@import flex/flex
 @import components/navbar
+@import components/subbar
 @import components/footer
 @import components/button
 @import components/note

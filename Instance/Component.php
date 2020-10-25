@@ -4,6 +4,8 @@
 namespace Mirele\Compound;
 
 
+use Mirele\TWIG;
+
 /**
  * Class Component
  * @package Mirele\Compound
@@ -16,6 +18,7 @@ class Component
      * @var
      */
     private $id;
+    private $template;
     /**
      * @var
      */
@@ -42,6 +45,76 @@ class Component
      */
     private $alias;
     private $parent;
+
+    /* ACTIONS */
+    private $construct;
+    private $created;
+    private $mounted;
+
+    private function __call_construct ()
+    {
+        if (is_callable($this->construct)) {
+            return call_user_func($this->construct, $this);
+        } else {
+            return false;
+        }
+    }
+
+    private function __call_created ()
+    {
+        if (is_callable($this->created)) {
+            return call_user_func($this->created, $this);
+        } else {
+            return false;
+        }
+    }
+
+    private function __call_mounted ()
+    {
+        if (is_callable($this->mounted)) {
+            return call_user_func($this->mounted, $this);
+        } else {
+            return false;
+        }
+    }
+
+    function __construct($object = false)
+    {
+        if (is_array($object) or is_object($object)) {
+
+            $object = (object) $object;
+
+            if (isset($object->data)) {
+
+                foreach ($object->data as $name => $value) {
+                    $this->{$name} = $value;
+                }
+
+            }
+
+            if (isset($object->construct)) {
+                $this->construct = $object->construct;
+            }
+
+            if (isset($object->created)) {
+                $this->created = $object->created;
+            }
+
+            if (isset($object->mounted)) {
+                $this->mounted = $object->mounted;
+            }
+
+            if (isset($object->template)) {
+                $this->template = $object->template;
+            }
+
+            Store::add($this);
+
+            $this->__call_construct();
+
+        }
+
+    }
 
     /**
      * is triggered when invoking inaccessible methods in an object context.
@@ -330,22 +403,86 @@ class Component
      */
     public function render(array $props)
     {
-        if (isset($this->handlers['output']) and is_callable($this->handlers['output'])) {
-            return call_user_func($this->handlers['output'], array_merge($this->props, $props));
+
+        /**
+         * Create a component and initialize user events
+         */
+        $this->setProps(array_merge(
+            (array) $this->props,
+            (array) $props
+        ));
+
+        $this->__call_created();
+
+        /**
+         * Render
+         */
+        if (!empty($this->getTemplate())) {
+
+            $promise = TWIG::Render($this->getTemplate(), $this->props);
+            $this->__call_mounted();
+            return $promise;
+
         } else {
-            throw new \Exception("The output handler was not correctly executed.");
+//            throw new \Exception('Template for the component is not specified' . $this->getTemplate());
         }
+
     }
 
-    public function output(array $props)
+    /**
+     * @return mixed
+     */
+    public function getTemplate()
     {
-        if (isset($this->handlers['output']) and is_callable($this->handlers['output']))
-        {
-            return call_user_func($this->handlers['output'], array_merge($this->props, $props));
-        } else {
-            throw new \Exception("The output handler was not correctly executed.");
-        }
+        return $this->template;
     }
+
+    /**
+     * @param mixed $template
+     * @return Component
+     */
+    public function setTemplate($template)
+    {
+        $this->template = $template;
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getCreated()
+    {
+        return $this->created;
+    }
+
+    /**
+     * @param mixed $created
+     * @return Component
+     */
+    public function setCreated($created)
+    {
+        $this->created = $created;
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getMounted()
+    {
+        return $this->mounted;
+    }
+
+    /**
+     * @param mixed $mounted
+     * @return Component
+     */
+    public function setMounted($mounted)
+    {
+        $this->mounted = $mounted;
+        return $this;
+    }
+
 
     /**
      * @return $this

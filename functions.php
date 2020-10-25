@@ -75,7 +75,7 @@ ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 
 # Show errors
-if (wp_doing_ajax() == true and true) {
+if (wp_doing_ajax() == false and true) {
     ini_set('error_reporting', E_ALL);
     ini_set('display_errors', 1);
     ini_set('display_startup_errors', 1);
@@ -109,6 +109,7 @@ if (wp_doing_ajax() === false) {
     include_once 'Framework/Converter.php';
     include_once 'Framework/WPGNU.php';
     include_once 'Framework/WP.php';
+    include_once 'Framework/Option.php';
 
     # Arrhitectural Classes Sets (Mirele)
     include_once 'Framework/MCache.php';
@@ -156,6 +157,8 @@ if (wp_doing_ajax() === false) {
     include_once 'Tags/vandor.php';
 
 }
+
+Router::static_files('/public/(:all)', TEMPLATE_PATH . '/Public/');
 
 # Setup an error handler
 set_error_handler(
@@ -291,38 +294,6 @@ add_action(
     wp_dequeue_script('jquery-payment');
     wp_dequeue_script('fancybox');
     wp_dequeue_script('jqueryui');
-
-    # We will register all necessary scripts in the future.
-    wp_register_script('fontAwesome', 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/js/all.min.js', array('jquery'), '', true);
-    wp_register_script('qs', 'https://cdnjs.cloudflare.com/ajax/libs/qs/6.9.4/qs.min.js', array('vue'), '', true);
-    wp_register_script('vue', 'https://cdn.jsdelivr.net/npm/vue', array('jquery'), '', true);
-    wp_register_script('popper', 'https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js', array('jquery'), '', true);
-    wp_register_script('axios', 'https://unpkg.com/axios/dist/axios.min.js', array('jquery'), '', true);
-    wp_register_script('bootstrap4', 'https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js', array('jquery'), '', true);
-    wp_register_script('mirele_admin', '/public/js/admin.min.js', array('jquery', 'vue'), '', true);
-//    wp_register_script('mireleapi', '/public/js/API.min.js', array('jquery', 'vue'), '', true);
-    wp_register_script('org.app', '/public/js/org.app.min.js', array('jquery', 'vue'), '', true);
-
-//    wp_register_script('org.web.request', '/public/js/org.web.request.min.js', array('jquery', 'vue'), '', true);
-    wp_register_script('compound', '/public/js/compound.min.js', array('jquery', 'vue'), '', true);
-    wp_register_script('compound_form_props', '/public/js/compound/form/props.min.js', array('jquery', 'vue'), '', true);
-    wp_register_script('compound_form_insertComponent', '/public/js/compound/form/insertComponent.min.js', array('jquery', 'vue'), '', true);
-    wp_register_script('compound_form_insertTemplate', '/public/js/compound/form/insertTemplate.min.js', array('jquery', 'vue'), '', true);
-    wp_register_script('compound_form_propsTemplate', '/public/js/compound/form/propsTemplate.min.js', array('jquery', 'vue'), '', true);
-
-    wp_register_script('woocommerceui_product', '/public/js/woocommerceui_product.min.js', array('jquery', 'vue', 'mireleapi'), '', true);
-    wp_register_script('woocommerceui_products', '/public/js/woocommerceui_products.min.js', array('jquery', 'vue', 'mireleapi'), '', true);
-    wp_register_script('woocommerceui_login', '/public/js/woocommerceui_login.min.js', array('jquery', 'vue', 'mireleapi'), '', true);
-    wp_register_script('woocommerceui_signup', '/public/js/woocommerceui_signup.min.js', array('jquery', 'vue', 'mireleapi'), '', true);
-    wp_register_script('woocommerceui_recovery_password', '/public/js/woocommerceui_recovery_password.min.js', array('jquery', 'vue', 'mireleapi'), '', true);
-
-    # We will register all styles necessary in the future. (long)
-    wp_register_style('fontAwesome', 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css');
-    wp_register_style('bootsrtap4', 'https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css', false);
-
-    // TODO: Redirect to public
-    wp_register_style('main_style', MIRELE_SOURCE_DIR . '/css/style.css', false);
-    wp_register_style('admin_style', MIRELE_SOURCE_DIR . '/css/admin.css', false);
 
     # If support for WooCommerce is provided,
     # we reassign the routing of code shorts.
@@ -523,94 +494,77 @@ add_action(
 
 });
 
+add_action('init', function () {
+
+    if (wp_doing_ajax() == false) {
+        
+        Router::plugDependencies([is_admin() ? 'private' : 'public', is_wc() ? 'woocommerce' : false], function ($id, $type, $alias, $src, $history) {
+            switch ($type) {
+                case 'scripts':
+                    wp_enqueue_script($alias, $src, (array) $history[$type], MIRELE_VERSION, true);
+                    break;
+
+                case 'styles':
+                    wp_enqueue_style($alias, $src, (array) $history[$type], MIRELE_VERSION, 'all');
+                    break;
+
+                case 'localize':
+
+                    if ($src === 'main') {
+
+                        wp_localize_script(
+                            $alias, 'MIRELE',
+                            [
+                                'urls' => [
+                                    'ajax' => esc_url(admin_url('admin-ajax.php')),
+                                    'rest' => esc_url(get_rest_url())
+                                ],
+                                'configs' => [
+                                ],
+                                'security' => [
+                                    'ajax' => [
+                                        'nonce' => wp_create_nonce('main')
+                                    ]
+                                ]
+                            ]
+                        );
+
+                    } else if ($src === 'compound') {
+
+                        global $post;
+
+                        $wp_page = (object)get_post((MIRELE_GET)['page_id']);
+
+                        wp_localize_script(
+                            $alias, 'Compound',
+                            [
+                                'page_on_edit' => (MIRELE_GET)['page_id'],
+                                'page' => !empty($post->ID) ? $post->ID : 0,
+                                'page_on_edit_url' => !empty($wp_page->guid) ? $wp_page->guid : 0
+                            ]
+                        );
+
+
+                    }
+
+                    break;
+
+            }
+        });
+    }
+
+});
+
 # Admin front-end
 add_action(
 /**
  *
  */ 'admin_enqueue_scripts', function () {
 
-    if (is_admin())
-    {
-        if (MFile::exist(MIRELE_ROOT_DIR . '/Enqueue.yaml'))
-        {
-            $array = Spyc::YAMLLoad(MIRELE_ROOT_DIR . '/Enqueue.yaml');
-            if (isset($array['javascript']['admin'])) {
-                foreach($array['javascript']['admin'] as $key => $value) {
-                    if (is_string($value)) {
-                        if ($value == 'self') {
-                            wp_enqueue_script($key);
-                        } else {
-                            wp_enqueue_script($key, $value);
-                        }
-                    } else {
-
-                        $after = false;
-                        $version = false;
-                        $src = false;
-                        $footer = false;
-
-                        if (isset($value['after'])) {
-                            $after = $value['after'];
-                        }
-
-                        if (isset($value['version'])) {
-                            $version = $value['version'];
-                        }
-
-                        if (isset($value['src'])) {
-                            $src = $value['src'];
-                        }
-
-                        if (isset($value['footer'])) {
-                            $footer = $value['footer'];
-                        }
-
-                        wp_enqueue_script($key, $src, $after, $version, $footer);
-
-                    }
-                }
-            }
-        }
-
-    }
-
-    # Localization and declaration of external variables
-    wp_localize_script(
-        '__MIRELE__', 'MIRELE',
-        [
-            'urls' => [
-                'ajax' => esc_url(admin_url('admin-ajax.php')),
-                'rest' => esc_url(get_rest_url())
-            ],
-            'configs' => [
-            ],
-            'security' => [
-                'ajax' => [
-                    'nonce' => wp_create_nonce('main')
-                ]
-            ]
-        ]
-    );
-
-
-    # The script works in the visibility area of the Compound editor
-    $wp_page = get_post((MIRELE_GET)['page_id']);
-    if ($wp_page) {
-        wp_localize_script(
-            '__compound__', 'Compound',
-            [
-                'page_on_edit' => (MIRELE_GET)['page_id'],
-                'page' => !empty($post->ID) ? $post->ID : 0,
-                'page_on_edit_url' => !empty($wp_page->guid) ? $wp_page->guid : 0
-            ]
-        );
-    }
-
-
-
-    wp_enqueue_style('admin_style');
+//    wp_enqueue_style('admin_style');
 
     wp_enqueue_media();
+
 
 });
 
@@ -621,16 +575,16 @@ add_action(
  */ 'wp_enqueue_scripts', function () {
 
     # Scripts and styles for all pages
-    wp_enqueue_script('axios');
-    wp_enqueue_script('qs');
-    wp_enqueue_script('popper');
-    wp_enqueue_script('vue');
-    wp_enqueue_script('bootstrap4');
-    wp_enqueue_script('mireleapi');
-    wp_enqueue_script('org.app');
-    wp_enqueue_script('org.web.request');
-    wp_enqueue_script('fontAwesome');
-
+//    wp_enqueue_script('axios');
+//    wp_enqueue_script('qs');
+//    wp_enqueue_script('popper');
+//    wp_enqueue_script('vue');
+//    wp_enqueue_script('bootstrap4');
+//    wp_enqueue_script('mireleapi');
+//    wp_enqueue_script('org.app');
+//    wp_enqueue_script('org.web.request');
+//    wp_enqueue_script('fontAwesome');
+//
     wp_enqueue_style('fontAwesome');
     wp_enqueue_style('bootsrtap4');
     wp_enqueue_style('main_style');

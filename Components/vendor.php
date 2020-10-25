@@ -21,37 +21,38 @@
  * @author Mirele
  * @alias vendor-components
  * @template vendor
+ * @vendor
  */
 
-include_once 'Abstract/Tag/default.php';
-include_once 'Abstract/Inputs/default.php';
-include_once 'Abstract/Textareas/default.php';
-include_once 'Abstract/Selects/default.php';
-include_once 'Abstract/Buttons/default.php';
-include_once 'Abstract/Checkboxs/default.php';
-include_once 'Abstract/Radios/default.php';
-include_once 'Abstract/Labels/default.php';
-include_once 'Abstract/Unit/default.php';
-
-include_once 'Multi/template.php';
-
-include_once 'Grids/default.php';
-include_once 'Carts/default.php';
-include_once 'Sidebars/default.php';
-include_once 'Footers/default.php';
-include_once 'Navbars/default.php';
-include_once 'Menus/default.php';
 include_once 'Woocommerce/Notes/default.php';
 include_once 'Woocommerce/Steps/default.php';
-include_once 'Woocommerce/Field/default.php';
-include_once 'Woocommerce/Forms/default_billing.php';
-include_once 'Woocommerce/Forms/default_shipping.php';
-include_once 'Woocommerce/Carousel/default.php';
-include_once 'Woocommerce/Notices/default.php';
 include_once 'Woocommerce/Gallerys/default.php';
-include_once 'Woocommerce/Tables/Orders/default.php';
-include_once 'Woocommerce/Tables/Downloads/default.php';
-include_once 'Woocommerce/Tables/Cart/default.php';
 include_once 'Woocommerce/Placeholders/Orders/default.php';
 include_once 'Woocommerce/Placeholders/Downloads/default.php';
 include_once 'Woocommerce/Placeholders/Cart/default.php';
+
+include_once 'HTMLTag/component.php';
+include_once 'Button/component.php';
+include_once 'Input/component.php';
+include_once 'Textarea/component.php';
+include_once 'Checkbox/component.php';
+include_once 'Radio/component.php';
+include_once 'Select/component.php';
+include_once 'Label/component.php';
+include_once 'FormField/component.php';
+include_once 'Cart/component.php';
+include_once 'Sidebar/component.php';
+include_once 'Notice/component.php';
+include_once 'Navbar/component.php';
+include_once 'Navbar/Children/menu.php';
+include_once 'Footer/component.php';
+
+include_once 'WidgetFactory/component.php';
+
+include_once 'Woocommerce/Carousel/component.php';
+include_once 'Woocommerce/Forms/Children/Billing/component.php';
+include_once 'Woocommerce/Forms/Children/Shipping/component.php';
+
+include_once 'Woocommerce/Table/Children/Cart/component.php';
+include_once 'Woocommerce/Table/Children/Downloads/component.php';
+include_once 'Woocommerce/Table/Children/Orders/component.php';

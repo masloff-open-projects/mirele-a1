@@ -1,5 +1,5 @@
 {% macro import(event) %}
-    {% import 'Compound/pages/modal/create_page.twig' as modal %}
+    {% import 'TWIG/Compound/pages/modal/create_page.twig' as modal %}
     {{ modal.render(event) }}
 {% endmacro %}
 
@@ -21,7 +21,7 @@
                     <h1>Welcome to Compound Editor!</h1>
                     <p>New page editor, new features in template customization. Let's get acquainted!</p>
 
-                    <img src='{{ event.source }}/img/forms/lerning.jpg' width="420px">
+                    <img src='{{ event.source }}/img/forms/lerning.jpg' width="420">
 
                     <div class="align-left card-welcome-box">
 

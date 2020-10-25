@@ -4,7 +4,7 @@
  *
  * Magic numbers:
  *  1.618 = golden mean.
- *  1.35  = default body_text_size multipler. Gives default heading of 20px.
+ *  1.35  = default body_text_size multipler. Gives default heading of 20.
  *
  * @since 2.5.0
  *
@@ -141,12 +141,12 @@ $settings = bp_email_get_appearance_settings();
 	<center style="width: 100%; text-align: <?php echo esc_attr( $settings['direction'] ); ?>;">
 
 		<!-- Visually Hidden Preheader Text : BEGIN -->
-		<div style="display: none; font-size: 1px; line-height: 1px; max-height: 0px; max-width: 0px; opacity: 0; overflow: hidden; mso-hide: all; font-family: sans-serif;">
+		<div style="display: none; font-size: 1px; line-height: 1px; max-height: 0; max-width: 0; opacity: 0; overflow: hidden; mso-hide: all; font-family: sans-serif;">
 			{{email.preheader}}
 		</div>
 		<!-- Visually Hidden Preheader Text : END -->
 
-		<div style="max-width: 600px; margin: auto;" class="email-container">
+		<div style="max-width: 600; margin: auto;" class="email-container">
 			<!--[if mso]>
 			<table role="presentation" cellspacing="0" cellpadding="0" border="0" width="600" align="center">
 			<tr>
@@ -154,7 +154,7 @@ $settings = bp_email_get_appearance_settings();
 			<![endif]-->
 
 			<!-- Email Header : BEGIN -->
-			<table role="presentation" cellspacing="0" cellpadding="0" border="0" align="center" width="100%" style="max-width: 600px; border-top: 7px solid <?php echo esc_attr( $settings['highlight_color'] ); ?>" bgcolor="<?php echo esc_attr( $settings['header_bg'] ); ?>" class="header_bg">
+			<table role="presentation" cellspacing="0" cellpadding="0" border="0" align="center" width="100%" style="max-width: 600; border-top: 7px solid <?php echo esc_attr( $settings['highlight_color'] ); ?>" bgcolor="<?php echo esc_attr( $settings['header_bg'] ); ?>" class="header_bg">
 				<tr>
 					<td style="text-align: center; padding: 15px 0; font-family: sans-serif; mso-height-rule: exactly; font-weight: bold; color: <?php echo esc_attr( $settings['header_text_color'] ); ?>; font-size: <?php echo esc_attr( $settings['header_text_size'] . 'px' ); ?>" class="header_text_color header_text_size">
 						<?php
@@ -180,14 +180,14 @@ $settings = bp_email_get_appearance_settings();
 			<!-- Email Header : END -->
 
 			<!-- Email Body : BEGIN -->
-			<table role="presentation" cellspacing="0" cellpadding="0" border="0" align="center" bgcolor="<?php echo esc_attr( $settings['body_bg'] ); ?>" width="100%" style="max-width: 600px; border-radius: 5px;" class="body_bg">
+			<table role="presentation" cellspacing="0" cellpadding="0" border="0" align="center" bgcolor="<?php echo esc_attr( $settings['body_bg'] ); ?>" width="100%" style="max-width: 600; border-radius: 5px;" class="body_bg">
 
 				<!-- 1 Column Text : BEGIN -->
 				<tr>
 					<td>
 						<table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
 							<tr>
-								<td style="padding: 20px; font-family: sans-serif; mso-height-rule: exactly; line-height: <?php echo esc_attr( floor( $settings['body_text_size'] * 1.618 ) . 'px' ) ?>; color: <?php echo esc_attr( $settings['body_text_color'] ); ?>; font-size: <?php echo esc_attr( $settings['body_text_size'] . 'px' ); ?>" class="body_text_color body_text_size">
+								<td style="padding: 20; font-family: sans-serif; mso-height-rule: exactly; line-height: <?php echo esc_attr( floor( $settings['body_text_size'] * 1.618 ) . 'px' ) ?>; color: <?php echo esc_attr( $settings['body_text_color'] ); ?>; font-size: <?php echo esc_attr( $settings['body_text_size'] . 'px' ); ?>" class="body_text_color body_text_size">
 									<span style="font-weight: bold; font-size: <?php echo esc_attr( floor( $settings['body_text_size'] * 1.35 ) . 'px' ); ?>" class="welcome"><?php bp_email_the_salutation( $settings ); ?></span>
 									<hr color="<?php echo esc_attr( $settings['email_bg'] ); ?>">
 									{{{content}}}
@@ -203,9 +203,9 @@ $settings = bp_email_get_appearance_settings();
 
 			<!-- Email Footer : BEGIN -->
 			<br>
-			<table role="presentation" cellspacing="0" cellpadding="0" border="0" align="<?php echo esc_attr( $settings['direction'] ); ?>" width="100%" style="max-width: 600px; border-radius: 5px;" bgcolor="<?php echo esc_attr( $settings['footer_bg'] ); ?>" class="footer_bg">
+			<table role="presentation" cellspacing="0" cellpadding="0" border="0" align="<?php echo esc_attr( $settings['direction'] ); ?>" width="100%" style="max-width: 600; border-radius: 5px;" bgcolor="<?php echo esc_attr( $settings['footer_bg'] ); ?>" class="footer_bg">
 				<tr>
-					<td style="padding: 20px; width: 100%; font-size: <?php echo esc_attr( $settings['footer_text_size'] . 'px' ); ?>; font-family: sans-serif; mso-height-rule: exactly; line-height: <?php echo esc_attr( floor( $settings['footer_text_size'] * 1.618 ) . 'px' ) ?>; text-align: <?php echo esc_attr( $settings['direction'] ); ?>; color: <?php echo esc_attr( $settings['footer_text_color'] ); ?>; word-break: break-all;" class="footer_text_color footer_text_size">
+					<td style="padding: 20; width: 100%; font-size: <?php echo esc_attr( $settings['footer_text_size'] . 'px' ); ?>; font-family: sans-serif; mso-height-rule: exactly; line-height: <?php echo esc_attr( floor( $settings['footer_text_size'] * 1.618 ) . 'px' ) ?>; text-align: <?php echo esc_attr( $settings['direction'] ); ?>; color: <?php echo esc_attr( $settings['footer_text_color'] ); ?>; word-break: break-all;" class="footer_text_color footer_text_size">
 						<?php
 						/**
 						 * Fires before the display of the email template footer.

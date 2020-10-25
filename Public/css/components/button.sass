@@ -1,27 +1,36 @@
 // Button
+/* THE COMPONENT IS INDEPENDENT AND DOES NOT INHERIT ENVIRONMENTAL VARIABLES | From 20.10.20 */
+
 button,
 input[type="submit"]
-  background: $UIBackground
-  border: $UIBorder $mainBorderColor
-  color: $UIColor
-  padding: $UIPadding
-  font: $UIFont
+  background: #fafafa
+  border: 1px solid #e1e1e1
+  color: #4B4B4B
+  border-radius: 4px
+  min-width: 24px
+  padding: 6px 32px
+
+  font-family: $UIFont
   font-size: $UIFontSize
   font-weight: normal
   cursor: pointer
   outline: none
 
+  line-height: 137.5%
+  letter-spacing: 0.3px
+
+
   &:hover
-    border: $UIBorder $mainHoverBorderColor
+    border: 1px solid #D4D4D4
 
   &:active
-    background: rgb(233, 234, 234)
-    color: #171616
-
+    background: #EAEAEA
+    color: #4B4B4B
 
   &:focus,
   &:active
     outline: none
+    cursor: pointer
 
   &:disabled,
   &[disabled]

@@ -27,7 +27,7 @@ require_once 'AJAX.php';
 
 // Complex
 require_once 'Complex/wp-admin/Compound-createPage.php';
-require_once 'Complex/public.php';
+//require_once 'Complex/public.php';
 
 // AJAX
 require_once 'AJAX/namespaces.php';

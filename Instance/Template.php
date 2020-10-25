@@ -249,7 +249,7 @@ class Template
     /**
      * Template constructor.
      */
-    function __construct($object = '')
+    function __construct($object = false)
     {
         $this->setHandler(function ($event) {
             return $event;

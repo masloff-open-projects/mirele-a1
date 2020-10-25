@@ -1,0 +1,76 @@
+# The router has reserved ids
+# for connecting dependencies from this configuration file
+# List of reserved names:
+# - public
+# - private
+# - woocommerce
+
+
+# A router for all pages that are in public space.
+# All pages, except the admin
+# @version: 1.0.0
+public:
+  scripts:
+    jquery: false
+    AXIOS: //unpkg.com/axios/dist/axios.min.js
+    FontAwesome: //cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/js/all.min.js
+    QS: //cdnjs.cloudflare.com/ajax/libs/qs/6.9.4/qs.min.js
+    VUE: //cdn.jsdelivr.net/npm/vue
+    Popper: //cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js
+    Bootstrap: https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js
+    MIRELE: /public/js/org.app.min.js
+
+  styles:
+    bootstrap: //stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css
+    style: $root/Public/css/style.css
+    fontawesome: //cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css
+
+  localize:
+    MIRELE: main
+
+
+# A router for all pages that are in private space.
+# All pages in the admin panel WordPress
+# @version: 1.0.0
+private:
+  scripts:
+    jquery: false
+      => ui-core: false
+      => ui-draggable: false
+      => ui-droppable: false
+      => ui-selectable: false
+
+    AXIOS: //unpkg.com/axios/dist/axios.min.js
+    FontAwesome: //cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/js/all.min.js
+    QS: //cdnjs.cloudflare.com/ajax/libs/qs/6.9.4/qs.min.js
+    VUE: //cdn.jsdelivr.net/npm/vue
+    Popper: //cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js
+    Center: /public/js/center.min.js
+    MIRELE: /public/js/org.app.min.js
+    Bootstrap: //stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js
+
+    compound:
+      =>: /public/js/compound.min.js
+      => props-component: /public/js/compound/form/props.min.js
+      => props-template: /public/js/compound/form/propsTemplate.min.js
+      => insert-component: /public/js/compound/form/insertComponent.min.js
+      => insert-template: /public/js/compound/form/insertTemplate.min.js
+
+
+  styles:
+    style: $root/Public/css/admin.css
+
+  localize:
+    MIRELE: main
+    compound: compound
+
+
+# ...
+# @version: 1.0.0
+woocommerce:
+  scripts:
+    -> product: /public/js/woocommerceui_product.min.js
+    -> products: /public/js/woocommerceui_products.min.js
+    -> login: /public/js/woocommerceui_login.min.js
+    -> signup: /public/js/woocommerceui_signup.min.js
+    -> recoveryPassword: /public/js/woocommerceui_recovery_password.min.js
