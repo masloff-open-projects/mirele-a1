@@ -98,10 +98,7 @@ if (wp_doing_ajax() === false) {
     # of the interest.
 
     # Connection of all prototypes and instances
-    include_once 'Traits/vendor.php';
-    include_once 'Interface/vendor.php';
-    include_once 'Instance/vendor.php';
-    include_once 'Сontroller/vendor.php';
+    include_once 'Compound/autoloader.php';
     include_once 'Prototypes/vendor.php';
     include_once 'Patterns/vendor.php';
 
@@ -137,10 +134,7 @@ if (wp_doing_ajax() === false) {
     # of the interest.
 
     # Connection of all prototypes and instances
-    include_once 'Traits/vendor.php';
-    include_once 'Interface/vendor.php';
-    include_once 'Instance/vendor.php';
-    include_once 'Сontroller/vendor.php';
+    include_once 'Compound/autoloader.php';
     include_once 'Prototypes/vendor.php';
     include_once 'Patterns/vendor.php';
     include_once 'Prototypes/vendor.php';
