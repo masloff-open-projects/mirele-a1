@@ -99,18 +99,12 @@ if (wp_doing_ajax() === false) {
 
     # Connection of all prototypes and instances
     include_once 'Compound/autoloader.php';
-    include_once 'Prototypes/vendor.php';
-    include_once 'Patterns/vendor.php';
 
     # Main Core
     include_once 'Framework/Converter.php';
     include_once 'Framework/WPGNU.php';
     include_once 'Framework/WP.php';
     include_once 'Framework/Option.php';
-
-    # Arrhitectural Classes Sets (Mirele)
-    include_once 'Framework/MCache.php';
-    include_once 'Framework/MNotification.php';
 
     # Meta
     include_once "meta.php";
@@ -120,10 +114,8 @@ if (wp_doing_ajax() === false) {
     # all building cores are ready for use.
 
     # Connecting Vendor files except Composer
-    include_once 'Components/vendor.php';
-    include_once 'Strategys/vendor.php';
-    include_once 'Routes/vendor.php';
-    include_once 'Templates/vendor.php';
+    include_once 'Binders/autoloader.php';
+    include_once 'Routes/autoloader.php';
     include_once 'Options/vendor.php';
     include_once 'Tags/vandor.php';
 
@@ -135,18 +127,14 @@ if (wp_doing_ajax() === false) {
 
     # Connection of all prototypes and instances
     include_once 'Compound/autoloader.php';
-    include_once 'Prototypes/vendor.php';
-    include_once 'Patterns/vendor.php';
-    include_once 'Prototypes/vendor.php';
-    include_once 'Components/vendor.php';
-    include_once 'Templates/vendor.php';
+    include_once 'Binders/autoloader.php';
+
 
     # Main core
     include_once 'Framework/WPGNU.php';
 
     # Connecting Vendor files except Composer
-    include_once 'Strategys/vendor.php';
-    include_once 'Routes/vendor.php';
+    include_once 'Routes/autoloader.php';
     include_once 'Options/vendor.php';
     include_once 'Tags/vandor.php';
 
@@ -200,44 +188,6 @@ add_action(
         },
         'show_in_rest' => true
     ]);
-
-});
-
-# AJAX Redirect
-add_action('wp_ajax_nopriv_mirele_endpoint_v1', function () {
-
-    if (isset((MIRELE_POST)['action']) and isset((MIRELE_POST)['method'])) {
-
-        \Mirele\Router::error(function () {
-            wp_send_json([
-                'error' => 'Method not found'
-            ]);
-            wp_die();
-        });
-
-        wp_send_json(\Mirele\Router::dispatch('/ajax_endpoint_v1/' . (MIRELE_POST)['method'], function ($object) {
-            die($object);
-        }));
-    }
-
-});
-add_action(/**
- *
- */ 'wp_ajax_mirele_endpoint_v1', function () {
-
-    if (isset((MIRELE_POST)['action']) and isset((MIRELE_POST)['method'])) {
-
-        Router::error(function () {
-            wp_send_json([
-                'error' => 'Method not found'
-            ]);
-            wp_die();
-        });
-
-        wp_send_json(Router::dispatch('/ajax_endpoint_v1/' . (MIRELE_POST)['method'], function ($object) {
-            die($object);
-        }));
-    }
 
 });
 
@@ -493,6 +443,9 @@ add_action('init', function () {
     if (wp_doing_ajax() == false) {
         
         Router::plugDependencies([is_admin() ? 'private' : 'public', is_wc() ? 'woocommerce' : false], function ($id, $type, $alias, $src, $history) {
+
+            var_dump($id);
+
             switch ($type) {
                 case 'scripts':
                     wp_enqueue_script($alias, $src, (array) $history[$type], MIRELE_VERSION, true);

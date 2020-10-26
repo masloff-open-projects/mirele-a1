@@ -28,7 +28,12 @@ use Mirele\Framework\Customizer;
         'home' => get_bloginfo ('home', 'display'),
         'siteurl' => get_bloginfo ('siteurl', 'display')
     ],
-    'user' => (object) wp_get_current_user(),
+    'user' => (object) array_merge(
+        (array) wp_get_current_user()->data,
+        [
+            'avatar' => get_avatar_url(get_current_user_id())
+        ]
+    ),
     'permalink' => [
         'account' => [
             'main' => get_permalink(WOOCOMMERCE_SUPPORT ? wc_get_page_id('myaccount') : '')

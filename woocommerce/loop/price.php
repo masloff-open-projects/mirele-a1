@@ -22,7 +22,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 global $product;
 ?>
 
-<h5 class="el_3825098092"> <?php echo wc_price($product->price) ?> </span> </h3>
+<h5 class="el_3825098092"> <?php echo wc_price($product->price) ?> </span> </h5>
 
 <?php if ($product->regular_price != $product->price && $product->regular_price): ?>
 	<h3 class="el_1851147446"> <strike> <?php echo wc_price($product->regular_price) ?> </span></strike> </h3>

@@ -14,35 +14,12 @@ class Component
 {
 
     private $index = true;
-    /**
-     * @var
-     */
     private $id;
     private $template;
-    /**
-     * @var
-     */
     private $name;
-    /**
-     * @var
-     */
     private $props;
-    /**
-     * @var
-     */
-    private $function;
-    private $handlers;
-    /**
-     * @var
-     */
     private $data;
-    /**
-     * @var
-     */
     private $meta;
-    /**
-     * @var
-     */
     private $alias;
     private $parent;
 
@@ -380,24 +357,6 @@ class Component
     }
 
     /**
-     * @param mixed $function
-     */
-
-    public function setHandler($action, callable $function)
-    {
-        if (!empty($action) and $action) {
-            if (is_callable($function)) {
-                $this->handlers[$action] = $function;
-                return $this;
-            } else {
-                throw new \Exception("You're not passing on a function");
-            }
-        } else {
-            throw new \Exception("The name of the processor cannot be empty");
-        }
-    }
-
-    /**
      * @param array $props
      * @return mixed
      */
@@ -417,6 +376,7 @@ class Component
         /**
          * Render
          */
+
         if (!empty($this->getTemplate())) {
 
             $promise = TWIG::Render($this->getTemplate(), $this->props);

@@ -367,7 +367,7 @@ class Router
                             $glossary = array(
                                 '$root' => TEMPLATE_URI,
                                 '~' => $type,
-                                '-> ' => "$id-",
+                                '-> ' => $id . "_",
                                 '->' => $id,
                             );
 
@@ -379,7 +379,7 @@ class Router
                                 if (is_array($src)) {
 
                                     foreach ($src as $child_alias => $child) {
-                                        $glossary['=> '] = "$alias-";
+                                        $glossary['=> '] = $alias . "_";
                                         $glossary['=>'] = "$alias";
 
                                         $child_alias = str_replace(array_keys($glossary), array_values($glossary), $child_alias);

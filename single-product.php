@@ -143,8 +143,9 @@ $productObject = product_filter($product);
 wp_enqueue_script('woocommerceui_product');
 
 # Localization and declaration of external variables
+// TODO!
 wp_localize_script(
-    'woocommerceui_product', 'WOOCOMMERCE',
+    'woocommerce_product', 'WOOCOMMERCE',
     [
         'product'     => (object) $productObject,
         'post'        => (object) $post

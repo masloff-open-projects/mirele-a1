@@ -1,6 +1,0 @@
-<label for="{{ attr.id|default(attributes.id) }}">
-
-    {{ Tag('input', attributes, attr, {inline: inline}, {type: 'radio'})|raw }}
-    {{ attr.text|default(attr.value)|default(attributes.text)|default(attributes.value) }}
-
-</label>

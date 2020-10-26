@@ -1,0 +1,30 @@
+<compound>
+    <container template="...">
+
+        <area id="name">
+            <button>Hello world</button>
+            <data>Helloy</data>
+
+        </area>
+
+        <area id="name2">
+            <button>Hello world</button>
+            <data>Helloy</data>
+        </area>
+
+    </container>
+
+    <container template="...34">
+
+        <area id="name">
+            <button>Hello world</button>
+            <data>Helloy</data>
+        </area>
+
+        <area id="name2">
+            <button>Hello world</button>
+            <data>Helloy</data>
+        </area>
+
+    </container>
+</compound>

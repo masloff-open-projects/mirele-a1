@@ -1,43 +1,69 @@
 <?php
 
-use Mirele\Framework\Inter;
-use Mirele\Router;
 
-# Endpoint to add goods to user cart
+namespace Mirele\WPAJAX;
+
+use Mirele\Compound\Patterns;
+use Mirele\Compound\Response;
+use Mirele\Framework\Inter;
+use Mirele\Framework\Request;
+
+
+# Endpoint to save or update options
 # Endpoint Version: 1.0.0
 # Distributors: AJAX
-Router::post('/ajax_endpoint_v1/WCAddToCart', function () {
+class WPAJAX_WCAddToCart extends Request {
 
-    # Parse params
-    $ID = (int)(new Inter((MIRELE_POST)['product_id']))::ABS();
-    $QTY = (int)(new Inter((MIRELE_POST)['product_quantity']))::ABS();
-    $VariationID = (int)(new Inter((MIRELE_POST)['product_variation_id']))::ABS();
-    $VariationAttr = (MIRELE_POST)['product_variation'];
+    /**
+     * The __invoke method is used to compile (if necessary) and process a request with the transferred parameters.
+     * The query object also supports working with the 'handler' method, but its use is not recommended.
+     *
+     * PHPDOC: The __invoke method is called when a script tries to call an object as a function.
+     *
+     * @param $request array $_REQUEST
+     * @return object|array|Response|boolean|string
+     * @link https://php.net/manual/en/language.oop5.magic.php#language.oop5.magic.invoke
+     */
+    public function __invoke(array $request)
+    {
 
-    # Checking if it is possible to add the goods to the cart.
-    if (apply_filters('woocommerce_add_to_cart_validation', true, $ID, $QTY)) {
+        # Parse params
+        $ID = (int)(new Inter((MIRELE_POST)['product_id']))::ABS();
+        $QTY = (int)(new Inter((MIRELE_POST)['product_quantity']))::ABS();
+        $VariationID = (int)(new Inter((MIRELE_POST)['product_variation_id']))::ABS();
+        $VariationAttr = (MIRELE_POST)['product_variation'];
 
-        # Create cart
-        $CartItem = WC()->cart->add_to_cart($ID, $QTY, $VariationID, $VariationAttr);
+        # Checking if it is possible to add the goods to the cart.
+        if (apply_filters('woocommerce_add_to_cart_validation', true, $ID, $QTY)) {
 
-        if ($CartItem) {
+            # Create cart
+            $CartItem = WC()->cart->add_to_cart($ID, $QTY, $VariationID, $VariationAttr);
 
-            do_action('woocommerce_ajax_added_to_cart', $ID);
+            if ($CartItem) {
 
-            if ('yes' === get_option('woocommerce_cart_redirect_after_add')) {
-                wc_add_to_cart_message(array($ID => $QTY), true);
+                do_action('woocommerce_ajax_added_to_cart', $ID);
+
+                if ('yes' === get_option('woocommerce_cart_redirect_after_add')) {
+                    wc_add_to_cart_message(array($ID => $QTY), true);
+                }
+
+                return new Response([
+                    'id' => $CartItem
+                ], 200);
+
+            } else {
+
+                return new Response([
+                    'error' => 'This product was not added to the cart.'
+                ], 500);
+
             }
 
-            wp_send_json_success([
-                'id' => $CartItem
-            ]);
-
-        } else {
-            wp_send_json_error([
-                'error' => 'This product was not added to the cart.'
-            ]);
         }
+
+        return new Response([], 500);
 
     }
 
-});
+
+}

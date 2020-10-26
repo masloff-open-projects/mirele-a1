@@ -8,6 +8,14 @@ class Response
 {
 
     /**
+     * Pattern for reporting an error with code 405
+     */
+    const PATTERN_405 = [
+        'message' => 'This method is not available',
+        'code' => 405
+    ];
+
+    /**
      * Pattern for reporting an error with code 403
      */
     const PATTERN_403 = [
@@ -29,6 +37,14 @@ class Response
     const PATTERN_500 = [
         'message' => 'An internal server error occurred',
         'code' => 500
+    ];
+
+    /**
+     * Pattern for reporting an error with code 201
+     */
+    const PATTERN_201 = [
+        'message' => 'The object was successfully created',
+        'code' => 201
     ];
 
     private $code;

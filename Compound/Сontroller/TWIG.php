@@ -234,16 +234,20 @@ class TWIG
          * @depreacted
          */
         # Processing template name
-        $template = ((new Stringer($template))::format(self::$alias));
+        $template =  ((new Stringer($template))::format(self::$alias));
 
         $ext = pathinfo($template, PATHINFO_EXTENSION);
         $abs = realpath(TEMPLATE_PATH . '/' . $template . (empty($ext) ? '.twig' : ''));
         $dep = $template . (empty($ext) ? '.twig' : '');
-
+        
         if ($abs) {
             $path = $dep;
         } else {
-            $path = "TWIG/$dep";
+            if (file_exists(TEMPLATE_PATH . "/Binders/$dep")) {
+                $path = "Binders/$dep";
+            } else {
+                $path = "TWIG/$dep";
+            }
         }
 
         $params = array_merge(
