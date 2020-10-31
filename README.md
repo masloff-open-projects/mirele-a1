@@ -8,12 +8,12 @@ Mirele Canonical is the full name of the whole project.
 
 #### Table of composition of each architecture
 
-| Name of architecture | Render page | Template Engine | Complex Manager | Signature verify engine |
-|----------------------|-------------|-----------------|-----------------|-------------------------|
-| Mirele Z1            | Aneli       |                 |                 |                         |
-| Mirele S1            | Rosemary    |                 |                 |                         |
-| Mirele A1            | Rosemary    |                 |                 | Mirele Verify Signature |
-| Mirele A2            | Compound    | TWIG            | Vendor CTB      |                         |
+| Name of architecture | Render page | Template Engine | Complex Manager            | Signature verify engine | Developing Tools Kit |
+|----------------------|-------------|-----------------|----------------------------|-------------------------|----------------------|
+| Mirele Z1            | Aneli       | —               | —                          | —                       | —                    |  
+| Mirele S1            | Rosemary    | —               | —                          | —                       | —                    | 
+| Mirele A1            | Rosemary    | —               | —                          | Mirele Verify Signature | —                    |  
+| Mirele A2            | Compound    | TWIG            | Vendor CTB -> Autoloader   | —                       | Hammer&Wrench        |
 
 ## Mirele for developers 
 
