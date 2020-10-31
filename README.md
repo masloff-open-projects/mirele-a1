@@ -1,4 +1,6 @@
-# Mirele Canonical
+<h1 align="center">Mirele Canonical</h1>
+<p align="center">Your new WordPress will be different. Add to, expand, or simply use as a normal template with unusual features.</p>
+
 
 Mirele is a universal template for most types of sites, from a personal writer's blog and own store to a forum with a small social network. Mirele has its own system of levels of abstraction, which allows him to be easily expandable at lower levels of abstraction, so as all the relationships between the bloods are perfectly clear and documented. 
 
