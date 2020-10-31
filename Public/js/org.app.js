@@ -3,10 +3,13 @@
  *
  * @type {org}
  */
-const org = class {};
+const org = class {
+};
 
-org.web = class {};
-org.compound = class {};
+org.web = class {
+};
+org.compound = class {
+};
 org.data = {};
 org.references = {};
 org.references.form = {};
@@ -24,8 +27,8 @@ org.references.form.set = {};
 org.references.form.set.component = {};
 org.references.form.set.template = {};
 org.references.form.upgrade = {};
-org.references.form.upgrade.component= {};
-org.references.form.upgrade.template= {};
+org.references.form.upgrade.component = {};
+org.references.form.upgrade.template = {};
 org.references.form.sort = {};
 org.references.form.sort.component = {};
 org.references.form.sort.template = {};
@@ -43,14 +46,14 @@ org.server = MIRELE || {};
  * @param HTTP
  * @returns {*}
  */
-org.web.request = function (method, props, HTTP={}) {
+org.web.request = function (method, props, HTTP = {}) {
     return axios({
         method: HTTP.method || 'post',
         url: MIRELE.urls.ajax,
         headers: {
             'Content-Type': 'application/x-www-form-urlencoded'
         },
-        data : Qs.stringify(Object.assign(props, {
+        data: Qs.stringify(Object.assign(props, {
             'action': 'mirele_endpoint_v1',
             'method': method
         }))

@@ -7,34 +7,43 @@ use Mirele\Router;
 Router::get('/public/(:all)', function ($path) {
 
     # Check which directory is the directory with public resources.
-    if (is_dir(get_template_directory() . '/Public')) {
-        $dir = get_template_directory() . '/Public';
-        $file = $dir . '/' . $path;
-    } elseif (is_dir(get_template_directory() . '/Source')) {
-        $dir = get_template_directory() . '/Source';
-        $file = $dir . '/' . $path;
-    } else {
+    if (is_dir(get_template_directory().'/Public'))
+    {
+        $dir = get_template_directory().'/Public';
+        $file = $dir.'/'.$path;
+    } elseif (is_dir(get_template_directory().'/Source'))
+    {
+        $dir = get_template_directory().'/Source';
+        $file = $dir.'/'.$path;
+    } else
+    {
         http_response_code(404);
         exit;
     }
 
     # Checking for file availability
-    if ($file and file_exists($file)) {
+    if ($file and file_exists($file))
+    {
 
         $ignore = [];
-        if (file_exists($dir . '/.ignore')) {
-            $ignore = file($dir . '/.ignore');
+        if (file_exists($dir.'/.ignore'))
+        {
+            $ignore = file($dir.'/.ignore');
         }
 
-        foreach ($ignore as $source) {
-            if (($dir . '/' . $source) == $file) {
+        foreach ($ignore as $source)
+        {
+            if (($dir.'/'.$source) == $file)
+            {
 
                 http_response_code(404);
                 exit;
 
-            } elseif (is_dir($dir . '/' . $source)) {
+            } elseif (is_dir($dir.'/'.$source))
+            {
 
-                if (dirname($file) === realpath($dir . '/' . $source)) {
+                if (dirname($file) === realpath($dir.'/'.$source))
+                {
 
                     http_response_code(404);
                     exit;
@@ -45,12 +54,13 @@ Router::get('/public/(:all)', function ($path) {
         }
 
         http_response_code(200);
-        header('Content-Type: ' . mime_content_type($file));
+        header('Content-Type: '.mime_content_type($file));
 
         print file_get_contents($file);
         exit;
 
-    } else {
+    } else
+    {
 
         http_response_code(404);
         exit;

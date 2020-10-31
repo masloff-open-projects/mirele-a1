@@ -11,13 +11,7 @@ $Template = new Template();
 $Template->setId('default_empty');
 
 // Fields
-$Template->setField("field",
-    clone (new Field())
-        ->setName("field")
-        ->setMeta('editor', ((new Config())
-            ->setData('grid', 'inline')
-        ))
-);
+$Template->setField("field", clone (new Field())->setName("field")->setMeta('editor', ((new Config())->setData('grid', 'inline'))));
 
 $Template->setMeta('name', 'Empty');
 

@@ -16,7 +16,8 @@ use Mirele\Framework\Strategists\__strategy_admin;
  * @description The endpoint serves to obtain the parameters of a particular template.
  * @version 1.0.0
  */
-class WPAJAX_Compound__getTemplateProps extends Request {
+class WPAJAX_Compound__getTemplateProps extends Request
+{
 
     /**
      * The __invoke method is used to compile (if necessary) and process a request with the transferred parameters.
@@ -31,15 +32,14 @@ class WPAJAX_Compound__getTemplateProps extends Request {
     public function __invoke(array $request)
     {
 
-        return $this->useAuthorizationStrategy( new __strategy_admin )->next(function ($a) {
+        return $this->useAuthorizationStrategy(new __strategy_admin)->next(function ($a) {
 
             $pattern = new Patterns\propsTemplate();
             $pattern->template = (MIRELE_POST)['template'];
             $pattern->page = (MIRELE_POST)['page'];
 
             return new Response([
-                'props' => $pattern()
-            ], 200);
+                'props' => $pattern()], 200);
 
         })->reject(function ($a) {
             return new Response(Response::PATTERN_403, 403);

@@ -11,7 +11,8 @@ use Mirele\Framework\Strategists\__strategy_admin;
 use Mirele\Framework\Strategy;
 
 
-class WPAJAX_Compound__sortOrder extends Request {
+class WPAJAX_Compound__sortOrder extends Request
+{
 
     /**
      * The __invoke method is used to compile (if necessary) and process a request with the transferred parameters.
@@ -33,7 +34,7 @@ class WPAJAX_Compound__sortOrder extends Request {
          *
          * @param Strategy $strategy Created strategy object
          */
-        return $this->useAuthorizationStrategy( new __strategy_admin )->next(function ($a) {
+        return $this->useAuthorizationStrategy(new __strategy_admin)->next(function ($a) {
 
             # Implementation of an event pattern created as
             # an abstract object in the "Mirele\Compound\Patterns" namespace
@@ -43,17 +44,17 @@ class WPAJAX_Compound__sortOrder extends Request {
             $execute = $pattern();
 
             # Return the results of the pattern
-            if ($execute) {
+            if ($execute)
+            {
 
                 return new Response([
-                    'result' => $execute
-                ], 200);
+                    'result' => $execute], 200);
 
-            } else {
+            } else
+            {
 
                 return new Response([
-                    'result' => $execute
-                ], 500);
+                    'result' => $execute], 500);
 
             }
 

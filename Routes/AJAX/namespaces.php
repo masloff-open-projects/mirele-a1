@@ -4,10 +4,8 @@
 namespace Mirele\WPAJAX;
 
 
-use Mirele\Compound\Patterns;
 use Mirele\Compound\Response;
 use Mirele\Framework\Customizer;
-use Mirele\Framework\IRequest;
 use Mirele\Framework\Request;
 use Mirele\Framework\Strategists\__strategy_admin;
 use Mirele\Framework\Strategy;
@@ -20,7 +18,8 @@ use Mirele\Framework\Strategy;
  * @description The Endpoint serves to create a copy of the Instance Template.
  * @version 1.0.0
  */
-class WPAJAX_namespaces extends Request {
+class WPAJAX_namespaces extends Request
+{
 
     /**
      * The __invoke method is used to compile (if necessary) and process a request with the transferred parameters.
@@ -42,11 +41,10 @@ class WPAJAX_namespaces extends Request {
          *
          * @param Strategy $strategy Created strategy object
          */
-        return $this->useAuthorizationStrategy( new __strategy_admin )->next(function ($a) {
+        return $this->useAuthorizationStrategy(new __strategy_admin)->next(function ($a) {
 
             return new Response([
-                'result' => Customizer::namespaces()
-            ], 200);
+                'result' => Customizer::namespaces()], 200);
 
         })->reject(function ($a) {
             return new Response(Response::PATTERN_403, 403);

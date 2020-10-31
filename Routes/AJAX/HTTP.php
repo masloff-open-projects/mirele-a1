@@ -2,7 +2,6 @@
 
 namespace Mirele\WPAJAX;
 
-use Mirele\Compound\Patterns;
 use Mirele\Compound\Response;
 use Mirele\Framework\Request;
 use Mirele\Framework\Strategists\__strategy_admin;
@@ -11,7 +10,8 @@ use Mirele\Framework\Strategy;
 # HTTP
 # Endpoint Version: 1.0.0
 # Distributors: AJAX
-class WPAJAX_HTTP extends Request {
+class WPAJAX_HTTP extends Request
+{
 
     /**
      * The __invoke method is used to compile (if necessary) and process a request with the transferred parameters.
@@ -34,7 +34,7 @@ class WPAJAX_HTTP extends Request {
          *
          * @param Strategy $strategy Created strategy object
          */
-        return $this->useAuthorizationStrategy( new __strategy_admin )->next(function ($a) {
+        return $this->useAuthorizationStrategy(new __strategy_admin)->next(function ($a) {
             return $a;
         })->reject(function ($a) {
 

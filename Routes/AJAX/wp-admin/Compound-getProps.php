@@ -21,7 +21,8 @@ use Mirele\Framework\Strategists\__strategy_admin;
  * @description The endpoint is used to obtain parameters about a component.
  * @version 1.0.0
  */
-class WPAJAX_Compound__getProps extends Request {
+class WPAJAX_Compound__getProps extends Request
+{
 
     /**
      * The __invoke method is used to compile (if necessary) and process a request with the transferred parameters.
@@ -36,14 +37,13 @@ class WPAJAX_Compound__getProps extends Request {
     public function __invoke(array $request)
     {
 
-        return $this->useAuthorizationStrategy( new __strategy_admin )->next(function ($a) {
+        return $this->useAuthorizationStrategy(new __strategy_admin)->next(function ($a) {
 
             $props = array(
-                'template' => (MIRELE_POST)['template'],
+                'template'  => (MIRELE_POST)['template'],
                 'component' => (MIRELE_POST)['component'],
-                'field' => (MIRELE_POST)['field'],
-                'page' => (MIRELE_POST)['page'],
-            );
+                'field'     => (MIRELE_POST)['field'],
+                'page'      => (MIRELE_POST)['page'],);
 
             $wp_page = (object)get_post($props['page']);
 
@@ -52,24 +52,30 @@ class WPAJAX_Compound__getProps extends Request {
 
             $root = (object)$lex->getRootInstanceById($props['template']);
 
-            if (isset($root->fields) and is_array($root->fields)) {
-                if (isset($root->fields[$props['field']])) {
-                    foreach ($root->fields[$props['field']] as $tag) {
-                        if ($tag instanceof Tag) {
+            if (isset($root->fields) and is_array($root->fields))
+            {
+                if (isset($root->fields[$props['field']]))
+                {
+                    foreach ($root->fields[$props['field']] as $tag)
+                    {
+                        if ($tag instanceof Tag)
+                        {
                             $name = $tag->getAttribute('name');
-                            if (!empty($name)) {
+                            if (!empty($name))
+                            {
                                 $component = Store::get($name);
-                                if ($component instanceof Component) {
+                                if ($component instanceof Component)
+                                {
                                     $propsOfComponent = (array)$component->getProps();
                                     $propsOfTag = (array)$tag->getAttributes();
                                     $propsOfMeta = array();
                                     $meta = $component->getMeta('editor');
-                                    if ($meta instanceof Config) {
+                                    if ($meta instanceof Config)
+                                    {
                                         $propsOfMeta['meta'] = $meta->all();
                                     }
                                     $props = array_merge($propsOfMeta, [
-                                        'props' => array_merge($propsOfComponent, $propsOfTag)
-                                    ]);
+                                        'props' => array_merge($propsOfComponent, $propsOfTag)]);
                                     ksort($props);
                                     unset($props['props']['name']);
                                     unset($props['props']['id']);

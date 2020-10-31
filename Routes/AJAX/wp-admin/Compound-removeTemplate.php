@@ -11,7 +11,8 @@ use Mirele\Framework\Strategists\__strategy_admin;
 use Mirele\Framework\Strategy;
 
 
-class WPAJAX_Compound__removeTemplate extends Request {
+class WPAJAX_Compound__removeTemplate extends Request
+{
 
     /**
      * The __invoke method is used to compile (if necessary) and process a request with the transferred parameters.
@@ -33,7 +34,7 @@ class WPAJAX_Compound__removeTemplate extends Request {
          *
          * @param Strategy $strategy Created strategy object
          */
-        return $this->useAuthorizationStrategy( new __strategy_admin )->next(function ($a) {
+        return $this->useAuthorizationStrategy(new __strategy_admin)->next(function ($a) {
 
 
             # Implementation of an event pattern created as
@@ -44,17 +45,17 @@ class WPAJAX_Compound__removeTemplate extends Request {
 
             $biffer = $pattern();
 
-            if ($biffer) {
+            if ($biffer)
+            {
 
                 return new Response([
-                    'result' => $biffer
-                ], 200);
+                    'result' => $biffer], 200);
 
-            } else {
+            } else
+            {
 
                 return new Response([
-                    'result' => $biffer
-                ], 500);
+                    'result' => $biffer], 500);
 
             }
 

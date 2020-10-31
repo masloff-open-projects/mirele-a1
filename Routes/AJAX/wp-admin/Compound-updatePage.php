@@ -11,7 +11,8 @@ use Mirele\Framework\Strategists\__strategy_admin;
 use Mirele\Framework\Strategy;
 
 
-class WPAJAX_Compound__updatePage extends Request {
+class WPAJAX_Compound__updatePage extends Request
+{
 
     /**
      * The __invoke method is used to compile (if necessary) and process a request with the transferred parameters.
@@ -33,28 +34,27 @@ class WPAJAX_Compound__updatePage extends Request {
          *
          * @param Strategy $strategy Created strategy object
          */
-        return $this->useAuthorizationStrategy( new __strategy_admin )->next(function ($a) {
+        return $this->useAuthorizationStrategy(new __strategy_admin)->next(function ($a) {
 
             # Implementation of an event pattern created as
             # an abstract object in the "Mirele\Compound\Patterns" namespace
             $pattern = (new Patterns\updatePage([
-                'page' => (MIRELE_POST)['page'],
-                'props' => (MIRELE_POST)['props']
-            ]));
+                'page'  => (MIRELE_POST)['page'],
+                'props' => (MIRELE_POST)['props']]));
 
             $buffer = $pattern();
 
-            if ($buffer) {
+            if ($buffer)
+            {
 
                 return new Response([
-                    'result' => $buffer
-                ], 200);
+                    'result' => $buffer], 200);
 
-            } else {
+            } else
+            {
 
                 return new Response([
-                    'result' => $buffer
-                ], 500);
+                    'result' => $buffer], 500);
 
             }
 

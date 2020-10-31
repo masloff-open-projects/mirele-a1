@@ -3,7 +3,6 @@
 
 namespace Mirele\WPAJAX;
 
-use Mirele\Compound\Patterns;
 use Mirele\Compound\Response;
 use Mirele\Framework\Inter;
 use Mirele\Framework\Request;
@@ -12,7 +11,8 @@ use Mirele\Framework\Request;
 # Endpoint to save or update options
 # Endpoint Version: 1.0.0
 # Distributors: AJAX
-class WPAJAX_WCAddToCart extends Request {
+class WPAJAX_WCAddToCart extends Request
+{
 
     /**
      * The __invoke method is used to compile (if necessary) and process a request with the transferred parameters.
@@ -34,28 +34,30 @@ class WPAJAX_WCAddToCart extends Request {
         $VariationAttr = (MIRELE_POST)['product_variation'];
 
         # Checking if it is possible to add the goods to the cart.
-        if (apply_filters('woocommerce_add_to_cart_validation', true, $ID, $QTY)) {
+        if (apply_filters('woocommerce_add_to_cart_validation', true, $ID, $QTY))
+        {
 
             # Create cart
             $CartItem = WC()->cart->add_to_cart($ID, $QTY, $VariationID, $VariationAttr);
 
-            if ($CartItem) {
+            if ($CartItem)
+            {
 
                 do_action('woocommerce_ajax_added_to_cart', $ID);
 
-                if ('yes' === get_option('woocommerce_cart_redirect_after_add')) {
+                if ('yes' === get_option('woocommerce_cart_redirect_after_add'))
+                {
                     wc_add_to_cart_message(array($ID => $QTY), true);
                 }
 
                 return new Response([
-                    'id' => $CartItem
-                ], 200);
+                    'id' => $CartItem], 200);
 
-            } else {
+            } else
+            {
 
                 return new Response([
-                    'error' => 'This product was not added to the cart.'
-                ], 500);
+                    'error' => 'This product was not added to the cart.'], 500);
 
             }
 

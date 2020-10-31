@@ -45,7 +45,7 @@ new org.interface({
 
                 // Overriding behavior
                 e.preventDefault();
-                
+
                 org.web.request('login', {
                     login: this.login,
                     password: this.password,

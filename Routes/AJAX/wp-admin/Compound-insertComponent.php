@@ -34,7 +34,7 @@ class WPAJAX_Compound__insertComponent extends Request
          *
          * @param Strategy $strategy Created strategy object
          */
-        return $this->useAuthorizationStrategy( new __strategy_admin )->next(function ($a) {
+        return $this->useAuthorizationStrategy(new __strategy_admin)->next(function ($a) {
 
             $pattern = new Patterns\insertComponent();
             $pattern->page = (MIRELE_POST)['page'];
@@ -44,17 +44,17 @@ class WPAJAX_Compound__insertComponent extends Request
 
             $biffer = $pattern();
 
-            if ($biffer) {
+            if ($biffer)
+            {
 
                 return new Response([
-                    'result' => $biffer
-                ], 200);
+                    'result' => $biffer], 200);
 
-            } else {
+            } else
+            {
 
                 return new Response([
-                    'result' => $biffer
-                ], 500);
+                    'result' => $biffer], 500);
 
             }
 

@@ -22,7 +22,8 @@ use Mirele\Framework\Strategy;
  * @description Endpoint serves to obtain a markup of the Compound page.
  * @version 1.0.0
  */
-class WPAJAX_Compound__getMarkup extends Request {
+class WPAJAX_Compound__getMarkup extends Request
+{
 
     /**
      * The __invoke method is used to compile (if necessary) and process a request with the transferred parameters.
@@ -44,11 +45,10 @@ class WPAJAX_Compound__getMarkup extends Request {
          *
          * @param Strategy $strategy Created strategy object
          */
-        return $this->useAuthorizationStrategy( new __strategy_admin )->next(function ($a) {
+        return $this->useAuthorizationStrategy(new __strategy_admin)->next(function ($a) {
 
             $props = array(
-                'page' => (MIRELE_POST)['page'],
-            );
+                'page' => (MIRELE_POST)['page'],);
 
             $wp_page = (object)get_post($props['page']);
 
@@ -56,36 +56,44 @@ class WPAJAX_Compound__getMarkup extends Request {
             $Lexer = new Lexer($wp_page->post_content);
             $lex = $Lexer->parse();
 
-            if ((object)$lex and $lex instanceof Layout) {
-                foreach ($lex->getLayout() as $ID => $Template) {
+            if ((object)$lex and $lex instanceof Layout)
+            {
+                foreach ($lex->getLayout() as $ID => $Template)
+                {
 
                     $template = Grider::findById($Template->props->name);
 
-                    if ($template instanceof Template) {
+                    if ($template instanceof Template)
+                    {
 
                         $fields = $template->getFields();
 
-                        foreach ($fields as $name => $field) {
+                        foreach ($fields as $name => $field)
+                        {
 
-                            if ($field instanceof Field) {
+                            if ($field instanceof Field)
+                            {
 
                                 $meta['editor'] = $field->getMeta('editor');
 
-                                if ($meta['editor'] instanceof Config) {
+                                if ($meta['editor'] instanceof Config)
+                                {
 
                                     $Markup[$ID]['fields'][$name]['meta']['editor'] = $meta['editor']->all();
 
                                 }
 
-                                if (isset($Template->fields[$name])) {
+                                if (isset($Template->fields[$name]))
+                                {
 
-                                    foreach ($Template->fields[$name] as $tag) {
-                                        if ($tag instanceof Tag) {
+                                    foreach ($Template->fields[$name] as $tag)
+                                    {
+                                        if ($tag instanceof Tag)
+                                        {
                                             $Markup[$ID]['fields'][$name]['tags'][] = (object)[
-                                                'tag' => $tag->getTagName(),
-                                                'essence' => $tag->getEssence(),
-                                                'attributes' => $tag->getAttributes()
-                                            ];
+                                                'tag'        => $tag->getTagName(),
+                                                'essence'    => $tag->getEssence(),
+                                                'attributes' => $tag->getAttributes()];
                                         }
                                     }
 
@@ -93,11 +101,10 @@ class WPAJAX_Compound__getMarkup extends Request {
 
 
                                 $Markup[$ID]['fields'][$name]['field'] = (object)[
-                                    'id' => $field->getId(),
-                                    'name' => $field->getName(),
+                                    'id'    => $field->getId(),
+                                    'name'  => $field->getName(),
                                     'props' => $field->getProps(),
-                                    'page' => $props['page']
-                                ];
+                                    'page'  => $props['page']];
 
                             }
 

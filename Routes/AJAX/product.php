@@ -4,14 +4,12 @@
 namespace Mirele\WPAJAX;
 
 
-use Mirele\Compound\Patterns;
 use Mirele\Compound\Response;
 use Mirele\Framework\Request;
-use Mirele\Framework\Strategists\__strategy_admin;
-use Mirele\Framework\Strategy;
 
 
-class WPAJAX_product extends Request {
+class WPAJAX_product extends Request
+{
 
     /**
      * The __invoke method is used to compile (if necessary) and process a request with the transferred parameters.
@@ -26,7 +24,7 @@ class WPAJAX_product extends Request {
     public function __invoke(array $request)
     {
 
-       return new Response((array) wc_get_product((MIRELE_POST)['id']), 200);
+        return new Response((array)wc_get_product((MIRELE_POST)['id']), 200);
 
     }
 

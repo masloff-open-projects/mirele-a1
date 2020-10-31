@@ -4,11 +4,9 @@
 namespace Mirele\WPAJAX;
 
 
-use Mirele\Compound\Patterns;
 use Mirele\Compound\Response;
 use Mirele\Framework\Buffer;
 use Mirele\Framework\Customizer;
-use Mirele\Framework\IRequest;
 use Mirele\Framework\Request;
 use Mirele\Framework\Strategists\__strategy_admin;
 use Mirele\Framework\Strategy;
@@ -21,7 +19,8 @@ use Mirele\Framework\Strategy;
  * @description The Endpoint serves to create a copy of the Instance Template.
  * @version 1.0.0
  */
-class WPAJAX_options extends Request {
+class WPAJAX_options extends Request
+{
 
     /**
      * The __invoke method is used to compile (if necessary) and process a request with the transferred parameters.
@@ -43,23 +42,24 @@ class WPAJAX_options extends Request {
          *
          * @param Strategy $strategy Created strategy object
          */
-        return $this->useAuthorizationStrategy( new __strategy_admin )->next(function ($a) {
+        return $this->useAuthorizationStrategy(new __strategy_admin)->next(function ($a) {
 
             # Setting up the environment
             $namespace = isset((MIRELE_POST)['namespace']) ? ((MIRELE_POST)['namespace'] === 'all' ? Customizer::namespaces() : explode('|', (MIRELE_POST)['namespace'])) : '*';
             $buffer = new Buffer();
 
             # Foreach options store
-            foreach ($namespace as $name) {
-                foreach (Customizer::all($name) as $Option) {
+            foreach ($namespace as $name)
+            {
+                foreach (Customizer::all($name) as $Option)
+                {
                     $buffer->setNamespace($name);
                     $buffer->append($Option->build());
                 }
             }
 
             return new Response([
-                'result' => $buffer->getBuffer((MIRELE_POST)['namespace'] === 'all' ? 'all' : (MIRELE_POST)['namespace'])
-            ], 200);
+                'result' => $buffer->getBuffer((MIRELE_POST)['namespace'] === 'all' ? 'all' : (MIRELE_POST)['namespace'])], 200);
 
         })->reject(function ($a) {
             return new Response(Response::PATTERN_403, 403);
