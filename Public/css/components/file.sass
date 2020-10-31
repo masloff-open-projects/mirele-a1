@@ -1,0 +1,72 @@
+input[type=file]
+
+  font-family: $UIFontRegular
+  font-size: $UIFontSize
+  font-weight: normal
+  outline: none
+  box-shadow: none !important
+
+  // For iOS. Removes shadows
+  -webkit-appearance: none
+  -moz-appearance: none
+  appearance: none
+  background-clip: padding-box
+  background-image: linear-gradient(transparent, transparent)
+
+  text-align: center
+  transition: background 0.3s ease-in-out
+  top: 0
+  left: 0
+  right: 0
+  bottom: 0
+  cursor: pointer
+
+  // It is necessary to intentionally prohibit
+  // stretching of an element as the page may
+  // display a non-selected element and
+  // cause disorientation.
+  &[width]
+    width: auto !important
+
+  &[height]
+    height: auto !important
+
+  &:before
+    content: $UIResourceUpload
+    white-space: nowrap
+    -webkit-user-select: none
+    cursor: pointer
+    text-shadow: 1px 1px #fff
+
+    font-family: $UIFontRegular
+    font-size: $UIFontSize
+    font-weight: normal
+    outline: none
+    box-shadow: none !important
+
+    // For iOS. Removes shadows
+    -webkit-appearance: none
+    -moz-appearance: none
+    appearance: none
+    background-clip: padding-box
+    background-image: linear-gradient(transparent, transparent)
+
+    background: #FFFFFF
+    border: 1px solid #e1e1e1
+    color: #4B4B4B
+    border-radius: $UIBorderRadiusMedium
+    min-width: 24px
+    padding: 6px 16px
+    line-height: 137.5%
+    letter-spacing: 0.3px
+
+    width: max-content
+
+    display: block
+    margin: 8px 0
+
+  &::-webkit-file-upload-button
+    visibility: hidden
+    display: none
+    opacity: 0
+

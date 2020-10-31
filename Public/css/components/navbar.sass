@@ -16,13 +16,15 @@
 
     .navbar-nav
       .nav-link
-        color: #F0F0F0
+        color: #9c9c9c
 
-        &:hover
-          color: #F0F0F0
+        &:active,
+        &:hover,
+        &:focus
+          color: $UIColorWhite
 
         &.disabled
-          color: #F0F0F0
+          color: #828282
 
       .show > .nav-link,
       .active > .nav-link,
@@ -32,7 +34,7 @@
 
     .navbar-toggler
       color: #F0F0F0
-      border-color: white
+      border-color: #202020
 
     .navbar-text
       color: #F0F0F0
@@ -40,7 +42,6 @@
       a
         color: #F0F0F0
 
-// Small devices (landscape phones, 576px and down)
 @media (max-width: 576px)
   .navbar-light
     padding: 4px
@@ -48,7 +49,6 @@
   .nav-item
     padding: 4px 16px
 
-// Small devices (landscape phones, 576px and up)
 @media (min-width: 576px)
   .navbar-light
     padding: 4px
@@ -56,7 +56,6 @@
   .nav-item
     padding: 7px
 
-// Medium devices (tablets, 768px and up)
 @media (min-width: 768px)
   .navbar-light
     padding: 4px
@@ -64,7 +63,6 @@
   .nav-item
     padding: 7px
 
-// Large devices (desktops, 992px and up)
 @media (min-width: 992px)
   .navbar-light
     padding: 2px
@@ -72,7 +70,6 @@
   .nav-item
     padding: 0
 
-// Extra large devices (large desktops, 1200 and up)
 @media (min-width: 1200px)
   .navbar-light
     padding: 0

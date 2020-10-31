@@ -26,11 +26,41 @@
 @import url("https://use.typekit.net/fml3enj.css")
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&display=swap')
 
-$mainFont: source-sans-pro, sans-serif, Source Sans Pro, -apple-system
+$mainFont: -apple-system, source-sans-pro, sans-serif,
 $mainHoverBorderColor: #80b1e0
 $mainBorderColor: rgba(70, 77, 106, .1)
 $mainTransition: 1s
 $mainFontSize: inherit
+
+// $UIFont{Type}
+$UIFontRegular: -apple-system, source-sans-pro, sans-serif,
+
+// $UIColor{Color}
+$UIColorWhite: #FFFFFF
+$UIColorBlack: #000000
+$UIColorDark:  #323232
+$UIColorGray: #f3f3f3
+
+// $UIBorder{Size}
+$UIBorderRadiusSmall: 2px
+$UIBorderRadiusRegular: 4px
+$UIBorderRadiusMedium: 6px
+$UIBorderRadiusExtra: 12px
+$UIBorderRadiusSuper: 24px
+$UIBorderRadiusBig: 42px
+$UIBorderRadiusInfinity: 150%
+
+// $UIResource{Type}
+$UIResourceCheck: url('data:image/svg+xml;utf8, <svg viewBox="0 0 21 16" xmlns="http://www.w3.org/2000/svg"><path d="M7.75781 15.0576C8.14844 15.4482 8.8125 15.4482 9.20312 15.0576L20.6875 3.57324C21.0781 3.18262 21.0781 2.51855 20.6875 2.12793L19.2812 0.72168C18.8906 0.331055 18.2656 0.331055 17.875 0.72168L8.5 10.0967L4.08594 5.72168C3.69531 5.33105 3.07031 5.33105 2.67969 5.72168L1.27344 7.12793C0.882811 7.51855 0.882811 8.18262 1.27344 8.57324L7.75781 15.0576Z"/></svg>')
+$UIResourceCheckDisabled: url('data:image/svg+xml;utf8, <svg viewBox="0 0 21 16" fill="gray" xmlns="http://www.w3.org/2000/svg"><path d="M7.75781 15.0576C8.14844 15.4482 8.8125 15.4482 9.20312 15.0576L20.6875 3.57324C21.0781 3.18262 21.0781 2.51855 20.6875 2.12793L19.2812 0.72168C18.8906 0.331055 18.2656 0.331055 17.875 0.72168L8.5 10.0967L4.08594 5.72168C3.69531 5.33105 3.07031 5.33105 2.67969 5.72168L1.27344 7.12793C0.882811 7.51855 0.882811 8.18262 1.27344 8.57324L7.75781 15.0576Z"/></svg>')
+$UIResourceRadio: url('data:image/svg+xml;utf8, <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M2.375 2.39844C3.51562 1.25781 4.89062 0.6875 6.5 0.6875C8.10938 0.6875 9.47656 1.25781 10.6016 2.39844C11.7422 3.52344 12.3125 4.89062 12.3125 6.5C12.3125 8.10938 11.7422 9.48438 10.6016 10.625C9.47656 11.75 8.10938 12.3125 6.5 12.3125C4.89062 12.3125 3.51562 11.75 2.375 10.625C1.25 9.48438 0.6875 8.10938 0.6875 6.5C0.6875 4.89062 1.25 3.52344 2.375 2.39844Z"/></svg>')
+$UIResourceRadioDisabled: url('data:image/svg+xml;utf8, <svg xmlns="http://www.w3.org/2000/svg" fill="gray" viewBox="0 0 24 24"><path d="M2.375 2.39844C3.51562 1.25781 4.89062 0.6875 6.5 0.6875C8.10938 0.6875 9.47656 1.25781 10.6016 2.39844C11.7422 3.52344 12.3125 4.89062 12.3125 6.5C12.3125 8.10938 11.7422 9.48438 10.6016 10.625C9.47656 11.75 8.10938 12.3125 6.5 12.3125C4.89062 12.3125 3.51562 11.75 2.375 10.625C1.25 9.48438 0.6875 8.10938 0.6875 6.5C0.6875 4.89062 1.25 3.52344 2.375 2.39844Z"/></svg>')
+$UIResourceDown: url('data:image/svg+xml;utf8, <svg width="17" height="9" viewBox="0 0 17 9" xmlns="http://www.w3.org/2000/svg"><path d="M8.5 9L17 1.71515L15.0016 0L8.5 5.57576L1.99983 0L0 1.71394L8.5 9Z"/></svg>')
+$UIResourceCalendar: url('data:image/svg+xml;utf8, <svg viewBox="0 0 15 16" xmlns="http://www.w3.org/2000/svg"><path d="M0 14.5C0 15.3281 0.719866 16 1.60714 16H13.3929C14.2801 16 15 15.3281 15 14.5V6H0L0 14.5ZM10.7143 8.375C10.7143 8.16875 10.8951 8 11.1161 8H12.4554C12.6763 8 12.8571 8.16875 12.8571 8.375V9.625C12.8571 9.83125 12.6763 10 12.4554 10H11.1161C10.8951 10 10.7143 9.83125 10.7143 9.625V8.375ZM10.7143 12.375C10.7143 12.1687 10.8951 12 11.1161 12H12.4554C12.6763 12 12.8571 12.1687 12.8571 12.375V13.625C12.8571 13.8312 12.6763 14 12.4554 14H11.1161C10.8951 14 10.7143 13.8312 10.7143 13.625V12.375ZM6.42857 8.375C6.42857 8.16875 6.60937 8 6.83036 8H8.16964C8.39062 8 8.57143 8.16875 8.57143 8.375V9.625C8.57143 9.83125 8.39062 10 8.16964 10H6.83036C6.60937 10 6.42857 9.83125 6.42857 9.625V8.375ZM6.42857 12.375C6.42857 12.1687 6.60937 12 6.83036 12H8.16964C8.39062 12 8.57143 12.1687 8.57143 12.375V13.625C8.57143 13.8312 8.39062 14 8.16964 14H6.83036C6.60937 14 6.42857 13.8312 6.42857 13.625V12.375ZM2.14286 8.375C2.14286 8.16875 2.32366 8 2.54464 8H3.88393C4.10491 8 4.28571 8.16875 4.28571 8.375V9.625C4.28571 9.83125 4.10491 10 3.88393 10H2.54464C2.32366 10 2.14286 9.83125 2.14286 9.625V8.375ZM2.14286 12.375C2.14286 12.1687 2.32366 12 2.54464 12H3.88393C4.10491 12 4.28571 12.1687 4.28571 12.375V13.625C4.28571 13.8312 4.10491 14 3.88393 14H2.54464C2.32366 14 2.14286 13.8312 2.14286 13.625V12.375ZM13.3929 2H11.7857V0.5C11.7857 0.225 11.5446 0 11.25 0L10.1786 0C9.88393 0 9.64286 0.225 9.64286 0.5V2H5.35714V0.5C5.35714 0.225 5.11607 0 4.82143 0L3.75 0C3.45536 0 3.21429 0.225 3.21429 0.5V2H1.60714C0.719866 2 0 2.67187 0 3.5L0 5H15V3.5C15 2.67187 14.2801 2 13.3929 2Z"/></svg>')
+$UIResourceUpload: url('data:image/svg+xml;utf8, <svg width="25" height="16" viewBox="0 0 25 16" xmlns="http://www.w3.org/2000/svg"><path d="M19.0038 16.0001H6.00382C2.87819 16.002 0.274715 13.604 0.020185 10.4887C-0.234345 7.37347 1.94535 4.58465 5.02982 4.07911C6.44953 1.562 9.11394 0.00362534 12.0038 5.65992e-05C13.8058 -0.00675485 15.5563 0.601415 16.9658 1.72411C18.3499 2.82197 19.3339 4.34509 19.7658 6.05811C22.3497 6.45514 24.1916 8.77563 23.9918 11.3822C23.7921 13.9888 21.6181 16.0015 19.0038 16.0001ZM12.0038 2.0001C9.83553 2.00267 7.8365 3.17221 6.77182 5.06111L6.30382 5.90011L5.35482 6.05511C3.3051 6.39852 1.85983 8.25441 2.02904 10.3258C2.19824 12.3972 3.92555 13.9939 6.00382 14.0001H19.0038C20.5724 14.0017 21.8774 12.7947 21.998 11.2308C22.1186 9.66685 21.0141 8.27401 19.4638 8.03511L18.1478 7.83511L17.8258 6.54311C17.1611 3.86992 14.7584 1.99507 12.0038 2.0001ZM13.4538 12.0001H10.5538V9.00011H8.00382L12.0038 5.00011L16.0038 9.00011H13.4538V12.0001Z"/></svg>')
+
+// $UIColor{Color}
+$UIColorBlue: #5BA8F5
 
 $UIErrorBorderColor: #EA4F4B
 $UIErrorBackground: #FAE9EC
@@ -47,7 +77,6 @@ $UIColor: #131313
 $UIPadding: 6px 12px
 $UIPaddingX: 12px
 $UIPaddingY: 6px
-$UIFont: $mainFont
 $UIFontSize: 13px
 $UITransition: all 0.1s 0s ease-in-out
 $UISoftShadow: 0 2px 78px 8px rgba(217, 217, 217, 0.44)
@@ -55,7 +84,7 @@ $UISoftShadow: 0 2px 78px 8px rgba(217, 217, 217, 0.44)
 // Html
 html,
 body
-  font-family: $mainFont
+  font-family: $UIFontRegular
   font-size: 14px
   font-weight: normal
   scrollbar-face-color: rgba(193, 193, 193, .8)
@@ -72,18 +101,25 @@ body
 @import components/label
 @import components/input
 @import components/textarea
+@import components/color
 @import components/step
 @import components/scrollbar
 @import components/checkbox
 @import components/radio
+@import components/file
+@import components/range
 @import components/select
+@import components/datetime
 @import components/breadcrumds
 @import components/product
 @import components/blocks/user
 @import components/blocks/placeholder
 @import components/cart/default
 @import components/controller
+@import components/container-form
 @import components/carousel
 @import components/prototype/product
 @import components/bootstrap/container
 @import components/animate
+@import components/logo
+@import components/screen/login

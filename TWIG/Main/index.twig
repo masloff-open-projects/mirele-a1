@@ -2,59 +2,47 @@
 
 {% block main %}
 
-    <form action="">
+   <div class="container">
+       <hr><br><input width="100%" style="width: 100%" type="button">
+       <hr><br><input width="100%" style="width: 100%" type="checkbox">
+       <hr><br><input width="100%" style="width: 100%" type="color">
+       <hr><br><input width="100%" style="width: 100%" type="date" value="2018-07-22">
+       <hr><br><input width="100%" style="width: 100%" type="datetime-local" value="2018-07-22">
+       <hr><br><input width="100%" style="width: 100%" type="email">
+       <hr><br><input width="100%" style="width: 100%" type="file" accept="image/*" title="&nbsp;">
+       <hr><br><input width="100%" style="width: 100%" type="hidden">
+       <hr><br><input width="100%" style="width: 100%" type="image" src="https://www.tadviser.ru/images/thumb/8/83/Apple-app-store.jpg/840px-Apple-app-store.jpg">
+       <hr><br><input width="100%" style="width: 100%" type="image" src="https://data.tooliphone.net/iskin/themes/14241/15260/preview-256.png" disabled>
+       <hr><br><input width="100%" style="width: 100%" type="month">
+       <hr><br><input width="100%" style="width: 100%" type="number">
+       <hr><br><input width="100%" style="width: 100%" type="password">
+       <hr><br><input width="100%" style="width: 100%" type="radio">
+       <hr><br><input width="100%" style="width: 100%" type="range">
+       <hr><br><input width="100%" style="width: 100%" type="reset">
+       <hr><br><input width="100%" style="width: 100%" type="search">
+       <hr><br><input width="100%" style="width: 100%" type="submit">
+       <hr><br><input width="100%" style="width: 100%" type="tel">
+       <hr><br><input width="100%" style="width: 100%" type="text">
+       <hr><br><input width="100%" style="width: 100%" type="time">
+       <hr><br><input width="100%" style="width: 100%" type="url">
+       <hr><br><input width="100%" style="width: 100%" type="week">
 
-        <button>Welcome</button>
-        <button>Lorem ipsum dolor.</button>
-        <button type="button" disabled>Click Me!</button>
+       <select name="contact-name" id="contact-name" multiple data-placeholder="Select Name">
+           <option value='example1@gmail.com'>Mike Charley</option>
+           <option value='example2@gmail.com'>Andy Lurs</option>
+           <option value='example3@gmail.com'>Toby Lightman</option>
+           <option value='example4@gmail.com'>Lene Marlin</option>
+           <option value='example5@gmail.com'>Deep Purple</option>
+       </select>
 
-        <input type="text">
-        <input type="text" placeholder="Name">
-        <input type="password">
-        <input type="password" placeholder="Password">
-        <input type="password" disabled data-ignore-behaviour>
-        <input type="password" required data-ignore-behaviour>
-        <input type="url" data-ignore-behaviour>
+       <select name="contact-name" id="contact-name" data-placeholder="Select Name">
+           <option value='example1@gmail.com'>Mike Charley</option>
+           <option value='example2@gmail.com'>Andy Lurs</option>
+           <option value='example3@gmail.com'>Toby Lightman</option>
+           <option value='example4@gmail.com'>Lene Marlin</option>
+           <option value='example5@gmail.com'>Deep Purple</option>
+       </select>
 
-        <input type="checkbox" id="checkbox" checked>
-        <input type="checkbox" id="checkbox" checked disabled>
-        <input type="checkbox" id="checkbox">
-        <input type="checkbox" id="checkbox">
-        <input type="checkbox" id="checkbox">
-        <input type="checkbox" id="checkbox">
-        <input type="checkbox" id="checkbox">
-
-        <input type="radio" name="'" checked>
-        <input type="radio" name="'" checked disabled>
-        <input type="radio" name="'">
-        <input type="radio" name="'">
-
-        <button tyle="submit">submit</button>
-
-    </form>
-
-
-    <form action="">
-        <input type="checkbox" id="checkbox">
-        <label for="checkbox">Welcome</label>
-
-        <select size="3" multiple name="hero[]">
-            <option disabled>Выберите героя</option>
-            <option value="Чебурашка">Чебурашка</option>
-            <option selected value="Крокодил Гена">Крокодил Гена</option>
-            <option value="Шапокляк">Шапокляк</option>
-            <option value="Крыса Лариса">Крыса Лариса</option>
-        </select>
-
-        <select name="hero[]">
-            <option disabled>Выберите героя</option>
-            <option value="Чебурашка">Чебурашка</option>
-            <option selected value="Крокодил Гена">Крокодил Гена</option>
-            <option value="Шапокляк">Шапокляк</option>
-            <option value="Крыса Лариса">Крыса Лариса</option>
-        </select>
-
-    </form>
-
+   </div>
 
 {% endblock %}

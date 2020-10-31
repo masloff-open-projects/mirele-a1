@@ -26,11 +26,9 @@
 <div class="subbar">
     <div class="container">
         <div class="col-sm-12">
-            <div class="container-flex j-space-between p-3">
-                <div>
-                    <h3 class="m-0 p-0 font-weight-lighter" style="color: #4e4e4e">
-                        <a href="{{ blog.home }}" style="color: #4e4e4e">{{ blog.name|upper }}</a>
-                    </h3>
+            <div class="container-flex j-space-between py-3 px-0">
+                <div class="container-flex pi-center">
+                    <a href="{{ blog.home }}" class="logo-regular m-0 p-0 font-weight-lighter font-size-6">{{ blog.name|upper }}</a>
                 </div>
                 <div class="w-75">
                     <input type="text" width="100%" class="w-100" placeholder="Search by site, store and articles">

@@ -1,19 +1,41 @@
-// <select>
-// TODO: IT!
 select
-  background: $UIBackground
-  border: $UIBorder $mainBorderColor
-  color: $UIColor
-  padding: $UIPadding
-  font: $UIFont
+  background: $UIColorWhite
+  border: 1px solid #e1e1e1
+  color: $UIColorDark
+  font: $UIFontRegular
   font-size: $UIFontSize
   font-weight: normal
   outline: none
-  border-radius: 0
+  border-radius: $UIBorderRadiusRegular
+  min-width: 42px
+  padding: 6px 28px 6px 12px
 
-  // Style for open mutivariant list
-  &[multiple]
-    padding: $UIPaddingY
+  -webkit-appearance: none
+  -moz-appearance: none
+  text-overflow: ''
+
+  background-image: $UIResourceDown
+  background-position: 90% 55%
+  background-size: 7%
+  background-repeat: no-repeat
+
+  @media (max-width: 576px)
+    &[multiple]
+      background-image: none
+      padding: 12px
+      box-shadow: none
+
+  @media (min-width: 576px)
+    &[multiple]
+      background-image: none
+      padding: 12px
+      box-shadow: none
+
+  @media (min-width: 768px)
+    &[multiple]
+      background-image: none
+      padding: 12px
+      box-shadow: inset 0 -5px 10px -2px #efefef
 
   &:-webkit-autofill,
   &:-webkit-autofill:hover,

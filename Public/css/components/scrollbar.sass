@@ -1,12 +1,19 @@
 ::-webkit-scrollbar
-  width: 10
+  width: 10px
   height: 8px
 
+  &:hover
+    background: transparent
+
 ::-webkit-scrollbar-thumb
-  background: rgba(193, 193, 193, .8)
-  border: solid 1.4px rgba(193, 193, 193, 1)
+  background: rgb(238, 238, 238)
+  border: none
+  border-radius: $UIBorderRadiusRegular
   -webkit-transition: ease 1s
   transition: ease 1s
+
+  &:hover
+    background: rgb(224, 224, 224)
 
 ::-webkit-scrollbar-track
   background: #00000005

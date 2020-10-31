@@ -4,6 +4,7 @@
         "voku/anti-xss": "^4.1",
         "ext-json": "*",
         "ext-xml": "*",
-        "mustangostang/spyc": "^0.6.3"
+        "mustangostang/spyc": "^0.6.3",
+        "monolog/monolog": "^2.1"
     }
 }

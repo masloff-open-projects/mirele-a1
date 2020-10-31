@@ -1,21 +1,18 @@
-//input[type=range],
-//input[type=file],
-//input[type=hidden],
-input[type=text],
-input[type=email],
-input[type=image],
-input[type=number],
-input[type=search],
-input[type=tel],
-input[type=url],
-input[type=password]
+input[type=date],
+input[type=datetime-local],
+input[type=month],
+input[type=time],
+input[type=week]
 
   background: #FFFFFF
   border: 1px solid #e1e1e1
   color: #4B4B4B
   border-radius: $UIBorderRadiusMedium
   min-width: 24px
+  min-height: 24px
   padding: 6px 16px
+
+  text-overflow: ''
 
   line-height: 137.5%
   letter-spacing: 0.3px
@@ -54,34 +51,12 @@ input[type=password]
   &[disabled]
     color: #A0A0A0
     filter: grayscale(1)
+    outline: none
 
   &:disabled:hover,
   &[disabled]:hover
     border: $UIBorder $mainBorderColor
     cursor: not-allowed
-    filter: grayscale(1)
-    outline: none
-
-  &[type=image]
-    padding: 0
-
-  &[type=image]:hover
-    padding: 0
-    border: 1px solid #e1e1e1
-
-  &[type=image]:disabled,
-  &[type=image][disabled]
-    filter: grayscale(1)
-    padding: 0
-    border: 1px solid #e1e1e1
-
-  // Hide ...
-  &::-webkit-search-decoration,
-  &::-webkit-search-cancel-button,
-  &::-webkit-search-results-button,
-  &::-webkit-search-results-decoration
-    -webkit-appearance: none
-
 
   // Invalid state
   &:invalid:not([data-ignore-behaviour]),
@@ -90,7 +65,8 @@ input[type=password]
     border: $UIBorder $UIErrorBorderColor
     background: $UIErrorBackground !important
 
-// Valid state
-//&:valid:not([data-ignore-behaviour])
-//  border: $UIBorder $UISuccessBorderColor
-//  background: $UISuccessBackground !important
+  &::-webkit-inner-spin-button,
+  &::-webkit-calendar-picker-indicator
+    display: none
+    -webkit-appearance: none
+

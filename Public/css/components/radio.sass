@@ -1,5 +1,3 @@
-// Radio
-
 $radioWidth: 14px
 $radioHeight: 14px
 
@@ -15,13 +13,22 @@ input[type="radio"]
   border-color: transparent
   padding: 0
 
-  // In normal condition.
+  // It is necessary to intentionally prohibit
+  // stretching of an element as the page may
+  // display a non-selected element and
+  // cause disorientation.
+  &[width]
+    width: auto !important
+
+  &[height]
+    height: auto !important
+
   &:before
     content: ""
     background-size: 110%
     background-position: -200% -200%
     background-repeat: no-repeat
-    background-color: $UIBackground
+    background-color: white
     border: $UIBorder $mainBorderColor
     width: $radioHeight + 4px
     height: $radioHeight + 4px
@@ -30,14 +37,13 @@ input[type="radio"]
     opacity: 1
     top: -2px
     left: -2px
-    border-radius: 50%
+    border-radius: $UIBorderRadiusInfinity
     transition: $mainTransition
 
-  // In activated state
   &:checked:before
     content: ""
     background-image: url('data:image/svg+xml;utf8, <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M2.375 2.39844C3.51562 1.25781 4.89062 0.6875 6.5 0.6875C8.10938 0.6875 9.47656 1.25781 10.6016 2.39844C11.7422 3.52344 12.3125 4.89062 12.3125 6.5C12.3125 8.10938 11.7422 9.48438 10.6016 10.625C9.47656 11.75 8.10938 12.3125 6.5 12.3125C4.89062 12.3125 3.51562 11.75 2.375 10.625C1.25 9.48438 0.6875 8.10938 0.6875 6.5C0.6875 4.89062 1.25 3.52344 2.375 2.39844Z"/></svg>')
-    background-color: $UIBackground
+    background-color: white
     border: $UIBorder $mainBorderColor
     width: $radioHeight + 4px
     height: $radioHeight + 4px
@@ -46,8 +52,12 @@ input[type="radio"]
     opacity: 1
     top: -2px
     left: -2px
+    border-radius: $UIBorderRadiusInfinity
 
   // Forbidden to change
   &[disabled]:before,
   &[disabled]:checked:before
     background-image: url('data:image/svg+xml;utf8, <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="gray"><path d="M2.375 2.39844C3.51562 1.25781 4.89062 0.6875 6.5 0.6875C8.10938 0.6875 9.47656 1.25781 10.6016 2.39844C11.7422 3.52344 12.3125 4.89062 12.3125 6.5C12.3125 8.10938 11.7422 9.48438 10.6016 10.625C9.47656 11.75 8.10938 12.3125 6.5 12.3125C4.89062 12.3125 3.51562 11.75 2.375 10.625C1.25 9.48438 0.6875 8.10938 0.6875 6.5C0.6875 4.89062 1.25 3.52344 2.375 2.39844Z"/></svg>')
+    filter: grayscale(1)
+    outline: none
+    cursor: not-allowed
