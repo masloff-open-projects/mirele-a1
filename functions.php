@@ -443,6 +443,88 @@ add_action('init', function () {
 
 });
 
+add_action('wp_ajax_nopriv_mirele_endpoint_v1', function ($event = null) {
+
+    // Wordpress Event Processing
+    $POST = MIRELE_POST;
+
+    if (isset($POST['action']) and isset($POST['method']))
+    {
+
+        $run = AJAX::run((MIRELE_POST)['method'], [
+            'verify_nonce' => wp_verify_nonce($_REQUEST['nonce'], MIRELE_NONCE)]);
+
+        if ($run instanceof Response)
+        {
+            http_response_code($run->getCode());
+            wp_send_json($run->getBody());
+        } elseif (is_bool($run))
+        {
+            if ($run === true)
+            {
+                wp_send_json_success([]);
+            } elseif ($run === false)
+            {
+                wp_send_json_error([]);
+            } else
+            {
+                wp_send_json([]);
+            }
+        } elseif (is_object($run) or is_array($run))
+        {
+            wp_send_json($run);
+        } else
+        {
+            print $run;
+        }
+
+        exit;
+
+    }
+
+});
+
+add_action('wp_ajax_mirele_endpoint_v1', function ($event = null) {
+
+    // Wordpress Event Processing
+    $POST = MIRELE_POST;
+
+    if (isset($POST['action']) and isset($POST['method']))
+    {
+
+        $run = AJAX::run((MIRELE_POST)['method'], [
+            'verify_nonce' => wp_verify_nonce($_REQUEST['nonce'], MIRELE_NONCE)]);
+
+        if ($run instanceof Response)
+        {
+            http_response_code($run->getCode());
+            wp_send_json($run->getBody());
+        } elseif (is_bool($run))
+        {
+            if ($run === true)
+            {
+                wp_send_json_success([]);
+            } elseif ($run === false)
+            {
+                wp_send_json_error([]);
+            } else
+            {
+                wp_send_json([]);
+            }
+        } elseif (is_object($run) or is_array($run))
+        {
+            wp_send_json($run);
+        } else
+        {
+            print $run;
+        }
+
+        exit;
+
+    }
+
+});
+
 add_action('init', function () {
 
     if (wp_doing_ajax() == false)
