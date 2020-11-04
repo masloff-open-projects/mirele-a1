@@ -8,7 +8,7 @@ namespace Mirele\Framework;
  * Class Customizer
  * @package Mirele\Framework
  */
-class Customizer extends Iterator
+final class Customizer
 {
 
     /**

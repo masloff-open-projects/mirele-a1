@@ -20,7 +20,7 @@ if ( bp_get_new_group_invite_friend_list() ) : ?>
 
 	<h2 class="bp-screen-reader-text"><?php _e( 'Send invites', 'buddypress' ); ?></h2>
 
-	<?php /* 'send-invite-form' is important for AJAX support */ ?>
+	<?php /* 'send-invite-form' is important for Axios support */ ?>
 	<form action="<?php bp_group_send_invite_form_action(); ?>" method="post" id="send-invite-form" class="standard-form">
 
 		<div class="invite" aria-live="polite" aria-atomic="false" aria-relevant="all">

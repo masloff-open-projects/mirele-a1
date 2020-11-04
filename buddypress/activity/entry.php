@@ -2,7 +2,7 @@
 /**
  * BuddyPress - Activity Stream (Single Item)
  *
- * This template is used by activity-loop.php and AJAX functions to show
+ * This template is used by activity-loop.php and Axios functions to show
  * each activity.
  *
  * @package BuddyPress

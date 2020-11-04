@@ -8,8 +8,9 @@
  */
 
 use Mirele\Framework\Customizer;
+use Mirele\TWIG;
 
-\Mirele\TWIG::Render('Layout/header', [
+TWIG::Render('Compound/Engine/Application/header.html.twig', [
     'blog' => [
         'name' => get_bloginfo ('name', 'display'),
         'description' => get_bloginfo ('description', 'display'),

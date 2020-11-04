@@ -4,11 +4,12 @@
 namespace Mirele;
 
 
-use Dallgoot\Yaml;
 use Spyc;
 
 
 /**
+ * Web Methods
+ *
  * @method static Router get(string $route, Callable $callback)
  * @method static Router post(string $route, Callable $callback)
  * @method static Router put(string $route, Callable $callback)
@@ -17,7 +18,7 @@ use Spyc;
  * @method static Router head(string $route, Callable $callback)
  */
 
-class Router
+final class Router
 {
     /**
      * @var bool
@@ -119,7 +120,7 @@ class Router
         self::$halts = $flag;
     }
 
-    public static function static_files ($uri='/public/(:all)', $path='') {
+    public static function staticFiles ($uri='/public/(:all)', $path='') {
 
         self::$static_dir = $path;
         self::$static_uri = $uri;
@@ -128,50 +129,65 @@ class Router
 
             # Setup router
             self::get($uri, function ($filename) {
-                if (self::$static_dir) {
+                if(!empty($filename)) {
+                    if (self::$static_dir) {
 
-                    $file = realpath(self::$static_dir . '/' . $filename);
+                        $file = realpath(self::$static_dir . '/' . $filename);
 
-                    if ($file and (is_file($file) or is_dir($file))) {
+                        if ($file and (is_file($file) or is_dir($file))) {
 
-                        $ignoreFile = realpath(self::$static_dir . '/.ignore');
-                        $ignoreFiles = [];
+                            $ignoreFile = realpath(self::$static_dir . '/.ignore');
+                            $ignoreFiles = [];
 
-                        if (file_exists($ignoreFile)) {
-                            $ignoreFiles = file($ignoreFile);
-                        }
+                            if (file_exists($ignoreFile)) {
+                                $ignoreFiles = file($ignoreFile);
+                            }
 
-                        if ($ignoreFiles != []) {
-                            foreach ($ignoreFiles as $source) {
-                                if (strpos($filename, $source) === 0) {
-                                    http_response_code(404);
-                                    exit;
+                            if ($ignoreFiles != []) {
+                                foreach ($ignoreFiles as $source) {
+                                    if (strpos($filename, $source) === 0) {
+                                        http_response_code(404);
+                                        exit;
+                                    }
                                 }
                             }
-                        }
 
-                        if (is_file($file)) {
+                            if (is_file($file)) {
 
-                            header('Content-Type: ' . mime_content_type($file));
-                            http_response_code(200);
+                                header('Content-Type: ' . mime_content_type($file));
+                                http_response_code(200);
 
-                            print file_get_contents($file);
+                                print file_get_contents($file);
+                                exit;
+
+                            } else if (is_dir($file)) {
+                                exit;
+                            }
+
                             exit;
 
-                        } else if (is_dir($file)) {
+                        } else {
+                            http_response_code(404);
                             exit;
                         }
-
-                        exit;
 
                     } else {
                         http_response_code(404);
                         exit;
                     }
-
                 } else {
-                    http_response_code(404);
-                    exit;
+                    $file = realpath(self::$static_dir . '/index.html');
+
+                    if ($file and (is_file($file) or is_dir($file))) {
+                        header('Content-Type: ' . mime_content_type($file));
+                        http_response_code(403);
+
+                        print file_get_contents($file);
+                        exit;
+                    } else {
+                        http_response_code(404);
+                        exit;
+                    }
                 }
             });
 
@@ -367,7 +383,7 @@ class Router
                             $glossary = array(
                                 '$root' => TEMPLATE_URI,
                                 '~' => $type,
-                                '-> ' => $id . "_",
+                                '-> ' => $id . "-",
                                 '->' => $id,
                             );
 
@@ -379,7 +395,7 @@ class Router
                                 if (is_array($src)) {
 
                                     foreach ($src as $child_alias => $child) {
-                                        $glossary['=> '] = $alias . "_";
+                                        $glossary['=> '] = $alias . "-";
                                         $glossary['=>'] = "$alias";
 
                                         $child_alias = str_replace(array_keys($glossary), array_values($glossary), $child_alias);

@@ -14,7 +14,7 @@ use TypeError;
  * Class Store
  * @package Mirele\Compound
  */
-class Store extends Iterator
+class Store
 {
 
     /**

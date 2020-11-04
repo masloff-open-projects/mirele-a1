@@ -361,7 +361,7 @@ do_action( 'bp_before_create_group_page' ); ?>
 							<p><?php _e('Select people to invite from your friends list.', 'buddypress' ); ?></p>
 						</div>
 
-						<?php /* The ID 'friend-list' is important for AJAX support. */ ?>
+						<?php /* The ID 'friend-list' is important for Axios support. */ ?>
 						<ul id="friend-list" class="item-list">
 
 						<?php if ( bp_group_has_invites() ) : ?>

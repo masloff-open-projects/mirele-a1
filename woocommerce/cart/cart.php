@@ -17,7 +17,7 @@
 
 defined( 'ABSPATH' ) || exit;
 
-\Mirele\TWIG::Render('Woocommerce/cart', [
+\Mirele\TWIG::Render('Compound/Engine/Application/Module/Woocommerce/cart.html.twig', [
     'url' => [
         'form' => esc_url(wc_get_cart_url()),
         'cart' => WC()->cart->get_cart()

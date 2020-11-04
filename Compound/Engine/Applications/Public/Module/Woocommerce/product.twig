@@ -1,0 +1,181 @@
+{% extends 'Compound/Engine/Applications/Public/layout.html.twig' %}
+
+{% block main %}
+
+    {{ wp.wc_print_notices }}
+
+    {{ wp.do_action( 'woocommerce_before_main_content' ) }}
+
+    <div class="container-fluid woocommerce-product_{{ product.get_id }}" id="productObject">
+
+        {# Main block #}
+        <div class="row mb-5" itemtype="http://schema.org/Product" itemscope>
+            <div class="col-md-6 p-0 pr-md-3 p-xs-0">
+
+                {{ Component('default_product_gallery', {
+                    name: product.name,
+                    gallery: product.get_gallery_image_urls_thumbnails,
+                    show_gallery: product.get_gallery_image_urls_thumbnails|length > 0,
+                }) }}
+
+            </div>
+            <div class="col-md-6">
+
+                {# SEO #}
+                <meta itemprop="sku" content="{{ product.get_sku }}"/>
+                <meta itemprop="mpn" content="925872"/>
+                <meta itemprop="name" content="{{ product.name }}"/>
+                <meta itemprop="description" content="{{ product.description }}"/>
+
+                <link itemprop="image" href="{{ product.get_image_src }}"/>
+
+                {% for image in product.get_gallery_image_urls_thumbnails %}
+                    <link itemprop="image" href="https://example.com/photos/16x9/photo.jpg"/>
+                {% endfor %}
+
+                <div itemprop="aggregateRating" itemtype="http://schema.org/AggregateRating" itemscope>
+                    <meta itemprop="reviewCount" content="89"/>
+                    <meta itemprop="ratingValue" content="4.4"/>
+                </div>
+
+                <div itemprop="brand" itemtype="http://schema.org/Brand" itemscope>
+                    <meta itemprop="name" content="ACME"/>
+                </div>
+
+                <div itemprop="review" itemtype="http://schema.org/Review" itemscope>
+                    <div itemprop="author" itemtype="http://schema.org/Person" itemscope>
+                        <meta itemprop="name" content="Fred Benson"/>
+                    </div>
+                    <div itemprop="reviewRating" itemtype="http://schema.org/Rating" itemscope>
+                        <meta itemprop="ratingValue" content="4"/>
+                        <meta itemprop="bestRating" content="5"/>
+                    </div>
+                </div>
+
+                <div itemprop="offers" itemtype="http://schema.org/AggregateOffer" itemscope>
+                    <meta itemprop="lowPrice" content="119.99"/>
+                    <meta itemprop="highPrice" content="199.99"/>
+                    <meta itemprop="offerCount" content="6"/>
+                    <meta itemprop="priceCurrency" content="USD"/>
+                </div>
+
+                {# Title #}
+                <span>
+                    <h3>{{ product.name }}</h3>
+                    <small v-html="sku">{{ product.get_sku }}</small>
+                </span>
+
+                {# Description #}
+                <p class="woocommerce-product-description">
+                    {{ product.description }}
+                </p>
+
+                {# Price #}
+                <h4>
+
+                    <span class="woocommerce-product-price">
+                        <span v-html="price">{{ product.price }}</span> USD
+                    </span>
+
+                    <span v-if="regularPrice" class="woocommerce-product-regular-price">
+                        <span v-html="regularPrice">{{ product.get_regular_price }}</span> USD
+                    </span>
+
+                </h4>
+
+                {# Props #}
+                <div>
+                    {% if product.get_attributes is not empty %}
+                        <div class="woocommerce-props">
+
+                            {# Dynamic props #}
+                            <div class="woocommerce-props-dynamic">
+                                {% for id,i in product.get_attributes %}
+                                    {% if i.get_data.is_visible == 1 and i.get_data.is_variation == 1 %}
+
+                                        <div class="mb-3">
+
+                                            {# It`s single attribute #}
+                                            {% if i.get_data.is_taxonomy == 1 %}
+
+                                                {% set taxonomy = wp.wc_get_attribute(i.get_data.id) %}
+
+                                                <div class="woocommerce-props-single-prop woocommerce-attribute_{{ id }} mb-2 font-weight-normal">{{ taxonomy.name|upper }}</div>
+
+                                                <select name="attribute_{{ id }}" id="attribute_{{ id }}"
+                                                        style="width:80%" v-model="variation['attribute_{{ id }}']">
+                                                    <option value="{{ taxonomy.name }}" :selected="true"
+                                                            disabled>{{ taxonomy.name|upper }}</option>
+
+                                                    {% for i in wp.get_the_terms(product.get_id, i.get_data.name) %}
+                                                        <option value="{{ i.slug }}">{{ i.name }}</option>
+                                                    {% endfor %}
+                                                </select>
+
+                                            {% else %}
+
+                                                <div class="woocommerce-props-single-prop woocommerce-attribute_{{ id }} mb-2 font-weight-normal">{{ i.get_data.name|upper }}</div>
+
+                                                <select name="attribute_{{ id }}" id="attribute_{{ id }}"
+                                                        style="width:80%" v-model="variation['attribute_{{ id }}']">
+
+                                                    <option value="{{ i.get_data.name }}" selected
+                                                            disabled>{{ i.get_data.name|upper }}</option>
+
+                                                    {% for i in i.get_data.options %}
+                                                        <option value="{{ i }}">{{ i }}</option>
+                                                    {% endfor %}
+                                                </select>
+
+                                            {% endif %}
+
+                                        </div>
+
+                                    {% endif %}
+                                {% endfor %}
+                            </div>
+
+                            {# Static props #}
+                            <div class="woocommerce-props-static">
+                                {% for i in product.get_attributes %}
+                                    {% if i.get_data.is_visible == 1 and i.get_data.is_variation == 0 %}
+                                        {# It`s single attribute #}
+                                        {% if i.get_data.options|length == 1 and i.get_data.options[0] == 0 %}
+                                            <div class="woocommerce-props-single-prop">{{ i.get_data.name }}</div>
+                                        {% else %}
+                                            <div>{{ i.get_data.name }}</div>
+                                        {% endif %}
+                                    {% endif %}
+                                {% endfor %}
+                            </div>
+
+                        </div>
+                    {% endif %}
+                </div>
+
+                {# Actions #}
+                <button style="width:80%" @click="addToCart" v-bind:disabled="!enabled">Buy</button>
+
+
+            </div>
+        </div>
+
+        {# Recommended block #}
+        <div class="row mb-5">
+            <div class="col-md-12">
+                <h5>Recommended for you</h5>
+            </div>
+        </div>
+
+        {# Comments block #}
+        <div class="row mb-5">
+            <div class="col-md-12">
+                <h5>Comments</h5>
+            </div>
+        </div>
+
+    </div>
+
+    {{ wp.do_action( 'woocommerce_after_main_content' ) }}
+
+{% endblock %}

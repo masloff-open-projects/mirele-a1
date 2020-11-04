@@ -1,4 +1,10 @@
+# Tips:
+# 1. If a file 'index.html' is created in a public folder,
+#    it will be shown when a user tries to get into a directory with all public files.
+#    Access to this file via .ignore cannot be denied
+#    access to this file will be granted bypassing .ignore
+
 # Specify the files that should not be indexed
+
 .ignore
-common.txt
-css/compound
+index.html

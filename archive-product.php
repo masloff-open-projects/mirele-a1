@@ -23,7 +23,7 @@ use Mirele\Framework\Customizer;
 wp_enqueue_script('woocommerceui_products');
 
 # Create shadows of products
-$shadows = new Buffer();
+//$shadows = new Buffer();
 
 # Generator
 foreach (wc_get_products([
@@ -33,19 +33,19 @@ foreach (wc_get_products([
     'posts_per_page' => get_option( 'posts_per_page' ),
     'paged'          => (get_query_var('paged')) ? get_query_var('paged') : 1
 ]) as $product) {
-    $shadows->append((object) [
-        'name' => $product->get_name(),
-        'description' => $product->get_description(),
-        'price' => $product->get_price(),
-        'regular_price' => $product->get_regular_price(),
-        'sale_price' => $product->get_sale_price(),
-        'weight' => $product->get_weight(),
-        'width' => $product->get_width(),
-        'height' => $product->get_height(),
-        'image' => wp_get_attachment_url(get_post_thumbnail_id($product->get_id())),
-        'meta' => $product->get_meta(),
-        'link' => $product->get_permalink()
-    ]);
+//    $shadows->append((object) [
+//        'name' => $product->get_name(),
+//        'description' => $product->get_description(),
+//        'price' => $product->get_price(),
+//        'regular_price' => $product->get_regular_price(),
+//        'sale_price' => $product->get_sale_price(),
+//        'weight' => $product->get_weight(),
+//        'width' => $product->get_width(),
+//        'height' => $product->get_height(),
+//        'image' => wp_get_attachment_url(get_post_thumbnail_id($product->get_id())),
+//        'meta' => $product->get_meta(),
+//        'link' => $product->get_permalink()
+//    ]);
 }
 
 
@@ -60,7 +60,7 @@ foreach (wc_get_products([
     'lsbn'          => 'left-side-list-products',
     'show_header'   => apply_filters('woocommerce_show_page_title', true),
     'show_carousel' => Customizer::get('@wc-shop', 'mrl_wp_show_carousel', []),
-    'shadows'       => $shadows->getBuffer(),
+//    'shadows'       => $shadows->getBuffer(),
     'grid' => [
         'columns' => get_option( 'woocommerce_catalog_columns', 4 ),
         'rows' => get_option( 'woocommerce_catalog_rows', 8 ),

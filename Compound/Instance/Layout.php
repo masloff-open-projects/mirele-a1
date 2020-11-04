@@ -7,6 +7,7 @@ namespace Mirele\Compound;
 /**
  * Class Signature
  * @package Mirele\Compound
+ * @deprecated
  */
 class Layout
 {

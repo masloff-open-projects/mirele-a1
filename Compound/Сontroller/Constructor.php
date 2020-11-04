@@ -12,7 +12,7 @@ use Mirele\Framework\Stringer;
  * Class Constructor
  * @package Mirele\Compound
  */
-class Constructor extends Iterator
+class Constructor
 {
 
     /**

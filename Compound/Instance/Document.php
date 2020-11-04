@@ -4,7 +4,7 @@
 namespace Mirele\Compound;
 
 
-class Document
+class Document extends Protector
 {
 
     protected $document;

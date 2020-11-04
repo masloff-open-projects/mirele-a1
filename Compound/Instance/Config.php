@@ -7,6 +7,7 @@ namespace Mirele\Compound;
 /**
  * Class Config
  * @package Mirele\Compound
+ * @deprecated
  */
 class Config
 {

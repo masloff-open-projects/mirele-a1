@@ -30,10 +30,7 @@ if ( ! $checkout->is_registration_enabled() && $checkout->is_registration_requir
     return;
 }
 
-\Mirele\TWIG::Render('Woocommerce/checkout', [
-    'url' => [
-        'checkout' => esc_url(wc_get_checkout_url())
-    ],
+\Mirele\TWIG::Render('Compound/Engine/Application/Module/Woocommerce/checkout.html.twig', [
     'checkout' => $checkout,
     'nonce' => wp_create_nonce('woocommerce-process_checkout')
 ]);

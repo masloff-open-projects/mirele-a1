@@ -2,13 +2,11 @@
 
 namespace Mirele;
 
-use Automattic\Jetpack\Sync\Modules\Options;
 use Mirele\Compound\Component;
 use Mirele\Compound\Field;
 use Mirele\Compound\Store;
 use Mirele\Compound\Template;
 use Mirele\Framework\Customizer;
-use Mirele\Framework\Option;
 use Mirele\Framework\Stringer;
 use Mirele\Utils\Converter;
 use Twig\Extension\AbstractExtension;
@@ -35,10 +33,13 @@ class TWIG
      * @var string[]
      */
     private static $alias = [
-        '@woocommerce' => 'Woocommerce',
-        "@login" => 'Woocommerce/authorization/login',
-        "@signup" => 'Woocommerce/authorization/signup',
-        "@passwordRecovery" => 'Woocommerce/authorization/password_recovery',
+//        '@woocommerce' => 'Woocommerce',
+//        "@login" => 'Woocommerce/authorization/login',
+//        "@signup" => 'Woocommerce/authorization/signup',
+//        "@passwordRecovery" => 'Woocommerce/authorization/password_recovery',
+//        "application@footer" => 'Compound/Engine/Application/footer.html.twig',
+//        "application@header" => 'Compound/Engine/Application/header.html.twig',
+//        "application@layout" => 'Compound/Engine/Application/layout.html.twig',
     ];
 
     /**
@@ -237,21 +238,15 @@ class TWIG
         $template =  ((new Stringer($template))::format(self::$alias));
 
         $ext = pathinfo($template, PATHINFO_EXTENSION);
-        $abs = realpath(TEMPLATE_PATH . '/' . $template . (empty($ext) ? '.twig' : ''));
-        $dep = $template . (empty($ext) ? '.twig' : '');
-        
-        if ($abs) {
-            $path = $dep;
-        } else {
-            if (file_exists(TEMPLATE_PATH . "/Binders/$dep")) {
-                $path = "Binders/$dep";
-            } else {
-                $path = "TWIG/$dep";
-            }
-        }
+        $path = $template . (empty($ext) ? '.twig' : '');
 
         $params = array_merge(
             array (
+                'ww2as' => get_option('mrl_wp_sidebar_width_2_active', 2),
+                'ww1as' => get_option('mrl_wp_sidebar_width_1_active', 4),
+                'ars' => is_active_sidebar('right-side-page', 'false') == 'true' ? true : false,
+                'als' => is_active_sidebar('left-side-page', 'false') == 'true' ? true : false,
+                'hsmp' => get_option('mrl_wp_sidebar_hide_mobile', 'true') == 'true' ? true : false,
                 'options' => Customizer::all(),
                 'source' => MIRELE_SOURCE_DIR,
                 'url_without_params' => MIRELE_URL,
@@ -262,6 +257,7 @@ class TWIG
                     'login' => wp_login_url(),
                     'logout' => wp_logout_url(),
                     'lost_password' => wp_lostpassword_url(),
+                    'checkout' => WOOCOMMERCE_SUPPORT ? esc_url(wc_get_checkout_url()) : '',
                     'profile' => [
                         'edit' => get_edit_profile_url(),
                     ],

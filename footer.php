@@ -7,4 +7,6 @@
  * @version 1.0.0
  */
 
-\Mirele\TWIG::Render('Layout/footer', []);
+use Mirele\TWIG;
+
+TWIG::Render('Compound/Engine/Application/footer.html.twig', []);

@@ -7,7 +7,7 @@ namespace Mirele\Framework;
 use Mirele\Compound\Response;
 
 /**
- * A class is usually inherited to other classes from the package Mirele\WPAJAX.
+ * A class is usually inherited to other classes from the package Mirele\Network.
  * In the case of inheritance, the parent class may have the '__invoke' method - this is called when processing a request.
  *
  * Class Request

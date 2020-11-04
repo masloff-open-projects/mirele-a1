@@ -7,6 +7,7 @@ namespace Mirele\Compound;
 /**
  * Class Field
  * @package Mirele\Compound
+ * @deprecated
  */
 class Field
 {

@@ -12,7 +12,7 @@ use Mirele\Framework\Stringer;
  * Class TagsManager
  * @package Mirele\Compound
  */
-class TagsManager extends Iterator
+class TagsManager
 {
 
     /**

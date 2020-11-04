@@ -1,0 +1,43 @@
+{
+  "HammerWrench": {
+    "binders": {
+      "masks": [
+        "Binder/Component/*/Children/*.php",
+        "Binder/Component/*/*.php",
+        "Binder/Template/*/*.php",
+        "Binder/Template/*.php"
+      ],
+      "output": "Binder/autoloader.php"
+    },
+    "compound": {
+      "masks": [
+        "Compound/Instance/Protector.php",
+        "Compound/Interface/*.php",
+        "Compound/Trait/*.php",
+        "Compound/Instance/*.php",
+        "Compound/Prototype/*.php",
+        "Compound/Module/*.php",
+        "Compound/Module/*/*.php",
+        "Compound/Module/*/*/*.php",
+        "Compound/Сontroller/*.php",
+        "Compound/Adapter/*.php",
+        "Compound/Strategy/*.php",
+        "Compound/Strategy/*/*.php",
+        "Compound/Pattern/*/*/*.php",
+        "Compound/Pattern/*/*.php",
+        "Compound/Pattern/*.php",
+        "Compound/Engine/*/*/*.php",
+        "Compound/Engine/*/*.php",
+        "Compound/Engine/*.php"
+      ],
+      "output": "Compound/autoloader.php"
+    },
+    "network": {
+      "masks": [
+        "Route/*/*.php",
+        "Route/*/*/*.php"
+      ],
+      "output": "Route/autoloader.php"
+    }
+  }
+}

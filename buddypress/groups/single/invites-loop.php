@@ -51,7 +51,7 @@
 
 		</div>
 
-		<?php /* The ID 'friend-list' is important for AJAX support. */ ?>
+		<?php /* The ID 'friend-list' is important for Axios support. */ ?>
 		<ul id="friend-list" class="item-list">
 
 		<?php while ( bp_group_invites() ) : bp_group_the_invite(); ?>

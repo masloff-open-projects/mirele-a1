@@ -22,24 +22,25 @@
  */
 
 global $logger;
+global $modules;
 
-use Mirele\Compound\Field;
+use Mirele\Compound\Adapter\AJAX;
+use Mirele\Compound\Document;
 use Mirele\Compound\Grider;
-use Mirele\Compound\Lexer;
+use Mirele\Compound\Network;
 use Mirele\Compound\Store;
-use Mirele\Compound\Template;
 use Mirele\Framework;
 use Mirele\Framework\Stringer;
 use Mirele\Router;
 use Mirele\TWIG;
-use Monolog\Logger;
 use Monolog\Handler\StreamHandler;
+use Monolog\Logger;
 
 # Checking the compatibility and legality of the file call
 defined('ABSPATH') or die('Not defined ABSPATH');
 
 # Main Constants
-include_once 'Adjustment.php';
+include_once 'environment.php';
 
 # Compatibility check
 if (version_compare(PHP_VERSION, MIRELE_REQUIRED['PHP']) <= 0)
@@ -53,13 +54,17 @@ if (version_compare(PHP_VERSION, MIRELE_REQUIRED['PHP']) <= 0)
             'href'   => '#',
             'parent' => '',
             'meta'   => ['class' => 'incompatibility-dummy-wp-menu'],
-            'group'  => false));
-    });
+            'group'  => false
+        )
+        );
+    }
+    );
 
     # Create page
     add_menu_page('MIRELE', 'Mirele Repair', 'edit_themes', 'mirele_repair', function () {
         echo "Install PHP ".MIRELE_REQUIRED['PHP']." or next";
-    }, '', 1);
+    }, '', 1
+    );
 
     return;
 }
@@ -77,93 +82,87 @@ if (wp_doing_ajax() == false and true)
     ini_set('display_startup_errors', 1);
 }
 
-# In order not to clog up AJAX requests with empty file connections,
-# Mirele connects all necessary AJAX scripts separately from the UI
+# In order not to clog up Axios requests with empty file connections,
+# Mirele connects all necessary Axios scripts separately from the UI
 # version scripts
 if (wp_doing_ajax() === false)
 {
 
-    # The composer connects first - it
-    # is like a separate system inside MIrele
+    $modules = array (
 
-    # Include composer
-    include_once 'vendor/autoload.php';
+        # The composer connects first - it
+        # is like a separate system inside MIrele
 
+        # Include composer
+        'composer' => include_once 'vendor/autoload.php',
 
-    # Initially, Mirele needs to create its own infostructure,
-    # which will already be used within the elements and components
-    # of the interest.
+        # Initially, Mirele needs to create its own infostructure,
+        # which will already be used within the elements and components
+        # of the interest.
+    
+        # Connection of all prototypes and instances
+        'Compound' => include_once 'Compound/autoloader.php',
+    
+        # Meta
+        'meta' => include_once "meta.php",
+    
+        # UI components must be connected strictly after
+        # all building cores are ready for use.
+    
+        # Connecting Vendor files except Composer
+        'Binders' => include_once 'Binder/autoloader.php',
+        'Route' => include_once 'Route/autoloader.php',
+        'Options' => include_once 'Option/vendor.php'
 
-    # Connection of all prototypes and instances
-    include_once 'Compound/autoloader.php';
-
-    # Main Core
-    include_once 'Framework/Converter.php';
-    include_once 'Framework/WPGNU.php';
-    include_once 'Framework/WP.php';
-    include_once 'Framework/Option.php';
-
-    # Meta
-    include_once "meta.php";
-
-
-    # UI components must be connected strictly after
-    # all building cores are ready for use.
-
-    # Connecting Vendor files except Composer
-    include_once 'Binders/autoloader.php';
-    include_once 'Routes/autoloader.php';
-    include_once 'Options/vendor.php';
-    include_once 'Tags/vandor.php';
+    ); 
 
 } else
 {
 
-    # Initially, Mirele needs to create its own infostructure,
-    # which will already be used within the elements and components
-    # of the interest.
+    $modules = array (
 
-    # Connection of all prototypes and instances
-    include_once 'Compound/autoloader.php';
-    include_once 'Binders/autoloader.php';
+        # Initially, Mirele needs to create its own infostructure,
+        # which will already be used within the elements and components
+        # of the interest.
 
+        # Connection of all prototypes and instances
+        'Compound' => include_once 'Compound/autoloader.php',
+        'Binders' => include_once 'Binder/autoloader.php',
 
-    # Main core
-    include_once 'Framework/WPGNU.php';
+        # Connecting Vendor files except Composer
+        'Route' => include_once 'Route/autoloader.php',
+        'Options' => include_once 'Option/vendor.php'
 
-    # Connecting Vendor files except Composer
-    include_once 'Routes/autoloader.php';
-    include_once 'Options/vendor.php';
-    include_once 'Tags/vandor.php';
+    );
 
 }
 
 # Setting enviroment
-$logger = new Logger('Mirele');
-$logger->pushHandler(new StreamHandler(MIRELE_LOG_FILE, Logger::WARNING));
+if (wp_doing_ajax() == false)
+{
+    $logger = new Logger('Mirele');
+    $logger->pushHandler(new StreamHandler(MIRELE_LOG_FILE, Logger::WARNING));
+}
 
-Router::static_files('/public/(:all)', TEMPLATE_PATH.'/Public/');
+Router::staticFiles('/public/(:all)', TEMPLATE_PATH.'/Public/');
 
 
 # Setup an error handler
 if (true)
 {
 
-    /**
-     * @see https://github.com/Seldaek/monolog
-     */
-
     set_error_handler(
 
         function ($errno, $errstr, $errfile, $errline) {
-
-            global $logger;
-
-            if ($logger)
+            if (wp_doing_ajax() == false)
             {
-                $logger->warning("(line $errline:$errfile) >>> $errstr");
-            }
+                global $logger;
 
+                if ($logger)
+                {
+                    $logger->warning("(line $errline:$errfile) >>> $errstr");
+                }
+            }
         }
 
     );
@@ -173,17 +172,20 @@ if (true)
 
         if (error_get_last())
         {
+            if (wp_doing_ajax() == false)
+            {
+                $error = (object)error_get_last();
 
-            $error = (object)error_get_last();
-
-            // create a log channel
-            $log = new Logger('Mirele');
-            $log->pushHandler(new StreamHandler(MIRELE_LOG_FILE, Logger::WARNING));
-            $log->error("(line $error->line:$error->file) >>> $error->message");
+                // create a log channel
+                $log = new Logger('Mirele');
+                $log->pushHandler(new StreamHandler(MIRELE_LOG_FILE, Logger::WARNING));
+                $log->error("(line $error->line:$error->file) >>> $error->message");
+            }
 
         }
 
-    });
+    }
+    );
 
 }
 
@@ -195,11 +197,14 @@ add_action('rest_api_init', function () {
         'methods'      => 'GET',
         'callback'     => function ($event) {
             $props = (object)$event->get_params();
-            \Mirele\Router::dispatch("/rest_endpoint_v1/$props->package/$props->method");
+            Router::dispatch("/rest_endpoint_v1/$props->package/$props->method");
         },
-        'show_in_rest' => true]);
+        'show_in_rest' => true
+    ]
+    );
 
-});
+}
+);
 
 # Init WP
 add_action('init', function () {
@@ -208,11 +213,15 @@ add_action('init', function () {
 
     # Registration of some components of the Compound
     add_shortcode('Component', function ($attr, $content) {
-        Store::call($attr['name'], array_merge((array)$attr, ['attr' => (array)$attr], (array)['context_content' => $content]));
-    });
+        Store::call($attr['name'],
+            array_merge((array)$attr, ['attr' => (array)$attr], (array)['context_content' => $content])
+        );
+    }
+    );
 
     add_shortcode('Compound', function ($attr, $content) {
-    });
+    }
+    );
 
     # Disable unnecessary scripts
     wp_dequeue_style('woocommerce_frontend_styles');
@@ -268,6 +277,7 @@ add_action('init', function () {
                     $user->avatar = get_avatar_url($user->ID);
 
                     # Render
+                    // FIXME
                     TWIG::Render('Woocommerce/account/edit/profile', ['user' => (object)$user,]);
 
                 } # Viewing a specific order
@@ -285,6 +295,7 @@ add_action('init', function () {
                     $order = wc_get_order($wp->query_vars['view-order']);
 
                     # Render
+                    // FIXME
                     TWIG::Render('Woocommerce/order', [
                         'user'   => (object)$user,
                         'id'     => (integer)$wp->query_vars['view-order'],
@@ -294,7 +305,10 @@ add_action('init', function () {
                         'time'   => [
                             'modified' => date("m.d.y H:i", strtotime($order->get_date_modified())),
                             'created'  => date("m.d.y H:i", strtotime($order->get_date_created())),
-                            'paid'     => $order->get_date_paid()]]);
+                            'paid'     => $order->get_date_paid()
+                        ]
+                    ]
+                    );
 
 
                 } # User does not ask for anything.
@@ -314,7 +328,9 @@ add_action('init', function () {
                         'meta_key'    => '_customer_user',
                         'meta_value'  => get_current_user_id(),
                         'post_type'   => wc_get_order_types(),
-                        'post_status' => array_keys(wc_get_order_statuses())));
+                        'post_status' => array_keys(wc_get_order_statuses())
+                    )
+                    );
 
                     foreach ($orders as $order)
                     {
@@ -322,11 +338,14 @@ add_action('init', function () {
                     }
 
                     # Render
-                    TWIG::Render('Woocommerce/account', [
+                    TWIG::Render('Compound/Engine/Application/Module/Woocommerce/account.html.twig', [
                         'account' => (object)[
                             'user'      => (object)$user,
                             'orders'    => (array)$orders,
-                            'downloads' => (array)$downloads]]);
+                            'downloads' => (array)$downloads
+                        ]
+                    ]
+                    );
 
                 }
 
@@ -352,7 +371,12 @@ add_action('init', function () {
                             TWIG::Render('@login', [
                                 'content' => [
                                     'title'       => Framework\Customizer::get('@wc-login', 'mrl_wp_title_login', []),
-                                    'description' => Framework\Customizer::get('@wc-login', 'mrl_wp_description_login', []),]]);
+                                    'description' => Framework\Customizer::get('@wc-login', 'mrl_wp_description_login',
+                                        []
+                                    ),
+                                ]
+                            ]
+                            );
                             break;
 
                         case 'register':
@@ -364,7 +388,12 @@ add_action('init', function () {
                             TWIG::Render('@signup', [
                                 'content' => [
                                     'title'       => Framework\Customizer::get('@wc-signup', 'mrl_wp_title_signup', []),
-                                    'description' => Framework\Customizer::get('@wc-signup', 'mrl_wp_description_signup', [])]]);
+                                    'description' => Framework\Customizer::get('@wc-signup',
+                                        'mrl_wp_description_signup', []
+                                    )
+                                ]
+                            ]
+                            );
                             break;
 
                         default:
@@ -376,7 +405,12 @@ add_action('init', function () {
                             TWIG::Render('@login', [
                                 'content' => [
                                     'title'       => Framework\Customizer::get('@wc-login', 'mrl_wp_title_login', []),
-                                    'description' => Framework\Customizer::get('@wc-login', 'mrl_wp_description_login', [])]]);
+                                    'description' => Framework\Customizer::get('@wc-login', 'mrl_wp_description_login',
+                                        []
+                                    )
+                                ]
+                            ]
+                            );
                             break;
                     }
 
@@ -396,8 +430,15 @@ add_action('init', function () {
                         # Render
                         TWIG::Render('@passwordRecovery', [
                             'content' => [
-                                'title'       => Framework\Customizer::get('@wc-recovery', 'mrl_wp_title_recovery_password', []),
-                                'description' => Framework\Customizer::get('@wc-recovery', 'mrl_wp_description_recovery_password', [])]]);
+                                'title'       => Framework\Customizer::get('@wc-recovery',
+                                    'mrl_wp_title_recovery_password', []
+                                ),
+                                'description' => Framework\Customizer::get('@wc-recovery',
+                                    'mrl_wp_description_recovery_password', []
+                                )
+                            ]
+                        ]
+                        );
 
                     } else
                     {
@@ -413,7 +454,10 @@ add_action('init', function () {
                         TWIG::Render('@login', [
                             'content' => [
                                 'title'       => Framework\Customizer::get('@wc-login', 'mrl_wp_title_login', []),
-                                'description' => Framework\Customizer::get('@wc-login', 'mrl_wp_description_login', [])]]);
+                                'description' => Framework\Customizer::get('@wc-login', 'mrl_wp_description_login', [])
+                            ]
+                        ]
+                        );
 
                     }
 
@@ -422,7 +466,8 @@ add_action('init', function () {
 
             }
 
-        });
+        }
+        );
 
     }
 
@@ -430,100 +475,33 @@ add_action('init', function () {
     # Register URL
     add_filter('register_url', function ($data) {
         return get_permalink(get_option('woocommerce_myaccount_page_id')).'?action=register';
-    }, 1, 1);
+    }, 1, 1
+    );
 
     # Login URL
     add_filter('login_url', function ($data) {
         return get_permalink(get_option('woocommerce_myaccount_page_id')).'?action=login';
-    }, 1, 1);
+    }, 1, 1
+    );
 
     Router::error(function () {
-    });
+    }
+    );
+
     Router::dispatch(parse_url($_SERVER["REQUEST_URI"], PHP_URL_PATH));
 
-});
+}
+);
 
-add_action('wp_ajax_nopriv_mirele_endpoint_v1', function ($event = null) {
+add_action('wp_ajax_nopriv_mirele_endpoint_v1', function () {
+    AJAX::run();
+}
+);
 
-    // Wordpress Event Processing
-    $POST = MIRELE_POST;
-
-    if (isset($POST['action']) and isset($POST['method']))
-    {
-
-        $run = AJAX::run((MIRELE_POST)['method'], [
-            'verify_nonce' => wp_verify_nonce($_REQUEST['nonce'], MIRELE_NONCE)]);
-
-        if ($run instanceof Response)
-        {
-            http_response_code($run->getCode());
-            wp_send_json($run->getBody());
-        } elseif (is_bool($run))
-        {
-            if ($run === true)
-            {
-                wp_send_json_success([]);
-            } elseif ($run === false)
-            {
-                wp_send_json_error([]);
-            } else
-            {
-                wp_send_json([]);
-            }
-        } elseif (is_object($run) or is_array($run))
-        {
-            wp_send_json($run);
-        } else
-        {
-            print $run;
-        }
-
-        exit;
-
-    }
-
-});
-
-add_action('wp_ajax_mirele_endpoint_v1', function ($event = null) {
-
-    // Wordpress Event Processing
-    $POST = MIRELE_POST;
-
-    if (isset($POST['action']) and isset($POST['method']))
-    {
-
-        $run = AJAX::run((MIRELE_POST)['method'], [
-            'verify_nonce' => wp_verify_nonce($_REQUEST['nonce'], MIRELE_NONCE)]);
-
-        if ($run instanceof Response)
-        {
-            http_response_code($run->getCode());
-            wp_send_json($run->getBody());
-        } elseif (is_bool($run))
-        {
-            if ($run === true)
-            {
-                wp_send_json_success([]);
-            } elseif ($run === false)
-            {
-                wp_send_json_error([]);
-            } else
-            {
-                wp_send_json([]);
-            }
-        } elseif (is_object($run) or is_array($run))
-        {
-            wp_send_json($run);
-        } else
-        {
-            print $run;
-        }
-
-        exit;
-
-    }
-
-});
+add_action('wp_ajax_mirele_endpoint_v1', function () {
+    AJAX::run();
+}
+);
 
 add_action('init', function () {
 
@@ -532,7 +510,8 @@ add_action('init', function () {
 
         Router::plugDependencies([
             is_admin() ? 'private' : 'public',
-            is_wc() ? 'woocommerce' : false], function ($id, $type, $alias, $src, $history) {
+            is_wc() ? 'woocommerce' : false
+        ], function ($id, $type, $alias, $src, $history) {
 
             switch ($type)
             {
@@ -550,11 +529,14 @@ add_action('init', function () {
                     {
 
                         wp_localize_script($alias, 'MIRELE', [
-                            'urls'     => [
-                                'ajax' => esc_url(admin_url('admin-ajax.php')),
-                                'rest' => esc_url(get_rest_url())],
-                            'configs'  => [],
-                            'security' => ['ajax' => ['nonce' => wp_create_nonce('main')]]]);
+                                'urls'     => [
+                                    'ajax' => esc_url(admin_url('admin-ajax.php')),
+                                    'rest' => esc_url(get_rest_url())
+                                ],
+                                'configs'  => [],
+                                'security' => ['ajax' => ['nonce' => wp_create_nonce('main')]]
+                            ]
+                        );
 
                     } else if ($src === 'compound')
                     {
@@ -566,28 +548,26 @@ add_action('init', function () {
                         wp_localize_script($alias, 'Compound', [
                             'page_on_edit'     => (MIRELE_GET)['page_id'],
                             'page'             => !empty($post->ID) ? $post->ID : 0,
-                            'page_on_edit_url' => !empty($wp_page->guid) ? $wp_page->guid : 0]);
-
-
+                            'page_on_edit_url' => !empty($wp_page->guid) ? $wp_page->guid : 0
+                        ]
+                        );
                     }
 
                     break;
 
             }
-        });
+        }
+        );
     }
 
-});
+}
+);
 
 # Admin front-end
 add_action('admin_enqueue_scripts', function () {
-
-//    wp_enqueue_style('admin_style');
-
     wp_enqueue_media();
-
-
-});
+}
+);
 
 # User front-end
 add_action('wp_enqueue_scripts', function () {
@@ -597,7 +577,8 @@ add_action('wp_enqueue_scripts', function () {
     wp_enqueue_style('bootsrtap4');
     wp_enqueue_style('main_style');
 
-});
+}
+);
 
 # Admin front end
 add_action('admin_menu', function () {
@@ -612,99 +593,42 @@ add_action('admin_menu', function () {
         {
             TWIG::Render('Main/no-access');
         }
-    }, '', 1);
+    }, '', 1
+    );
 
     add_menu_page('MIRELE', 'Mirele Apps', MIRELE_RIGHTS['page']['edit'], 'mirele_apps', function () {
 
         TWIG::Render('Apps/main', [
 
-        ]);
+        ]
+        );
 
-    }, 'dashicons-screenoptions', 2);
+    }, 'dashicons-screenoptions', 2
+    );
 
     add_menu_page('MIRELE', 'Compound Editor', MIRELE_RIGHTS['page']['edit'], 'сompound_render_editor', function () {
 
         if (isset((MIRELE_GET)['page_id']) ? (MIRELE_GET)['page_id'] : false)
         {
 
-            # Vars
-            $Markup = [];
-            $page = get_post((MIRELE_GET)['page_id']);
+            $post = get_post((MIRELE_GET)['page_id']);
 
-            # Generate a block editing page
-            if (has_shortcode($page->post_content, 'Compound'))
-            {
+            $document = new Document();
+            $DOM = $document->document($post->post_content);
 
-                # Create a code vocabulary parsing object
-                $Lexer = new Lexer($page->post_content);
+            TWIG::Render('Compound/editor', [
+                    'layout' => $DOM,
+                    'store'  => [
+                        'templates'         => Grider::all(),
+                        'components'        => Store::all(),
+                        'getFamilies'       => Store::getFamilies(true),
+                        'templatesTypes'    => Grider::getTypes(),
+                        'templatesFamilies' => Grider::getFamilies(),
+                        'templatesFolders'  => Grider::getFolders(),
+                    ]
+                ]
+            );
 
-                # Return the page with the template
-                $lex = $Lexer->parse();
-
-                # We check the essence of the lecturer
-                if (is_object($lex))
-                {
-
-                    $Layout = $lex->getLayout();
-
-                    foreach ($Layout as $ID => $Template)
-                    {
-
-                        $fields = [];
-                        $_fields = [];
-
-                        if (isset($Template->props->name))
-                        {
-
-                            $template = Grider::findById($Template->props->name);
-
-                            if ($template instanceof Template)
-                            {
-
-                                foreach ($template->getFields() as $index => $field)
-                                {
-                                    if ($field instanceof Field)
-                                    {
-                                        $fields[$field->getName()] = $field;
-                                    }
-                                }
-
-                                $_fields = $template->getFields();
-
-                            }
-
-                        }
-
-
-                        # Adding templates with unindexed
-                        # objects is the best solution that
-                        # allows you not to worry about sorting problems.
-
-                        $Markup[] = (object)[
-                            'name'     => (string)$Template->props->name,
-                            'ID'       => (string)$ID,
-                            'lex'      => $Template,
-                            'fields'   => $fields,
-                            'template' => ['fields' => $_fields]];
-
-                    }
-
-                    # Render Page Editor
-                    TWIG::Render('Compound/editor', [
-                        'page'   => $page,
-                        'markup' => $Markup,
-                        'layout' => $lex->getLayout(),
-                        'store'  => [
-                            'templates'         => Grider::all(),
-                            'components'        => Store::all(),
-                            'getFamilies'       => Store::getFamilies(true),
-                            'templatesTypes'    => Grider::getTypes(),
-                            'templatesFamilies' => Grider::getFamilies(),
-                            'templatesFolders'  => Grider::getFolders(),]]);
-
-                }
-
-            }
 
         } else
         {
@@ -713,27 +637,40 @@ add_action('admin_menu', function () {
             TWIG::Render('Compound/main', [
                 'pages'     => get_pages(array(
                     'meta_key'   => '_wp_page_template',
-                    'meta_value' => COMPOUND_CANVAS)),
-                'templates' => Grider::all()]);
+                    'meta_value' => COMPOUND_CANVAS
+                )
+                ),
+                'templates' => Grider::all()
+            ]
+            );
 
         }
 
-    }, 'dashicons-welcome-write-blog', 3);
+    }, 'dashicons-welcome-write-blog', 3
+    );
 
-    add_submenu_page('сompound_render_editor', 'MIRELE', 'Demos', MIRELE_RIGHTS['page']['edit'], 'сompound_render_demos', function () {
+    add_submenu_page('сompound_render_editor', 'MIRELE', 'Demos', MIRELE_RIGHTS['page']['edit'],
+        'сompound_render_demos', function () {
 
-        TWIG::Render('Compound/demos', [
+            TWIG::Render('Compound/demos', [
 
-        ]);
+            ]
+            );
 
-    }, 2);
+        }, 2
+    );
 
     add_action('admin_bar_menu', function ($wp_admin_bar) {
         $wp_admin_bar->add_node(array(
             'id'     => 'rpage',
             'title'  => 'Compound Page',
             'href'   => MIRELE_URL.'?page=rosemary_render_editor',
-            'parent' => 'new-content'));
-    });
+            'parent' => 'new-content'
+        )
+        );
+    }
+    );
 
-});
+}
+);
+

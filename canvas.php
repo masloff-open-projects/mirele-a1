@@ -67,7 +67,7 @@ if (isset($post) and is_object($post)) {
 
     }
 
-    TWIG::Render('Main/canvas', [
+    TWIG::Render('Compound/Engine/Application/canvas.html.twig', [
         'markup' => $HTML
     ]);
 

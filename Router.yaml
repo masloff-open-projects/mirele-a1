@@ -51,10 +51,10 @@ private:
 
     compound:
       =>: /public/js/compound.min.js
-      => props-component: /public/js/compound/form/props.min.js
-      => props-template: /public/js/compound/form/propsTemplate.min.js
-      => insert-component: /public/js/compound/form/insertComponent.min.js
-      => insert-template: /public/js/compound/form/insertTemplate.min.js
+      => props_component: /public/js/compound/form/props.min.js
+      => props_template: /public/js/compound/form/propsTemplate.min.js
+      => insert_component: /public/js/compound/form/insertComponent.min.js
+      => insert_template: /public/js/compound/form/insertTemplate.min.js
 
 
   styles:

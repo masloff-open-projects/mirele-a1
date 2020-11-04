@@ -7,6 +7,7 @@ namespace Mirele\Compound;
 /**
  * Class Directive
  * @package Mirele\Compound
+ * @deprecated
  */
 class Directive
 {
