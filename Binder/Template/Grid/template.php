@@ -28,6 +28,6 @@ foreach (range(1, $Template->getProp('grid')) as $i)
 
 $Template->setMeta('name', 'Grid');
 
-$Template->setTwig('Templates/Grid/default');
+$Template->setTwig('Binder/Template/Grid/template.html.twig');
 
 Grider::save(clone $Template);

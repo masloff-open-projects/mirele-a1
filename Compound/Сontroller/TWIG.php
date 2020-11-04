@@ -3,6 +3,7 @@
 namespace Mirele;
 
 use Mirele\Compound\Component;
+use Mirele\Compound\Engine\Application;
 use Mirele\Compound\Field;
 use Mirele\Compound\Store;
 use Mirele\Compound\Template;
@@ -37,9 +38,9 @@ class TWIG
 //        "@login" => 'Woocommerce/authorization/login',
 //        "@signup" => 'Woocommerce/authorization/signup',
 //        "@passwordRecovery" => 'Woocommerce/authorization/password_recovery',
-//        "application@footer" => 'Compound/Engine/Application/footer.html.twig',
-//        "application@header" => 'Compound/Engine/Application/header.html.twig',
-//        "application@layout" => 'Compound/Engine/Application/layout.html.twig',
+//        "application@footer" => 'Compound/Engine/Applications/Public/footer.html.twig',
+//        "application@header" => 'Compound/Engine/Applications/Public/header.html.twig',
+//        "application@layout" => 'Compound/Engine/Applications/Public/layout.html.twig',
     ];
 
     /**
@@ -50,6 +51,7 @@ class TWIG
         self::$twig = new \Twig\Environment(new \Twig\Loader\FilesystemLoader(TEMPLATE_PATH), [
             'cache' => false
         ]);
+        self::$twig->addGlobal('App', new Application);
         self::$twig->addGlobal('wp', new \Mirele\Framework\WP);
         self::$twig->addGlobal('Option', new \Mirele\Framework\Application\Option);
         self::$twig->addGlobal('converter', clone new Converter);
@@ -167,7 +169,7 @@ class TWIG
                             if (isset($props['components'][$name])) {
                                 foreach ($props['components'][$name] as $component) {
                                     if ($component instanceof Component) {;
-                                        print ($component->build()->render([
+                                        print ($component->render([
                                             'attributes' => array_merge(
                                                 (array) $component->getProps(),
                                                 (array) isset($props['attr']) ? $props['attr'] : []
@@ -178,7 +180,7 @@ class TWIG
                             } elseif (isset($props['default'])) {
 
                                 if ($props['default'] instanceof Component) {
-                                    print $props['default']->build()->render([
+                                    print $props['default']->render([
                                         'attributes' => array_merge(
                                             (array) $props['default']->getProps(),
                                             (array) isset($props['attr']) ? $props['attr'] : []
@@ -244,15 +246,12 @@ class TWIG
             array (
                 'ww2as' => get_option('mrl_wp_sidebar_width_2_active', 2),
                 'ww1as' => get_option('mrl_wp_sidebar_width_1_active', 4),
-                'ars' => is_active_sidebar('right-side-page', 'false') == 'true' ? true : false,
-                'als' => is_active_sidebar('left-side-page', 'false') == 'true' ? true : false,
                 'hsmp' => get_option('mrl_wp_sidebar_hide_mobile', 'true') == 'true' ? true : false,
-                'options' => Customizer::all(),
                 'source' => MIRELE_SOURCE_DIR,
                 'url_without_params' => MIRELE_URL,
                 'GET' => MIRELE_GET,
                 'page_id' => isset($_GET['page']) ? $_GET['page'] : false,
-                "url" => [
+                'url' => [
                     'registration' => wp_registration_url(),
                     'login' => wp_login_url(),
                     'logout' => wp_logout_url(),

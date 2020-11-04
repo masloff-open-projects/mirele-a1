@@ -9,4 +9,4 @@
 
 use Mirele\TWIG;
 
-TWIG::Render('Compound/Engine/Application/footer.html.twig', []);
+TWIG::Render('Compound/Engine/Applications/Public/footer.html.twig', []);

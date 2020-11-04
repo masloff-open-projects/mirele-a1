@@ -13,7 +13,7 @@ use Mirele\Compound\Response;
  * Class Request
  * @package Mirele\Framework
  */
-class Request implements IRequest
+class Request implements NetworkRequest
 {
 
     private $strategy = null;

@@ -16,7 +16,7 @@ new Component([
         ]
     ],
 
-    'template'  => "Binders/Component/Woocommerce/Carousel/template.html.twig",
+    'template'  => "Binder/Component/Woocommerce/Carousel/template.html.twig",
 
     # Once the component is created in the system and registered.
     # Not called when creating a component with an empty constructor

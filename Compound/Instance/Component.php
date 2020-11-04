@@ -4,29 +4,25 @@
 namespace Mirele\Compound;
 
 
+use Mirele\Framework\CompoundComponent;
 use Mirele\TWIG;
 
-/**
- * Class Component
- * @package Mirele\Compound
- */
 class Component
 {
 
-    private $index = true;
-    private $id;
-    private $template;
-    private $name;
-    private $props;
-    private $data;
-    private $meta;
-    private $alias;
-    private $parent;
+    protected $index = true;
+    protected $id = null;
+    protected $template = null;
+    protected $name = null;
+    protected $props = [];
+    protected $meta = [];
+    protected $alias = null;
+    protected $parent = null;
 
-    /* ACTIONS */
-    private $construct;
-    private $created;
-    private $mounted;
+    protected $construct;
+    protected $created;
+    protected $mounted;
+    protected $middleware;
 
     private function __call_construct ()
     {
@@ -55,7 +51,7 @@ class Component
         }
     }
 
-    function __construct($object = false)
+    public function __construct($object = false)
     {
         if (is_array($object) or is_object($object)) {
 
@@ -111,9 +107,9 @@ class Component
      * @return mixed
      * @link https://php.net/manual/en/language.oop5.magic.php#language.oop5.magic.invoke
      */
-    public function __invoke($props)
+    public function __invoke(array $props)
     {
-        return $this->output($props);
+        return $this->render($props);
     }
 
     /**
@@ -195,168 +191,6 @@ class Component
     }
 
     /**
-     * @param boolean $index
-     * @return Component
-     */
-    public function setIndex(bool $index)
-    {
-        $this->index = $index;
-        return $this;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getParent()
-    {
-        return $this->parent;
-    }
-
-    /**
-     * @param string $parent
-     * @return Component
-     */
-    public function setParent(string $parent)
-    {
-        $this->parent = $parent;
-        return $this;
-    }
-
-    /**
-     * @param $alias
-     * @return $this
-     */
-    public function setAlias($alias)
-    {
-        $this->alias = $alias;
-        return $this;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getAlias()
-    {
-        return $this->alias;
-    }
-
-    /**
-     * @param string $meta
-     * @param mixed $value
-     * @return $this
-     */
-    public function setMeta(string $meta, $value)
-    {
-        $this->meta[$meta] = $value;
-        return $this;
-    }
-
-    /**
-     * @param string $meta
-     * @return false|mixed
-     */
-    public function getMeta(string $meta)
-    {
-        if (isset($this->meta[$meta])) {
-            return $this->meta[$meta];
-        }
-
-        return false;
-    }
-
-    /**
-     * @param mixed $id
-     */
-
-    public function setId(string $id)
-    {
-        $this->id = (string)$id;
-        return $this;
-    }
-
-
-    /**
-     * @return mixed
-     */
-
-    public function getId()
-    {
-        return $this->id;
-    }
-
-
-    /**
-     * @param mixed $props
-     */
-
-    public function setProps(array $props)
-    {
-        $this->props = (array)$props;
-        return $this;
-    }
-
-    /**
-     * @param string $name
-     * @param string $value
-     * @return $this
-     */
-    public function setProp(string $name, string $value)
-    {
-        $this->props[$name] = $value;
-        return $this;
-    }
-
-    /**
-     * @param mixed $data
-     */
-    public function setData(string $key, $data)
-    {
-        $this->data[$key] = $data;
-        return $this;
-    }
-
-    /**
-     * @param mixed $data
-     */
-    public function getData(string $key)
-    {
-        if (isset($this->data[$key])) {
-            return $this->data[$key];
-        }
-
-        return false;
-    }
-
-    /**
-     * @param string $key
-     * @return false|mixed
-     */
-    public function getProp(string $key)
-    {
-        if (isset($this->props[$key])) {
-            return $this->props[$key];
-        }
-
-        return false;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getProps()
-    {
-        return $this->props;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getName()
-    {
-        return $this->name;
-    }
-
-    /**
      * @param array $props
      * @return mixed
      */
@@ -389,8 +223,21 @@ class Component
 
     }
 
+    /*
+     * Getters
+     */
+
+
     /**
-     * @return mixed
+     * @return null
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * @return |null
      */
     public function getTemplate()
     {
@@ -398,13 +245,51 @@ class Component
     }
 
     /**
-     * @param mixed $template
-     * @return Component
+     * @return null
      */
-    public function setTemplate($template)
+    public function getName()
     {
-        $this->template = $template;
-        return $this;
+        return $this->name;
+    }
+
+    /**
+     * @return array
+     */
+    public function getProps()
+    {
+        return $this->props;
+    }
+
+    /**
+     * @return array
+     */
+    public function getMeta()
+    {
+        return $this->meta;
+    }
+
+    /**
+     * @return null
+     */
+    public function getAlias()
+    {
+        return $this->alias;
+    }
+
+    /**
+     * @return null
+     */
+    public function getParent()
+    {
+        return $this->parent;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getConstruct()
+    {
+        return $this->construct;
     }
 
     /**
@@ -416,16 +301,6 @@ class Component
     }
 
     /**
-     * @param mixed $created
-     * @return Component
-     */
-    public function setCreated($created)
-    {
-        $this->created = $created;
-        return $this;
-    }
-
-    /**
      * @return mixed
      */
     public function getMounted()
@@ -434,22 +309,11 @@ class Component
     }
 
     /**
-     * @param mixed $mounted
-     * @return Component
+     * @return mixed
      */
-    public function setMounted($mounted)
+    public function getMiddleware()
     {
-        $this->mounted = $mounted;
-        return $this;
-    }
-
-
-    /**
-     * @return $this
-     */
-    public function build()
-    {
-        return $this;
+        return $this->middleware;
     }
 
 }

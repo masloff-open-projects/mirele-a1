@@ -28,18 +28,18 @@
         <div class="col-sm-12">
             <div class="container-flex j-space-between py-3 px-0">
                 <div class="container-flex pi-center">
-                    <a href="{{ blog.home }}"
-                       class="logo-regular m-0 p-0 font-weight-lighter font-size-6">{{ blog.name|upper }}</a>
+                    <a href="{{ App.Blog('home') }}"
+                       class="logo-regular m-0 p-0 font-weight-lighter font-size-6">{{ App.Blog('name') }}</a>
                 </div>
                 <div class="w-75">
                     <input type="text" width="100%" class="w-100" placeholder="Search by site, store and articles">
                 </div>
                 <div>
 
-                    {% if user.user_login %}
+                    {% if App.User().user_login %}
 
                         <a class="h-100" href="{{ permalink.account.main }}">
-                            <img class="rounded-circle" alt="{{ user.user_login }}" src="{{ user.avatar }}"
+                            <img class="rounded-circle" alt="{{ App.User().user_login }}" src="{{ App.User().avatar }}"
                                  data-holder-rendered="true" height="100%">
                         </a>
 

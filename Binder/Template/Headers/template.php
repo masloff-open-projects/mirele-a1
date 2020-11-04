@@ -23,6 +23,6 @@ $Template->setField('label', (new Field())->setName('label')->setComponent(Store
 $Template->setMeta('name', 'Header');
 $Template->setMeta('editor', (new Config())->setData('title', 'Header'));
 
-$Template->setTwig('Templates/Headers/default');
+$Template->setTwig('Binder/Template/Headers/template.html.twig');
 
 Grider::save($Template);

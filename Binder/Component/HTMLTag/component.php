@@ -16,7 +16,7 @@ new Component([
         'index' => false
     ],
 
-    'template'  => "Binders/Component/HTMLTag/template.html.twig",
+    'template'  => "Binder/Component/HTMLTag/template.html.twig",
 
     # Once the component is created in the system and registered.
     # Not called when creating a component with an empty constructor

@@ -23,7 +23,7 @@ new Component([
         ]
     ],
 
-    'template'  => "Binders/Component/Cart/template.html.twig",
+    'template'  => "Binder/Component/Cart/template.html.twig",
 
     # Once the component is created in the system and registered.
     # Not called when creating a component with an empty constructor

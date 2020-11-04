@@ -19,7 +19,7 @@ new Component([
         ]
     ],
 
-    'template'  => "Binders/Component/Button/template.html.twig",
+    'template'  => "Binder/Component/Button/template.html.twig",
 
     # Once the component is created in the system and registered.
     # Not called when creating a component with an empty constructor

@@ -10,7 +10,7 @@
 use Mirele\Framework\Customizer;
 use Mirele\TWIG;
 
-TWIG::Render('Compound/Engine/Application/header.html.twig', [
+TWIG::Render('Compound/Engine/Applications/Public/header.html.twig', [
     'blog' => [
         'name' => get_bloginfo ('name', 'display'),
         'description' => get_bloginfo ('description', 'display'),

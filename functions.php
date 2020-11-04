@@ -338,7 +338,7 @@ add_action('init', function () {
                     }
 
                     # Render
-                    TWIG::Render('Compound/Engine/Application/Module/Woocommerce/account.html.twig', [
+                    TWIG::Render('Compound/Engine/Applications/Public/Module/Woocommerce/account.html.twig', [
                         'account' => (object)[
                             'user'      => (object)$user,
                             'orders'    => (array)$orders,

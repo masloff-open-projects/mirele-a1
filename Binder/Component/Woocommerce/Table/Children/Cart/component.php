@@ -17,7 +17,7 @@ new Component([
         ]
     ],
 
-    'template'  => "Binders/Component/Woocommerce/Table/Children/Cart/template.html.twig",
+    'template'  => "Binder/Component/Woocommerce/Table/Children/Cart/template.html.twig",
 
     # Once the component is created in the system and registered.
     # Not called when creating a component with an empty constructor

@@ -52,6 +52,6 @@ $Template->setMeta('editor',
     ))
 );
 
-$Template->setTwig('Templates/Matrix/default');
+$Template->setTwig('Template/Matrix/default');
 
 Grider::save(clone $Template);

@@ -17,6 +17,6 @@ $Template->setField("field",
 
 $Template->setMeta('name', 'Empty');
 
-$Template->setTwig('Templates/Grid/default');
+$Template->setTwig('Binder/Template/Emptys/template.html.twig');
 
 Grider::save(clone $Template);

@@ -18,7 +18,7 @@ new Component([
         ]
     ],
 
-    'template'  => "Binders/Component/Checkbox/template.html.twig",
+    'template'  => "Binder/Component/Checkbox/template.html.twig",
 
     # Once the component is created in the system and registered.
     # Not called when creating a component with an empty constructor

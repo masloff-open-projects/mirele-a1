@@ -19,7 +19,7 @@ new Component([
         'index' => false
     ],
 
-    'template'  => "Binders/Component/FormField/template.html.twig",
+    'template'  => "Binder/Component/FormField/template.html.twig",
 
     # Once the component is created in the system and registered.
     # Not called when creating a component with an empty constructor
@@ -110,7 +110,7 @@ new Component([
         //    $field = apply_filters( 'woocommerce_form_field', $field, $key, $args, $value );
 
         # Create an HTML component
-//        return TWIG::Render('Binders/Component/Abstract/default_field', (object) array(
+//        return TWIG::Render('Binder/Component/Abstract/default_field', (object) array(
 //            'args'    => (array) $args,
 //            'props'   => (array) $props,
 //            'country' => $countries = 'shipping_country' ===  $props->key ? WC()->countries->get_shipping_countries() : WC()->countries->get_allowed_countries(),

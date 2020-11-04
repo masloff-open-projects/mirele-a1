@@ -13,7 +13,7 @@ $Component->setHandler("output", function ($props) {
 
     $props = (object)$props;
 
-    TWIG::Render('Binders/Component/Woocommerce/default_product_gallery', $props);
+    TWIG::Render('Binder/Component/Woocommerce/default_product_gallery', $props);
 
 }
 );
