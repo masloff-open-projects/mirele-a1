@@ -89,6 +89,8 @@ class Component
 
     }
 
+
+
     /**
      * is triggered when invoking inaccessible methods in an object context.
      *
@@ -142,7 +144,7 @@ class Component
      */
     public function __get($name)
     {
-        return $this->getProp((string)$name);
+        return $this->props[$name];
     }
 
     /**
@@ -155,7 +157,7 @@ class Component
      */
     public function __set($name, $value)
     {
-        $this->setProp((string)$name, (string)$value);
+        $this->props[(string)$name] = $value;
     }
 
     /**
@@ -200,10 +202,21 @@ class Component
         /**
          * Create a component and initialize user events
          */
-        $this->setProps(array_merge(
+
+        $args = array_merge(
             (array) $this->props,
             (array) $props
-        ));
+        );
+
+        /**
+         * @todo this
+         * @deprecated
+         */
+        foreach ($args as $k => $v) {
+            $this->{$k} = $v;
+        }
+
+        $this->self = $args;
 
         $this->__call_created();
 

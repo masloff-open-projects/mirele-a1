@@ -7,6 +7,8 @@ $__RELATIVE__ = dirname(__FILE__);
 parse_str(file_get_contents("php://input"), $_PUT);
 parse_str(file_get_contents("php://input"), $_DELETE);
 
+define ('MIRELE', 1.0);
+
 /**
  * Unchangeable GET parameters
  */

@@ -42,6 +42,12 @@ defined('ABSPATH') or die('Not defined ABSPATH');
 # Main Constants
 include_once 'environment.php';
 
+# Debug?
+if (file_exists(dirname(__FILE__) . '/.debug') and file_exists(dirname(__FILE__) . '/Hammer&Wrench.php'))
+{
+    include_once 'Hammer&Wrench.php';
+}
+
 # Compatibility check
 if (version_compare(PHP_VERSION, MIRELE_REQUIRED['PHP']) <= 0)
 {
@@ -551,6 +557,19 @@ add_action('init', function () {
                             'page_on_edit_url' => !empty($wp_page->guid) ? $wp_page->guid : 0
                         ]
                         );
+                    } else if ($src === 'woocommerce')
+                    {
+
+                        global $post;
+
+                        wp_localize_script(
+                            $alias, 'WOOCOMMERCE',
+                            [
+                                'product'     => (object) [],
+                                'post'        => (object) $post
+                            ]
+                        );
+
                     }
 
                     break;

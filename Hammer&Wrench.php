@@ -12,9 +12,15 @@
 
 namespace HammerWrench;
 
+use Mirele\Compound\Grider;
+use Mirele\Compound\Store;
+use Mirele\Router;
 use PHPMailer\PHPMailer\Exception;
 use TypeError;
 
+# Init
+defined('MIRELE_DEBUG_DIR') or define('MIRELE_DEBUG_DIR', dirname(__FILE__) . '/.Debug');
+is_dir(MIRELE_DEBUG_DIR) or mkdir(MIRELE_DEBUG_DIR);
 
 /**
  * Interface Constructor
@@ -165,11 +171,28 @@ class Logger extends LoggerColor
         }
     }
 
+    /**
+     * @param $status
+     * @param $text
+     * @param array $font
+     * @throws Exception
+     */
     final public function printf($status, $text, $font = [
         'gray',
         null])
     {
         echo $this->log($status, $text, $font);
+    }
+
+    /**
+     * @param string $string
+     * @param null $font_color
+     * @param null $bg_color
+     * @return string
+     */
+    final public function print_c($string = "", $font_color = null, $bg_color = null)
+    {
+        return parent::print_c($string, $font_color, $bg_color);
     }
 
 }
@@ -212,7 +235,7 @@ class ARGV
             {
                 if (is_callable(self::$arg[$arg][0]))
                 {
-                    call_user_func(self::$arg[$arg][0], $arg);
+                    call_user_func(self::$arg[$arg][0], $argv);
                 } else
                 {
                     throw new TypeError('The object is not a function ');
@@ -470,6 +493,9 @@ class Networker extends PHP implements Generator
 
 }
 
+/**
+ * CLI
+ */
 if ($argv)
 {
     global $project;
@@ -593,7 +619,7 @@ if ($argv)
 
     ARGV::register('--help', function () {
 
-        $mask = str_repeat('─', 13)."┼".str_repeat('─', 42)."\n%12.12s │ %s\n";
+        $mask = str_repeat('─', 19)."┼".str_repeat('─', 42)."\n%18.18s │ %s\n";
 
         foreach (ARGV::glossary() as $arg => $pkg)
         {
@@ -602,7 +628,49 @@ if ($argv)
 
     }, ['Screen output about commands']);
 
+    ARGV::register('--monitor.network', function ($argv) {
+
+        $logger_cli = new Logger();
+
+        $object = json_decode(file_get_contents(MIRELE_DEBUG_DIR . '/network.json'));
+
+        foreach ($object as $request) {
+            print $logger_cli->print_c("[{$request->REQUEST_METHOD}]", 'yellow', null) .
+                  $logger_cli->print_c(" {$request->REQUEST_URI} ", 'white', null) .
+                  $logger_cli->print_c("({$request->REQUEST_TIME})", 'white', null) .
+                  ((isset($request->_REQUEST) and in_array('--monitor.body', $argv)) ? $logger_cli->print_c(sprintf("\n%s\n", json_encode($request->_REQUEST, JSON_PRETTY_PRINT)), 'white', null) : 'No body').
+                  PHP_EOL;
+        }
+
+    }, ['Shows map printout of web requests routed through internal router']);
+
     ARGV::call($argv);
+
+} else {
+
+    defined('ABSPATH') or die('Not defined ABSPATH');
+    defined('MIRELE') or die('Not defined MIRELE');
+
+    add_action('wp', function () {
+
+        $store = Store::all();
+        $grider = Grider::all();
+
+    });
+
+    add_action('init', function () {
+
+        Router::addMiddleware(function ($uri, $method) {
+
+            $object = json_decode(file_get_contents(MIRELE_DEBUG_DIR . '/network.json'));
+            $_SERVER['_REQUEST'] = $_REQUEST;
+            $object->{$_SERVER['REQUEST_TIME']} = $_SERVER;
+
+            file_put_contents(MIRELE_DEBUG_DIR . '/network.json', json_encode($object),  LOCK_EX);
+
+        });
+
+    });
 
 }
 

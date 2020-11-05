@@ -4,6 +4,8 @@
       "masks": [
         "Binder/Component/*/Children/*.php",
         "Binder/Component/*/*.php",
+        "Binder/Component/*/*/*.php",
+        "Binder/Component/*/*/*/*.php",
         "Binder/Template/*/*.php",
         "Binder/Template/*.php"
       ],

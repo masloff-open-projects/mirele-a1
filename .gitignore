@@ -621,3 +621,5 @@ dist
 # Compilers other data
 phpDocumentor.phar
 ./phpDocumentor.phar
+
+.Debug

@@ -1,0 +1,16 @@
+<div class="row">
+    <div class="col-md-12">
+        <div class="row woocommerce-product-gallery">
+
+            <div class="col-md-3 col-12 order-last order-md-first">
+                {% for url in gallery|slice(0, 3) %}
+                    <img class="gallery-photo mb-4 col-4 col-md-12 d-md-block" src="{{ url }}" alt="" width="100%">
+                {% endfor %}
+            </div>
+
+            <div class="col-md-{{ show_gallery == true ? '9' : '12' }} col-12 order-first order-md-last">
+                <img :src="image" class="single-photo" alt="{{ name }}" width="100%">
+            </div>
+        </div>
+    </div>
+</div>

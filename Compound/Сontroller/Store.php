@@ -78,6 +78,7 @@ class Store
         if (isset(self::$store[$id])) {
             return self::$store[$id]->render($props ? (array)$props : []);
         }
+
         return false;
     }
 

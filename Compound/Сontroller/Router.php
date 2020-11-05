@@ -129,6 +129,7 @@ final class Router
 
             # Setup router
             self::get($uri, function ($filename) {
+
                 if(!empty($filename)) {
                     if (self::$static_dir) {
 

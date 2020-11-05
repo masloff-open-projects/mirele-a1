@@ -53,3 +53,7 @@ Mirele's development path is the responsibility of the road map.
 | 13.10.2020 | Initial approval of the router of AJAX requests |
 | 15.10.2020 | A system of strategies has been established (authorization of requests is the main objective) |
 |  |  |
+
+
+https://miro.com/app/board/o9J_kgaLi5s=/ - Component
+https://miro.com/app/board/o9J_kgbZPoc=/ - Template

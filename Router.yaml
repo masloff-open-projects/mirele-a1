@@ -69,8 +69,13 @@ private:
 # @version: 1.0.0
 woocommerce:
   scripts:
-    -> product: /public/js/woocommerceui_product.min.js
-    -> products: /public/js/woocommerceui_products.min.js
-    -> login: /public/js/woocommerceui_login.min.js
-    -> signup: /public/js/woocommerceui_signup.min.js
-    -> recoveryPassword: /public/js/woocommerceui_recovery_password.min.js
+    woocommerce:
+      => product: /public/js/woocommerceui_product.min.js
+      => products: /public/js/woocommerceui_products.min.js
+      => login: /public/js/woocommerceui_login.min.js
+      => signup: /public/js/woocommerceui_signup.min.js
+      => recoveryPassword: /public/js/woocommerceui_recovery_password.min.js
+
+  localize:
+    woocommerce-product: woocommerce
+    woocommerce-products: main
