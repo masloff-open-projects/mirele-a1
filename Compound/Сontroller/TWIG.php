@@ -35,7 +35,7 @@ class TWIG
      */
     private static $alias = [
 //        '@woocommerce' => 'Woocommerce',
-//        "@login" => 'Woocommerce/authorization/login',
+//        "Compound/Engine/Applications/Public/Module/Woocommerce/Login/login.html.twig" => 'Woocommerce/authorization/login',
 //        "@signup" => 'Woocommerce/authorization/signup',
 //        "@passwordRecovery" => 'Woocommerce/authorization/password_recovery',
 //        "application@footer" => 'Compound/Engine/Applications/Public/footer.html.twig',

@@ -40,13 +40,13 @@ class Request_Compound__insertTemplate extends Request
             $pattern->template = (MIRELE_POST)['template'];
             $pattern->page = (MIRELE_POST)['page'];
 
-            $biffer = $pattern();
+            $buffer = $pattern();
 
-            if ($biffer)
+            if ($buffer)
             {
 
                 return new Response([
-                    'result' => $biffer
+                    'result' => $buffer
                 ], 200
                 );
 
@@ -54,7 +54,7 @@ class Request_Compound__insertTemplate extends Request
             {
 
                 return new Response([
-                    'result' => $biffer
+                    'result' => $buffer
                 ], 500
                 );
 

@@ -42,13 +42,13 @@ class Request_Compound__insertComponent extends Request
             $pattern->field = (MIRELE_POST)['field'];
             $pattern->template = (MIRELE_POST)['template'];
 
-            $biffer = $pattern();
+            $buffer = $pattern();
 
-            if ($biffer)
+            if ($buffer)
             {
 
                 return new Response([
-                    'result' => $biffer
+                    'result' => $buffer
                 ], 200
                 );
 
@@ -56,7 +56,7 @@ class Request_Compound__insertComponent extends Request
             {
 
                 return new Response([
-                    'result' => $biffer
+                    'result' => $buffer
                 ], 500
                 );
 

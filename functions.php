@@ -374,7 +374,7 @@ add_action('init', function () {
                             wp_enqueue_script('woocommerceui_login');
 
                             # Render page
-                            TWIG::Render('@login', [
+                            TWIG::Render('Compound/Engine/Applications/Public/Module/Woocommerce/Login/login.html.twig', [
                                 'content' => [
                                     'title'       => Framework\Customizer::get('@wc-login', 'mrl_wp_title_login', []),
                                     'description' => Framework\Customizer::get('@wc-login', 'mrl_wp_description_login',
@@ -408,7 +408,7 @@ add_action('init', function () {
                             wp_enqueue_script('woocommerceui_login');
 
                             # Render page
-                            TWIG::Render('@login', [
+                            TWIG::Render('Compound/Engine/Applications/Public/Module/Woocommerce/Login/login.html.twig', [
                                 'content' => [
                                     'title'       => Framework\Customizer::get('@wc-login', 'mrl_wp_title_login', []),
                                     'description' => Framework\Customizer::get('@wc-login', 'mrl_wp_description_login',
@@ -457,7 +457,7 @@ add_action('init', function () {
                         wp_enqueue_script('woocommerceui_login');
 
                         # Render page
-                        TWIG::Render('@login', [
+                        TWIG::Render('Compound/Engine/Applications/Public/Module/Woocommerce/Login/login.html.twig', [
                             'content' => [
                                 'title'       => Framework\Customizer::get('@wc-login', 'mrl_wp_title_login', []),
                                 'description' => Framework\Customizer::get('@wc-login', 'mrl_wp_description_login', [])
