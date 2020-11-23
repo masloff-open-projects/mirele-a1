@@ -23,6 +23,8 @@ if (!isset($category)) {
     global $category;
 }
 
-\Mirele\TWIG::Render('Woocommerce/category-cart', [
+use Mirele\Compound\Engine\Document as App;
+
+App::render('Woocommerce/category-cart', [
     'category' => $category
 ]);

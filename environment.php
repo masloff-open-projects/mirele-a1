@@ -98,7 +98,7 @@ define('MIRELE_RIGHTS', [
 define('COMPOUND_FORBIDDEN_SYMBOLS', array(':', '/', "@"));
 
 /**
- * Constant with the name of the compound canvas template
+ * Constant with the name of the Compound canvas template
  */
 define('COMPOUND_CANVAS', 'canvas.php');
 

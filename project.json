@@ -3,9 +3,12 @@
     "binders": {
       "masks": [
         "Binder/Component/*/Children/*.php",
-        "Binder/Component/*/*.php",
-        "Binder/Component/*/*/*.php",
+        "Binder/Component/*/*/*/*/*/*/*.php",
+        "Binder/Component/*/*/*/*/*/*.php",
+        "Binder/Component/*/*/*/*/*.php",
         "Binder/Component/*/*/*/*.php",
+        "Binder/Component/*/*/*.php",
+        "Binder/Component/*/*.php",
         "Binder/Template/*/*.php",
         "Binder/Template/*.php"
       ],
@@ -28,6 +31,9 @@
         "Compound/Pattern/*/*/*.php",
         "Compound/Pattern/*/*.php",
         "Compound/Pattern/*.php",
+        "Compound/Engine/*/*/*/*/*/*.php",
+        "Compound/Engine/*/*/*/*/*.php",
+        "Compound/Engine/*/*/*/*.php",
         "Compound/Engine/*/*/*.php",
         "Compound/Engine/*/*.php",
         "Compound/Engine/*.php"
@@ -37,7 +43,11 @@
     "network": {
       "masks": [
         "Route/*/*.php",
-        "Route/*/*/*.php"
+        "Route/*/*/*.php",
+        "Route/*/*/*/*.php",
+        "Route/*/*/*/*/*.php",
+        "Route/*/*/*/*/*/*.php",
+        "Route/*/*/*/*/*/*/*.php"
       ],
       "output": "Route/autoloader.php"
     }

@@ -5,7 +5,7 @@ namespace Mirele\Compound;
 
 
 use Mirele\Framework\CompoundComponent;
-use Mirele\TWIG;
+use Mirele\Compound\Engine\Document as App;
 
 class Component
 {
@@ -226,7 +226,7 @@ class Component
 
         if (!empty($this->getTemplate())) {
 
-            $promise = TWIG::Render($this->getTemplate(), $this->props);
+            $promise = App::render($this->getTemplate(), $this->props);
             $this->__call_mounted();
             return $promise;
 

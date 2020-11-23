@@ -153,7 +153,9 @@ wp_localize_script(
 );
 
 # Render
-\Mirele\TWIG::Render('Compound/Engine/Applications/Public/Module/Woocommerce/product.html.twig', [
+use Mirele\Compound\Engine\Document as App;
+
+App::render('Compound/Engine/Applications/Public/Module/Woocommerce/product.html.twig', [
     'ww2as'         => get_option('mrl_wp_sidebar_width_2_active', 2),
     'ww1as'         => get_option('mrl_wp_sidebar_width_1_active', 4),
     'ars'           => is_active_sidebar('right-side-product', 'false') == 'true' ? true : false,

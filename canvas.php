@@ -18,6 +18,7 @@ use Mirele\Compound\Template;
 use Mirele\Framework\Buffer;
 use \Mirele\Compound\Document;
 use Mirele\TWIG;
+use Mirele\Compound\Engine\Document as App;
 
 global $post;
 
@@ -67,7 +68,7 @@ if (isset($post) and is_object($post)) {
 
     }
 
-    TWIG::Render('Compound/Engine/Applications/Public/canvas.html.twig', [
+    App::render('Compound/Engine/Applications/Public/canvas.html.twig', [
         'markup' => $HTML
     ]);
 

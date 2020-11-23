@@ -7,7 +7,9 @@
  * @version 1.0.0
  */
 
-\Mirele\TWIG::Render('Compound/Engine/Applications/Public/single.html.twig', [
+use Mirele\Compound\Engine\Document as App;
+
+App::render('Compound/Engine/Applications/Public/single.html.twig', [
     'ww2as'       => get_option('mrl_wp_sidebar_width_2_active', 2),
     'ww1as'       => get_option('mrl_wp_sidebar_width_1_active', 4),
     'ars'         => is_active_sidebar('right-side-single', 'false') == 'true' ? true : false,

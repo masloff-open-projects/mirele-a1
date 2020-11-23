@@ -9,4 +9,6 @@
 
 use Mirele\TWIG;
 
-TWIG::Render('Compound/Engine/Applications/Public/footer.html.twig', []);
+use Mirele\Compound\Engine\Document as App;
+
+App::render('Compound/Engine/Applications/Public/footer.html.twig', []);

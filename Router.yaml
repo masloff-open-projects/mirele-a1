@@ -18,15 +18,17 @@ public:
     VUE: //cdn.jsdelivr.net/npm/vue
     Popper: //cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js
     Bootstrap: https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js
-    MIRELE: /public/js/org.app.min.js
+#    MIRELE: /public/js/org.app.min.js
+    lodash: //cdn.jsdelivr.net/npm/lodash@4.17.20/lodash.min.js
+    Application: /public/js/Application.min.js
 
   styles:
     bootstrap: //stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css
-    style: $root/Public/css/style.css
+    style: {ROOT}/Public/css/style.css
     fontawesome: //cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css
 
   localize:
-    MIRELE: main
+    Application: main
 
 
 # A router for all pages that are in private space.
@@ -40,42 +42,41 @@ private:
       => ui-droppable: false
       => ui-selectable: false
 
+    Application: /public/js/Application.min.js
     AXIOS: //unpkg.com/axios/dist/axios.min.js
     FontAwesome: //cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/js/all.min.js
     QS: //cdnjs.cloudflare.com/ajax/libs/qs/6.9.4/qs.min.js
     VUE: //cdn.jsdelivr.net/npm/vue
     Popper: //cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js
-    Center: /public/js/center.min.js
+#    Center: /public/js/center.min.js
+    ApplicationC: /public/js/Applications/Compound/Application.min.js
     MIRELE: /public/js/org.app.min.js
     bootstrap: //stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js
-
-    compound:
-      =>: /public/js/compound.min.js
-      => props_component: /public/js/compound/form/props.min.js
-      => props_template: /public/js/compound/form/propsTemplate.min.js
-      => insert_component: /public/js/compound/form/insertComponent.min.js
-      => insert_template: /public/js/compound/form/insertTemplate.min.js
 
 
   styles:
 #    bootstrap: //stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css
-    style: $root/Public/css/admin.css
+    style: {ROOT}/Public/css/admin.css
 
   localize:
     MIRELE: main
-    compound: compound
+    compound: Compound
 
 
 # ...
 # @version: 1.0.0
 woocommerce:
   scripts:
+
+#    woocommerce:
+#      => product: /public/js/woocommerceui_product.min.js
+#      => products: /public/js/woocommerceui_products.min.js
+#      => login: /public/js/woocommerceui_login.min.js
+#      => signup: /public/js/woocommerceui_signup.min.js
+#      => recoveryPassword: /public/js/woocommerceui_recovery_password.min.js
+
     woocommerce:
-      => product: /public/js/woocommerceui_product.min.js
-      => products: /public/js/woocommerceui_products.min.js
-      => login: /public/js/woocommerceui_login.min.js
-      => signup: /public/js/woocommerceui_signup.min.js
-      => recoveryPassword: /public/js/woocommerceui_recovery_password.min.js
+      => login: {Applications.JS}/Woocommerce/Login.min.js
 
   localize:
     woocommerce-product: woocommerce

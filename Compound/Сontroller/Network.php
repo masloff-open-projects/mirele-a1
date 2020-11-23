@@ -72,6 +72,13 @@ class Network
                 }
             }
 
+            if (defined("$controllerName::METHOD")) {
+                if (constant("$controllerName::METHOD") != $_SERVER['REQUEST_METHOD'])
+                {
+                    return new Response([], 405);
+                }
+            }
+
             if (method_exists($controllerObject, 'handler'))
             {
                 return $controllerObject->handler($_REQUEST);

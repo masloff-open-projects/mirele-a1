@@ -29,7 +29,9 @@ $product->get_placeholder_src = wc_placeholder_img_src();
 
 # If the product exists and is not hidden - output the product template
 if (!(empty($product) || !$product->is_visible())) {
-	\Mirele\TWIG::Render('Compound/Engine/Applications/Public/Module/Woocommerce/product-cart.twig', [
+	use Mirele\Compound\Engine\Document as App;
+
+App::render('Compound/Engine/Applications/Public/Module/Woocommerce/product-cart.twig', [
 		'product' => $product,
         'grid' => [
             'columns' => get_option( 'woocommerce_catalog_columns', 4 ),

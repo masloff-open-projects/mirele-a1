@@ -1,32 +1,48 @@
 <div class="screen-login container-flex pi-center j-center">
 
-    <div class="container-form padding-15 p-4">
-        <form role="form" id="loginForm" @submit.prevent="submit">
-            <div class="mb-4">
-                <div class="form-group mb-3">
-                    <input type="text" class="form-control" id="login" name="login" placeholder="Your Login"
-                           v-model="login"/>
-                </div>
-                <div class="form-group mb-4">
-                    <input type="password" class="form-control" id="password" name="password"
-                           placeholder="Your Password" v-model="password"/>
-                </div>
-                <div v-if="message.text != false" v-html="message.text">
-                </div>
-                <div class="checkbox mb-3">
-                    <label for="remember">
-                        <input type="checkbox" v-model="remember" id="remember"/>
-                        <span>Check me out</span>
-                    </label>
-                </div>
+    <div class="container-form">
+        <form role="form" id="mirele__form__login" @submit.prevent="submit" class="d-flex justify-content-center flex-column text-center align-items-center">
+
+            <div class="offer d-flex justify-content-center flex-column text-center align-items-center">
+                <h1 class="w-100 mb-2">Login to Retak account</h1>
+                <p class="w-75 mb-5">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
             </div>
-            <div>
+
+            <div class="mb-4 w-100">
+
+                <div class="form-group mb-4">
+                    <input type="text" class="form-control" id="login" name="login" placeholder="Your Login"
+                           v-model="form.login"/>
+                    <div class="w-100 text-left mt-2">
+                        <a href="#">Forgot your login or password?</a>
+                    </div>
+                </div>
+
+                <div class="form-group mb-3" v-if="(form.login).length > 3">
+                    <input type="password" class="form-control" id="password" name="password"
+                           placeholder="Your Password" v-model="form.password"/>
+                </div>
+
+                <div v-if="message != false" v-html="message">
+                </div>
+
+            </div>
+
+            <div class="text-right">
+                <a href="{{ url.registration }}" class="mr-3">Register</a>
                 <button type="submit">
                     Log in
                 </button>
-                <a href="{{ url.registration }}" class="ml-3">Register</a>
             </div>
+
         </form>
+
+        <div class="align-self-end d-flex justify-content-center">
+            <small>
+                Protected by reCAPTCHA and subject to the Google Privacy Policy and Terms of Service.
+            </small>
+        </div>
+
     </div>
 
 </div>

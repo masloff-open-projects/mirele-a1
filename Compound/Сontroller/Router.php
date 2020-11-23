@@ -374,6 +374,11 @@ final class Router
 
         $history = [];
         $routes = self::readConfigFile();
+        $consts = [
+            "{Applications.JS}" => '/public/js/Applications',
+            "{Applications.CSS}" => '/public/css/Applications',
+            "{ROOT}" => TEMPLATE_URI
+        ];
 
         if (is_array($routes)) {
             foreach ($routes as $id => $route) {
@@ -382,13 +387,13 @@ final class Router
                         foreach ($elements as $alias => $src) {
 
                             $glossary = array(
-                                '$root' => TEMPLATE_URI,
                                 '~' => $type,
                                 '-> ' => $id . "-",
                                 '->' => $id,
                             );
 
                             $src = str_replace(array_keys($glossary), array_values($glossary), $src);
+                            $src = str_replace(array_keys($consts), array_values($consts), $src);
                             $alias = str_replace(array_keys($glossary), array_values($glossary), $alias);
 
                             if ($id == $name or (is_array($name) and in_array($id, $name))) {
@@ -400,6 +405,7 @@ final class Router
                                         $glossary['=>'] = "$alias";
 
                                         $child_alias = str_replace(array_keys($glossary), array_values($glossary), $child_alias);
+                                        $child = str_replace(array_keys($consts), array_values($consts), $child);
 
                                         call_user_func($callback, $id, $type, $child_alias, $child, $history);
 

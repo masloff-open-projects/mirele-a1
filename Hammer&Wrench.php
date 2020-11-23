@@ -122,6 +122,36 @@ class LoggerColor
 
 }
 
+class Tree {
+
+    private $text = "";
+    private $indent = 0;
+    
+    private function __inside ($tree__) {
+
+        foreach ((array) $tree__ as $key => $value){
+            if(is_array($value) or is_object($value)){
+                $this->text .= "\n ├" . str_repeat("─", $this->indent) . " $key: ";
+                $this->indent++;
+                $this->__inside($value);
+                $this->indent--;
+
+            } else{
+                $this->text .= "\n ├" . str_repeat("─", $this->indent) . " $key: " . $value;
+            }
+        }
+    }
+    
+    public function render ($tree,  $title='Tree') {
+
+        $this->text = " ┌ [$title] ";
+        $this->__inside($tree);
+        return $this->text;
+
+    }
+
+}
+
 /**
  * Class Logger
  * @package HammerWrench
@@ -553,7 +583,7 @@ if ($argv)
 
     }, ['Compilation of all types `binders`: templates, components, modules. Creates autoloader.php files, heirs of vendor.php']);
 
-    ARGV::register('--compound', function () {
+    ARGV::register('--Compound', function () {
 
         global $staticenv;
 
@@ -638,11 +668,66 @@ if ($argv)
             print $logger_cli->print_c("[{$request->REQUEST_METHOD}]", 'yellow', null) .
                   $logger_cli->print_c(" {$request->REQUEST_URI} ", 'white', null) .
                   $logger_cli->print_c("({$request->REQUEST_TIME})", 'white', null) .
-                  ((isset($request->_REQUEST) and in_array('--monitor.body', $argv)) ? $logger_cli->print_c(sprintf("\n%s\n", json_encode($request->_REQUEST, JSON_PRETTY_PRINT)), 'white', null) : 'No body').
+                  ((isset($request->_REQUEST) and in_array('--monitor.body', $argv)) ? $logger_cli->print_c(sprintf("\n%s\n", json_encode($request->_REQUEST, JSON_PRETTY_PRINT)), 'white', null) : '').
                   PHP_EOL;
         }
 
     }, ['Shows map printout of web requests routed through internal router']);
+
+    ARGV::register('--watch.errors', function ($argv) {
+
+        // TODO
+        $logger_cli = new Logger();
+
+        $object = json_decode(file_get_contents(MIRELE_DEBUG_DIR . '/errors.json'));
+
+//        foreach ($object as $request) {
+//            print $logger_cli->print_c("[{$request->REQUEST_METHOD}]", 'yellow', null) .
+//                  $logger_cli->print_c(" {$request->REQUEST_URI} ", 'white', null) .
+//                  $logger_cli->print_c("({$request->REQUEST_TIME})", 'white', null) .
+//                  ((isset($request->_REQUEST) and in_array('--monitor.body', $argv)) ? $logger_cli->print_c(sprintf("\n%s\n", json_encode($request->_REQUEST, JSON_PRETTY_PRINT)), 'white', null) : '').
+//                  PHP_EOL;
+//        }
+
+    }, ['Shows all new errors and warnings in real time. (for better performance, we recommend integrating the tool).']);
+
+    ARGV::register('--watch.network', function ($argv) {
+
+        $logger_cli = new Logger();
+        $object = $_object = json_decode(file_get_contents(MIRELE_DEBUG_DIR . '/network.json'), true);
+
+        while (true) {
+
+            $object = json_decode(file_get_contents(MIRELE_DEBUG_DIR . '/network.json'), true);
+
+            if ($_object != $object) {
+                $request = (object) end($object);
+                $_object = $object;
+
+                if ($request) {
+
+                    $time = date("H:i:s", $request->REQUEST_TIME * 1000 || 0);
+
+                    print $logger_cli->print_c("[{$request->REQUEST_METHOD}]", 'yellow', null) .
+                        $logger_cli->print_c(" ({$time})", 'white', null) .
+                        $logger_cli->print_c(" {$request->REQUEST_URI} ", 'white', null) .
+                        ((isset($request->_REQUEST) and in_array('--watch.body', $argv)) ? $logger_cli->print_c(sprintf("\n%s\n",
+                            (new Tree())->render((array) $request->_REQUEST, "REQUEST BODY")
+                        ), 'white', null) : '').
+                        ((isset($request->_REQUEST) and in_array('--watch.session', $argv)) ? $logger_cli->print_c(sprintf("\n%s\n",
+                            (new Tree())->render((array) $request->_SESSION, "SESSION")
+                        ), 'white', null) : '').
+                        ((isset($request->_REQUEST) and in_array('--watch.cookies', $argv)) ? $logger_cli->print_c(sprintf("\n%s\n",
+                            (new Tree())->render((array) $request->_COOKIE, "COOKIES")
+                        ), 'white', null) : '').
+                        PHP_EOL;
+
+                }
+            }
+
+        }
+
+    }, ['Shows all router requests in real time. Requires integration']);
 
     ARGV::call($argv);
 
@@ -650,6 +735,32 @@ if ($argv)
 
     defined('ABSPATH') or die('Not defined ABSPATH');
     defined('MIRELE') or die('Not defined MIRELE');
+
+    error_reporting(-1);
+
+    if (!file_exists(MIRELE_DEBUG_DIR . '/errors.json')) {
+        file_put_contents(MIRELE_DEBUG_DIR . '/errors.json', "{}");
+    }
+
+    if (!file_exists(MIRELE_DEBUG_DIR . '/network.json')) {
+        file_put_contents(MIRELE_DEBUG_DIR . '/network.json', "{}");
+    }
+
+    set_error_handler (
+        function($errno, $errstr, $errfile, $errline) {
+
+            $object = json_decode(file_get_contents(MIRELE_DEBUG_DIR . '/errors.json'), true);
+            $object[] = [
+                'errno' => $errno,
+                'errstr' => $errstr,
+                'errfile' => $errfile,
+                'errline' => $errline
+            ];
+
+            file_put_contents(MIRELE_DEBUG_DIR . '/errors.json', json_encode($object),  LOCK_EX);
+
+        }
+    );
 
     add_action('wp', function () {
 
@@ -664,6 +775,8 @@ if ($argv)
 
             $object = json_decode(file_get_contents(MIRELE_DEBUG_DIR . '/network.json'));
             $_SERVER['_REQUEST'] = $_REQUEST;
+            $_SERVER['_COOKIE'] = $_COOKIE;
+            $_SERVER['_SESSION'] = $_SESSION;
             $object->{$_SERVER['REQUEST_TIME']} = $_SERVER;
 
             file_put_contents(MIRELE_DEBUG_DIR . '/network.json', json_encode($object),  LOCK_EX);

@@ -23,6 +23,8 @@ if (!isset($breadcrumb)) {
     global $breadcrumb;
 }
 
-\Mirele\TWIG::Render('Compound/Engine/Applications/Public/Module/Woocommerce/Page/breadcrumb.html.twig', [
+use Mirele\Compound\Engine\Document as App;
+
+App::render('Compound/Engine/Applications/Public/Module/Woocommerce/Page/breadcrumb.html.twig', [
     'breadcrumb' => $breadcrumb
 ]);

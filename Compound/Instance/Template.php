@@ -3,8 +3,7 @@
 
 namespace Mirele\Compound;
 
-
-use Mirele\TWIG;
+use Mirele\Compound\Engine\Document as App;
 
 
 /**
@@ -516,7 +515,7 @@ class Template
         ];
 
         # Render
-        return TWIG::Render($this->getTwig(), array_merge((array)$this->getProps(), (array)$props, (array)$components, (array)$this->getComponents(), [
+        App::render($this->getTwig(), array_merge((array)$this->getProps(), (array)$props, (array)$components, (array)$this->getComponents(), [
             'components' => (object)array_merge(
                 (array)$this->getComponents(),
                 (array)[

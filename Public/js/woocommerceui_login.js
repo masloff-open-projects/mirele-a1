@@ -50,15 +50,10 @@ new org.interface({
                     login: this.login,
                     password: this.password,
                     remember: this.remember
-                }).then(Event => {
-                    if ('success' in Event.data) {
-                        if (Event.data.success) {
-                            location.reload();
-                        } else {
-                            this.toast('error', Event.data.message)
-                        }
-                    }
-                }).catch(Event => {
+                }).then(e => {
+                    console.log(e)
+                }).catch(e => {
+                    console.log(e)
 
                 });
             },

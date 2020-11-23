@@ -39,11 +39,11 @@ const CompoundEditor = org.compound.editor = new org.interface({
         jquery: true
     },
     elements: {
-        vue: ['#compound-editor']
+        vue: ['#Compound-editor']
     },
     vue: {
         delimiters: ['{', '}'],
-        el: "#compound-editor",
+        el: "#Compound-editor",
         data: {
             markup: [],
             selected: [],
@@ -479,11 +479,11 @@ const CompoundEditor = org.compound.editor = new org.interface({
                 jquery: true
             },
             elements: {
-                vue: ['#compound-meta']
+                vue: ['#Compound-meta']
             },
             vue: {
                 delimiters: ['{', '}'],
-                el: "#compound-meta",
+                el: "#Compound-meta",
                 data: {
                     updated: true,
                     meta: []
@@ -507,7 +507,7 @@ const CompoundEditor = org.compound.editor = new org.interface({
 
                         var $props = {};
 
-                        jQuery(jQuery('#compound-meta').serializeArray()).each(function (index, obj) {
+                        jQuery(jQuery('#Compound-meta').serializeArray()).each(function (index, obj) {
                             $props[obj.name] = obj.value;
                         });
 

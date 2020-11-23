@@ -1,0 +1,16 @@
+<!DOCTYPE {{ blog.html_type }}>
+
+<html {{ wp.language_attributes }}>
+
+<head>
+    {{ Component('default_meta', []) }}
+</head>
+
+<body>
+
+{{ wp.wp_body_open }}
+
+{{ Component('default_navbar_before', []) }}
+
+{{ wp.posts }}
+{{ wp.footer }}
