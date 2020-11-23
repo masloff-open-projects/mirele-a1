@@ -47,7 +47,7 @@ private:
     Popper: //cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js
     Center: /public/js/center.min.js
     MIRELE: /public/js/org.app.min.js
-    Bootstrap: //stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js
+    bootstrap: //stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js
 
     compound:
       =>: /public/js/compound.min.js
@@ -58,6 +58,7 @@ private:
 
 
   styles:
+#    bootstrap: //stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css
     style: $root/Public/css/admin.css
 
   localize:

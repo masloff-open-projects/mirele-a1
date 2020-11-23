@@ -627,43 +627,16 @@ add_action('admin_menu', function () {
 
     add_menu_page('MIRELE', 'Compound Editor', MIRELE_RIGHTS['page']['edit'], 'сompound_render_editor', function () {
 
-        if (isset((MIRELE_GET)['page_id']) ? (MIRELE_GET)['page_id'] : false)
-        {
-
-            $post = get_post((MIRELE_GET)['page_id']);
-
-            $document = new Document();
-            $DOM = $document->document($post->post_content);
-
-            TWIG::Render('Compound/editor', [
-                    'layout' => $DOM,
-                    'store'  => [
-                        'templates'         => Grider::all(),
-                        'components'        => Store::all(),
-                        'getFamilies'       => Store::getFamilies(true),
-                        'templatesTypes'    => Grider::getTypes(),
-                        'templatesFamilies' => Grider::getFamilies(),
-                        'templatesFolders'  => Grider::getFolders(),
-                    ]
-                ]
-            );
-
-
-        } else
-        {
-
-            # Render list of all pages or welcome message if there are no pages
-            TWIG::Render('Compound/main', [
+        # Render list of all pages or welcome message if there are no pages
+        TWIG::Render('Compound/Engine/Applications/Compound/index', [
                 'pages'     => get_pages(array(
-                    'meta_key'   => '_wp_page_template',
-                    'meta_value' => COMPOUND_CANVAS
-                )
+                        'meta_key'   => '_wp_page_template',
+                        'meta_value' => COMPOUND_CANVAS
+                    )
                 ),
                 'templates' => Grider::all()
             ]
-            );
-
-        }
+        );
 
     }, 'dashicons-welcome-write-blog', 3
     );
@@ -671,7 +644,7 @@ add_action('admin_menu', function () {
     add_submenu_page('сompound_render_editor', 'MIRELE', 'Demos', MIRELE_RIGHTS['page']['edit'],
         'сompound_render_demos', function () {
 
-            TWIG::Render('Compound/demos', [
+            TWIG::Render('Compound/Engine/Applications/Compound/index', [
 
             ]
             );

@@ -1,0 +1,50 @@
+/*
+Error: Undefined variable: "$multiplicator".
+        on line 1 of font-size.sass
+
+1: @for $i from 0 through 12 * $multiplicator
+2: 
+3:   // em
+4:   .margin-#{$i}
+5:     margin: #{$i/4}em !important
+6: 
+
+Backtrace:
+font-size.sass:1
+/usr/lib/ruby/vendor_ruby/sass/script/tree/variable.rb:49:in `_perform'
+/usr/lib/ruby/vendor_ruby/sass/script/tree/node.rb:50:in `perform'
+/usr/lib/ruby/vendor_ruby/sass/script/tree/operation.rb:76:in `_perform'
+/usr/lib/ruby/vendor_ruby/sass/script/tree/node.rb:50:in `perform'
+/usr/lib/ruby/vendor_ruby/sass/tree/visitors/perform.rb:257:in `visit_for'
+/usr/lib/ruby/vendor_ruby/sass/tree/visitors/base.rb:36:in `visit'
+/usr/lib/ruby/vendor_ruby/sass/tree/visitors/perform.rb:158:in `block in visit'
+/usr/lib/ruby/vendor_ruby/sass/stack.rb:79:in `block in with_base'
+/usr/lib/ruby/vendor_ruby/sass/stack.rb:135:in `with_frame'
+/usr/lib/ruby/vendor_ruby/sass/stack.rb:79:in `with_base'
+/usr/lib/ruby/vendor_ruby/sass/tree/visitors/perform.rb:158:in `visit'
+/usr/lib/ruby/vendor_ruby/sass/tree/visitors/base.rb:52:in `block in visit_children'
+/usr/lib/ruby/vendor_ruby/sass/tree/visitors/base.rb:52:in `map'
+/usr/lib/ruby/vendor_ruby/sass/tree/visitors/base.rb:52:in `visit_children'
+/usr/lib/ruby/vendor_ruby/sass/tree/visitors/perform.rb:167:in `block in visit_children'
+/usr/lib/ruby/vendor_ruby/sass/tree/visitors/perform.rb:179:in `with_environment'
+/usr/lib/ruby/vendor_ruby/sass/tree/visitors/perform.rb:166:in `visit_children'
+/usr/lib/ruby/vendor_ruby/sass/tree/visitors/base.rb:36:in `block in visit'
+/usr/lib/ruby/vendor_ruby/sass/tree/visitors/perform.rb:186:in `visit_root'
+/usr/lib/ruby/vendor_ruby/sass/tree/visitors/base.rb:36:in `visit'
+/usr/lib/ruby/vendor_ruby/sass/tree/visitors/perform.rb:157:in `visit'
+/usr/lib/ruby/vendor_ruby/sass/tree/visitors/perform.rb:10:in `visit'
+/usr/lib/ruby/vendor_ruby/sass/tree/root_node.rb:36:in `css_tree'
+/usr/lib/ruby/vendor_ruby/sass/tree/root_node.rb:29:in `render_with_sourcemap'
+/usr/lib/ruby/vendor_ruby/sass/engine.rb:389:in `_render_with_sourcemap'
+/usr/lib/ruby/vendor_ruby/sass/engine.rb:307:in `render_with_sourcemap'
+/usr/lib/ruby/vendor_ruby/sass/exec/sass_scss.rb:383:in `run'
+/usr/lib/ruby/vendor_ruby/sass/exec/sass_scss.rb:63:in `process_result'
+/usr/lib/ruby/vendor_ruby/sass/exec/base.rb:50:in `parse'
+/usr/lib/ruby/vendor_ruby/sass/exec/base.rb:18:in `parse!'
+/usr/bin/sass:8:in `<main>'
+*/
+body:before {
+  white-space: pre;
+  font-family: monospace;
+  content: "Error: Undefined variable: \"$multiplicator\".\A         on line 1 of font-size.sass\A \A 1: @for $i from 0 through 12 * $multiplicator\A 2: \A 3:   // em\A 4:   .margin-#{$i}\A 5:     margin: #{$i/4}em !important\A 6: "; }
+/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbImZvbnQtc2l6ZS5jc3MiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBQUE7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7O0NBNENDO0FBQ0Q7RUFDRSxnQkFBZ0I7RUFDaEIsc0JBQXNCO0VBQ3RCLHNPQUFzTyxFQUFFIiwiZmlsZSI6ImZvbnQtc2l6ZS5jc3MiLCJzb3VyY2VzQ29udGVudCI6WyIvKlxuRXJyb3I6IFVuZGVmaW5lZCB2YXJpYWJsZTogXCIkbXVsdGlwbGljYXRvclwiLlxuICAgICAgICBvbiBsaW5lIDEgb2YgZm9udC1zaXplLnNhc3NcblxuMTogQGZvciAkaSBmcm9tIDAgdGhyb3VnaCAxMiAqICRtdWx0aXBsaWNhdG9yXG4yOiBcbjM6ICAgLy8gZW1cbjQ6ICAgLm1hcmdpbi0jeyRpfVxuNTogICAgIG1hcmdpbjogI3skaS80fWVtICFpbXBvcnRhbnRcbjY6IFxuXG5CYWNrdHJhY2U6XG5mb250LXNpemUuc2FzczoxXG4vdXNyL2xpYi9ydWJ5L3ZlbmRvcl9ydWJ5L3Nhc3Mvc2NyaXB0L3RyZWUvdmFyaWFibGUucmI6NDk6aW4gYF9wZXJmb3JtJ1xuL3Vzci9saWIvcnVieS92ZW5kb3JfcnVieS9zYXNzL3NjcmlwdC90cmVlL25vZGUucmI6NTA6aW4gYHBlcmZvcm0nXG4vdXNyL2xpYi9ydWJ5L3ZlbmRvcl9ydWJ5L3Nhc3Mvc2NyaXB0L3RyZWUvb3BlcmF0aW9uLnJiOjc2OmluIGBfcGVyZm9ybSdcbi91c3IvbGliL3J1YnkvdmVuZG9yX3J1Ynkvc2Fzcy9zY3JpcHQvdHJlZS9ub2RlLnJiOjUwOmluIGBwZXJmb3JtJ1xuL3Vzci9saWIvcnVieS92ZW5kb3JfcnVieS9zYXNzL3RyZWUvdmlzaXRvcnMvcGVyZm9ybS5yYjoyNTc6aW4gYHZpc2l0X2Zvcidcbi91c3IvbGliL3J1YnkvdmVuZG9yX3J1Ynkvc2Fzcy90cmVlL3Zpc2l0b3JzL2Jhc2UucmI6MzY6aW4gYHZpc2l0J1xuL3Vzci9saWIvcnVieS92ZW5kb3JfcnVieS9zYXNzL3RyZWUvdmlzaXRvcnMvcGVyZm9ybS5yYjoxNTg6aW4gYGJsb2NrIGluIHZpc2l0J1xuL3Vzci9saWIvcnVieS92ZW5kb3JfcnVieS9zYXNzL3N0YWNrLnJiOjc5OmluIGBibG9jayBpbiB3aXRoX2Jhc2UnXG4vdXNyL2xpYi9ydWJ5L3ZlbmRvcl9ydWJ5L3Nhc3Mvc3RhY2sucmI6MTM1OmluIGB3aXRoX2ZyYW1lJ1xuL3Vzci9saWIvcnVieS92ZW5kb3JfcnVieS9zYXNzL3N0YWNrLnJiOjc5OmluIGB3aXRoX2Jhc2UnXG4vdXNyL2xpYi9ydWJ5L3ZlbmRvcl9ydWJ5L3Nhc3MvdHJlZS92aXNpdG9ycy9wZXJmb3JtLnJiOjE1ODppbiBgdmlzaXQnXG4vdXNyL2xpYi9ydWJ5L3ZlbmRvcl9ydWJ5L3Nhc3MvdHJlZS92aXNpdG9ycy9iYXNlLnJiOjUyOmluIGBibG9jayBpbiB2aXNpdF9jaGlsZHJlbidcbi91c3IvbGliL3J1YnkvdmVuZG9yX3J1Ynkvc2Fzcy90cmVlL3Zpc2l0b3JzL2Jhc2UucmI6NTI6aW4gYG1hcCdcbi91c3IvbGliL3J1YnkvdmVuZG9yX3J1Ynkvc2Fzcy90cmVlL3Zpc2l0b3JzL2Jhc2UucmI6NTI6aW4gYHZpc2l0X2NoaWxkcmVuJ1xuL3Vzci9saWIvcnVieS92ZW5kb3JfcnVieS9zYXNzL3RyZWUvdmlzaXRvcnMvcGVyZm9ybS5yYjoxNjc6aW4gYGJsb2NrIGluIHZpc2l0X2NoaWxkcmVuJ1xuL3Vzci9saWIvcnVieS92ZW5kb3JfcnVieS9zYXNzL3RyZWUvdmlzaXRvcnMvcGVyZm9ybS5yYjoxNzk6aW4gYHdpdGhfZW52aXJvbm1lbnQnXG4vdXNyL2xpYi9ydWJ5L3ZlbmRvcl9ydWJ5L3Nhc3MvdHJlZS92aXNpdG9ycy9wZXJmb3JtLnJiOjE2NjppbiBgdmlzaXRfY2hpbGRyZW4nXG4vdXNyL2xpYi9ydWJ5L3ZlbmRvcl9ydWJ5L3Nhc3MvdHJlZS92aXNpdG9ycy9iYXNlLnJiOjM2OmluIGBibG9jayBpbiB2aXNpdCdcbi91c3IvbGliL3J1YnkvdmVuZG9yX3J1Ynkvc2Fzcy90cmVlL3Zpc2l0b3JzL3BlcmZvcm0ucmI6MTg2OmluIGB2aXNpdF9yb290J1xuL3Vzci9saWIvcnVieS92ZW5kb3JfcnVieS9zYXNzL3RyZWUvdmlzaXRvcnMvYmFzZS5yYjozNjppbiBgdmlzaXQnXG4vdXNyL2xpYi9ydWJ5L3ZlbmRvcl9ydWJ5L3Nhc3MvdHJlZS92aXNpdG9ycy9wZXJmb3JtLnJiOjE1NzppbiBgdmlzaXQnXG4vdXNyL2xpYi9ydWJ5L3ZlbmRvcl9ydWJ5L3Nhc3MvdHJlZS92aXNpdG9ycy9wZXJmb3JtLnJiOjEwOmluIGB2aXNpdCdcbi91c3IvbGliL3J1YnkvdmVuZG9yX3J1Ynkvc2Fzcy90cmVlL3Jvb3Rfbm9kZS5yYjozNjppbiBgY3NzX3RyZWUnXG4vdXNyL2xpYi9ydWJ5L3ZlbmRvcl9ydWJ5L3Nhc3MvdHJlZS9yb290X25vZGUucmI6Mjk6aW4gYHJlbmRlcl93aXRoX3NvdXJjZW1hcCdcbi91c3IvbGliL3J1YnkvdmVuZG9yX3J1Ynkvc2Fzcy9lbmdpbmUucmI6Mzg5OmluIGBfcmVuZGVyX3dpdGhfc291cmNlbWFwJ1xuL3Vzci9saWIvcnVieS92ZW5kb3JfcnVieS9zYXNzL2VuZ2luZS5yYjozMDc6aW4gYHJlbmRlcl93aXRoX3NvdXJjZW1hcCdcbi91c3IvbGliL3J1YnkvdmVuZG9yX3J1Ynkvc2Fzcy9leGVjL3Nhc3Nfc2Nzcy5yYjozODM6aW4gYHJ1bidcbi91c3IvbGliL3J1YnkvdmVuZG9yX3J1Ynkvc2Fzcy9leGVjL3Nhc3Nfc2Nzcy5yYjo2MzppbiBgcHJvY2Vzc19yZXN1bHQnXG4vdXNyL2xpYi9ydWJ5L3ZlbmRvcl9ydWJ5L3Nhc3MvZXhlYy9iYXNlLnJiOjUwOmluIGBwYXJzZSdcbi91c3IvbGliL3J1YnkvdmVuZG9yX3J1Ynkvc2Fzcy9leGVjL2Jhc2UucmI6MTg6aW4gYHBhcnNlISdcbi91c3IvYmluL3Nhc3M6ODppbiBgPG1haW4+J1xuKi9cbmJvZHk6YmVmb3JlIHtcbiAgd2hpdGUtc3BhY2U6IHByZTtcbiAgZm9udC1mYW1pbHk6IG1vbm9zcGFjZTtcbiAgY29udGVudDogXCJFcnJvcjogVW5kZWZpbmVkIHZhcmlhYmxlOiBcXFwiJG11bHRpcGxpY2F0b3JcXFwiLlxcQSAgICAgICAgIG9uIGxpbmUgMSBvZiBmb250LXNpemUuc2Fzc1xcQSBcXEEgMTogQGZvciAkaSBmcm9tIDAgdGhyb3VnaCAxMiAqICRtdWx0aXBsaWNhdG9yXFxBIDI6IFxcQSAzOiAgIC8vIGVtXFxBIDQ6ICAgLm1hcmdpbi0jeyRpfVxcQSA1OiAgICAgbWFyZ2luOiAjeyRpLzR9ZW0gIWltcG9ydGFudFxcQSA2OiBcIjsgfVxuIl19 */
