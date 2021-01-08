@@ -12,54 +12,93 @@ use Mirele\Compound\Engine\Document as App;
  */
 class Template
 {
+    
+    protected $id;
+    protected $name;
+    protected $props;
+    protected $template;
+    protected $editor;
+
+    protected $construct;
+    protected $created;
+    protected $mounted;
+    protected $middleware;
+
+    private function __call_construct ()
+    {
+        if (is_callable($this->construct)) {
+            return call_user_func($this->construct, $this);
+        } else {
+            return false;
+        }
+    }
+
+    private function __call_created ()
+    {
+        if (is_callable($this->created)) {
+            return call_user_func($this->created, $this);
+        } else {
+            return false;
+        }
+    }
+
+    private function __call_mounted ()
+    {
+        if (is_callable($this->mounted)) {
+            return call_user_func($this->mounted, $this);
+        } else {
+            return false;
+        }
+    }
 
     /**
-     * @var
+     * Template constructor.
      */
-    private $id;
-    /**
-     * @var
-     */
-    private $name;
-    /**
-     * @var
-     */
-    private $props;
-    /**
-     * @var
-     */
-    private $components;
-    /**
-     * @var
-     */
-    private $fields;
-    /**
-     * @var
-     */
-    private $componentsProps;
-    /**
-     * @var
-     */
-    private $twig;
-    /**
-     * @var
-     */
-    private $meta;
-    /**
-     * @var
-     */
-    private $handler;
+    function __construct($object = false)
+    {
 
-    /**
-     * @var
-     */
-    private $type;
-    /**
-     * @var
-     */
-    private $alias;
-    private $parent;
-    private $folder;
+        if (is_array($object) or is_object($object)) {
+
+            $object = (object) $object;
+
+            if (isset($object->data)) {
+
+                foreach ($object->data as $name => $value) {
+                    $this->{$name} = $value;
+                }
+
+            }
+
+            if (isset($object->construct)) {
+                $this->construct = $object->construct;
+            }
+
+            if (isset($object->created)) {
+                $this->created = $object->created;
+            }
+
+            if (isset($object->mounted)) {
+                $this->mounted = $object->mounted;
+            }
+
+            if (isset($object->template)) {
+                $this->template = $object->template;
+            }
+
+            if (isset($object->editor)) {
+                $this->editor = $object->editor;
+            }
+
+            Repository::registerTemplate($this->id, $this);
+
+            if (isset($this->editor)) {
+                Market::registerTemplate($this->id, $this->editor);
+            }
+
+            $this->__call_construct();
+
+        }
+    }
 
     /**
      * is utilized for reading data from inaccessible members.
@@ -70,7 +109,7 @@ class Template
      */
     public function __get($name)
     {
-        return $this->getProp($name);
+        return $this->props[$name];
     }
 
     /**
@@ -83,7 +122,7 @@ class Template
      */
     public function __set($name, $value)
     {
-        $this->setProp((string)$name, $value);
+        $this->props[(string)$name] = $value;
     }
 
     /**
@@ -150,6 +189,8 @@ class Template
             'props' => $this->props,
             'type' => $this->type,
             'meta' => $this->meta,
+            'areas' => $this->areas,
+            'template' => $this->template,
         );
     }
 
@@ -240,31 +281,17 @@ class Template
     /**
      * @return mixed
      */
-    public function getAlias()
+    public function getTemplate()
     {
-        return $this->alias;
+        return $this->template;
     }
 
     /**
-     * Template constructor.
+     * @return mixed
      */
-    function __construct($object = false)
+    public function getAlias()
     {
-        $this->setHandler(function ($event) {
-            return $event;
-        });
-
-        if (is_array($object) or is_object($object)) {
-
-            $object = (object)$object;
-
-            foreach ($object as $name => $value) {
-                $this->{$name} = $value;
-            }
-
-            Grider::save($this);
-
-        }
+        return $this->alias;
     }
 
     /**
@@ -509,17 +536,17 @@ class Template
 
         # Standart
         $components = [
-//            'input' => Store::get('@input'),
-//            'button' => Store::get('@button'),
-//            'label' => Store::get('@label'),
+//            'input' => Market::get('@input'),
+//            'button' => Market::get('@button'),
+//            'label' => Market::get('@label'),
         ];
 
         # Render
-        App::render($this->getTwig(), array_merge((array)$this->getProps(), (array)$props, (array)$components, (array)$this->getComponents(), [
+        App::render($this->getTemplate(), array_merge((array)$this->getProps(), (array)$props, (array)$components, (array)$this->getComponents(), [
             'components' => (object)array_merge(
                 (array)$this->getComponents(),
                 (array)[
-                    'error' => Store::get('default_error')
+                    'error' => Market::get('default_error')
                 ]
             ),
             'props' => (object)array_merge(
@@ -540,9 +567,11 @@ class Template
     /**
      * @return $this
      */
-    public function build()
+    public function build($attr)
     {
-        return $this;
+        return (object) [
+            'HTML' => App::renderToString($this->getTemplate(), $attr)
+        ];
     }
 
 }

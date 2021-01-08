@@ -1,0 +1,70 @@
+#compound__editor__frame
+  margin: 0
+  padding: 0
+
+  .__compound_editor_parent
+    padding: 0
+
+  .__compound_editor_tools
+    background-color: #0073AA
+    color: white
+    display: flex
+
+    .__compound_editor_tools_tool
+      display: flex
+      cursor: pointer
+
+      &:hover
+        background-color: #005d8b
+
+  .__compound_editor_document
+    padding: 12px
+
+    .__compound_editor_template
+      background: #ffffff
+      padding: 10
+      margin: 4px
+      width: auto
+      width: -webkit-fill-available
+      min-width: 40
+
+      .__compound_editor_template_header
+        display: flex
+        width: 100%
+        place-content: flex-end
+
+      .__compound_editor_template_header_toolbar
+          float: right
+
+    .__compound_editor_area
+      background: #ffffff
+      padding: 4px
+      display: flex
+      place-content: space-around
+
+      .__compound_editor_component_append
+        cursor: pointer
+        padding: 16px
+        transition: 0.1s ease-in-out
+        background: #f9f9f9
+        overflow: hidden
+        width: 20%
+        margin: 4px
+        grid-auto-flow: column
+        display: flex
+        align-items: center
+        justify-content: center
+
+        svg
+          color: #0073aa
+          width: 42px
+          height: 42px
+
+      .__compound_editor_component
+        cursor: pointer
+        padding: 16px
+        transition: 0.1s ease-in-out
+        background: #F5F5F5
+        overflow: hidden
+        width: 100%
+        margin: 4px

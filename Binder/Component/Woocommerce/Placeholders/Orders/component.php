@@ -4,7 +4,7 @@ namespace Mirele\Components;
 
 use Mirele\Compound\Component;
 use Mirele\Compound\Config;
-use Mirele\Compound\Store;
+use Mirele\Compound\Market;
 use Mirele\TWIG;
 
 

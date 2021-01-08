@@ -11,7 +11,8 @@ new Component([
         'id'    => 'default_abstract_input',
         'alias' => '@input',
         'props' => [
-            'value' => 'New input'
+            'value' => 'New input',
+            'type' => 'text'
         ],
         'meta'  => [
             'editor' => (new Config())->setData('title', 'Input')->setData('description', '')->setData('alias', '')

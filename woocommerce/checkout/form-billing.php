@@ -18,9 +18,9 @@
 
 defined( 'ABSPATH' ) || exit;
 
-use Mirele\Compound\Store;
+use Mirele\Compound\Market;
 
-Store::call('default_form_billing', [
+Market::call('default_form_billing', [
     'checkout' => $checkout,
     'form'     => $checkout->get_checkout_fields('billing'),
     'account'  => $checkout->get_checkout_fields('account'),

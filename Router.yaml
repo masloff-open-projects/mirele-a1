@@ -49,9 +49,13 @@ private:
     VUE: //cdn.jsdelivr.net/npm/vue
     Popper: //cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js
 #    Center: /public/js/center.min.js
-    ApplicationC: /public/js/Applications/Compound/Application.min.js
     MIRELE: /public/js/org.app.min.js
     bootstrap: //stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js
+    CompoundEditor: /public/js/Applications/Compound/Application.min.js
+    CompoundModalEditComponent: /public/js/Applications/Compound/Modal/EditComponent.min.js
+    CompoundModalAppendComponent: /public/js/Applications/Compound/Modal/AppendComponent.min.js
+    CompoundModalInsertTemplate: /public/js/Applications/Compound/Modal/InsertTemplate.min.js
+    CompoundModal: /public/js/Applications/Compound/Modal.min.js
 
 
   styles:
@@ -60,7 +64,7 @@ private:
 
   localize:
     MIRELE: main
-    compound: Compound
+    CompoundEditor: Compound
 
 
 # ...

@@ -1,0 +1,18 @@
+/* Error: Undefined variable.
+ *   ,
+ * 1 | @for $i from 0 through 12 * $multiplicator
+ *   |                             ^^^^^^^^^^^^^^
+ *   '
+ *   gap.sass 1:29  root stylesheet */
+
+body::before {
+  font-family: "Source Code Pro", "SF Mono", Monaco, Inconsolata, "Fira Mono",
+      "Droid Sans Mono", monospace, monospace;
+  white-space: pre;
+  display: block;
+  padding: 1em;
+  margin-bottom: 1em;
+  border-bottom: 2px solid black;
+  content: "Error: Undefined variable.\a   \2577 \a 1 \2502  @for $i from 0 through 12 * $multiplicator\a   \2502                              ^^^^^^^^^^^^^^\a   \2575 \a   gap.sass 1:29  root stylesheet";
+}
+/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbImdhcC5jc3MiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBQUE7Ozs7O3FDQUtxQzs7QUFFckM7RUFDRTs2Q0FDMkM7RUFDM0MsZ0JBQWdCO0VBQ2hCLGNBQWM7RUFDZCxZQUFZO0VBQ1osa0JBQWtCO0VBQ2xCLDhCQUE4QjtFQUM5QiwwTUFBME07QUFDNU0iLCJmaWxlIjoiZ2FwLmNzcyIsInNvdXJjZXNDb250ZW50IjpbIi8qIEVycm9yOiBVbmRlZmluZWQgdmFyaWFibGUuXG4gKiAgICxcbiAqIDEgfCBAZm9yICRpIGZyb20gMCB0aHJvdWdoIDEyICogJG11bHRpcGxpY2F0b3JcbiAqICAgfCAgICAgICAgICAgICAgICAgICAgICAgICAgICAgXl5eXl5eXl5eXl5eXl5cbiAqICAgJ1xuICogICBnYXAuc2FzcyAxOjI5ICByb290IHN0eWxlc2hlZXQgKi9cblxuYm9keTo6YmVmb3JlIHtcbiAgZm9udC1mYW1pbHk6IFwiU291cmNlIENvZGUgUHJvXCIsIFwiU0YgTW9ub1wiLCBNb25hY28sIEluY29uc29sYXRhLCBcIkZpcmEgTW9ub1wiLFxuICAgICAgXCJEcm9pZCBTYW5zIE1vbm9cIiwgbW9ub3NwYWNlLCBtb25vc3BhY2U7XG4gIHdoaXRlLXNwYWNlOiBwcmU7XG4gIGRpc3BsYXk6IGJsb2NrO1xuICBwYWRkaW5nOiAxZW07XG4gIG1hcmdpbi1ib3R0b206IDFlbTtcbiAgYm9yZGVyLWJvdHRvbTogMnB4IHNvbGlkIGJsYWNrO1xuICBjb250ZW50OiBcIkVycm9yOiBVbmRlZmluZWQgdmFyaWFibGUuXFxhICAgXFwyNTc3IFxcYSAxIFxcMjUwMiAgQGZvciAkaSBmcm9tIDAgdGhyb3VnaCAxMiAqICRtdWx0aXBsaWNhdG9yXFxhICAgXFwyNTAyICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgXl5eXl5eXl5eXl5eXl5cXGEgICBcXDI1NzUgXFxhICAgZ2FwLnNhc3MgMToyOSAgcm9vdCBzdHlsZXNoZWV0XCI7XG59XG4iXX0= */

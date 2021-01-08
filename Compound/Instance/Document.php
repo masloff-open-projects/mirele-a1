@@ -18,7 +18,10 @@ class Document extends Protector
 
     private function __processing ($data)
     {
+
         if (function_exists('xml_parser_create')) {
+
+            $data = "<root>$data</root>";
 
             $document = xml_parser_create();
 
@@ -30,6 +33,7 @@ class Document extends Protector
 
             $area = false;
             $container = false;
+            $index = 0;
 
             foreach($values as $XKey => $XValue)
             {
@@ -40,12 +44,12 @@ class Document extends Protector
                     if ($area and $container) {
 
                         # Component
-                        $uuid = $this->__uid();
                         $component = $XValue['tag'];
                         $value = $XValue['value'];
                         $attributes = isset($XValue['attributes']) ? $XValue['attributes'] : [];
+                        $uuid = isset($attributes['id']) ? $attributes['id'] : $this->__uid();
 
-                        $this->document[$container][$area][$uuid] = array(
+                        $this->document[$index][$container][$area][$uuid] = array(
                             'component' => $component,
                             'value' => $value,
                             'attributes' => $attributes,
@@ -58,11 +62,16 @@ class Document extends Protector
                 {
 
                     switch ($XValue["tag"]) {
+                        case 'root':
+                            break;
+
                         case 'area':
                             if ($area == false) {
+                                $area = true;
                                 if (isset($XValue['attributes']['id'])) {
                                     $area = $XValue['attributes']['id'];
                                 } else {
+                                    throw new \Exception('No `id` attribute is set for the area');
                                     $area = false;
                                 }
                             } else {
@@ -71,15 +80,22 @@ class Document extends Protector
                             break;
 
                         case 'container':
+                            $index++;
                             if ($container == false) {
+                                $container = true;
                                 if (isset($XValue['attributes']['template'])) {
                                     $container = $XValue['attributes']['template'];
                                 } else {
+                                    throw new \Exception('No `template` attribute is set for the container');
                                     $container = false;
                                 }
                             } else {
                                 throw new \Exception('Within a tag container, no other container can be created');
                             }
+                            break;
+
+                        default:
+                            throw new \Exception('The tag does not exist');
                             break;
                     }
 
@@ -88,12 +104,19 @@ class Document extends Protector
                 {
 
                     switch ($XValue["tag"]) {
+                        case 'root':
+                            break;
+
                         case 'area':
                             $area = false;
                             break;
 
                         case 'container':
                             $container = false;
+                            break;
+
+                        default:
+                            throw new \Exception('The tag does not exist');
                             break;
                     }
 
@@ -108,8 +131,62 @@ class Document extends Protector
         }
     }
 
-    public function document (string $document) {
-        return $this->__processing($document);
+    /**
+     * @return array
+     */
+    public function getDocument()
+    {
+        return $this->document;
     }
+
+    /**
+     * @return string
+     */
+    public function getCXML ()
+    {
+
+        $document = "";
+
+        foreach ($this->document as $instance) {
+            foreach ($instance as $templateName => $template) {
+                $document .= "<container template=\"{$templateName}\">\n";
+                foreach ($template as $areaName => $area) {
+                    $document .= "    <area id=\"{$areaName}\">\n";
+                    foreach ($area as $componentName => $component) {
+                        $attr = Helpers\HTML::arrayToAttrs($component['attributes']);
+                        $document .= "        <{$component['component']} {$attr}/>\n";
+                    }
+                    $document .= "    </area>\n";
+                }
+                $document .= "</container>\n";
+            }
+        }
+
+        return $document;
+
+    }
+
+    /**
+     * PHP 5 allows developers to declare constructor methods for classes.
+     * Classes which have a constructor method call this method on each newly-created object,
+     * so it is suitable for any initialization that the object may need before it is used.
+     *
+     * Note: Parent constructors are not called implicitly if the child class defines a constructor.
+     * In order to run a parent constructor, a call to parent::__construct() within the child constructor is required.
+     *
+     * param [ mixed $args [, $... ]]
+     * @link https://php.net/manual/en/language.oop5.decon.php
+     */
+    public function __construct($document)
+    {
+
+        if (is_array($document) or is_object($document)) {
+            $this->document = $document;
+        } else {
+            $this->__processing($document);
+        }
+
+    }
+
 
 }

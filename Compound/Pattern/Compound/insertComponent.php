@@ -5,7 +5,7 @@ namespace Mirele\Compound\Patterns;
 
 
 use Mirele\Compound\Component;
-use Mirele\Compound\Store;
+use Mirele\Compound\Market;
 use Mirele\Compound\Tag;
 use Mirele\Framework\Prototypes\Pattern;
 
@@ -30,7 +30,7 @@ class insertComponent extends Pattern
 
             if (is_object($root)) {
 
-                $component = Store::get($this->component);
+                $component = Market::get($this->component);
 
                 if ($component instanceof Component) {
 

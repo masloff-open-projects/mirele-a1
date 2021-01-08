@@ -1,0 +1,11 @@
+# Certificates are required for the distribution to work properly on the server.
+# The certificate is baked on January 2, 2021 and is valid for 4 years.
+
+requirements:
+  php: 7.0.0
+  wp: 10
+
+wishes:
+
+signed: iRTEX
+releaseDate: 02.01.2021

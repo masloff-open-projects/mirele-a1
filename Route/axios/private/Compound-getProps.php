@@ -8,7 +8,7 @@ use Mirele\Compound\Component;
 use Mirele\Compound\Config;
 use Mirele\Compound\Lexer;
 use Mirele\Compound\Response;
-use Mirele\Compound\Store;
+use Mirele\Compound\Market;
 use Mirele\Compound\Tag;
 use Mirele\Framework\Request;
 use Mirele\Framework\Strategists\__strategy_admin;
@@ -64,7 +64,7 @@ class Request_Compound__getProps extends Request
                             $name = $tag->getAttribute('name');
                             if (!empty($name))
                             {
-                                $component = Store::get($name);
+                                $component = Market::get($name);
                                 if ($component instanceof Component)
                                 {
                                     $propsOfComponent = (array)$component->getProps();

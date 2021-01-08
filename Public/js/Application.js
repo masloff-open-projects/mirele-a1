@@ -11,6 +11,9 @@ const Application = {
     },
     Temporary: {},
     Variables: {},
+    Components: {
+        Compound: {}
+    },
     Modules: {},
     Declare: class {
         constructor(path) {

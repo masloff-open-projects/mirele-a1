@@ -6,6 +6,7 @@
         "ext-xml": "*",
         "mustangostang/spyc": "^0.6.3",
         "monolog/monolog": "^2.1",
-        "composer/xdebug-handler": "^1.4"
+        "composer/xdebug-handler": "^1.4",
+        "paquettg/php-html-parser": "^3.1"
     }
 }

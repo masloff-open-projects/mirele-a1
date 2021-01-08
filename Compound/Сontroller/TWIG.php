@@ -5,7 +5,7 @@ namespace Mirele;
 use Mirele\Compound\Component;
 use Mirele\Compound\Engine\Application;
 use Mirele\Compound\Field;
-use Mirele\Compound\Store;
+use Mirele\Compound\Market;
 use Mirele\Compound\Template;
 use Mirele\Framework\Customizer;
 use Mirele\Framework\Stringer;

@@ -13,7 +13,7 @@
 namespace HammerWrench;
 
 use Mirele\Compound\Grider;
-use Mirele\Compound\Store;
+use Mirele\Compound\Market;
 use Mirele\Router;
 use PHPMailer\PHPMailer\Exception;
 use TypeError;
@@ -763,9 +763,6 @@ if ($argv)
     );
 
     add_action('wp', function () {
-
-        $store = Store::all();
-        $grider = Grider::all();
 
     });
 

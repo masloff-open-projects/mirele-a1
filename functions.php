@@ -23,16 +23,20 @@
 
 global $logger;
 global $modules;
+global $repository;
 
 use Mirele\Compound\Adapter\AJAX;
 use Mirele\Compound\Engine\Document as App;
 use Mirele\Compound\Grider;
-use Mirele\Compound\Store;
+use Mirele\Compound\Market;
 use Mirele\Framework;
 use Mirele\Framework\Stringer;
 use Mirele\Router;
 use Monolog\Handler\StreamHandler;
 use Monolog\Logger;
+use Mirele\Compound\Repository;
+use Mirele\Compound\Module;
+use Mirele\Compound\VisualEditor\Editor;
 
 # Checking the compatibility and legality of the file call
 defined('ABSPATH') or die('Not defined ABSPATH');
@@ -120,6 +124,9 @@ if (wp_doing_ajax() === false) {
 
     $modules = array(
 
+        # Include composer
+        'composer' => include_once 'vendor/autoload.php',
+
         # Initially, Mirele needs to create its own infostructure,
         # which will already be used within the elements and components
         # of the interest.
@@ -129,8 +136,8 @@ if (wp_doing_ajax() === false) {
         'Binders' => include_once 'Binder/autoloader.php',
 
         # Connecting Vendor files except Composer
-        'Route' => include_once 'Route/autoloader.php',
-        'Options' => include_once 'Option/vendor.php'
+        'Options' => include_once 'Option/vendor.php',
+        'Route' => include_once 'Route/autoloader.php'
 
     );
 
@@ -142,8 +149,10 @@ if (wp_doing_ajax() == false) {
     $logger->pushHandler(new StreamHandler(MIRELE_LOG_FILE, Logger::WARNING));
 }
 
+# Init
 Router::staticFiles('/public/(:all)', TEMPLATE_PATH . '/Public/');
 App::init();
+//$repository = new Repository();
 
 # Setup an error handler
 if (true) {
@@ -206,13 +215,9 @@ add_action('init', function () {
 
     # Registration of some components of the Compound
     add_shortcode('Component', function ($attr, $content) {
-        Store::call($attr['name'],
-            array_merge((array)$attr, ['attr' => (array)$attr], (array)['context_content' => $content])
-        );
-    }
-    );
-
-    add_shortcode('Compound', function ($attr, $content) {
+//        Market::call($attr['name'],
+//            array_merge((array)$attr, ['attr' => (array)$attr], (array)['context_content' => $content])
+//        );
     }
     );
 
@@ -267,6 +272,8 @@ add_action('init', function () {
     );
 
     Router::dispatch(parse_url($_SERVER["REQUEST_URI"], PHP_URL_PATH));
+
+    Module::init();
 
 }
 );
@@ -493,10 +500,15 @@ add_action('init', function () {
 
     if (wp_doing_ajax() == false) {
 
-        Router::plugDependencies([
-            is_admin() ? 'private' : 'public',
-            is_wc() ? 'woocommerce' : false
-        ], function ($id, $type, $alias, $src, $history) {
+
+        Router::plugDependencies(array_merge(
+            [
+                is_admin() ? 'private' : 'public',
+                is_wc() ? 'woocommerce' : false,
+                (MIRELE_GET)['action'] == 'compound_visual_edit' ? 'public' : false
+            ],
+            apply_filters('compoundRouterDependencies', [])
+        ), function ($id, $type, $alias, $src, $history) {
 
             switch ($type) {
                 case 'scripts':
@@ -531,9 +543,9 @@ add_action('init', function () {
                         $wp_page = (object)get_post((MIRELE_GET)['page_id']);
 
                         wp_localize_script($alias, 'x27511', [
-                                'page_on_edit' => (MIRELE_GET)['page_id'],
-                                'page' => !empty($post->ID) ? $post->ID : 0,
-                                'page_on_edit_url' => !empty($wp_page->guid) ? $wp_page->guid : 0
+                                'ID' => (MIRELE_GET)['post'],
+                                'Page' => !empty($post->ID) ? $post->ID : 0,
+                                'URL' => !empty($wp_page->guid) ? $wp_page->guid : 0
                             ]
                         );
                     } else if ($src === 'woocommerce') {
@@ -555,10 +567,66 @@ add_action('init', function () {
             }
         }
         );
+
+        add_filter('page_row_actions', function($actions) {
+
+            global $post;
+            $url = get_admin_url(null, "post.php?post={$post->ID}&action=edit&compound=compound", 'admin');
+            $actions['compound'] = "<a href=\"{$url}\" aria-label=\"Edit page with Compound editor\">Edit page with Compound editor</a>";
+            return $actions;
+
+        });
+
+
+        add_action('post_action_compound_visual_edit', function () {
+
+            new Editor([
+                'post' => ''
+            ]);
+
+            $post = get_post((MIRELE_GET)['post']);
+
+            $HTML = '';
+            $document = new Mirele\Compound\Document($post->post_content);
+
+            add_filter('compoundRouterDependencies', function () {
+                return 'public';
+            });
+
+            foreach ($document->getDocument() as $instance) {
+
+                foreach ($instance as $name => $container) {
+
+                    $Tempalte = Repository::getTemplate($name);
+
+                    if ($Tempalte instanceof Mirele\Compound\Template) {
+
+                        $DOMDocument = new \Mirele\Compound\DOM($Tempalte, [], $container, true);
+
+                        if ($DOMDocument->getDocument()) {
+                            $HTML .= $DOMDocument->getDocument();
+                        }
+
+                    } else {
+                        wp_die("Template with identifier `{$name}` was not found in the system ", "Template not found");
+                    }
+
+                }
+
+            }
+
+            App::render('Compound/Engine/Applications/Public/canvas.html.twig', [
+                'markup' => $HTML
+            ]);
+
+
+        });
+
     }
 
 }
 );
+
 
 # Admin front-end
 add_action('admin_enqueue_scripts', function () {
@@ -584,32 +652,16 @@ add_action('admin_menu', function () {
     add_thickbox();
 
     // Compound editor
-    add_menu_page('MIRELE', 'Compound Editor', MIRELE_RIGHTS['page']['edit'], 'сompound_render_editor', function () {
-        if (current_user_can(MIRELE_RIGHTS['page']['edit'])) {
-            App::render('Compound/Engine/Applications/Compound/index.html.twig', [
+    add_action( 'edit_page_form', function () {
 
-                ]
-            );
-        }
-    }, 'dashicons-welcome-write-blog', 3
-    );
+        global $post;
 
-    // Mirele center
-    add_menu_page('MIRELE', 'Mirele Center', MIRELE_RIGHTS['page']['edit'], 'mirele_center', function () {
-//        if (current_user_can(MIRELE_RIGHTS['page']['edit'])) {
-//            App::render('Main/center');
-//        } else {
-//            App::render('Main/no-access');
-//        }
-    }, '', 1
-    );
+        App::render('Compound/Engine/Applications/Compound/editor.html.twig', [
+                'content' => get_post_meta( $post->ID, 'second_content', true )
+            ]
+        );
 
-    // Mirele apps
-    add_menu_page('MIRELE', 'Mirele Apps', MIRELE_RIGHTS['page']['edit'], 'mirele_apps', function () {
-        App::render('Apps/main', []);
-
-    }, 'dashicons-screenoptions', 2
-    );
+    });
 
 
 //    add_action('admin_bar_menu', function ($wp_admin_bar) {

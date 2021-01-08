@@ -12,12 +12,14 @@ use Mirele\Compound\Component;
 use Mirele\Compound\Field;
 use Mirele\Compound\Grider;
 use Mirele\Compound\Lexer;
-use Mirele\Compound\Store;
+use Mirele\Compound\Market;
 use Mirele\Compound\Tag;
 use Mirele\Compound\Template;
 use Mirele\Framework\Buffer;
-use \Mirele\Compound\Document;
+use Mirele\Compound\Repository;
+use Mirele\Compound\Document;
 use Mirele\TWIG;
+use Mirele\Compound\DOM;
 use Mirele\Compound\Engine\Document as App;
 
 global $post;
@@ -25,44 +27,25 @@ global $post;
 if (isset($post) and is_object($post)) {
 
     $HTML = '';
-    $components = [];
-    $document = new Document();
+    $document = new Document($post->post_content);
 
-    foreach ($document->document($post->post_content) as $container_name => $container) {
+    foreach ($document->getDocument() as $instance) {
 
-        foreach ($container as $area_name => $area) {
+        foreach ($instance as $name => $container) {
 
-            foreach ($area as $component) {
+            $Tempalte = Repository::getTemplate($name);
 
+            if ($Tempalte instanceof Template) {
 
-                $Component = Store::get($component['component']);
+                $DOMDocument = new DOM($Tempalte, [], $container);
 
-                if ($Component instanceof Component) {
-
-                    $object = clone $Component;
-                    $object->setProps(array_merge(
-                        $component['attributes'],
-                        [
-                            'value' => $component['value']
-                        ]
-                    ));
-
-                    $components[$area_name][] = $object;
-
+                if ($DOMDocument->getDocument()) {
+                    $HTML .= $DOMDocument->getDocument();
                 }
 
+            } else {
+                wp_die("Template with identifier `{$name}` was not found in the system ", "Template not found");
             }
-
-            $HTML .= Grider::call($container_name, array_merge(
-                (array) [],
-                (array) [
-                    'call' => [
-                        'components' => $components
-                    ],
-                ]
-            ), true);
-
-            $components = [];
 
         }
 

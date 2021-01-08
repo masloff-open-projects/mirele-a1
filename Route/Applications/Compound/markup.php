@@ -3,6 +3,7 @@
 
 namespace Mirele\Network;
 
+use Couchbase\Document;
 use Mirele\Compound\Layout;
 use Mirele\Compound\Response;
 use Mirele\Framework\Request;
@@ -41,11 +42,18 @@ class Request_CompoundPrivate__markup extends Request
          */
         return $this->useAuthorizationStrategy(new CompoundPrivate)->next(function ($a) {
 
-            return new Response([], 200);
+            $content = get_post(isset((MIRELE_POST)['id']) ? (MIRELE_POST)['id'] : 0)->post_content;
+            $document = new \Mirele\Compound\Document($content);
+
+            return new Response([
+                'document' => $document->getDocument()
+            ], 200);
 
         }
         )->reject(function ($a) {
+
             return new Response(Response::PATTERN_403, 403);
+
         }
         )();
 

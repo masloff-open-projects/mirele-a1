@@ -4,6 +4,7 @@ namespace Mirele\Components;
 
 use Mirele\Compound\Component;
 use Mirele\Compound\Config;
+use Mirele\Compound\Helpers\Compound;
 
 new Component([
 
@@ -37,7 +38,11 @@ new Component([
     # Interaction with it in this state is no longer possible.
     'mounted'   => function (Component $self) {
 
-    }
+    },
+
+    'editor' => array_merge(Compound::ECOMPONENT, [
+        'title' => 'Button'
+    ])
 
 ]
 );

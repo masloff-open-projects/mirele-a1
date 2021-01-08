@@ -24,7 +24,7 @@ defined( 'ABSPATH' ) or exit;
 foreach ($notices as $notice) {
 
 	# Call the notification component
-	\Mirele\Compound\Store::call('default_notice', [
+	\Mirele\Compound\Market::call('default_notice', [
 		'notice' => $notice,
 		'text' => $notice['notice'],
 		'type' => 'success',

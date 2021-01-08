@@ -3,7 +3,8 @@
 namespace Mirele\Compound\Engine;
 
 use Mirele\Compound\Component;
-use Mirele\Compound\Store;
+use Mirele\Compound\Repository;
+use Mirele\Compound\Market;
 use Mirele\Compound\Template;
 use Mirele\Framework\Customizer;
 use Mirele\Utils\Converter;
@@ -108,7 +109,7 @@ class Extension extends AbstractExtension
     }
 
     public function Component (string $id, array $props) {
-        Store::call($id, $props);
+        echo Repository::getComponent($id)->render($props);
     }
 
     public function Option (string $name, $namespace="*", $props=[]) {

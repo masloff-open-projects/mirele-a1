@@ -1,66 +1,3 @@
-// Welcome screen
-.wp-welcome-page
-  text-align: center
-  display: flex
-  flex-flow: column
-  align-items: center
-  padding-top: 10%
-
-  p
-    width: 70%
-
-.__compound_element
-  border: 1px solid #ddd
-  border-radius: 8px
-  overflow: hidden
-  background: white
-  cursor: pointer
-  transition: 0.3s ease-in-out
-
-  &:active,
-  &:focus
-    box-shadow: 0 0 19px -6px #c5c5c5
-
-
-.wp-mrl-tabs
-  .wp-mrl-tab
-    background: #fff
-    /* min-height: 40; */
-    border-top-right-radius: 8px
-    border-top-left-radius: 8px
-    padding: 3px 8px
-    margin-right: 4px
-    display: inline-block
-    font-size: 10
-
-  .wp-mrl-tabs-container
-    margin-left: 24px
-
-  .wp-mrl-tools-line
-    background: #f7f7f7
-
-.wp-mrl-field-grid-inline
-  display: inline-block
-
-.wp-mrl-field-grid-block
-  display: block
-
-.wp-wrap-tabs
-  margin: 1.6em 0 0 0
-
-.inner-center-box
-  margin: 24px 12%
-  text-align: center
-
-.inner-center-box > .align-left
-  text-align: left
-
-.inner-center-box-margin
-  margin: 24px 256px
-
-.wp-mrl-modal-center
-  text-align: center
-
 @import compound/grid/grid
 @import components/switch
 @import compound/modal
@@ -68,9 +5,10 @@
 @import compound/box
 @import compound/message_mute
 @import compound/offer
-@import compound/static_modal
 @import compound/wp-native/table
 @import compound/wp-native/tag
 @import compound/wp-native/grid
 
 @import compound/editor_field
+@import compound/editor
+@import compound/visual_editor

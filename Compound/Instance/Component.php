@@ -7,6 +7,7 @@ namespace Mirele\Compound;
 use Mirele\Framework\CompoundComponent;
 use Mirele\Compound\Engine\Document as App;
 
+
 class Component
 {
 
@@ -18,6 +19,7 @@ class Component
     protected $meta = [];
     protected $alias = null;
     protected $parent = null;
+    protected $editor = null;
 
     protected $construct;
     protected $created;
@@ -81,12 +83,19 @@ class Component
                 $this->template = $object->template;
             }
 
-            Store::add($this);
+            if (isset($object->editor)) {
+                $this->editor = $object->editor;
+            }
+
+            if (isset($this->editor)) {
+                Market::registerComponent($this->id, $this->editor);
+            }
+
+            Repository::registerComponent($this->id, $this);
 
             $this->__call_construct();
 
         }
-
     }
 
 
@@ -216,7 +225,7 @@ class Component
             $this->{$k} = $v;
         }
 
-        $this->self = $args;
+//        $this->self = $args;
 
         $this->__call_created();
 
@@ -226,7 +235,7 @@ class Component
 
         if (!empty($this->getTemplate())) {
 
-            $promise = App::render($this->getTemplate(), $this->props);
+            $promise = App::renderToString($this->getTemplate(), $this->props);
             $this->__call_mounted();
             return $promise;
 

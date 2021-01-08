@@ -375,8 +375,6 @@ final class Router
         $history = [];
         $routes = self::readConfigFile();
         $consts = [
-            "{Applications.JS}" => '/public/js/Applications',
-            "{Applications.CSS}" => '/public/css/Applications',
             "{ROOT}" => TEMPLATE_URI
         ];
 

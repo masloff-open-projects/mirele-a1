@@ -10,7 +10,12 @@
         "Binder/Component/*/*/*.php",
         "Binder/Component/*/*.php",
         "Binder/Template/*/*.php",
-        "Binder/Template/*.php"
+        "Binder/Template/*.php",
+        "Binder/Option/*/*/*/*/*.php",
+        "Binder/Option/*/*/*/*.php",
+        "Binder/Option/*/*/*.php",
+        "Binder/Option/*/*.php",
+        "Binder/Option/*.php"
       ],
       "output": "Binder/autoloader.php"
     },
@@ -36,7 +41,9 @@
         "Compound/Engine/*/*/*/*.php",
         "Compound/Engine/*/*/*.php",
         "Compound/Engine/*/*.php",
-        "Compound/Engine/*.php"
+        "Compound/Engine/*.php",
+        "Compound/Helpers/*/*.php",
+        "Compound/Helpers/*.php"
       ],
       "output": "Compound/autoloader.php"
     },
