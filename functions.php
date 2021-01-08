@@ -500,13 +500,12 @@ add_action('init', function () {
 
     if (wp_doing_ajax() == false) {
 
-
         Router::plugDependencies(array_merge(
             [
                 is_admin() ? 'private' : 'public',
                 is_wc() ? 'woocommerce' : false,
-                (MIRELE_GET)['action'] == 'compound_visual_edit' ? 'public' : false
             ],
+            (MIRELE_GET)['action'] == 'compound_visual_layout' ? ['public', 'VisualEditor'] : [],
             apply_filters('compoundRouterDependencies', [])
         ), function ($id, $type, $alias, $src, $history) {
 
@@ -577,56 +576,65 @@ add_action('init', function () {
 
         });
 
-
-        add_action('post_action_compound_visual_edit', function () {
-
-            new Editor([
-                'post' => ''
-            ]);
-
-            $post = get_post((MIRELE_GET)['post']);
-
-            $HTML = '';
-            $document = new Mirele\Compound\Document($post->post_content);
-
-            add_filter('compoundRouterDependencies', function () {
-                return 'public';
-            });
-
-            foreach ($document->getDocument() as $instance) {
-
-                foreach ($instance as $name => $container) {
-
-                    $Tempalte = Repository::getTemplate($name);
-
-                    if ($Tempalte instanceof Mirele\Compound\Template) {
-
-                        $DOMDocument = new \Mirele\Compound\DOM($Tempalte, [], $container, true);
-
-                        if ($DOMDocument->getDocument()) {
-                            $HTML .= $DOMDocument->getDocument();
-                        }
-
-                    } else {
-                        wp_die("Template with identifier `{$name}` was not found in the system ", "Template not found");
-                    }
-
-                }
-
-            }
-
-            App::render('Compound/Engine/Applications/Public/canvas.html.twig', [
-                'markup' => $HTML
-            ]);
-
-
-        });
-
     }
 
 }
 );
 
+add_action('post_action_compound_visual_layout', function () {
+
+    $post = get_post((MIRELE_GET)['post']);
+
+    $HTML = '';
+    $document = new Mirele\Compound\Document($post->post_content);
+
+    foreach ($document->getDocument() as $instance) {
+
+        foreach ($instance as $name => $container) {
+
+            $Tempalte = Repository::getTemplate($name);
+
+            if ($Tempalte instanceof Mirele\Compound\Template) {
+
+                $DOMDocument = new \Mirele\Compound\DOM($Tempalte, [], $container, true);
+
+                if ($DOMDocument->getDocument()) {
+                    $HTML .= $DOMDocument->getDocument();
+                }
+
+            } else {
+                wp_die("Template with identifier `{$name}` was not found in the system ", "Template not found");
+            }
+
+        }
+
+    }
+
+    App::render('Compound/Engine/Applications/Public/canvas.html.twig', [
+        'markup' => $HTML
+    ]);
+
+
+});
+
+add_filter('replace_editor', function () {
+
+    global $post;
+
+    if ((MIRELE_GET)['compound'] == 'compound' and $post) {
+
+        $post_type_object = get_post_type_object( $post->post_type );
+
+        new Editor([
+            'p' =>  admin_url( sprintf( $post_type_object->_edit_link . "&action=compound_visual_layout", $post->ID )),
+            'post' => get_edit_post_link($post->ID)
+        ]);
+
+        return true;
+
+    }
+
+});
 
 # Admin front-end
 add_action('admin_enqueue_scripts', function () {

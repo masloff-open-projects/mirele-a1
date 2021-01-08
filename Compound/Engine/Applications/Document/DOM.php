@@ -104,7 +104,7 @@ class DOM {
                                                 if ($marked) {
                                                     $children->setTag('div');
                                                     $children->setAttribute('data-compound', true);
-                                                    $children->setAttribute('class', "compound_visual_editor");
+                                                    $children->setAttribute('class', "__compound_visual_editor");
                                                 }
 
                                                 $section->addChild($children);

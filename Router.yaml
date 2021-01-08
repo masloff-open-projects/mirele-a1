@@ -85,3 +85,8 @@ woocommerce:
   localize:
     woocommerce-product: woocommerce
     woocommerce-products: main
+
+
+VisualEditor:
+  styles:
+    VisualEditorMain: {ROOT}/Public/css/visual_editor.css

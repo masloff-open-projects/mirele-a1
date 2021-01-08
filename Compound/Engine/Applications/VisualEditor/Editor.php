@@ -25,9 +25,7 @@ class Editor
     {
 
 
-        App::render('Compound/Engine/Applications/VisualEditor/editor.html.twig', [
-
-        ]);
+        App::render('Compound/Engine/Applications/VisualEditor/editor.html.twig', $env);
 
     }
 
