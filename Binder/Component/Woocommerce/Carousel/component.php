@@ -3,17 +3,14 @@
 namespace Mirele\Components;
 
 use Mirele\Compound\Component;
-use Mirele\Compound\Config;
+
 
 new Component([
 
     'data' => [
         'id'    => 'default_carousel',
         'alias' => '@woo_carousel',
-        'props' => [],
-        'meta'  => [
-            'editor' => (new Config())->setData('title', 'Carousel')->setData('description', '')->setData('alias', '')
-        ]
+        'props' => []
     ],
 
     'template'  => "Binder/Component/Woocommerce/Carousel/template.html.twig",

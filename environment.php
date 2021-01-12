@@ -127,13 +127,13 @@ define('COMPOUND_TWIG_DIR', get_template_directory() . '/TWIG');
  * Constant with by public data folder
  * @deprecated
  */
-define('MIRELE_SOURCE_DIR', get_template_directory_uri() . '/Public');
+define('MIRELE_SOURCE_DIR', get_template_directory_uri() . '/Templates');
 
 /**
  * Constant with by public data folder
  * @deprecated
  */
-define('MIRELE_SOURCE_PATH', get_template_directory() . '/Public');
+define('MIRELE_SOURCE_PATH', get_template_directory() . '/Templates');
 
 /**
  * Constant with by log file

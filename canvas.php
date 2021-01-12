@@ -8,19 +8,15 @@
 * @since: Mirele Canvas 1
 */
 
-use Mirele\Compound\Component;
+use Mirele\Compound\Document;
+use Mirele\Compound\DOM;
+use Mirele\Compound\Document\TWIG as App;
 use Mirele\Compound\Field;
 use Mirele\Compound\Grider;
-use Mirele\Compound\Lexer;
-use Mirele\Compound\Market;
+use Mirele\Compound\Repository;
 use Mirele\Compound\Tag;
 use Mirele\Compound\Template;
 use Mirele\Framework\Buffer;
-use Mirele\Compound\Repository;
-use Mirele\Compound\Document;
-use Mirele\TWIG;
-use Mirele\Compound\DOM;
-use Mirele\Compound\Engine\Document as App;
 
 global $post;
 
@@ -51,7 +47,7 @@ if (isset($post) and is_object($post)) {
 
     }
 
-    App::render('Compound/Engine/Applications/Public/canvas.html.twig', [
+    App::render('Compound/Templates/canvas.html.twig', [
         'markup' => $HTML
     ]);
 

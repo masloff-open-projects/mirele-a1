@@ -6,23 +6,23 @@
 
 </style>
 
-<section>
+<section class="container">
 
-    <div class="row featurette">
-        <div class="col-md-7">
-            <h2 class="featurette-heading">
+    <div class="row">
 
-                <c-area id="title" strict>
-                    <text id="devel">Welcome to hell</text>
+        {% for i in 1..6 %}
+
+            <div class="col-2">
+
+                <c-area id="col-{{ i }}" editor-col="2">
+                    <text value="Hello" id="{{ i }}"/>
                 </c-area>
 
-                <span class="text-muted">It'll blow your mind.</span>
-            </h2>
-            <p class="lead">The iconic Audrey Hepburn was styled in Givenchy in 1954. Her floral white dress was paired with a thin white belt showing off her elegance and slim figure. Although this was featured in 1954, this is one of the most memorable appearances at the Academy Awards.</p>
-        </div>
-        <div class="col-md-5">
-            <p><a class="btn btn-secondary" href="http://www.gq.com/gallery/oscars-2017-best-dressed-men-academy-awards-red-carpet#2" role="button">View details &raquo;</a></p>
-        </div>
+            </div>
+
+        {% endfor %}
+
+
     </div>
 
 </section>

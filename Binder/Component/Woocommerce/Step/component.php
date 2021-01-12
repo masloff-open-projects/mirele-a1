@@ -3,9 +3,6 @@
 namespace Mirele\Components;
 
 use Mirele\Compound\Component;
-use Mirele\Compound\Config;
-use Mirele\Compound\Market;
-use Mirele\TWIG;
 
 
 new Component([

@@ -94,5 +94,18 @@ class Compound
 
     }
 
+    static public function pathToObject (string $path)
+    {
+        $path = explode('/', $path);
+
+        return (object) [
+            'index' => isset($path[0]) ? $path[0] : false,
+            'template' => isset($path[1]) ? $path[1] : false,
+            'area' => isset($path[2]) ? $path[2] : false,
+            'component' => isset($path[3]) ? $path[3] : false,
+            'prop' => isset($path[4]) ? $path[4] : false
+        ];
+    }
+
 
 }

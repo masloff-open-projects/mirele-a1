@@ -7,7 +7,7 @@
  * @version 1.0.0
  */
 
-use Mirele\Compound\Engine\Document as App;
+use Mirele\Compound\Document\TWIG as App;
 
-App::render('Compound/Engine/Applications/Public/404.html.twig', []);
+App::render('Compound/Templates/404.html.twig', []);
 

@@ -25,18 +25,13 @@ global $logger;
 global $modules;
 global $repository;
 
+use Mirele\Compound\Document\TWIG as App;
 use Mirele\Compound\Adapter\AJAX;
-use Mirele\Compound\Engine\Document as App;
-use Mirele\Compound\Grider;
-use Mirele\Compound\Market;
-use Mirele\Framework;
-use Mirele\Framework\Stringer;
+use Mirele\Compound\Module;
 use Mirele\Router;
+
 use Monolog\Handler\StreamHandler;
 use Monolog\Logger;
-use Mirele\Compound\Repository;
-use Mirele\Compound\Module;
-use Mirele\Compound\VisualEditor\Editor;
 
 # Checking the compatibility and legality of the file call
 defined('ABSPATH') or die('Not defined ABSPATH');
@@ -115,8 +110,7 @@ if (wp_doing_ajax() === false) {
 
         # Connecting Vendor files except Composer
         'Binders' => include_once 'Binder/autoloader.php',
-        'Route' => include_once 'Route/autoloader.php',
-        'Options' => include_once 'Option/vendor.php'
+        'Route' => include_once 'Route/autoloader.php'
 
     );
 
@@ -136,7 +130,6 @@ if (wp_doing_ajax() === false) {
         'Binders' => include_once 'Binder/autoloader.php',
 
         # Connecting Vendor files except Composer
-        'Options' => include_once 'Option/vendor.php',
         'Route' => include_once 'Route/autoloader.php'
 
     );
@@ -211,16 +204,6 @@ add_action('rest_api_init', function () {
 # Init WP
 add_action('init', function () {
 
-    global $post;
-
-    # Registration of some components of the Compound
-    add_shortcode('Component', function ($attr, $content) {
-//        Market::call($attr['name'],
-//            array_merge((array)$attr, ['attr' => (array)$attr], (array)['context_content' => $content])
-//        );
-    }
-    );
-
     # Disable unnecessary scripts
     wp_dequeue_style('woocommerce_frontend_styles');
     wp_dequeue_style('woocommerce-general');
@@ -271,9 +254,9 @@ add_action('init', function () {
     }
     );
 
-    Router::dispatch(parse_url($_SERVER["REQUEST_URI"], PHP_URL_PATH));
-
     Module::init();
+
+    Router::dispatch(parse_url($_SERVER["REQUEST_URI"], PHP_URL_PATH));
 
 }
 );
@@ -301,7 +284,7 @@ add_action('wp', function () {
 
                     # Render
                     // FIXME
-                    App::render('Woocommerce/account/edit/profile', ['user' => (object)$user,]);
+                    App::render('Woocommerce/account/edit/profile', []);
 
                 } # Viewing a specific order
                 elseif (is_wc_endpoint_url('view-order')) {
@@ -318,19 +301,7 @@ add_action('wp', function () {
 
                     # Render
                     // FIXME
-                    App::render('Woocommerce/order', [
-                            'user' => (object)$user,
-                            'id' => (integer)$wp->query_vars['view-order'],
-                            'order' => $order,
-                            'note' => wc_get_order_notes(['order_id' => (integer)$wp->query_vars['view-order']]),
-                            'access' => $user->ID === $order->get_user_id(),
-                            'time' => [
-                                'modified' => date("m.d.y H:i", strtotime($order->get_date_modified())),
-                                'created' => date("m.d.y H:i", strtotime($order->get_date_created())),
-                                'paid' => $order->get_date_paid()
-                            ]
-                        ]
-                    );
+                    App::render('Woocommerce/order', []);
 
 
                 } # User does not ask for anything.
@@ -358,16 +329,7 @@ add_action('wp', function () {
                     }
 
                     # Render
-
-
-                    App::render('Compound/Engine/Applications/Public/Module/Woocommerce/account.html.twig', [
-                            'account' => (object)[
-                                'user' => (object)$user,
-                                'orders' => (array)$orders,
-                                'downloads' => (array)$downloads
-                            ]
-                        ]
-                    );
+                    App::render('Compound/Templates/Module/Woocommerce/account.html.twig', []);
 
                 }
 
@@ -384,15 +346,7 @@ add_action('wp', function () {
                         case 'login':
 
                             # Render page
-                            App::render('Compound/Engine/Applications/Public/Module/Woocommerce/Login/login.html.twig', [
-//                                    'content' => [
-//                                        'title' => Framework\Customizer::get('@wc-login', 'mrl_wp_title_login', []),
-//                                        'description' => Framework\Customizer::get('@wc-login', 'mrl_wp_description_login',
-//                                            []
-//                                        ),
-//                                    ]
-                                ]
-                            );
+                            App::render('Compound/Templates/Module/Woocommerce/Login/login.html.twig', []);
                             break;
 
                         case 'register':
@@ -401,17 +355,7 @@ add_action('wp', function () {
                             wp_enqueue_script('woocommerceui_signup');
 
                             # Render page
-
-
-                            App::render('@signup', [
-                                    'content' => [
-                                        'title' => Framework\Customizer::get('@wc-signup', 'mrl_wp_title_signup', []),
-                                        'description' => Framework\Customizer::get('@wc-signup',
-                                            'mrl_wp_description_signup', []
-                                        )
-                                    ]
-                                ]
-                            );
+                            App::render('@signup', []);
                             break;
 
                         default:
@@ -420,15 +364,7 @@ add_action('wp', function () {
                             wp_enqueue_script('woocommerceui_login');
 
                             # Render page
-                            App::render('Compound/Engine/Applications/Public/Module/Woocommerce/Login/login.html.twig', [
-                                    'content' => [
-                                        'title' => Framework\Customizer::get('@wc-login', 'mrl_wp_title_login', []),
-                                        'description' => Framework\Customizer::get('@wc-login', 'mrl_wp_description_login',
-                                            []
-                                        )
-                                    ]
-                                ]
-                            );
+                            App::render('Compound/Templates/Module/Woocommerce/Login/login.html.twig', []);
                             break;
                     }
 
@@ -443,17 +379,7 @@ add_action('wp', function () {
                         wp_enqueue_script('woocommerceui_recovery_password');
 
                         # Render
-                        App::render('@passwordRecovery', [
-                                'content' => [
-                                    'title' => Framework\Customizer::get('@wc-recovery',
-                                        'mrl_wp_title_recovery_password', []
-                                    ),
-                                    'description' => Framework\Customizer::get('@wc-recovery',
-                                        'mrl_wp_description_recovery_password', []
-                                    )
-                                ]
-                            ]
-                        );
+                        App::render('@passwordRecovery', []);
 
                     } else {
 
@@ -465,13 +391,7 @@ add_action('wp', function () {
                         wp_enqueue_script('woocommerceui_login');
 
                         # Render page
-                        App::render('Compound/Engine/Applications/Public/Module/Woocommerce/Login/login.html.twig', [
-                                'content' => [
-                                    'title' => Framework\Customizer::get('@wc-login', 'mrl_wp_title_login', []),
-                                    'description' => Framework\Customizer::get('@wc-login', 'mrl_wp_description_login', [])
-                                ]
-                            ]
-                        );
+                        App::render('Compound/Templates/Module/Woocommerce/Login/login.html.twig', []);
 
                     }
 
@@ -505,7 +425,6 @@ add_action('init', function () {
                 is_admin() ? 'private' : 'public',
                 is_wc() ? 'woocommerce' : false,
             ],
-            (MIRELE_GET)['action'] == 'compound_visual_layout' ? ['public', 'VisualEditor'] : [],
             apply_filters('compoundRouterDependencies', [])
         ), function ($id, $type, $alias, $src, $history) {
 
@@ -576,65 +495,14 @@ add_action('init', function () {
 
         });
 
-    }
-
-}
-);
-
-add_action('post_action_compound_visual_layout', function () {
-
-    $post = get_post((MIRELE_GET)['post']);
-
-    $HTML = '';
-    $document = new Mirele\Compound\Document($post->post_content);
-
-    foreach ($document->getDocument() as $instance) {
-
-        foreach ($instance as $name => $container) {
-
-            $Tempalte = Repository::getTemplate($name);
-
-            if ($Tempalte instanceof Mirele\Compound\Template) {
-
-                $DOMDocument = new \Mirele\Compound\DOM($Tempalte, [], $container, true);
-
-                if ($DOMDocument->getDocument()) {
-                    $HTML .= $DOMDocument->getDocument();
-                }
-
-            } else {
-                wp_die("Template with identifier `{$name}` was not found in the system ", "Template not found");
-            }
-
+        if ((MIRELE_GET)['compound']) {
+            add_filter('use_block_editor_for_post', '__return_false', 10);
         }
 
     }
 
-    App::render('Compound/Engine/Applications/Public/canvas.html.twig', [
-        'markup' => $HTML
-    ]);
-
-
-});
-
-add_filter('replace_editor', function () {
-
-    global $post;
-
-    if ((MIRELE_GET)['compound'] == 'compound' and $post) {
-
-        $post_type_object = get_post_type_object( $post->post_type );
-
-        new Editor([
-            'p' =>  admin_url( sprintf( $post_type_object->_edit_link . "&action=compound_visual_layout", $post->ID )),
-            'post' => get_edit_post_link($post->ID)
-        ]);
-
-        return true;
-
-    }
-
-});
+}
+);
 
 # Admin front-end
 add_action('admin_enqueue_scripts', function () {
@@ -664,10 +532,7 @@ add_action('admin_menu', function () {
 
         global $post;
 
-        App::render('Compound/Engine/Applications/Compound/editor.html.twig', [
-                'content' => get_post_meta( $post->ID, 'second_content', true )
-            ]
-        );
+        App::render('Compound/Engine/Applications/Compound/editor.html.twig', []);
 
     });
 

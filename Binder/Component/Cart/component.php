@@ -3,7 +3,7 @@
 namespace Mirele\Components;
 
 use Mirele\Compound\Component;
-use Mirele\Compound\Config;
+
 
 new Component([
 
@@ -17,9 +17,6 @@ new Component([
                 'link' => '#',
                 'text' => 'Learn more'
             ]
-        ],
-        'meta'  => [
-            'editor' => (new Config())->setData('title', 'Cart')->setData('description', '')->setData('alias', '')
         ]
     ],
 

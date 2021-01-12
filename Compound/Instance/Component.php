@@ -4,13 +4,14 @@
 namespace Mirele\Compound;
 
 
-use Mirele\Framework\CompoundComponent;
-use Mirele\Compound\Engine\Document as App;
+use Mirele\Compound\Document\TWIG as App;
+use Mirele\Framework\ClassExtends\Storage;
 
 
-class Component
+class Component extends Storage
 {
 
+    private $html;
     protected $index = true;
     protected $id = null;
     protected $template = null;
@@ -98,20 +99,6 @@ class Component
         }
     }
 
-
-
-    /**
-     * is triggered when invoking inaccessible methods in an object context.
-     *
-     * @param $name string
-     * @param $arguments array
-     * @return mixed
-     * @link https://php.net/manual/en/language.oop5.overloading.php#language.oop5.overloading.methods
-     */
-    public function __call($name, $arguments)
-    {
-    }
-
     /**
      * The __invoke method is called when a script tries to call an object as a function.
      *
@@ -135,120 +122,53 @@ class Component
     {
         return array(
             'alias' => $this->alias,
-            'name' => $this->name,
             'id' => $this->id,
-            'props' => $this->props,
-            'data' => $this->data,
-            'meta' => $this->meta,
+            'props' => $this->getData()
         );
     }
 
+    public function build($attr)
+    {
+        if (empty($this->html)) {
+
+            if ($this->getTemplate()) {
+
+                $this->html = App::renderToString($this->getTemplate(), $attr);
+                $this->__call_created();
+
+                return $this->html;
+
+            }
+
+        } else {
+
+            return $this->html;
+
+        }
+
+    }
+
+    public function mount ($attr)
+    {
+        $this->__call_mounted();
+        echo $this->build($attr);
+    }
 
     /**
-     * is utilized for reading data from inaccessible members.
-     *
-     * @param $name string
      * @return mixed
-     * @link https://php.net/manual/en/language.oop5.overloading.php#language.oop5.overloading.members
      */
-    public function __get($name)
+    public function getHtml()
     {
-        return $this->props[$name];
-    }
-
-    /**
-     * run when writing data to inaccessible members.
-     *
-     * @param $name string
-     * @param $value mixed
-     * @return void
-     * @link https://php.net/manual/en/language.oop5.overloading.php#language.oop5.overloading.members
-     */
-    public function __set($name, $value)
-    {
-        $this->props[(string)$name] = $value;
-    }
-
-    /**
-     * is triggered by calling isset() or empty() on inaccessible members.
-     *
-     * @param $name string
-     * @return bool
-     * @link https://php.net/manual/en/language.oop5.overloading.php#language.oop5.overloading.members
-     */
-    public function __isset($name)
-    {
-        return isset($this->props[$name]);
-    }
-
-    /**
-     * is invoked when unset() is used on inaccessible members.
-     *
-     * @param $name string
-     * @return void
-     * @link https://php.net/manual/en/language.oop5.overloading.php#language.oop5.overloading.members
-     */
-    public function __unset($name)
-    {
-        unset($this->props[$name]);
+        return $this->html;
     }
 
     /**
      * @return bool
      */
-    public function isIndex()
+    public function isIndex(): bool
     {
         return $this->index;
     }
-
-    /**
-     * @param array $props
-     * @return mixed
-     */
-    public function render(array $props)
-    {
-
-        /**
-         * Create a component and initialize user events
-         */
-
-        $args = array_merge(
-            (array) $this->props,
-            (array) $props
-        );
-
-        /**
-         * @todo this
-         * @deprecated
-         */
-        foreach ($args as $k => $v) {
-            $this->{$k} = $v;
-        }
-
-//        $this->self = $args;
-
-        $this->__call_created();
-
-        /**
-         * Render
-         */
-
-        if (!empty($this->getTemplate())) {
-
-            $promise = App::renderToString($this->getTemplate(), $this->props);
-            $this->__call_mounted();
-            return $promise;
-
-        } else {
-//            throw new \Exception('Template for the component is not specified' . $this->getTemplate());
-        }
-
-    }
-
-    /*
-     * Getters
-     */
-
 
     /**
      * @return null
@@ -259,7 +179,7 @@ class Component
     }
 
     /**
-     * @return |null
+     * @return null
      */
     public function getTemplate()
     {
@@ -277,7 +197,7 @@ class Component
     /**
      * @return array
      */
-    public function getProps()
+    public function getProps(): array
     {
         return $this->props;
     }
@@ -285,7 +205,7 @@ class Component
     /**
      * @return array
      */
-    public function getMeta()
+    public function getMeta(): array
     {
         return $this->meta;
     }
@@ -304,6 +224,14 @@ class Component
     public function getParent()
     {
         return $this->parent;
+    }
+
+    /**
+     * @return null
+     */
+    public function getEditor()
+    {
+        return $this->editor;
     }
 
     /**
@@ -337,5 +265,8 @@ class Component
     {
         return $this->middleware;
     }
+
+
+
 
 }

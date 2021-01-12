@@ -20,6 +20,22 @@
   .__compound_editor_document
     padding: 12px
 
+    .__compound_message_mute
+      text-align: center
+      margin: 3rem 0
+
+      .dashicons
+        color: #d3d3d3
+        font-size: 46px
+        line-height: 35px
+        margin: 1rem 0
+        display: inline-flex
+
+      p
+        color: #9d9d9d
+        line-height: 1.5
+        margin: 1em 0
+
     .__compound_editor_template
       background: #ffffff
       padding: 10
@@ -27,6 +43,7 @@
       width: auto
       width: -webkit-fill-available
       min-width: 40
+      margin-bottom: 14px
 
       .__compound_editor_template_header
         display: flex
@@ -34,21 +51,42 @@
         place-content: flex-end
 
       .__compound_editor_template_header_toolbar
-          float: right
+        float: right
+        padding: 4px
+        color: black
+        display: flex
+
+        &:hover
+          background-color: #0c9ce2
+          color: white
+
+      .__compound_editor_container[data-selected="true"]
+        border: 1px solid #0c9ce2
+
+      .__compound_editor_container.ui-selected
+        border: 1px solid #0c9ce2  !important
+
+      .__compound_editor_container[data-selected="false"]
+        border: 1px solid transparent
 
     .__compound_editor_area
       background: #ffffff
       padding: 4px
-      display: flex
+      display: block
       place-content: space-around
+      transition: 0.5s ease-in-out
+      border: 1px dashed #cecece
+
+      &.__compound_almost_inaccessible
+        transition: 0.5s ease-in-out
+        opacity: 0.5
 
       .__compound_editor_component_append
         cursor: pointer
         padding: 16px
         transition: 0.1s ease-in-out
-        background: #f9f9f9
+        background: #fdfdfd
         overflow: hidden
-        width: 20%
         margin: 4px
         grid-auto-flow: column
         display: flex
@@ -57,8 +95,8 @@
 
         svg
           color: #0073aa
-          width: 42px
-          height: 42px
+          width: 28px
+          height: 28px
 
       .__compound_editor_component
         cursor: pointer
@@ -66,5 +104,24 @@
         transition: 0.1s ease-in-out
         background: #F5F5F5
         overflow: hidden
-        width: 100%
+        //width: 100%
         margin: 4px
+
+
+.__compound_placeholder
+  border: 1px dashed #cecece !important
+  min-height: 60px
+
+[v-else],
+[v-else-if],
+[v-for]
+  display: none
+
+.ui-selecting
+  border: 1px solid #0c9ce2 !important
+
+.ui-selectable-helper
+  position: absolute
+  z-index: 100
+  border: 1px solid #029ee7
+  background: #0073aa3b

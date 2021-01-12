@@ -3,7 +3,7 @@
 namespace Mirele\Components;
 
 use Mirele\Compound\Component;
-use Mirele\Compound\Config;
+
 
 new Component([
 
@@ -13,9 +13,6 @@ new Component([
         'props' => [
             'value' => 'New input',
             'type' => 'text'
-        ],
-        'meta'  => [
-            'editor' => (new Config())->setData('title', 'Input')->setData('description', '')->setData('alias', '')
         ]
     ],
 

@@ -3,7 +3,7 @@
 namespace Mirele\Components;
 
 use Mirele\Compound\Component;
-use Mirele\Compound\Config;
+
 
 
 new Component([
@@ -11,10 +11,7 @@ new Component([
     'data' => [
         'id'    => 'default_navbar',
         'alias' => '@navbar',
-        'props' => [],
-        'meta'  => [
-            'editor' => (new Config())->setData('title', 'Navbar')->setData('description', '')->setData('alias', '')
-        ]
+        'props' => []
     ],
 
     'template'  => "Binder/Component/Navbar/template.html.twig",

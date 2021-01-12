@@ -3,7 +3,7 @@
 namespace Mirele\Components;
 
 use Mirele\Compound\Component;
-use Mirele\Compound\Config;
+
 
 new Component([
 
@@ -12,9 +12,6 @@ new Component([
         'alias' => '@sidebar',
         'props' => [
             'sidebar' => 'right-side-page'
-        ],
-        'meta'  => [
-            'editor' => (new Config())->setData('title', 'Sidebar')->setData('description', '')->setData('alias', '')
         ]
     ],
 

@@ -47,6 +47,14 @@ class Response
         'code' => 201
     ];
 
+    /**
+     * Pattern for reporting an error with code 421
+     */
+    const PATTERN_421 = [
+        'message' => 'The request was directed at a server that is not able to produce a response. Maybe params is not enough in request',
+        'code' => 421
+    ];
+
     private $code;
     private $body;
 

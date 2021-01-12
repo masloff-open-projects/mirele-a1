@@ -1,5 +1,4 @@
-<!-- Footer -->
-<footer class="page-footer font-small blue pt-4">
+<footer class="page-footer font-small blue pt-5 pb-5">
 
     <!-- Footer Links -->
     <div class="container text-center text-md-left">
@@ -7,77 +6,36 @@
         <!-- Grid row -->
         <div class="row">
 
-            <!-- Grid column -->
-            <div class="col-md-6 mt-md-0 mt-3">
+            {% for i in 1..3 %}
 
-                <!-- Content -->
-                <h5 class="text-uppercase">Footer Content</h5>
-                <p>Here you can use rows and columns to organize your footer content.</p>
+                <div class="col-md-4 mb-md-0 mb-3">
 
-            </div>
-            <!-- Grid column -->
+                    <h6 class="footer-header mb-3">Current news:</h6>
 
-            <hr class="clearfix w-100 d-md-none pb-3">
+                    <ul class="list-unstyled">
+                        <li>
+                            <a href="#!" class="footer-link">
+                                — Opening a branch in Washington
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#!" class="footer-link">
+                                — Black Friday terms and conditions
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#!" class="footer-link">
+                                — 45 stores in France
+                            </a>
+                        </li>
+                    </ul>
 
-            <!-- Grid column -->
-            <div class="col-md-3 mb-md-0 mb-3">
+                </div>
 
-                <!-- Links -->
-                <h5 class="text-uppercase">Links</h5>
-
-                <ul class="list-unstyled">
-                    <li>
-                        <a href="#!">Link 1</a>
-                    </li>
-                    <li>
-                        <a href="#!">Link 2</a>
-                    </li>
-                    <li>
-                        <a href="#!">Link 3</a>
-                    </li>
-                    <li>
-                        <a href="#!">Link 4</a>
-                    </li>
-                </ul>
-
-            </div>
-            <!-- Grid column -->
-
-            <!-- Grid column -->
-            <div class="col-md-3 mb-md-0 mb-3">
-
-                <!-- Links -->
-                <h5 class="text-uppercase">Links</h5>
-
-                <ul class="list-unstyled">
-                    <li>
-                        <a href="#!">Link 1</a>
-                    </li>
-                    <li>
-                        <a href="#!">Link 2</a>
-                    </li>
-                    <li>
-                        <a href="#!">Link 3</a>
-                    </li>
-                    <li>
-                        <a href="#!">Link 4</a>
-                    </li>
-                </ul>
-
-            </div>
-            <!-- Grid column -->
+            {% endfor %}
 
         </div>
-        <!-- Grid row -->
 
     </div>
-    <!-- Footer Links -->
-
-    <!-- Copyright -->
-    <div class="footer-copyright text-center py-3">© 2020 Copyright:
-        <a href="https://mdbootstrap.com/"> Mirele</a>
-    </div>
-    <!-- Copyright -->
 
 </footer>
-<!-- Footer -->

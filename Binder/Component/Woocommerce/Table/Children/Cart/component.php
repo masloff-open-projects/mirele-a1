@@ -3,18 +3,14 @@
 namespace Mirele\Components;
 
 use Mirele\Compound\Component;
-use Mirele\Compound\Config;
+
 
 new Component([
 
     'data' => [
         'id'    => 'default_cart_table',
         'alias' => '@woo_cart_table',
-        'props' => [],
-        'meta'  => [
-            'editor' => (new Config())->setData('title', 'Woocommerce Cart Table')->setData('description', ''
-                )->setData('alias', '')
-        ]
+        'props' => []
     ],
 
     'template'  => "Binder/Component/Woocommerce/Table/Children/Cart/template.html.twig",

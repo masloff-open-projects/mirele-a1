@@ -43,7 +43,6 @@ class Document extends Protector
 
                     if ($area and $container) {
 
-                        # Component
                         $component = $XValue['tag'];
                         $value = $XValue['value'];
                         $attributes = isset($XValue['attributes']) ? $XValue['attributes'] : [];
@@ -67,12 +66,15 @@ class Document extends Protector
 
                         case 'area':
                             if ($area == false) {
-                                $area = true;
-                                if (isset($XValue['attributes']['id'])) {
-                                    $area = $XValue['attributes']['id'];
+                                if ($container) {
+                                    if (isset($XValue['attributes']['id'])) {
+                                        $area = $XValue['attributes']['id'];
+                                        $this->document[$index][$container][$area] = array();
+                                    } else {
+                                        throw new \Exception('No `id` attribute is set for the area');
+                                    }
                                 } else {
-                                    throw new \Exception('No `id` attribute is set for the area');
-                                    $area = false;
+                                    throw new \Exception('The area tag cannot be opened outside the container tag');
                                 }
                             } else {
                                 throw new \Exception('Within a tag area, no other area can be created');
@@ -82,12 +84,11 @@ class Document extends Protector
                         case 'container':
                             $index++;
                             if ($container == false) {
-                                $container = true;
                                 if (isset($XValue['attributes']['template'])) {
                                     $container = $XValue['attributes']['template'];
+                                    $this->document[$index][$container] = array();
                                 } else {
                                     throw new \Exception('No `template` attribute is set for the container');
-                                    $container = false;
                                 }
                             } else {
                                 throw new \Exception('Within a tag container, no other container can be created');
@@ -96,7 +97,6 @@ class Document extends Protector
 
                         default:
                             throw new \Exception('The tag does not exist');
-                            break;
                     }
 
                 }
@@ -117,7 +117,6 @@ class Document extends Protector
 
                         default:
                             throw new \Exception('The tag does not exist');
-                            break;
                     }
 
                 }
@@ -153,8 +152,8 @@ class Document extends Protector
                 foreach ($template as $areaName => $area) {
                     $document .= "    <area id=\"{$areaName}\">\n";
                     foreach ($area as $componentName => $component) {
-                        $attr = Helpers\HTML::arrayToAttrs($component['attributes']);
-                        $document .= "        <{$component['component']} {$attr}/>\n";
+                        $attr = Helpers\HTML::arrayToAttrs((array) $component['attributes']);
+                        $document .= "<{$component['component']} {$attr}/>\n";
                     }
                     $document .= "    </area>\n";
                 }

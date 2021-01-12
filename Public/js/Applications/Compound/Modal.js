@@ -42,9 +42,7 @@ if (Application) {
             data: {
                 title: 'New modal window',
                 component: null,
-                props: {
-
-                }
+                props: {}
             },
             components: Application.Components.Compound || {},
             methods: {

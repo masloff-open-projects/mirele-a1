@@ -15,7 +15,7 @@ class Module
      *
      */
     static function init() {
-        return do_action('compoundModule', new ModuleKit());
+//        return do_action('compoundModule', new ModuleKit());
     }
 
 }

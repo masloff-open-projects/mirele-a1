@@ -234,16 +234,3 @@ function is_wc ()
     }
     return false;
 }
-
-add_action('admin_init' , function () {
-
-
-    wp_admin_css_color(
-        'mirele-darkness',
-        __( 'Mirele — Darkness', 'mirele' ),
-        TEMPLATE_URI . '/Public/css/admin-themes/darkness.css',
-        array( '#607d8b', '#ff5252', '#455a64', '#cfd8dc' )
-    //array( 'base' => '#f1f2f3', 'focus' => '#fff', 'current' => '#fff' )
-    );
-
-});

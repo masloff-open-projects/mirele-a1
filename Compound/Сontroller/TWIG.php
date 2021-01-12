@@ -2,18 +2,7 @@
 
 namespace Mirele;
 
-use Mirele\Compound\Component;
-use Mirele\Compound\Engine\Application;
 use Mirele\Compound\Field;
-use Mirele\Compound\Market;
-use Mirele\Compound\Template;
-use Mirele\Framework\Customizer;
-use Mirele\Framework\Stringer;
-use Mirele\Utils\Converter;
-use Twig\Extension\AbstractExtension;
-use Twig\TwigFilter;
-use Twig\TwigFunction;
-use voku\helper\AntiXSS;
 
 /**
  * Class TWIG
@@ -35,12 +24,12 @@ class TWIG
      */
     private static $alias = [
 //        '@woocommerce' => 'Woocommerce',
-//        "Compound/Engine/Applications/Public/Module/Woocommerce/Login/login.html.twig" => 'Woocommerce/authorization/login',
+//        "Compound/Templates/Module/Woocommerce/Login/login.html.twig" => 'Woocommerce/authorization/login',
 //        "@signup" => 'Woocommerce/authorization/signup',
 //        "@passwordRecovery" => 'Woocommerce/authorization/password_recovery',
-//        "application@footer" => 'Compound/Engine/Applications/Public/footer.html.twig',
-//        "application@header" => 'Compound/Engine/Applications/Public/header.html.twig',
-//        "application@layout" => 'Compound/Engine/Applications/Public/layout.html.twig',
+//        "application@footer" => 'Compound/Templates/footer.html.twig',
+//        "application@header" => 'Compound/Templates/header.html.twig',
+//        "application@layout" => 'Compound/Templates/layout.html.twig',
     ];
 
     /**

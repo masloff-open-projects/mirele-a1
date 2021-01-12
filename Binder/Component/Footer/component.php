@@ -3,17 +3,14 @@
 namespace Mirele\Components;
 
 use Mirele\Compound\Component;
-use Mirele\Compound\Config;
+
 
 new Component([
 
     'data' => [
         'id'    => 'default_footer',
         'alias' => '@footer',
-        'props' => [],
-        'meta'  => [
-            'editor' => (new Config())->setData('title', 'Footer')->setData('description', '')->setData('alias', '')
-        ]
+        'props' => []
     ],
 
     'template'  => "Binder/Component/Footer/template.html.twig",

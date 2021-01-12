@@ -4,224 +4,50 @@
 namespace Mirele\Framework;
 
 
-/**
- * Class Option
- * @package Mirele\Framework
- */
-class Option
-{
-    /**
-     * @var string
-     */
-    private $namespace = '*';
-    /**
-     * @var string
-     */
-    private $type = 'toggle';
-    /**
-     * @var string
-     */
-    private $name = '';
-    /**
-     * @var string
-     */
-    private $default = 'false';
-    /**
-     * @var string
-     */
-    private $description = '';
-    /**
-     * @var string
-     */
-    private $title = '';
-    /**
-     * @var array
-     */
-    private $props = [];
-    /**
-     * @var bool
-     */
-    private $warning = false;
-    private $data = [];
+use Mirele\Compound\Repository;
+use Mirele\Framework\ClassExtends\Storage;
+
+
+class Option extends Storage {
+
+    protected $id;
+    protected $default;
 
     /**
-     * @return array
+     * PHP 5 allows developers to declare constructor methods for classes.
+     * Classes which have a constructor method call this method on each newly-created object,
+     * so it is suitable for any initialization that the object may need before it is used.
+     *
+     * Note: Parent constructors are not called implicitly if the child class defines a constructor.
+     * In order to run a parent constructor, a call to parent::__construct() within the child constructor is required.
+     *
+     * param [ mixed $args [, $... ]]
+     * @link https://php.net/manual/en/language.oop5.decon.php
      */
-    public function getData()
+    public function __construct($object = false)
     {
-        return $this->data;
+
+        if (is_array($object) or is_object($object)) {
+
+            $object = (object)$object;
+
+            if (isset($object->id)) {
+                $this->id = $object->id;
+            }
+
+            if (isset($object->default)) {
+                $this->default = $object->default;
+            }
+
+            foreach ($object as $name => $value) {
+                $this->{$name} = $value;
+            }
+
+            Repository::registerOption($this->id, $this);
+
+        }
+
     }
 
-    /**
-     * @param array $data
-     * @return Option
-     */
-    public function setData($data)
-    {
-        $this->data = $data;
-        return $this;
-    }
-
-    /**
-     * @param array $warning
-     */
-    public function setWarning(array $warning)
-    {
-        $this->warning = (object)$warning;
-        return $this;
-    }
-
-    /**
-     * @return array
-     */
-    public function getWarning()
-    {
-        return $this->warning;
-    }
-
-    /**
-     * @param string $description
-     */
-    public function setDescription(string $description)
-    {
-        $this->description = $description;
-        return $this;
-    }
-
-    /**
-     * @param array $props
-     */
-    public function setProps(array $props)
-    {
-        $this->props = $props;
-        return $this;
-    }
-
-    /**
-     * @return array
-     */
-    public function getProps()
-    {
-        return $this->props;
-    }
-
-    /**
-     * @param string $title
-     */
-    public function setTitle($title)
-    {
-        $this->title = $title;
-        return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function getTitle()
-    {
-        return $this->title;
-    }
-
-    /**
-     * @return string
-     */
-    public function getDescription()
-    {
-        return $this->description;
-    }
-
-    /**
-     * @return string
-     */
-    public function getDefault()
-    {
-        return $this->default;
-    }
-
-    /**
-     * @param string $namespace
-     */
-    public function setNamespace(string $namespace)
-    {
-        $this->namespace = (new Stringer($namespace))::format([
-            '{NAME}' => $this->name,
-            '{TYPE}' => $this->type,
-            '{DEFAULT}' => $this->default,
-        ]);
-        return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function getNamespace()
-    {
-        return $this->namespace;
-    }
-
-    /**
-     * @return string
-     */
-    public function getType()
-    {
-        return $this->type;
-    }
-
-    /**
-     * @param string $name
-     */
-    public function setName(string $name)
-    {
-        $this->name = $name;
-        return $this;
-    }
-
-    /**
-     * @param string|bool|array|integer|float $default
-     */
-    public function setDefault($default)
-    {
-        $this->default = $default;
-        return $this;
-    }
-
-    /**
-     * @param string $type toggle
-     * @param string $type text
-     * @param string $type int
-     * @param string $type switch
-     */
-    public function setType(string $type)
-    {
-        $this->type = $type;
-        return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function getName()
-    {
-        return $this->name;
-    }
-
-    /**
-     * @return object
-     */
-    public function build()
-    {
-        return (object)[
-            'namespace' => $this->namespace,
-            'title' => $this->title,
-            'name' => $this->name,
-            'warning' => $this->warning,
-            'type' => $this->type,
-            'data' => $this->data,
-            'default' => $this->default,
-            'description' => $this->description,
-            'props' => (object)$this->props,
-            'value' => get_option($this->name, $this->default)
-        ];
-    }
 
 }

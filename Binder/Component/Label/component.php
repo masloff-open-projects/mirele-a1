@@ -3,7 +3,7 @@
 namespace Mirele\Components;
 
 use Mirele\Compound\Component;
-use Mirele\Compound\Config;
+
 
 new Component([
 
@@ -12,9 +12,6 @@ new Component([
         'alias' => '@label',
         'props' => [
             'text' => 'New label',
-        ],
-        'meta'  => [
-            'editor' => (new Config())->setData('title', 'Label')->setData('description', '')->setData('alias', '')
         ]
     ],
 

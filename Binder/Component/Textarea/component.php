@@ -3,7 +3,7 @@
 namespace Mirele\Components;
 
 use Mirele\Compound\Component;
-use Mirele\Compound\Config;
+
 
 new Component([
 
@@ -13,9 +13,6 @@ new Component([
         'props' => [
             'value' => 'New textarea',
             'href'  => false
-        ],
-        'meta'  => [
-            'editor' => (new Config())->setData('title', 'Text-area')->setData('description', '')->setData('alias', '')
         ]
     ],
 

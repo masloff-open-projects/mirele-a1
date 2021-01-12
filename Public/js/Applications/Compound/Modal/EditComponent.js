@@ -1,15 +1,30 @@
-// this.$parent.props
-
 Application.Components.Compound.EditComponent = Vue.component('modal-edit-component', {
     data: function () {
         return {
             component: null,
             attributes: {},
-            editor: Application.Modules.Compound.vue
+            editor: Application.Modules.Compound.vue,
+            tabs: {
+                props: {
+                    title: 'Props'
+                },
+                design: {
+                    title: 'Design'
+                },
+                manage: {
+                    title: 'Manage'
+                }
+            },
+            activeTab: 'props',
+            availableUpdate: true
         }
     },
+    components: Application.Modules.CompoundPrototypes || {},
     methods: {
         update: function (event) {
+
+            this.availableUpdate = false;
+
             new Application.Postman({
                 method: 'CompoundPrivate/component',
                 body: {
@@ -22,32 +37,41 @@ Application.Components.Compound.EditComponent = Vue.component('modal-edit-compon
                     UPDATE: this.attributes
                 },
             }).then((e) => {
-                this.$parent.close();
-                this.editor.update();
+                
             }).catch((e) => {
+
+            }).finally((e) => {
+
+                this.availableUpdate = true;
+
                 this.$parent.close();
                 this.editor.update();
+
             });
+        },
+        
+        prototype: function (name) {
+            return Application.Modules.CompoundPrototypes[name] || Application.Modules.CompoundPrototypes['default'] || false;
         }
     },
     template: `
         <div>
-        
-            <div class="grid-container margin-buttom-4" v-for="(attr, name) in this.$parent.props.Document[this.$parent.props.Index][this.$parent.props.Template][this.$parent.props.Area][this.$parent.props.Component].attributes">
-                <div class="col-6">
-                    <h4 class="width-100 margin-0 display-block">{{name}}</h4>
-                    <p class="margin-0 display-block"/>Lorem ipsum dolor sit amet, consectetur adipisicing elit. A animi, consequuntur debitis dicta obcaecati sunt tempore temporibus! Assumenda esse ex illum minima, praesentium quae quis quos rem sint tenetur voluptatem.</p>
+            <div class="__compound_modal_tabs_body">
+                <a href="#" :class="['__compound_modal_tabs_tab', index == activeTab ? 'current' : '']" v-for="(tab, index) in tabs" v-text="tab.title" @click.prevent="activeTab = index"></a>
+            </div>
+    
+            <div class="__compound_modal_body">
+               
+                <div class="margin-buttom-4" v-for="(attr, name) in this.$parent.props.Document[this.$parent.props.Index][this.$parent.props.Template][this.$parent.props.Area][this.$parent.props.Component].attributes">
+                    <component v-bind:is="prototype(name)" :name="name" :value="attr"></component>     
                 </div>
-                
-                <div class="col-6">
-                    <input type="text" :data-model="attributes[name] = attr" v-model="attributes[name]" :id="name" :name="name">
-                </div>
+                  
             </div>
             
-            <button class="button button-primary button-large" @click="update">Update</button>
-            
-            <a class="deletion" href="#">Move to Trash</a>
-            
+            <div class="__compound_modal_footer">
+                <a :class="['button', 'button-primary', 'right', availableUpdate === false ? 'disabled' : '']" @click="update">Update</a>
+            </div>
+                      
         </div> 
     `
 });

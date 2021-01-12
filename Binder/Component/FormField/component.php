@@ -1,9 +1,9 @@
 <?php
 
 namespace Mirele\Components;
-use Mirele\Compound\Engine\Document as App;
 use Mirele\Compound\Component;
-use Mirele\Compound\Config;
+
+use Mirele\Compound\Document\TWIG as App;
 
 new Component([
 
@@ -12,9 +12,6 @@ new Component([
         'alias' => '@field',
         'props' => [
 
-        ],
-        'meta'  => [
-            'editor' => (new Config())->setData('title', 'Field')->setData('description', '')->setData('alias', '')
         ],
         'index' => false
     ],
@@ -120,22 +117,6 @@ new Component([
                 'states' => WC()->countries->get_states(isset($args->country) ? $args->country : WC()->checkout->get_value( 'billing_state' === $props->key ? 'billing_country' : 'shipping_country' ))
             ]
         ), $args->return);
-
-        $self->setProps(array(
-            'args'            => (array)$args,
-            'props'           => (array)$props,
-            'country'         => $countries = 'shipping_country' === $props->key ? WC(
-            )->countries->get_shipping_countries() : WC()->countries->get_allowed_countries(),
-            'current_country' => current(array_keys($countries)),
-            'state'           => [
-                'for_country' => isset($args->country) ? $args->country : WC(
-                )->checkout->get_value('billing_state' === $props->key ? 'billing_country' : 'shipping_country'),
-                'states'      => WC()->countries->get_states(isset($args->country) ? $args->country : WC(
-                )->checkout->get_value('billing_state' === $props->key ? 'billing_country' : 'shipping_country')
-                )
-            ]
-        )
-        );
 
     },
 

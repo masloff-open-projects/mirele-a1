@@ -3,7 +3,7 @@
 
 namespace Mirele\Compound;
 
-use Mirele\Compound\Engine\Document as App;
+use Mirele\Compound\Document\TWIG as App;
 
 
 /**
@@ -18,6 +18,7 @@ class Template
     protected $props;
     protected $template;
     protected $editor;
+    protected $html;
 
     protected $construct;
     protected $created;
@@ -521,57 +522,25 @@ class Template
         return $this->twig;
     }
 
-    /**
-     * @param array $props
-     * @param bool $np
-     * @return false
-     */
-    public function render(array $props, $np = true)
-    {
-
-        # Check if a handler is available and call it if it is.
-        if (is_callable($this->getHandler())) {
-            call_user_func($this->getHandler(), $this);
-        }
-
-        # Standart
-        $components = [
-//            'input' => Market::get('@input'),
-//            'button' => Market::get('@button'),
-//            'label' => Market::get('@label'),
-        ];
-
-        # Render
-        App::render($this->getTemplate(), array_merge((array)$this->getProps(), (array)$props, (array)$components, (array)$this->getComponents(), [
-            'components' => (object)array_merge(
-                (array)$this->getComponents(),
-                (array)[
-                    'error' => Market::get('default_error')
-                ]
-            ),
-            'props' => (object)array_merge(
-                (array)$this->getProps(),
-                (array)$props
-            ),
-            'componentProps' => (object)$this->getComponentsProps(),
-        ], [
-            'template' => [
-                'id' => $this->getId(),
-                'name' => $this->getName(),
-                'fields' => $this->getFields()
-            ],
-            'this' => $this
-        ]), $np);
-    }
-
-    /**
-     * @return $this
-     */
     public function build($attr)
     {
-        return (object) [
-            'HTML' => App::renderToString($this->getTemplate(), $attr)
-        ];
+        if (empty($this->html)) {
+
+            if ($this->getTemplate()) {
+
+                $this->html = App::renderToString($this->getTemplate(), $attr);
+                $this->__call_created();
+
+                return $this->html;
+
+            }
+
+        } else {
+
+            return $this->html;
+
+        }
+
     }
 
 }

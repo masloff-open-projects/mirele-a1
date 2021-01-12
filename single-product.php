@@ -153,17 +153,6 @@ wp_localize_script(
 );
 
 # Render
-use Mirele\Compound\Engine\Document as App;
+use Mirele\Compound\Document\TWIG as App;
 
-App::render('Compound/Engine/Applications/Public/Module/Woocommerce/product.html.twig', [
-    'ww2as'         => get_option('mrl_wp_sidebar_width_2_active', 2),
-    'ww1as'         => get_option('mrl_wp_sidebar_width_1_active', 4),
-    'ars'           => is_active_sidebar('right-side-product', 'false') == 'true' ? true : false,
-    'als'           => is_active_sidebar('left-side-product', 'false') == 'true' ? true : false,
-    'hsmp'          => get_option('mrl_wp_sidebar_hide_mobile', 'true') == 'true' ? true : false,
-    'rsbn'          => 'right-side-product',
-    'lsbn'          => 'left-side-product',
-    'product'       => (object) $product,
-    'post'          => (object) $post,
-    'productObject' => (object) $productObject
-]);
+App::render('Compound/Templates/Module/Woocommerce/product.html.twig', []);

@@ -3,8 +3,8 @@
 <div class="subbar">
     <div class="container">
         <div class="col-sm-12">
-            <div class="container-flex j-space-between py-3 px-0">
-                <div class="container-flex pi-center">
+            <div class="d-flex justify-content-between py-3 px-0">
+                <div class="d-flex pi-center">
                     <a href="{{ App.Blog('home') }}"
                        class="logo-regular m-0 p-0 font-weight-lighter font-size-6">{{ App.Blog('name') }}</a>
                 </div>
@@ -15,14 +15,14 @@
 
                     {% if App.User().user_login %}
 
-                        <a class="h-100" href="{{ permalink.account.main }}">
+                        <a class="h-100" href="{{ Helpers.WP.URL.profile.account }}">
                             <img class="rounded-circle" alt="{{ App.User().user_login }}" src="{{ App.User().avatar }}"
                                  data-holder-rendered="true" height="32px">
                         </a>
 
                     {% else %}
 
-                        <a href="/my-account">
+                        <a href="{{ Helpers.WP.URL.login }}">
                             <button>Login</button>
                         </a>
 

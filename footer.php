@@ -7,8 +7,6 @@
  * @version 1.0.0
  */
 
-use Mirele\TWIG;
+use Mirele\Compound\Document\TWIG as App;
 
-use Mirele\Compound\Engine\Document as App;
-
-App::render('Compound/Engine/Applications/Public/footer.html.twig', []);
+App::render('Compound/Templates/footer.html.twig', []);

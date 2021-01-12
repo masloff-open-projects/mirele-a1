@@ -3,7 +3,6 @@
 namespace Mirele\Components;
 
 use Mirele\Compound\Component;
-use Mirele\Compound\Config;
 
 new Component([
 

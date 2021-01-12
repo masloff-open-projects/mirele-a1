@@ -3,7 +3,7 @@
 namespace Mirele\Components;
 
 use Mirele\Compound\Component;
-use Mirele\Compound\Config;
+
 
 new Component([
 
@@ -11,9 +11,6 @@ new Component([
         'id'    => 'default_notice',
         'alias' => '@notice',
         'props' => [],
-        'meta'  => [
-            'editor' => (new Config())->setData('title', 'Button')->setData('description', '')->setData('alias', '')
-        ],
         'index' => false
     ],
 

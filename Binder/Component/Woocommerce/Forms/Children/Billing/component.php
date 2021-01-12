@@ -3,7 +3,7 @@
 namespace Mirele\Components;
 
 use Mirele\Compound\Component;
-use Mirele\Compound\Config;
+
 
 new Component([
 
@@ -11,9 +11,7 @@ new Component([
         'id'    => 'default_form_billing',
         'alias' => '@woo_form_billing',
         'props' => [],
-        'meta'  => [
-            'editor' => (new Config())->setData('title', 'Button')->setData('description', '')->setData('alias', '')
-        ]
+
     ],
 
     'template'  => "Binder/Component/Woocommerce/Forms/Children/Billing/template.html.twig",

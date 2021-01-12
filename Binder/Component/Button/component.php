@@ -3,7 +3,7 @@
 namespace Mirele\Components;
 
 use Mirele\Compound\Component;
-use Mirele\Compound\Config;
+
 use Mirele\Compound\Helpers\Compound;
 
 new Component([
@@ -15,9 +15,7 @@ new Component([
             'value' => 'New button',
             'href'  => false
         ],
-        'meta'  => [
-            'editor' => (new Config())->setData('title', 'Button')->setData('description', '')->setData('alias', '')
-        ]
+
     ],
 
     'template'  => "Binder/Component/Button/template.html.twig",

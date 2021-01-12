@@ -2,11 +2,8 @@
 
 namespace Mirele\Templates;
 
-use Mirele\Compound\Config;
 use Mirele\Compound\Field;
 use Mirele\Compound\Grider;
-use Mirele\Compound\Repository;
-use Mirele\Compound\Market;
 use Mirele\Compound\Template;
 
 $Template = new Template([

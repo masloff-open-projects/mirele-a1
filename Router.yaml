@@ -25,6 +25,7 @@ public:
   styles:
     bootstrap: //stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css
     style: {ROOT}/Public/css/style.css
+#             /style.css
     fontawesome: //cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css
 
   localize:
@@ -48,22 +49,22 @@ private:
     QS: //cdnjs.cloudflare.com/ajax/libs/qs/6.9.4/qs.min.js
     VUE: //cdn.jsdelivr.net/npm/vue
     Popper: //cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js
-#    Center: /public/js/center.min.js
-    MIRELE: /public/js/org.app.min.js
     bootstrap: //stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js
     CompoundEditor: /public/js/Applications/Compound/Application.min.js
     CompoundModalEditComponent: /public/js/Applications/Compound/Modal/EditComponent.min.js
-    CompoundModalAppendComponent: /public/js/Applications/Compound/Modal/AppendComponent.min.js
+    CompoundModalInsertComponent: /public/js/Applications/Compound/Modal/InsertComponent.min.js
     CompoundModalInsertTemplate: /public/js/Applications/Compound/Modal/InsertTemplate.min.js
+    CompoundModalMeet: /public/js/Applications/Compound/Modal/Meet.min.js
     CompoundModal: /public/js/Applications/Compound/Modal.min.js
+    CompoundPrototypes: /public/js/Applications/Compound/Prototypes.min.js
 
 
   styles:
 #    bootstrap: //stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css
-    style: {ROOT}/Public/css/admin.css
+    style: {ROOT}/Templates/css/admin.css
 
   localize:
-    MIRELE: main
+    Application: main
     CompoundEditor: Compound
 
 
@@ -71,22 +72,9 @@ private:
 # @version: 1.0.0
 woocommerce:
   scripts:
-
-#    woocommerce:
-#      => product: /public/js/woocommerceui_product.min.js
-#      => products: /public/js/woocommerceui_products.min.js
-#      => login: /public/js/woocommerceui_login.min.js
-#      => signup: /public/js/woocommerceui_signup.min.js
-#      => recoveryPassword: /public/js/woocommerceui_recovery_password.min.js
-
     woocommerce:
-      => login: {Applications.JS}/Woocommerce/Login.min.js
+      => login: {Applications.JS}/Applications/Woocommerce/Login.min.js
 
   localize:
     woocommerce-product: woocommerce
     woocommerce-products: main
-
-
-VisualEditor:
-  styles:
-    VisualEditorMain: {ROOT}/Public/css/visual_editor.css

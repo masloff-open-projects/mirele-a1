@@ -8,6 +8,6 @@
 * @since: Mirele Blank
 */
 
-use Mirele\Compound\Engine\Document as App;
+use Mirele\Compound\Document\TWIG as App;
 
-App::render('Compound/Engine/Applications/Public/blank.html.twig', []);
+App::render('Compound/Templates/blank.html.twig', []);

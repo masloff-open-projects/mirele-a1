@@ -3,7 +3,7 @@
 namespace Mirele\Components;
 
 use Mirele\Compound\Component;
-use Mirele\Compound\Config;
+
 
 new Component([
 
@@ -12,11 +12,6 @@ new Component([
         'alias' => '@radio',
         'props' => [
             'text' => 'New radio',
-        ],
-        'meta'  => [
-            'editor' => (new Config())->setData('title', 'Radio-switcher')->setData('description', '')->setData('alias',
-                    ''
-                )
         ]
     ],
 

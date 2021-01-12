@@ -8,6 +8,6 @@
 * @since: Mirele Full-Width
 */
 
-use Mirele\Compound\Engine\Document as App;
+use Mirele\Compound\Document\TWIG as App;
 
-App::render('Compound/Engine/Applications/Public/full-width.html.twig', []);
+App::render('Compound/Templates/full-width.html.twig', []);

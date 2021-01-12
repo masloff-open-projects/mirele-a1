@@ -3,18 +3,14 @@
 namespace Mirele\Components;
 
 use Mirele\Compound\Component;
-use Mirele\Compound\Config;
+
 
 new Component([
 
     'data' => [
         'id'    => 'default_downloads_table',
         'alias' => '@woo_downloads_table',
-        'props' => [],
-        'meta'  => [
-            'editor' => (new Config())->setData('title', 'Woocommerce Downloads Table')->setData('description', ''
-                )->setData('alias', '')
-        ]
+        'props' => []
     ],
 
     'template'  => "Binder/Component/Woocommerce/Table/Children/Downloads/template.html.twig",

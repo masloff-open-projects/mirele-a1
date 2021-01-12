@@ -3,8 +3,7 @@
 namespace Mirele\Components;
 
 use Mirele\Compound\Component;
-use Mirele\Compound\Config;
-use Mirele\Compound\Market;
+
 
 add_action('wp_loaded', function () {
 
@@ -14,13 +13,6 @@ add_action('wp_loaded', function () {
             'id' => 'default_widget_factory',
             'alias' => '@widget_factory',
             'props' => [],
-            'meta' => [
-                'editor' =>
-                    (new Config())
-                        ->setData('title', 'WidgetFactory')
-                        ->setData('description', '')
-                        ->setData('alias', '')
-            ],
             'parent' => 'WordPress Widget'
         ],
 

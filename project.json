@@ -21,6 +21,7 @@
     },
     "compound": {
       "masks": [
+        "Compound/Extends/*.php",
         "Compound/Instance/Protector.php",
         "Compound/Interface/*.php",
         "Compound/Trait/*.php",
@@ -43,7 +44,9 @@
         "Compound/Engine/*/*.php",
         "Compound/Engine/*.php",
         "Compound/Helpers/*/*.php",
-        "Compound/Helpers/*.php"
+        "Compound/Helpers/*.php",
+        "Compound/Document/*/*.php",
+        "Compound/Document/*.php"
       ],
       "output": "Compound/autoloader.php"
     },

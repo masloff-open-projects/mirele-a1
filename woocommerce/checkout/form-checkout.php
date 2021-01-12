@@ -30,9 +30,6 @@ if ( ! $checkout->is_registration_enabled() && $checkout->is_registration_requir
     return;
 }
 
-use Mirele\Compound\Engine\Document as App;
+use Mirele\Compound\Document\TWIG as App;
 
-App::render('Compound/Engine/Applications/Public/Module/Woocommerce/checkout.html.twig', [
-    'checkout' => $checkout,
-    'nonce' => wp_create_nonce('woocommerce-process_checkout')
-]);
+App::render('Compound/Templates/Module/Woocommerce/checkout.html.twig', []);

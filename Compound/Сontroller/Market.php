@@ -4,10 +4,7 @@
 namespace Mirele\Compound;
 
 
-use Exception;
 use Mirele\Framework\Iterator;
-use Mirele\Framework\Stringer;
-use TypeError;
 
 
 /**

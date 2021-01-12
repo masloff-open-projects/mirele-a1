@@ -16,8 +16,8 @@
  * @version 3.4.0
  */
 
+use Mirele\Compound\Document\TWIG as App;
 use Mirele\Framework\Buffer;
-use Mirele\Framework\Customizer;
 
 # Include scripts and styles
 wp_enqueue_script('woocommerceui_products');
@@ -50,21 +50,5 @@ foreach (wc_get_products([
 
 
 # Render
-use Mirele\Compound\Engine\Document as App;
 
-App::render('Compound/Engine/Applications/Public/Module/Woocommerce/products.html.twig', [
-    'ww2as'         => get_option('mrl_wp_sidebar_width_2_active', 2),
-    'ww1as'         => get_option('mrl_wp_sidebar_width_1_active', 4),
-    'ars'           => is_active_sidebar('right-side-list-products', 'false') == 'true' ? true : false,
-    'als'           => is_active_sidebar('left-side-list-products', 'false') == 'true' ? true : false,
-    'hsmp'          => get_option('mrl_wp_sidebar_hide_mobile', 'true') == 'true' ? true : false,
-    'rsbn'          => 'right-side-list-products',
-    'lsbn'          => 'left-side-list-products',
-    'show_header'   => apply_filters('woocommerce_show_page_title', true),
-    'show_carousel' => Customizer::get('@wc-shop', 'mrl_wp_show_carousel', []),
-//    'shadows'       => $shadows->getBuffer(),
-    'grid' => [
-        'columns' => get_option( 'woocommerce_catalog_columns', 4 ),
-        'rows' => get_option( 'woocommerce_catalog_rows', 8 ),
-    ]
-]);
+App::render('Compound/Templates/Module/Woocommerce/products.html.twig', []);

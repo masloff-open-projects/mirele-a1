@@ -16,6 +16,8 @@
  * @version 3.6.0
  */
 
+use Mirele\Compound\Document\TWIG as App;
+
 defined('ABSPATH') || exit;
 
 # Verify and correct the virtual environment
@@ -29,13 +31,6 @@ $product->get_placeholder_src = wc_placeholder_img_src();
 
 # If the product exists and is not hidden - output the product template
 if (!(empty($product) || !$product->is_visible())) {
-	use Mirele\Compound\Engine\Document as App;
 
-App::render('Compound/Engine/Applications/Public/Module/Woocommerce/product-cart.twig', [
-		'product' => $product,
-        'grid' => [
-            'columns' => get_option( 'woocommerce_catalog_columns', 4 ),
-            'rows' => get_option( 'woocommerce_catalog_rows', 8 ),
-        ]
-	]);
+App::render('Compound/Templates/Module/Woocommerce/product-cart.twig', []);
 }
